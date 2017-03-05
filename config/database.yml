@@ -1,0 +1,11 @@
+development:
+  adapter: postgresql
+  database: sh_dev
+  host: /tmp
+  pool:  5
+
+test:
+  adapter: postgresql
+  database: sh_test
+  host: /tmp
+  pool:  5

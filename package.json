@@ -1,0 +1,12 @@
+{
+  "name": "sh",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^19.0.2",
+    "lanes-framework": "^0.7.0",
+    "react-router": "^3.0.2",
+    "webpack-dev-server": "^2.4.1"
+  }
+}
