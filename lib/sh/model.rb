@@ -9,4 +9,5 @@ module Sh
     end
 
     autoload :Event, "sh/models/event"
+    autoload :Events, "sh/models/events"
 end
