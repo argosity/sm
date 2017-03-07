@@ -12,6 +12,7 @@ module.exports = {
         "shallow": false,
         "mount": false,
         "console": false,
+        "fixture": false
         "jest": false
     },
     "rules": {

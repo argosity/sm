@@ -1,3 +1,7 @@
+Lanes::Screen.enabled_group_ids = [
+    'events', 'system-settings'
+]
+
 Lanes::Screen.define_group 'events' do | group |
     group.title       = "Events"
     group.description = "Screens relating to Events"

@@ -9,3 +9,6 @@ global.shallow = shallow;
 global.mount   = mount;
 global.fetch   = require('lanes/jest/mocks/fetch');
 global.React   = require('React');
+
+
+global.fixture = file => require(`../fixtures/sh/${file}.yml`);
