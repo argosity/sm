@@ -206,6 +206,7 @@ CREATE TABLE payments (
     id integer NOT NULL,
     tenant_id integer NOT NULL,
     purchase_id integer NOT NULL,
+    amount numeric(15,2) NOT NULL,
     card_type text NOT NULL,
     digits text NOT NULL,
     processor_transaction text NOT NULL

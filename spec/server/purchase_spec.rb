@@ -24,8 +24,6 @@ describe SM::Purchase do
         })
         event.save!
         expect(purchase.save).to be(true)
-        puts SM::Templates::Purchase.new(purchase).render
-
+        # puts SM::Templates::Purchase.new(purchase).render
     end
-
 end

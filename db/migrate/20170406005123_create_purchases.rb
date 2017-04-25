@@ -12,6 +12,8 @@ class CreatePurchases < ActiveRecord::Migration[5.0]
 
         create_table :payments, partition_key: :tenant_id do |t|
             t.integer :tenant_id, :purchase_id, null: false
+            t.decimal :amount, precision: 15, scale: 2, null: false
+
             t.text :card_type, :digits, :processor_transaction, null: false
         end
     end

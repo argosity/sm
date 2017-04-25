@@ -50,6 +50,10 @@ class Purchase extends React.PureComponent {
         if (this.nameFieldRef) { this.nameFieldRef.focus(); }
     }
 
+    @computed get totalAmount() {
+        return this.props.event.priceForQty(this.props.fields.qty.value);
+    }
+
     @action.bound
     onPurchase() {
         const { event, purchase, fields } = this.props;
@@ -57,7 +61,7 @@ class Purchase extends React.PureComponent {
         this.getBTToken().then(({ nonce, details: { cardType: card_type, lastTwo: digits } }) => {
             purchase.update(mapValues(fields, 'value'));
             purchase.event_id = event.id;
-            purchase.payments = [{ nonce, card_type, digits }];
+            purchase.payments = [{ nonce, card_type, digits, amount: this.totalAmount }];
             this.isTokenizing = false;
             purchase.save().then(() => {
                 debugger
@@ -150,7 +154,7 @@ class Purchase extends React.PureComponent {
                                     className="total"
 
                                     size="medium"
-                                    value={event.priceForQty(fields.qty.value)} units='$'
+                                    value={this.totalAmount} units='$'
                                     label="total"
                                 />
                             </Box>

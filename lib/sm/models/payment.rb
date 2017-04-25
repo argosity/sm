@@ -9,7 +9,7 @@ module SM
 
         attr_accessor :nonce
 
-        validates :processor_transaction, :card_type, :digits, presence: true
+        validates :amount, :card_type, :digits, presence: true
     end
 
 end

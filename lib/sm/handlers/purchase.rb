@@ -24,11 +24,15 @@ module SM
                     data.slice('name', 'phone', 'email', 'qty', 'event_id')
                 )
                 SM::Purchase.transaction do
+                    data['payments'].each do |payment_data|
+                        purchase.payments.build(payment_data)
+                    end
                     if purchase.valid?
-                        apply_payments(purchase)
+                        purchase.payments.each{ |payment| process_charge(purchase, payment) }
                         purchase.save
                     end
                 end
+
                 begin # we've charged the card at this point and we must show the results page
                     email_receipt(purchase) if purchase.errors.none?
                 rescue => e
@@ -41,36 +45,29 @@ module SM
             private
 
             def apply_payments(purchase)
-                data['payments'].each do |payment_data|
-                    payment_data['processor_transaction'] = process_charge(purchase, payment_data)
-                    purchase.payments.build(payment_data)
-                end
             end
 
-            def process_charge(purchase, payment_data)
-                payment = BraintreeConfig.sale(
-                    amount: purchase.event.price,
-                    payment_method_nonce: payment_data['nonce'],
+            def process_charge(purchase, payment)
+                sale = BraintreeConfig.sale(
+                    amount: payment.amount,
+                    payment_method_nonce: payment.nonce,
                     options: { submit_for_settlement: true }
                 )
-                Lanes.logger.warn "Processed CC transaction #{payment.transaction.id} for nonce #{payment_data['nonce']}, result: #{payment.success? ? 'success' : payment.message}"
-                if payment.success?
-                    return payment.transaction.id
+                Lanes.logger.warn "Processed CC transaction #{sale.transaction.id} for nonce #{payment['nonce']}, result: #{sale.success? ? 'success' : sale.message}"
+                if sale.success?
+                    payment.processor_transaction = sale.transaction.id
                 else
-                    purchase.errors.add(:payment, payment.message)
+                    purchase.errors.add(:payment, sale.message)
                     raise ActiveRecord::Rollback
                 end
             end
 
             def email_receipt(purchase)
                 mail = Lanes::Mailer.create
-
-                mail.body = Template::Purchase.new(purchase).render
-
+                mail.content_type = 'text/html; charset=UTF-8'
+                mail.body = ::SM::Templates::Purchase.new(purchase).render
                 mail.to = purchase.email
                 mail.subject = "Your tickets for #{purchase.event.title}"
-                mail.content_type = 'text/html; charset=UTF-8'
-                mail.body = email_body
                 mail.deliver
             end
 

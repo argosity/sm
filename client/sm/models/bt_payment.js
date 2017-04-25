@@ -7,4 +7,5 @@ export default class BTPayment extends BaseModel {
     @field nonce;
     @field card_type;
     @field digits;
+    @field amount;
 }
