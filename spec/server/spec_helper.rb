@@ -9,20 +9,7 @@ TEST_TENANT = SM::Tenant.find_or_create_by(slug: 'test', name: 'testing tenant',
 MultiTenant.with(TEST_TENANT) do
     require 'lanes/spec_helper'
 end
-require 'database_cleaner'
-require "shrine/storage/memory"
-require 'vcr'
 
-VCR.configure do |config|
-  config.cassette_library_dir = "fixtures/vcr_cassettes"
-  config.hook_into :webmock
-end
-
-
-Shrine.storages = {
-  cache: Shrine::Storage::Memory.new,
-  store: Shrine::Storage::Memory.new,
-}
 
 module PaymentHelpers
     def with_payment_proccessor
