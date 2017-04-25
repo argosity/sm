@@ -1,2 +1,2 @@
-require_relative 'lib/sh'
+require_relative 'lib/sm'
 require 'lanes/rake_tasks'
