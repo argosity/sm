@@ -1,0 +1,44 @@
+<html>
+  <body>
+    <table>
+      <tr>
+        <td>
+          <p style="font-size: 120%;">
+            Hello {{ purchase.name }},
+          </p>
+          <img src="{{ event_photo }}">
+          <p>
+            Thanks purchasing tickets to {{ event.title }}.
+          </p>
+          <p>
+            Your receipt ID is {{ purchase.random_identifier }}.
+            Please mention that number in correspondence with us so we can help you faster.
+          </p>
+          <p>
+            <a href="{{ purchase.pdf_download_url }}">Download Tickets</a>
+          </p>
+          <p style="margin-top: 20px;">
+            {{ company_name }}
+          </p>
+        </td>
+        <td>
+          {% if presenter %}
+          <h3>
+            {% if presenter.logo %}
+            <img src="{{ presenter.logo.url }}" width="{{ presenter.logo.width }}" height="{{ presenter.logo.height }}">
+            {% else %}
+            {{ presenter.name }}
+            {% endif %}
+            Presents:
+          </h3>
+          <br>
+          {% endif %}
+          <h1>{{event.title}}</h1>
+          {% if event.image %}
+          <img src="{{ event.image.url }}" width="{{ event.image.width }}" height="{{ event.image.height }}">
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

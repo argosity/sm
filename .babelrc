@@ -5,10 +5,11 @@
         "transform-class-properties",
         "transform-function-bind",
         "transform-react-jsx",
-        "transform-runtime"
+        "transform-runtime",
+        "lodash"
     ],
     "presets": [
-        "es2015",
+        ["es2015", {"modules": false}],
         "react",
         "stage-1"
     ],

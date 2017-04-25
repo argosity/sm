@@ -1,10 +1,10 @@
 require_relative 'spec_helper'
 
-describe sh::Venue do
+describe SM::Venue do
 
     it "can be instantiated" do
-        model = sh::Venue.new
-        expect( model ).to be_an(sh::Venue)
+        model = SM::Venue.new
+        expect( model ).to be_an(SM::Venue)
     end
 
 end

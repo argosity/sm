@@ -1,4 +1,4 @@
-import Venue from 'sh/models/venue';
+import Venue from 'sm/models/venue';
 
 describe('Model Venue', () => {
     it('can be instantiated', () => {

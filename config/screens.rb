@@ -8,14 +8,23 @@ Lanes::Screen.define_group 'events' do | group |
     group.icon        = "heart"
 end
 
-Lanes::Screen.for_extension 'sh' do | screens |
-    screens.define "events" do | screen |
-        screen.title       = "Events"
+Lanes::Screen.for_extension 'sm' do | screens |
+    screens.define "presenters" do | screen |
+        screen.title       = "Presenters"
         screen.description = ""
         screen.icon        = ""
         screen.group_id    = "events"
-        screen.model_class = ""
-        screen.view_class  = "Events"
-        screen.asset       = "events"
+    end
+    screens.define "venues" do | screen |
+        screen.title       = "Venues"
+        screen.description = ""
+        screen.icon        = ""
+        screen.group_id    = "events"
+    end
+    screens.define "events" do | screen |
+        screen.title       = "Listing"
+        screen.description = ""
+        screen.icon        = ""
+        screen.group_id    = "events"
     end
 end

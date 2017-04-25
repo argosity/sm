@@ -4,23 +4,40 @@ const path = require('path');
 
 const config = {
     entry: {
-        lanes: [
+        app: [
             'react-hot-loader/patch',
-            process.env.ENTRY,
+            '<%= "#{Lanes::Extensions.controlling.identifier}/index.js" %>',
+        ],
+        events: [
+            'react-hot-loader/patch',
+            'sm/external/events.js',
+        ],
+        homepage: [
+            'sm/homepage/index.js',
         ],
     },
     output: {
-        path: __dirname,
-        publicPath: '/',
-        filename: `${process.env.EXTENSION_ID}/.js`,
+        path: '<%= directory.join('..','public', 'assets') %>',
+        publicPath: 'http://test.lanes.dev:8889/',
+        filename: '[name].js',
     },
     resolve: {
-        modules: process.env.LANES_MODULES.split(':'),
+        modules: ["<%= module_paths.join('","') %>"],
         extensions: ['.js', '.jsx'],
     },
     module: {
         rules: [
-            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+            {
+                test: /\.css$/,
+                use: [ 'style-loader',  'css-loader' ]
+            },
+            {
+                test: /\.(jpg|png|svg)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 25000,
+                },
+            },
             {
                 loader: 'babel-loader',
                 test: /\.jsx?$/,
@@ -28,6 +45,7 @@ const config = {
                 options: {
                     plugins: [
                         'react-hot-loader/babel',
+                        'babel-plugin-lodash',
                         'babel-plugin-transform-decorators-legacy',
                         'babel-plugin-transform-class-properties',
                         'babel-plugin-transform-function-bind',
@@ -45,6 +63,7 @@ const config = {
                 use: [
                     'style-loader',
                     'css-loader',
+                    'resolve-url-loader',
                     {
                         loader: 'sass-loader',
                         options: {
@@ -57,16 +76,26 @@ const config = {
     },
     devtool: 'source-map',
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor', minChunks: Infinity, filename: '[name].[hash].js',
+        new HtmlWebpackPlugin({
+            filename: 'app.html',
+            template: '<%= directory.join('app.html') %>',
+            chunks: ['app'],
         }),
         new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: `${process.env.GENERATED_CONFIG_DIR}/root-view.tmpl.html`,
+            filename: 'homepage.html',
+            template: '<%= directory.join('homepage.html') %>',
+            chunks: ['homepage'],
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
         }),
+<% if Lanes.env.production? %>
+        new webpack.optimize.UglifyJsPlugin(), //minify everything
+        new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
+        new webpack.optimize.OccurrenceOrderPlugin(), // use smallest id for most used chuncks
+<% else %>
+        new webpack.NamedModulesPlugin(),
+<% end %>
     ],
     node: {
         fs: 'empty',
@@ -75,9 +104,12 @@ const config = {
         hot: true,
         inline: true,
         port: 8889,
-        historyApiFallback: true,
+        contentBase: './public',
+        historyApiFallback: {
+            index: '/app.html'
+        },
         proxy: [{
-            context: '/api',
+            context: [ '/api', '/signup' ],
             target: 'http://localhost:9292',
         }],
         stats: {

@@ -1,0 +1,7 @@
+lanes:
+  smtp:
+    server: 'test.localhost'
+    login: 'test'
+    password: 'testing'
+    from_name: 'Tester McTesty'
+    from_email: 'tester@test.com'

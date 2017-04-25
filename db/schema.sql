@@ -2,11 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.4
--- Dumped by pg_dump version 9.5.4
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -25,20 +26,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
--- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
-
-
---
--- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
 
 
 --
@@ -110,7 +97,8 @@ CREATE TABLE assets (
     owner_type character varying NOT NULL,
     owner_id integer NOT NULL,
     "order" integer,
-    file_data jsonb DEFAULT '{}'::jsonb NOT NULL
+    file_data jsonb DEFAULT '{}'::jsonb NOT NULL,
+    tenant_id integer NOT NULL
 );
 
 
@@ -139,19 +127,56 @@ ALTER SEQUENCE assets_id_seq OWNED BY assets.id;
 
 CREATE TABLE events (
     id integer NOT NULL,
-    code character varying NOT NULL,
+    tenant_id integer NOT NULL,
+    slug character varying NOT NULL,
     title text NOT NULL,
+    page_html text,
+    page_src text,
     sub_title text,
-    info text,
-    venue text,
-    email_from text,
-    email_signature text,
-    post_purchase_message text,
-    starts_at timestamp without time zone,
-    max_attendance integer,
+    description text,
+    occurs_at timestamp without time zone NOT NULL,
+    visible_after timestamp without time zone NOT NULL,
+    visible_until timestamp without time zone NOT NULL,
+    onsale_after timestamp without time zone NOT NULL,
+    onsale_until timestamp without time zone NOT NULL,
+    price numeric(15,2) NOT NULL,
+    capacity integer NOT NULL,
+    presenter_id integer,
+    venue_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
+
+
+--
+-- Name: venues; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE venues (
+    id integer NOT NULL,
+    tenant_id integer NOT NULL,
+    code character varying NOT NULL,
+    name text NOT NULL,
+    address text,
+    phone_number text,
+    capacity integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: event_details; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW event_details AS
+ SELECT ev.id AS event_id,
+    json_build_object('id', event_asset.id, 'file_data', event_asset.file_data) AS image_details,
+    json_build_object('id', venues.id, 'name', venues.name, 'address', venues.address, 'phone_number', venues.phone_number, 'logo', venue_asset.file_data) AS venue_details
+   FROM (((events ev
+     LEFT JOIN venues ON ((venues.id = ev.venue_id)))
+     LEFT JOIN assets event_asset ON ((((event_asset.owner_type)::text = 'Sh::Event'::text) AND (event_asset.owner_id = ev.id))))
+     LEFT JOIN assets venue_asset ON ((((venue_asset.owner_type)::text = 'Sh::Venue'::text) AND (venue_asset.owner_id = ev.venue_id))));
 
 
 --
@@ -174,27 +199,24 @@ ALTER SEQUENCE events_id_seq OWNED BY events.id;
 
 
 --
--- Name: lanes_users; Type: TABLE; Schema: public; Owner: -
+-- Name: payments; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE lanes_users (
+CREATE TABLE payments (
     id integer NOT NULL,
-    login character varying NOT NULL,
-    name character varying NOT NULL,
-    email character varying NOT NULL,
-    password_digest character varying NOT NULL,
-    role_names character varying[] DEFAULT '{}'::character varying[] NOT NULL,
-    options jsonb DEFAULT '{}'::jsonb NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    tenant_id integer NOT NULL,
+    purchase_id integer NOT NULL,
+    card_type text NOT NULL,
+    digits text NOT NULL,
+    processor_transaction text NOT NULL
 );
 
 
 --
--- Name: lanes_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: payments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE lanes_users_id_seq
+CREATE SEQUENCE payments_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -203,10 +225,80 @@ CREATE SEQUENCE lanes_users_id_seq
 
 
 --
--- Name: lanes_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: payments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE lanes_users_id_seq OWNED BY lanes_users.id;
+ALTER SEQUENCE payments_id_seq OWNED BY payments.id;
+
+
+--
+-- Name: presenters; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE presenters (
+    id integer NOT NULL,
+    tenant_id integer NOT NULL,
+    code character varying NOT NULL,
+    name character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: presenters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE presenters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: presenters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE presenters_id_seq OWNED BY presenters.id;
+
+
+--
+-- Name: purchases; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE purchases (
+    id integer NOT NULL,
+    tenant_id integer NOT NULL,
+    event_id integer NOT NULL,
+    qty integer NOT NULL,
+    random_identifier text NOT NULL,
+    name text NOT NULL,
+    phone text,
+    email text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: purchases_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE purchases_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: purchases_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE purchases_id_seq OWNED BY purchases.id;
 
 
 --
@@ -224,7 +316,9 @@ CREATE TABLE schema_migrations (
 
 CREATE TABLE system_settings (
     id integer NOT NULL,
-    settings jsonb DEFAULT '{}'::jsonb NOT NULL
+    configuration_id integer,
+    settings jsonb DEFAULT '{}'::jsonb NOT NULL,
+    tenant_id integer NOT NULL
 );
 
 
@@ -248,35 +342,163 @@ ALTER SEQUENCE system_settings_id_seq OWNED BY system_settings.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: tenants; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE tenants (
+    id integer NOT NULL,
+    slug character varying NOT NULL,
+    email character varying NOT NULL,
+    random_identifier text NOT NULL,
+    name text NOT NULL,
+    address text,
+    phone_number text,
+    subscription smallint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: tenants_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE tenants_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tenants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE tenants_id_seq OWNED BY tenants.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    login character varying NOT NULL,
+    name character varying NOT NULL,
+    email character varying NOT NULL,
+    password_digest character varying NOT NULL,
+    role_names character varying[] DEFAULT '{}'::character varying[] NOT NULL,
+    options jsonb DEFAULT '{}'::jsonb NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    tenant_id integer NOT NULL
+);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: venues_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE venues_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: venues_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE venues_id_seq OWNED BY venues.id;
+
+
+--
+-- Name: assets id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY assets ALTER COLUMN id SET DEFAULT nextval('assets_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: events id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY events ALTER COLUMN id SET DEFAULT nextval('events_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: payments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY lanes_users ALTER COLUMN id SET DEFAULT nextval('lanes_users_id_seq'::regclass);
+ALTER TABLE ONLY payments ALTER COLUMN id SET DEFAULT nextval('payments_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: presenters id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY presenters ALTER COLUMN id SET DEFAULT nextval('presenters_id_seq'::regclass);
+
+
+--
+-- Name: purchases id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY purchases ALTER COLUMN id SET DEFAULT nextval('purchases_id_seq'::regclass);
+
+
+--
+-- Name: system_settings id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY system_settings ALTER COLUMN id SET DEFAULT nextval('system_settings_id_seq'::regclass);
 
 
 --
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: tenants id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tenants ALTER COLUMN id SET DEFAULT nextval('tenants_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: venues id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY venues ALTER COLUMN id SET DEFAULT nextval('venues_id_seq'::regclass);
+
+
+--
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ar_internal_metadata
@@ -284,7 +506,7 @@ ALTER TABLE ONLY ar_internal_metadata
 
 
 --
--- Name: assets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: assets assets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY assets
@@ -292,23 +514,39 @@ ALTER TABLE ONLY assets
 
 
 --
--- Name: events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: events events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY events
-    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id, tenant_id);
 
 
 --
--- Name: lanes_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: payments payments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY lanes_users
-    ADD CONSTRAINT lanes_users_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY payments
+    ADD CONSTRAINT payments_pkey PRIMARY KEY (id, tenant_id);
 
 
 --
--- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: presenters presenters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY presenters
+    ADD CONSTRAINT presenters_pkey PRIMARY KEY (id, tenant_id);
+
+
+--
+-- Name: purchases purchases_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY purchases
+    ADD CONSTRAINT purchases_pkey PRIMARY KEY (id, tenant_id);
+
+
+--
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY schema_migrations
@@ -316,11 +554,35 @@ ALTER TABLE ONLY schema_migrations
 
 
 --
--- Name: system_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: system_settings system_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY system_settings
     ADD CONSTRAINT system_settings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tenants tenants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tenants
+    ADD CONSTRAINT tenants_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: venues venues_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY venues
+    ADD CONSTRAINT venues_pkey PRIMARY KEY (id, tenant_id);
 
 
 --
@@ -331,10 +593,38 @@ CREATE INDEX index_assets_on_owner_id_and_owner_type ON assets USING btree (owne
 
 
 --
--- Name: index_lanes_users_on_role_names; Type: INDEX; Schema: public; Owner: -
+-- Name: index_events_on_presenter_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_lanes_users_on_role_names ON lanes_users USING gin (role_names);
+CREATE INDEX index_events_on_presenter_id ON events USING btree (presenter_id);
+
+
+--
+-- Name: index_events_on_venue_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_events_on_venue_id ON events USING btree (venue_id);
+
+
+--
+-- Name: index_system_settings_on_id_and_tenant_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_system_settings_on_id_and_tenant_id ON system_settings USING btree (id, tenant_id);
+
+
+--
+-- Name: index_users_on_login_and_tenant_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_login_and_tenant_id ON users USING btree (login, tenant_id);
+
+
+--
+-- Name: index_users_on_role_names; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_role_names ON users USING gin (role_names);
 
 
 --
@@ -347,6 +637,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('1'),
 ('2'),
 ('20140615031600'),
-('20170305000314');
+('20170305000101'),
+('20170305000102'),
+('20170305000201'),
+('20170305000202'),
+('20170305000314'),
+('20170319000314'),
+('20170406005123');
 
 

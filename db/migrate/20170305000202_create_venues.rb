@@ -7,6 +7,7 @@ class CreateVenues < ActiveRecord::Migration[5.0]
 
             t.text :name, null: false
             t.text :address, :phone_number
+            t.integer :capacity, null: false
 
             t.timestamps null: false
         end

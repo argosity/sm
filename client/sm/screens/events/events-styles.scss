@@ -1,0 +1,32 @@
+.event {
+    flex: 1;
+    padding: 0.5em;
+    min-height: 120px;
+    margin: 0.5em 0;
+    border: 1px solid lightgrey;
+
+    .medium img {
+        max-height: 200px;
+        max-width: 100%;
+    }
+    .thumbnail img {
+        max-height: 80px;
+        max-width: 80px;
+    }
+    .title {
+        display: flex;
+        align-items: flex-start;
+        flex: 1;
+        h2, h3 {
+            margin-bottom: inherit;
+        }
+        .center {
+            flex: 1;
+        }
+    }
+    .info {
+
+    }
+
+//    .occurs { float: right; }
+}
