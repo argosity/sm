@@ -13,7 +13,12 @@ group :test, :development do
     gem 'vcr', '~> 3.0'
     gem 'webmock', '~> 3.0'
     gem 'database_cleaner'
+    gem 'capistrano', '~> 3.8'
+    gem 'capistrano-bundler', '~> 1.2'
+    gem 'capistrano-rails', '~> 1.2'
+    gem 'capistrano-passenger', '~> 0.2'
+
 end
+gem 'rollbar'
 gem 'rake'
-gem 'puma'
 gem "braintree", "~> 2.73"
