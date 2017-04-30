@@ -21,3 +21,4 @@ node_modules
 tmp
 db/schema*
 yarn-error.log
+public/assets
