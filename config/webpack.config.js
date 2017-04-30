@@ -18,7 +18,7 @@ const config = {
     },
     output: {
         path: '<%= directory.join('..','public', 'assets') %>',
-        publicPath: '/assets',
+        publicPath: '/assets/',
         filename: '[name].js',
     },
     resolve: {

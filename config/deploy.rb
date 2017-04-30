@@ -4,7 +4,7 @@ set :deploy_to, '/srv/www/showmaker.com'
 set :passenger_restart_with_touch, true
 set :conditionally_migrate, true
 set :linked_files, %w(config/database.yml)
-set :linked_dirs ,  %w(public/files log)
+set :linked_dirs, %w(public/files log node_modules)
 set :passenger_restart_with_touch, false
 
 set :rollbar_env, Proc.new { fetch :stage }
@@ -25,5 +25,12 @@ task :yarn do
     end
 end
 
+task :assets do
+    on roles(:db) do
+        execute "cd #{release_path}; LANES_ENV=production bundle exec rake assets:precompile"
+    end
+end
+
 after 'bundler:install', :yarn
-after :yarn, :migrate
+after :yarn, :assets
+after :assets, :migrate

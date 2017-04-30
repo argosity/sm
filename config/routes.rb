@@ -29,7 +29,7 @@ class Lanes::API::Root
 
     APP = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "app.html").expand_path
     HOMEPAGE = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "homepage.html").expand_path
-
+    Lanes.logger.warn "Setting route, env = #{Lanes.env.to_s}"
     if Lanes.env.production?
         get '/*' do
             send_file MultiTenant.current_tenant ? APP : HOMEPAGE
