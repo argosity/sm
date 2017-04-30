@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/lanes
-  revision: 1c229c4217efaef43b20a16980f22a59d3ce7c0b
+  revision: f9e5021d0d11485f3a40829b53ae4dc09c960e2c
   branch: master
   specs:
     lanes (0.8.3)
@@ -206,6 +206,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     public_suffix (2.0.5)
+    puma (3.8.2)
     rack (2.0.1)
     rack-cors (0.4.1)
     rack-protection (2.0.0.rc2)
@@ -337,6 +338,7 @@ DEPENDENCIES
   faker
   friendly_id (~> 5.1.0)
   lanes!
+  puma
   rake
   rollbar
   shrine-memory

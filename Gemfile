@@ -20,5 +20,6 @@ group :test, :development do
 
 end
 gem 'rollbar'
+gem 'puma'
 gem 'rake'
 gem "braintree", "~> 2.73"

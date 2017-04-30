@@ -18,7 +18,7 @@ const config = {
     },
     output: {
         path: '<%= directory.join('..','public', 'assets') %>',
-        publicPath: 'http://test.lanes.dev:8889/',
+        publicPath: '/assets',
         filename: '[name].js',
     },
     resolve: {
@@ -106,7 +106,7 @@ const config = {
         port: 8889,
         contentBase: './public',
         historyApiFallback: {
-            index: '/app.html'
+            index: '/assets/app.html'
         },
         proxy: [{
             context: [ '/api', '/signup' ],

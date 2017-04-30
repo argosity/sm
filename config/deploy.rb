@@ -10,6 +10,7 @@ set :passenger_restart_with_touch, false
 set :rollbar_env, Proc.new { fetch :stage }
 set :rollbar_role, Proc.new { :app }
 
+set :default_env, 'LANES_ENV' => 'production'
 
 task :migrate do
     on roles(:db) do
