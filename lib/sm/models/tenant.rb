@@ -2,7 +2,9 @@ module SM
     # Tenant
     class Tenant < Model
         validates :slug, uniqueness: true
-        validates :name, :email, presence: true
+        validates :name, :presence => { message: 'for company' }
+        validates :email, :presence => true
+
         has_random_identifier
         has_many :users, class_name: 'Lanes::User', autosave: true
 
@@ -40,14 +42,15 @@ module SM
             t = Tenant.new(params.slice(:email))
             t.name = params['company']
             t.users.build(params.slice(:name, :email, :login, :password))
-            if t.valid?
-                mail = Lanes::Mailer.create(
-                    to: t.email, subject: 'Thanks for signing up for ShowMaker'
-                )
-                mail.body = SM::Templates::Signup.new(t).render
-                mail.deliver
+            if t.save
+                MultiTenant.with(t) do
+                    mail = Lanes::Mailer.create(
+                        to: t.email, subject: 'Thanks for signing up for ShowMaker'
+                    )
+                    mail.body = SM::Templates::Signup.new(t).render
+                    mail.deliver
+                end
             end
-            t.save
             t
         end
 
