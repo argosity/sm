@@ -142,22 +142,26 @@ a.pure-button-primary {
     overflow: hidden;
     /* The following styles are required for the "scroll-over" effect */
     width: 100%;
-    height: 88%;
+    height: 70%;
     top: 0;
     left: 0;
     position: fixed !important;
-    background: url('./crowd.svg') bottom no-repeat;
     background-size: cover;
-    background-color: #1f8dd6;
-
+    background-color: #5e6f9c;
+//    background: url('./crowd.svg') bottom no-repeat;
+    background: url('./crowd.svg'), linear-gradient(to bottom, #b3bfd0 1%, #5e6f9c 100%);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: 100%;
 
     .splash {
         /* absolute center .splash within .splash-container */
         width: 80%;
+        max-width: 400px;
         height: 50%;
         margin: auto;
-        position: absolute;
-        top: 100px; left: 0; bottom: 0; right: 0;
+        //position: absolute;
+        margin-top: 150px;
         text-align: center;
         text-transform: uppercase;
     }
@@ -189,7 +193,7 @@ a.pure-button-primary {
 .content-wrapper {
     /* These styles are required for the "scroll-over" effect */
     position: absolute;
-    top: 87%;
+    top: 70%;
     width: 100%;
     min-height: 12%;
     z-index: 2;
@@ -207,7 +211,6 @@ a.pure-button-primary {
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin: 2em 0 1em;
 }
 
 /* This is a modifier class used when the content-head is inside a ribbon */
@@ -268,12 +271,17 @@ a.pure-button-primary {
     .splash {
         width: 50%;
         height: 50%;
-    }
 
-    .splash-head {
-        font-size: 250%;
-    }
+        .splash-head {
 
+        }
+
+        .splash-subhead {
+            font-weight: bold;
+            background-color: rgba(102, 51, 153, 0.31);
+            border-radius: 8px;
+        }
+    }
 
     /* We remove the border-separator assigned to .l-box-lrg */
     .l-box-lrg {
