@@ -59,7 +59,6 @@ module Lanes
             def seed_admin_account
                 tenant = MultiTenant.current_tenant || SM::Tenant.system
                 MultiTenant.with(tenant) do
-                    p tenant
                     original_seed_admin_account
                 end
             end
