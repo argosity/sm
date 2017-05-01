@@ -8,7 +8,7 @@ const config = {
             'react-hot-loader/patch',
             '<%= "#{Lanes::Extensions.controlling.identifier}/index.js" %>',
         ],
-        events: [
+        'embedded-events': [
             'react-hot-loader/patch',
             'sm/external/events.js',
         ],
@@ -18,7 +18,7 @@ const config = {
     },
     output: {
         path: '<%= directory.join('..','public', 'assets') %>',
-        publicPath: '/assets/',
+        publicPath: '<%= Lanes.env.production? ? '/assets/' : 'http://localhost:8889/assets/' %>',
         filename: '[name].js',
     },
     resolve: {
@@ -109,9 +109,10 @@ const config = {
             index: '/assets/app.html'
         },
         proxy: [{
-            context: [ '/api', '/signup' ],
+            context: [ '/api', '/signup', '/embed' ],
             target: 'http://localhost:9292',
         }],
+        disableHostCheck: true,
         stats: {
             colors: true,
             profile: true,

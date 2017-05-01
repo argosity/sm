@@ -3,13 +3,13 @@ import Bootstrap from 'lanes/lib/bootstrap';
 import './loading.scss';
 
 const bootstrap = new Bootstrap({
-    srcTag: /\/events\.js/,
+    srcTag: /\/assets\/embedded-events\.js/,
 });
 
 bootstrap.onReady((host, data) => {
-    let root = document.getElementById(data.renderToId);
+    let root = document.querySelector(data.renderTo);
     if (!root) {
-        console.warn(`Didn't find element for selector ${bootstrap.tagData.renderToId}, creating at end of document`); // eslint-disable-line no-console
+        console.warn(`Didn't find element for selector ${bootstrap.tagData.renderTo}, creating at end of document`); // eslint-disable-line no-console
         root = document.createElement('div');
         document.body.appendChild(root);
     }
