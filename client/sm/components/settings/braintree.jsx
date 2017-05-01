@@ -3,16 +3,16 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { mapValues, pick, keys, isEmpty } from 'lodash';
 import { Row } from 'react-flexbox-grid';
-import { addFormFieldValidations, stringValue, setFieldValues } from 'lanes/lib/forms';
+import { addFormFieldValidations, stringValue } from 'lanes/lib/forms';
 import Field from 'lanes/components/form-field';
 import Heading from 'grommet/components/Heading';
-import BraintreeConfig from '../models/brain-tree-config';
+import BraintreeConfigModel from '../../models/brain-tree-config';
 import User from 'lanes/user';
 
 const KEY = 'braintree';
 
 @observer
-class BtConfig extends React.PureComponent {
+class BraintreeConfig extends React.PureComponent {
 
     static formFields = {
         merchant_id: stringValue,
@@ -20,14 +20,14 @@ class BtConfig extends React.PureComponent {
         private_key: stringValue,
     }
 
-    config = new BraintreeConfig()
+    config = new BraintreeConfigModel()
 
     onSave() {
         this.props.settings[KEY] = mapValues(this.props.fields, 'value');
     }
 
     componentWillMount() {
-        this.props.registerForSave(this);
+        this.props.registerForSave('bt', this);
         this.setDefaults(this.props);
     }
 
@@ -60,4 +60,4 @@ class BtConfig extends React.PureComponent {
 }
 
 
-export default addFormFieldValidations(BtConfig);
+export default addFormFieldValidations(BraintreeConfig);

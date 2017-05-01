@@ -2,17 +2,27 @@ import React from 'react';
 
 import { observer } from 'mobx-react';
 
+import { invoke, extend } from 'lodash';
 import { Row, Col } from 'react-flexbox-grid';
 
-import BtConfig from './bt-config';
+import Braintree from './settings/braintree';
+import TenantConfig from './settings/tenant';
+
+import { autobind } from 'core-decorators';
 
 @observer
 export default class SMSystemSettings extends React.PureComponent {
 
+    childrenRefs = new Map();
+
     onSave() {
-        if (this.btConfig) {
-            this.btConfig.onSave();
-        }
+        this.childrenRefs.forEach(panel => invoke(panel, 'onSave'));
+    }
+
+
+    @autobind
+    onChildMount(id, child) {
+        this.childrenRefs.set(id, child);
     }
 
     componentDidMount() {
@@ -20,12 +30,14 @@ export default class SMSystemSettings extends React.PureComponent {
     }
 
     render() {
+        const childProps = extend({}, this.props, {
+            registerForSave: this.onChildMount,
+        });
+
         return (
             <div>
-                <BtConfig
-                    {...this.props}
-                    registerForSave={panel => (this.btConfig = panel)}
-                />
+                <TenantConfig {...childProps} />
+                <Braintree {...childProps} />
             </div>
         );
     }
