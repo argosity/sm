@@ -54,7 +54,7 @@ class Venues extends React.PureComponent {
     @action.bound
     onRecordFound(venue) {
         this.venue = venue;
-        setFieldValues(this.props.fields, venue);
+        setFieldValues(this.props, venue);
     }
 
     @action.bound
@@ -74,7 +74,7 @@ class Venues extends React.PureComponent {
     onSaved(venue) {
         this.errorMessage = venue.errors ? venue.lastServerMessage : '';
         if (!venue.errors) {
-            setFieldValues(this.props.fields, venue.serialize());
+            setFieldValues(this.props, venue);
         }
     }
 

@@ -50,7 +50,7 @@ class Presenters extends React.PureComponent {
     @action.bound
     onRecordFound(presenter) {
         this.presenter = presenter;
-        setFieldValues(this.props.fields, presenter);
+        setFieldValues(this.props, presenter);
     }
 
     @action.bound
@@ -69,7 +69,7 @@ class Presenters extends React.PureComponent {
     @action.bound
     onSaved(presenter) {
         if (!presenter.errors) {
-            setFieldValues(this.props.fields, presenter.serialize());
+            setFieldValues(this.props, presenter);
         }
     }
 
