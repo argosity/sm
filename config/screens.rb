@@ -27,4 +27,10 @@ Lanes::Screen.for_extension 'sm' do | screens |
         screen.icon        = ""
         screen.group_id    = "events"
     end
+    screens.define "embeds" do | screen |
+        screen.title       = "Embedding"
+        screen.description = ""
+        screen.icon        = ""
+        screen.group_id    = "events"
+    end
 end

@@ -1,10 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.2
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -119,6 +112,40 @@ CREATE SEQUENCE assets_id_seq
 --
 
 ALTER SEQUENCE assets_id_seq OWNED BY assets.id;
+
+
+--
+-- Name: embeds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE embeds (
+    id integer NOT NULL,
+    tenant_id integer NOT NULL,
+    name text NOT NULL,
+    random_identifier text NOT NULL,
+    tenants text[] DEFAULT '{}'::text[],
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: embeds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE embeds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: embeds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE embeds_id_seq OWNED BY embeds.id;
 
 
 --
@@ -443,6 +470,13 @@ ALTER TABLE ONLY assets ALTER COLUMN id SET DEFAULT nextval('assets_id_seq'::reg
 
 
 --
+-- Name: embeds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY embeds ALTER COLUMN id SET DEFAULT nextval('embeds_id_seq'::regclass);
+
+
+--
 -- Name: events id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -512,6 +546,14 @@ ALTER TABLE ONLY ar_internal_metadata
 
 ALTER TABLE ONLY assets
     ADD CONSTRAINT assets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: embeds embeds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY embeds
+    ADD CONSTRAINT embeds_pkey PRIMARY KEY (id, tenant_id);
 
 
 --
@@ -594,6 +636,13 @@ CREATE INDEX index_assets_on_owner_id_and_owner_type ON assets USING btree (owne
 
 
 --
+-- Name: index_embeds_on_random_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_embeds_on_random_identifier ON embeds USING btree (random_identifier);
+
+
+--
 -- Name: index_events_on_presenter_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -644,6 +693,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170305000202'),
 ('20170305000314'),
 ('20170319000314'),
-('20170406005123');
+('20170406005123'),
+('20170501012828');
 
 

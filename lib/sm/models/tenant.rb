@@ -7,11 +7,14 @@ module SM
 
         has_random_identifier
         has_many :users, class_name: 'Lanes::User', autosave: true
+        has_many :embeds, autosave: true
 
         accepts_nested_attributes_for :users
 
         before_validation :auto_assign_slug, on: :create
         validates :users, associated: true, on: :create
+
+        before_validation :setup_default_associations, on: :create
 
         def self.system
             find_by(slug: 'system') ||
@@ -38,6 +41,11 @@ module SM
             slug.downcase! if slug
         end
 
+        # convenience method
+        def self.current
+            MultiTenant.current_tenant
+        end
+
         def self.signup(params)
             t = Tenant.new(params.slice(:email))
             t.name = params['company']
@@ -52,6 +60,10 @@ module SM
                 end
             end
             t
+        end
+
+        def setup_default_associations
+            embeds.build(name: 'My events') if embeds.none?
         end
 
     end

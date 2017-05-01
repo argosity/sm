@@ -1,13 +1,16 @@
 Lanes::API.routes.for_extension 'sm' do
     resources SM::Event
     resources SM::Venue
+    resources SM::Embed
     resources SM::Presenter
 
     resources SM::Event,    path: 'public/events',   controller: SM::Handlers::Events,   cors: '*', public: true
     resources SM::Purchase, path: 'public/purchase', controller: SM::Handlers::Purchase, cors: '*', public: true
 
+    resources SM::Tenant,   controller: SM::Handlers::Tenant
 
 
+# { tenant: SM::Tenant.first.as_json(only: %w{slug name}) }
 #    resources SM::Purchase, path: 'public/purchase', controller: SM::Handlers::Purchase, cors: '*', public: true
 
 end
@@ -25,7 +28,6 @@ class Lanes::API::Root
             end
         end
     end
-
 
     APP = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "app.html").expand_path
     HOMEPAGE = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "homepage.html").expand_path
