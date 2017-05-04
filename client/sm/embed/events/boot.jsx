@@ -1,7 +1,7 @@
 import React from 'react';  // eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';
 import Config from 'lanes/config';
-import EventModel from 'sm/models/event';
+import EmbeddedEvents from 'sm/models/embed/event';
 import { AppContainer } from 'react-hot-loader';
 
 import Listing from './listing';
@@ -29,9 +29,8 @@ export default function boot({ host, data, root }) {
     Config.api_host = host;
     rootElement = root;
     rootElement.classList.remove('loading');
-    eventsListing = EventModel.Collection.create();
-    eventsListing.fetch({
-        url: `${Config.api_path}/sm/public/events`,
-        with: 'with_details',
-    }).then(() => render());
+    EmbeddedEvents.fetch(data.embedId).then((c) => {
+        eventsListing = c;
+        render();
+    });
 }

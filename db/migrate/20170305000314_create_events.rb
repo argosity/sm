@@ -3,7 +3,7 @@ class CreateEvents < ActiveRecord::Migration[5.0]
         create_table :events, partition_key: :tenant_id do |t|
             t.integer :tenant_id, null: false
 
-            t.string :slug, null: false
+            t.string :identifier, null: false
 
             t.text :title, null: false
             t.text :page_html, :page_src,
@@ -22,5 +22,10 @@ class CreateEvents < ActiveRecord::Migration[5.0]
 
             t.timestamps null: false
         end
+
+        add_index :events, :identifier, :unique => true
+
+        add_index :events, [:tenant_id, :visible_after, :visible_until]
+
     end
 end

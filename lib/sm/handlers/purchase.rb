@@ -9,7 +9,7 @@ module SM
                 begin
                     gw = ::Braintree::ClientTokenGateway.new(SM::BraintreeConfig.gateway)
                     std_api_reply(:get, token: gw.generate, success: true)
-                rescue Braintree::AuthenticationError => e
+                rescue Braintree::AuthenticationError, Braintree::ConfigurationError => e
                     Lanes.logger.warn e
                     std_api_reply(:get, {}, {
                                       message: 'Processor authentication failure',

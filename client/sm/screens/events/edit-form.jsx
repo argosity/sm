@@ -1,5 +1,8 @@
 import { action, observable, computed, autorun } from 'mobx';
-import { addFormFieldValidations, nonBlank, stringValue, numberValue, dateValue, anyValue } from 'lanes/lib/forms';
+import {
+    addFormFieldValidations, nonBlank, stringValue, numberValue, dateValue, anyValue,
+    setFieldsFromModel,
+} from 'lanes/lib/forms';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -57,7 +60,7 @@ class EditForm extends React.PureComponent {
     }
 
     componentWillMount() {
-        this.props.setDefaultValues(this.event);
+        setFieldsFromModel(this.props, this.event);
     }
 
     @observable isEditingPage = false;
@@ -149,17 +152,17 @@ class EditForm extends React.PureComponent {
 
                 </Row>
                 <Row>
-                    <Asset model={event} name="image" lg={3} xs={6} />
-                    <Col lg={9} xs={6}>
+                    <Asset model={event} name="image" lg={3} md={6} />
+                    <Col lg={9} md={6}>
                         <Row>
-                            <Field type="date" fields={fields} name="occurs_at" md={3} xs={12} />
+                            <Field type="date" fields={fields} name="occurs_at" lg={4} md={12} />
 
                             <Field
-                                fields={fields} name="venue_id" label="Venue" md={3} xs={12}
+                                fields={fields} name="venue_id" label="Venue" lg={4} md={12}
                                 type="select" collection={this.venues}
                             />
                             <Field
-                                fields={fields} name="presenter_id" label="Presented By" md={3} xs={12}
+                                fields={fields} name="presenter_id" label="Presented By" lg={4} md={12}
                                 type="select" collection={this.presenters}
                             />
                         </Row>

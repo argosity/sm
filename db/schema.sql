@@ -1,3 +1,10 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -122,7 +129,7 @@ CREATE TABLE embeds (
     id integer NOT NULL,
     tenant_id integer NOT NULL,
     name text NOT NULL,
-    random_identifier text NOT NULL,
+    identifier text NOT NULL,
     tenants text[] DEFAULT '{}'::text[],
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -155,7 +162,7 @@ ALTER SEQUENCE embeds_id_seq OWNED BY embeds.id;
 CREATE TABLE events (
     id integer NOT NULL,
     tenant_id integer NOT NULL,
-    slug character varying NOT NULL,
+    identifier character varying NOT NULL,
     title text NOT NULL,
     page_html text,
     page_src text,
@@ -202,8 +209,8 @@ CREATE VIEW event_details AS
     json_build_object('id', venues.id, 'name', venues.name, 'address', venues.address, 'phone_number', venues.phone_number, 'logo', venue_asset.file_data) AS venue_details
    FROM (((events ev
      LEFT JOIN venues ON ((venues.id = ev.venue_id)))
-     LEFT JOIN assets event_asset ON ((((event_asset.owner_type)::text = 'Sh::Event'::text) AND (event_asset.owner_id = ev.id))))
-     LEFT JOIN assets venue_asset ON ((((venue_asset.owner_type)::text = 'Sh::Venue'::text) AND (venue_asset.owner_id = ev.venue_id))));
+     LEFT JOIN assets event_asset ON ((((event_asset.owner_type)::text = 'SM::Event'::text) AND (event_asset.owner_id = ev.id))))
+     LEFT JOIN assets venue_asset ON ((((venue_asset.owner_type)::text = 'SM::Venue'::text) AND (venue_asset.owner_id = ev.venue_id))));
 
 
 --
@@ -293,6 +300,54 @@ ALTER SEQUENCE presenters_id_seq OWNED BY presenters.id;
 
 
 --
+-- Name: tenants; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE tenants (
+    id integer NOT NULL,
+    slug character varying NOT NULL,
+    email character varying NOT NULL,
+    identifier text NOT NULL,
+    name text NOT NULL,
+    address text,
+    phone_number text,
+    subscription smallint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: public_events; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public_events AS
+ SELECT em.identifier AS embed_identifier,
+    tenant.slug AS tenant_slug,
+    ev.identifier AS event_identifier,
+    ev.title,
+    ev.sub_title,
+    ev.description,
+    ev.page_html,
+    ev.occurs_at,
+    ev.onsale_after,
+    ev.onsale_until,
+    ev.price,
+    ev.capacity,
+    json_build_object('file_data', event_asset.file_data) AS image,
+    json_build_object('name', presenter.name, 'logo', presenter_asset.file_data) AS presenter,
+    json_build_object('name', venues.name, 'address', venues.address, 'phone_number', venues.phone_number, 'logo', venue_asset.file_data) AS venue
+   FROM (((((((embeds em
+     JOIN tenants tenant ON (((tenant.slug)::text IN ( SELECT unnest(em.tenants) AS unnest))))
+     JOIN events ev ON (((ev.tenant_id = tenant.id) AND (ev.visible_after <= now()) AND (ev.visible_until >= now()))))
+     LEFT JOIN venues ON ((venues.id = ev.venue_id)))
+     LEFT JOIN presenters presenter ON ((presenter.id = ev.presenter_id)))
+     LEFT JOIN assets event_asset ON ((((event_asset.owner_type)::text = 'SM::Event'::text) AND (event_asset.owner_id = ev.id))))
+     LEFT JOIN assets presenter_asset ON ((((presenter_asset.owner_type)::text = 'SM::Presenter'::text) AND (presenter_asset.owner_id = presenter.id))))
+     LEFT JOIN assets venue_asset ON ((((venue_asset.owner_type)::text = 'SM::Venue'::text) AND (venue_asset.owner_id = ev.venue_id))));
+
+
+--
 -- Name: purchases; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -301,7 +356,7 @@ CREATE TABLE purchases (
     tenant_id integer NOT NULL,
     event_id integer NOT NULL,
     qty integer NOT NULL,
-    random_identifier text NOT NULL,
+    identifier text NOT NULL,
     name text NOT NULL,
     phone text,
     email text,
@@ -367,24 +422,6 @@ CREATE SEQUENCE system_settings_id_seq
 --
 
 ALTER SEQUENCE system_settings_id_seq OWNED BY system_settings.id;
-
-
---
--- Name: tenants; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE tenants (
-    id integer NOT NULL,
-    slug character varying NOT NULL,
-    email character varying NOT NULL,
-    random_identifier text NOT NULL,
-    name text NOT NULL,
-    address text,
-    phone_number text,
-    subscription smallint,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
 
 
 --
@@ -636,10 +673,17 @@ CREATE INDEX index_assets_on_owner_id_and_owner_type ON assets USING btree (owne
 
 
 --
--- Name: index_embeds_on_random_identifier; Type: INDEX; Schema: public; Owner: -
+-- Name: index_embeds_on_identifier; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_embeds_on_random_identifier ON embeds USING btree (random_identifier);
+CREATE UNIQUE INDEX index_embeds_on_identifier ON embeds USING btree (identifier);
+
+
+--
+-- Name: index_events_on_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_events_on_identifier ON events USING btree (identifier);
 
 
 --
@@ -650,6 +694,13 @@ CREATE INDEX index_events_on_presenter_id ON events USING btree (presenter_id);
 
 
 --
+-- Name: index_events_on_tenant_id_and_visible_after_and_visible_until; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_events_on_tenant_id_and_visible_after_and_visible_until ON events USING btree (tenant_id, visible_after, visible_until);
+
+
+--
 -- Name: index_events_on_venue_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -657,10 +708,31 @@ CREATE INDEX index_events_on_venue_id ON events USING btree (venue_id);
 
 
 --
+-- Name: index_purchases_on_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_purchases_on_identifier ON purchases USING btree (identifier);
+
+
+--
 -- Name: index_system_settings_on_id_and_tenant_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_system_settings_on_id_and_tenant_id ON system_settings USING btree (id, tenant_id);
+
+
+--
+-- Name: index_tenants_on_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_tenants_on_identifier ON tenants USING btree (identifier);
+
+
+--
+-- Name: index_tenants_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_tenants_on_slug ON tenants USING btree (slug);
 
 
 --
@@ -694,6 +766,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170305000314'),
 ('20170319000314'),
 ('20170406005123'),
-('20170501012828');
+('20170501012828'),
+('20170502012828');
 
 

@@ -11,8 +11,12 @@ module Lanes::Access
             grant SM::Event
             grant SM::Venue
             grant SM::Presenter
+            self.read << SM::Tenant
         end
 
+        class Administrator < Role
+            grant SM::Tenant
+        end
     end
 
 end

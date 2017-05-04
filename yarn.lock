@@ -3993,6 +3993,10 @@ lanes-framework@^0.7.0:
     whatwg-fetch "^2.0.2"
     when-dom-ready "^1.2.4"
 
+lanes@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/lanes/-/lanes-1.1.0.tgz#9b0de3fb47ffedb8b92ef5cc32e186164b08defc"
+
 lazy-cache@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"

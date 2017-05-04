@@ -59,7 +59,7 @@ class Venues extends React.PureComponent {
 
     @action.bound
     onSave() {
-        persistFieldValues(this.props.fields, this.venue)
+        persistFieldValues(this.props, this.venue)
             .then(venue => venue.save())
             .then(this.onSaved);
     }

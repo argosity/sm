@@ -21,7 +21,6 @@ function Image(props) {
     const fd = get(image, `file_data.${size}`);
     if (!fd) { return null; }
     const { id: url, metadata: { height, width } } = fd;
-    console.log(size, fd)
     return (
         <div className={cn(size, getColumnProps(props).className)}>
             <img

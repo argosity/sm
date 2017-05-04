@@ -23,7 +23,8 @@ class TenantConfig extends React.PureComponent {
     }
 
     onSave() {
-        debugger
+        persistFieldValues(this.props, Tenant.current)
+            .then(() => Tenant.current.save());
     }
 
     componentWillMount() {
@@ -37,7 +38,7 @@ class TenantConfig extends React.PureComponent {
             <div>
                 <Heading tag="h3">Account</Heading>
                 <Row>
-                    <Field md={4} xs={6} name="slug" fields={fields} />
+                    <Field md={4} xs={6} name="slug" label="Identifier" fields={fields} />
                     <Field md={4} xs={6} name="name" fields={fields} />
                 </Row>
             </div>

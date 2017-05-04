@@ -55,7 +55,7 @@ class Presenters extends React.PureComponent {
 
     @action.bound
     onSave() {
-        persistFieldValues(this.props.fields, this.presenter)
+        persistFieldValues(this.props, this.presenter)
             .then(() => this.presenter.save())
             .then(this.onSaved);
     }

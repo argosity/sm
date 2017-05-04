@@ -15,7 +15,7 @@ export default class Event extends BaseModel {
 
     @identifier id;
 
-    @field slug = '';
+    @field identifier = '';
 
     @field title = '';
     @field sub_title = '';

@@ -117,7 +117,7 @@ export default class Listing extends React.PureComponent {
                     onComplete={this.onDisplayEventHide}
                 />
                 {this.purchaseLayer}
-                <h1>{this.props.events.length} f events</h1>
+                <h1>{this.props.events.length} events</h1>
                 {this.props.events.map(event => (
                      <Event
                          key={event.id}

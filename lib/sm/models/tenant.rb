@@ -15,6 +15,7 @@ module SM
         validates :users, associated: true, on: :create
 
         before_validation :setup_default_associations, on: :create
+        after_save :after_tenant_slug_updated, if: :slug_changed?
 
         def self.system
             find_by(slug: 'system') ||
@@ -63,8 +64,11 @@ module SM
         end
 
         def setup_default_associations
-            embeds.build(name: 'My events') if embeds.none?
+            embeds.build(name: 'My events', tenants: [self.slug]) if embeds.none?
         end
 
+        def after_tenant_slug_updated
+            Embed.update_tenant_slugs(slug_was, slug)
+        end
     end
 end

@@ -32,26 +32,6 @@ module Lanes
         end
     end
 
-    class SystemSettings
-        self.instance_eval do
-            CACHE = Hash.new {|h, tenant_id|
-                h[tenant_id] = SystemSettings.find_or_create_by(
-                    configuration_id: Lanes.config.configuration_id
-                )
-            }
-
-            def config
-                CACHE[MultiTenant.current_tenant.id]
-            end
-        end
-
-        SystemSettings.on_change do |settings|
-            Lanes.logger.debug "SystemSettings cache reset for tenant #{settings.tenant_id}"
-            Lanes::SystemSettings::CACHE.delete(settings.tenant_id)
-        end
-    end
-
-
     class User
         class <<self
             alias_method :original_seed_admin_account,:seed_admin_account
@@ -63,6 +43,17 @@ module Lanes
                 end
             end
         end
+    end
+
+    module MultiTenantAuthentication
+        def wrap_model_access(model, req, options = {})
+            fail_request(req) and return unless MultiTenant.current_tenant
+            super
+        end
+    end
+
+    class Lanes::API::AuthenticationProvider
+        prepend MultiTenantAuthentication
     end
 
     class Configuration

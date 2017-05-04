@@ -9,15 +9,15 @@ module SM
         class Events < Lanes::API::ControllerBase
 
             def show
-                perform_retrieval
+                std_api_reply(:retrieve, SM::Embed.json_for(params['id']))
             end
 
             private
 
-            def build_query(query = model.all)
-                query = super
-                query.where("visible_after <= now() and visible_until >= now()")
-            end
+            # def build_query(query = model.all)
+            #     query = super
+            #     query.where("visible_after <= now() and visible_until >= now()")
+            # end
 
             # private
             # def query_scopes

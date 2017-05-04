@@ -1,12 +1,9 @@
-require 'friendly_id'
-
 module SM
 
     class Event < Model
-        extend FriendlyId
-        friendly_id :title, use: :slugged
 
         acts_as_tenant
+        has_random_identifier
 
         belongs_to :venue
         belongs_to :presenter

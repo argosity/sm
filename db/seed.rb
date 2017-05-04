@@ -2,7 +2,12 @@ require 'pathname'
 require 'yaml'
 require_relative '../lib/sm'
 
-tenant = SM::Tenant.system
-MultiTenant.with(tenant) do
+system = SM::Tenant.system
+MultiTenant.with(system) do
+    Lanes::User.seed_admin_account
+end
+
+testing = SM::Tenant.find_or_create_by(slug: 'test', name: 'testing tenant', email: 'test@test.com')
+MultiTenant.with(testing) do
     Lanes::User.seed_admin_account
 end

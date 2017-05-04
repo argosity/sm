@@ -17,9 +17,9 @@ class CreateEventDetails < ActiveRecord::Migration[5.0]
             ) as venue_details
           from events ev
             left join venues on venues.id = ev.venue_id
-            left join assets as event_asset on event_asset.owner_type = 'Sh::Event'
+            left join assets as event_asset on event_asset.owner_type = 'SM::Event'
                  and event_asset.owner_id = ev.id
-            left join assets as venue_asset on venue_asset.owner_type = 'Sh::Venue'
+            left join assets as venue_asset on venue_asset.owner_type = 'SM::Venue'
                  and venue_asset.owner_id = ev.venue_id
         EOS
     end

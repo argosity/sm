@@ -9,10 +9,6 @@ Lanes::API.routes.for_extension 'sm' do
 
     resources SM::Tenant,   controller: SM::Handlers::Tenant
 
-
-# { tenant: SM::Tenant.first.as_json(only: %w{slug name}) }
-#    resources SM::Purchase, path: 'public/purchase', controller: SM::Handlers::Purchase, cors: '*', public: true
-
 end
 
 
@@ -29,14 +25,14 @@ class Lanes::API::Root
         end
     end
 
-    APP = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "app.html").expand_path
-    HOMEPAGE = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "homepage.html").expand_path
-    Lanes.logger.warn "Setting route, env = #{Lanes.env.to_s}"
-    if Lanes.env.production?
-        get '/*' do
-            send_file MultiTenant.current_tenant ? APP : HOMEPAGE
-        end
-    end
+    # APP = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "app.html").expand_path
+    # HOMEPAGE = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "homepage.html").expand_path
+    # Lanes.logger.warn "Setting route, env = #{Lanes.env.to_s}"
+    # if Lanes.env.production?
+    #     get '/*' do
+    #         send_file MultiTenant.current_tenant ? APP : HOMEPAGE
+    #     end
+    # end
 
 end
 

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/lanes
-  revision: 4766629154df0db0b09a93ee8e5983486738abbb
+  revision: 36c45e47638ae39f7962af4817d6330061a214b3
   branch: master
   specs:
     lanes (0.8.3)
@@ -124,7 +124,7 @@ GEM
     crass (1.0.2)
     database_cleaner (1.5.3)
     diff-lcs (1.3)
-    down (2.4.3)
+    down (2.5.0)
     erb_latex (1.0.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -135,8 +135,6 @@ GEM
     fastimage (2.1.0)
     ffi (1.9.18)
     formatador (0.2.5)
-    friendly_id (5.1.0)
-      activerecord (>= 4.0.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     guard (2.14.1)
@@ -156,7 +154,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    hashdiff (0.3.2)
+    hashdiff (0.3.4)
     hashie (3.5.5)
     i18n (0.8.1)
     image_processing (0.4.1)
@@ -336,7 +334,6 @@ DEPENDENCIES
   database_cleaner
   factory_girl
   faker
-  friendly_id (~> 5.1.0)
   lanes!
   puma
   rake

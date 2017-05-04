@@ -10,7 +10,7 @@ const config = {
         ],
         'embedded-events': [
             'react-hot-loader/patch',
-            'sm/external/events.js',
+            'sm/embed/events.js',
         ],
         homepage: [
             'sm/homepage/index.js',

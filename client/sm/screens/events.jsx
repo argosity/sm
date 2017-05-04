@@ -42,7 +42,7 @@ export default class Events extends React.PureComponent {
         syncOptions: { with: 'with_details' },
         fields: [
             { id: 'id', visible: false },
-            'slug',
+            'identifier',
             'title',
             'sub_title',
             'description',
