@@ -20,10 +20,14 @@ class CreatePublicEvents < ActiveRecord::Migration[5.0]
               'file_data', event_asset.file_data
             ) as image,
 
-            json_build_object(
-              'name', presenter.name,
-              'logo', presenter_asset.file_data
-            ) as presenter,
+            case
+            when presenter IS NULL then null
+            else
+                  json_build_object(
+                    'name', presenter.name,
+                    'logo', presenter_asset.file_data
+                   )
+            END as presenter,
 
             json_build_object(
               'name', venues.name,

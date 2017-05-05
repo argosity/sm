@@ -24,7 +24,7 @@ export default class Embeds extends React.PureComponent {
         autoFetch: true,
         sort: { name: 'DESC' },
         fields: [
-            'id', 'tenants', 'name', 'random_identifier',
+            'id', 'tenants', 'name', 'identifier',
         ],
     })
 
@@ -36,8 +36,9 @@ export default class Embeds extends React.PureComponent {
     rowRenderer(props) {
         const { index, key } = props;
         const [
-            id, tenants, name, random_identifier,
+            id, tenants, name, identifier,
         ] = this.query.results.rows[index];
+
         return (
             <Row
                 className="row"
@@ -48,7 +49,7 @@ export default class Embeds extends React.PureComponent {
                     <textarea
                         onFocus={this.onFocus}
                         readOnly
-                        value={`<script src="${Tenant.current.url}/assets/embedded-events.js" data-render-to="#showmaker-events-listing" data-embed-id="${random_identifier}"></script>\n<div id="showmaker-events-listing"></div>`}
+                        value={`<script src="${Tenant.current.url}/assets/embedded-events.js" data-render-to="#showmaker-events-listing" data-embed-id="${identifier}"></script>\n<div id="showmaker-events-listing">${Tenant.current.slug}</div>`}
                     />
                 </Col>
             </Row>

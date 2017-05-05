@@ -7,7 +7,7 @@ import Config from 'lanes/config';
 
 @identifiedBy('sm/embedded/venue')
 export default class Asset extends EmbeddedBaseModel {
-    @session file_data;
+    @session({ type: 'object' }) file_data;
 
     @computed get baseUrl() {
         return Config.api_host + Config.api_path + Config.assets_path_prefix;

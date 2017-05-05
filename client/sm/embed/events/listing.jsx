@@ -1,63 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-flexbox-grid';
+
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
-import EventModel from 'sm/models/event';
-import Button from 'grommet/components/Button';
-import CircleInformationIcon from 'grommet/components/icons/base/CircleInformation';
+
+import EventModel from '../../models/embed/event';
+import PurchaseModel from '../../models/embed/purchase';
 import Information from './information';
 import Purchase from './purchase';
-import PurchaseModel from '../../models/purchase';
-import PurchaseButton from './purchase-button';
+import Receipt from './purchase-receipt';
+import Event from './event';
 
 import './listing.scss';
-
-import Image from './image';
-
-
-@observer
-class Event extends React.PureComponent {
-    static propTypes = {
-        event: PropTypes.instanceOf(EventModel),
-        displayEvent:  PropTypes.func.isRequired,
-        onPurchase: PropTypes.func.isRequired,
-    }
-
-    // @action.bound
-    onInfo() {
-        this.props.displayEvent(this.props.event);
-    }
-
-    // @action.bound
-    // onPurchase(event) {
-    //     this.props.displayEvent(this.props.event);
-    // }
-
-    render() {
-        const { event } = this.props;
-
-        return (
-            <div className="event">
-                <Image image={event.image} />
-                <div className="info">
-                    <h2 className="title">{event.title}</h2>
-                    <h3 className="sub-title">{event.sub_title}</h3>
-                    <p className="description">{event.description}</p>
-                </div>
-                <div className="actions">
-                    <Button
-                        icon={<CircleInformationIcon />}
-                        label='Information'
-                        onClick={this.onInfo}
-                        href='#'
-                    />
-                    <PurchaseButton onClick={this.props.onPurchase} event={event} />
-                </div>
-            </div>
-        );
-    }
-}
 
 @observer
 export default class Listing extends React.PureComponent {
@@ -67,43 +21,53 @@ export default class Listing extends React.PureComponent {
         ).isRequired,
     }
 
-    @observable purchasingEvent;
-    @observable displayingEvent;
+    @observable displaying = {}
 
     @observable purchase = new PurchaseModel();
 
-    componentWillMount() {
-        this.purchase.fetch({ query: 'token' });
+    @action.bound
+    onDisplayInfo(event) {
+        this.displaying = { event, view: 'info' };
     }
 
     @action.bound
-    onDisplayEvent(event) {
-        this.displayingEvent = event;
+    onPurchase(event) {
+        this.displaying = { event, view: 'purchase', purchase: this.purchase };
     }
 
     @action.bound
-    onPurchaseEvent(event) {
-        this.displayingEvent = null;
-        this.purchasingEvent = event;
+    onHideDisplay() {
+        this.displaying = {};
     }
 
     @action.bound
-    onDisplayEventHide() {
-        this.displayingEvent = null;
+    onPurchaseComplete() {
+        this.displaying = { view: 'receipt', purchase: this.purchase };
+        this.purchase = new PurchaseModel();
     }
 
-    @action.bound
-    onPurchaseHide() {
-        this.purchasingEvent = null;
+    @computed get Layer() {
+        const { view } = this.displaying;
+        if ('info' === view) {
+            return Information;
+        } else if ('purchase' === view) {
+            return Purchase;
+        } else if ('receipt' === view) {
+            return Receipt;
+        }
+        return null;
     }
 
-    @computed get purchaseLayer() {
-        if (!this.purchasingEvent) { return null; }
+    @computed get actionsLayer() {
+        const { Layer } = this;
+        if (!Layer) { return null; }
+
         return (
-            <Purchase
-                purchase={this.purchase}
-                event={this.purchasingEvent}
-                onCancel={this.onPurchaseHide}
+            <Layer
+                {...this.displaying}
+                onPurchase={this.onPurchase}
+                onPurchaseComplete={this.onPurchaseComplete}
+                onCancel={this.onHideDisplay}
             />
         );
     }
@@ -111,19 +75,14 @@ export default class Listing extends React.PureComponent {
     render() {
         return (
             <div className="events-listing">
-                <Information
-                    event={this.displayingEvent}
-                    onPurchase={this.onPurchaseEvent}
-                    onComplete={this.onDisplayEventHide}
-                />
-                {this.purchaseLayer}
+                {this.actionsLayer}
                 <h1>{this.props.events.length} events</h1>
                 {this.props.events.map(event => (
                      <Event
-                         key={event.id}
+                         key={event.event_identifier}
                          event={event}
-                         onPurchase={this.onPurchaseEvent}
-                         displayEvent={this.onDisplayEvent}
+                         onPurchase={this.onPurchase}
+                         displayEvent={this.onDisplayInfo}
                      />
                  ))}
             </div>

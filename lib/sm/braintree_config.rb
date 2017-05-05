@@ -7,7 +7,7 @@ module SM
         class << self
 
             def config
-                config = Lanes::SystemSettings.config.for_ext(CONFIG_KEY)
+                config = system_settings_values
                 Braintree::Configuration.new(
                     environment: Lanes.env.production? ? :production : :sandbox,
                     merchant_id: config['merchant_id'],
@@ -15,6 +15,10 @@ module SM
                     private_key: config['private_key'],
                     logger:      Lanes.logger
                 )
+            end
+
+            def system_settings_values
+                Lanes::SystemSettings.config.for_ext(CONFIG_KEY)
             end
 
             def gateway

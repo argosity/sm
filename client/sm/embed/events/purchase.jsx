@@ -4,70 +4,55 @@ import { observer } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
 import { findKey, each, delay, mapValues } from 'lodash';
 import { Row, Col } from 'react-flexbox-grid';
-import Box        from 'grommet/components/Box';
-import EventModel from 'sm/models/event';
+import Box from 'grommet/components/Box';
+
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
-import Value from 'grommet/components/Value';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
-import FormField from 'lanes/components/form-field';
-import { addFormFieldValidations, nonBlank, stringValue, validEmail, numberValue } from 'lanes/lib/forms';
-import { sprintf } from 'sprintf-js';
-import { Braintree } from 'react-braintree-fields';
 
-import PurchaseModel from '../../models/purchase';
-import Layer from '../layer-wrapper';
 import NetworkActivityOverlay from 'lanes/components/network-activity-overlay';
 import WarningNotification from 'lanes/components/warning-notification';
-import CardField from './card-field';
+
+import PurchaseModel from '../../models/embed/purchase';
+import EventModel from '../../models/embed/event';
+
+import Layer from '../layer-wrapper';
+
 import Image from './image';
 
+import PurchaseForm from './purchase-form';
+
 @observer
-class Purchase extends React.PureComponent {
+export default class Purchase extends React.PureComponent {
+
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
+        onPurchaseComplete: PropTypes.func.isRequired,
         purchase: PropTypes.instanceOf(PurchaseModel).isRequired,
         event: PropTypes.instanceOf(EventModel).isRequired,
     }
 
-    static formFields = {
-        qty: numberValue,
-        name: nonBlank,
-        email: validEmail,
-        phone: stringValue,
-    }
+    @observable formSaver; // getBTToken;
+    @observable isValid = true // false;
 
-    @observable focused;
-    @observable getBTToken;
-    @observable cardIsValid = false;
     @observable isTokenizing = false;
-
-    componentWillMount() {
-        this.props.setDefaultValues(this.props.purchase);
-    }
-
-    componentDidMount() {
-        if (this.nameFieldRef) { this.nameFieldRef.focus(); }
-    }
-
-    @computed get totalAmount() {
-        return this.props.event.priceForQty(this.props.fields.qty.value);
-    }
 
     @action.bound
     onPurchase() {
-        const { event, purchase, fields } = this.props;
+        const { event, purchase } = this.props;
+        purchase.errors = null;
         this.isTokenizing = true;
-        this.getBTToken().then(({ nonce, details: { cardType: card_type, lastTwo: digits } }) => {
-            purchase.update(mapValues(fields, 'value'));
-            purchase.event_id = event.id;
-            purchase.payments = [{ nonce, card_type, digits, amount: this.totalAmount }];
+        this.formSaver({ purchase, event }).then(() => {
             this.isTokenizing = false;
-            purchase.save().then(() => {
-                debugger
-            });
+            if (purchase.isValid) {
+                purchase.save().then(() => {
+                    if (purchase.isValid()) {
+                        this.props.onPurchaseComplete();
+                    }
+                });
+            }
         }).catch((err) => {
-            purchase.errors = { credit_card: err.message };
+            purchase.errors = { invalid: err.message }; // eslint-disable-line
             this.isTokenizing = false;
         });
     }
@@ -80,90 +65,8 @@ class Purchase extends React.PureComponent {
     }
 
     @action.bound
-    onValidityChange(ev) {
-        this.cardIsValid = !findKey(ev.fields, ({ isValid }) => !isValid);
-    }
-
-    @computed get isValid() {
-        return this.cardIsValid && this.props.formState.valid;
-    }
-
-    renderForm() {
-        const { purchase: { token }, event, fields } = this.props;
-        if (!token) { return null; }
-
-        const fieldProps = {
-            sm: 6, xs: 12, fields,
-        };
-        return (
-            <Braintree
-                authorization={token}
-                onError={this.onBTError}
-                onValidityChange={this.onValidityChange}
-                getTokenRef={t => (this.getBTToken = t)}
-                styles={{
-                    'input': {
-                        'font-size': '16px',
-                        'color': '#3a3a3a'
-                    },
-                    ':focus': {
-                        'color': 'black'
-                    }
-                }}
-            >
-                <Row>
-
-                    <FormField {...fieldProps} name="name" ref={f => (this.nameFieldRef = f)} />
-
-                    <FormField {...fieldProps} name="email" />
-
-                    <FormField {...fieldProps} name="phone" xs={6} />
-                    <CardField
-                        {...fieldProps} xs={6} type="postalCode"
-                        label="Zip Code" errorMessage="is not valid" />
-
-                    <CardField {...fieldProps} type="number" label="Card Number" errorMessage="Invalid Card" />
-
-                    <CardField
-                        {...fieldProps} xs={6} type="expirationDate"
-                        label="Expiration" errorMessage="Invalid Date" />
-
-                    <CardField
-                        {...fieldProps} xs={6}
-                        type="cvv" label="Card CVV" errorMessage="Invalid value" />
-
-
-                    <Col xs={12}>
-                        <Box
-                            pad={{ between: 'medium' }}
-                            direction="row"
-                            align="center"
-                            className="totals-line"
-                        >
-                            <h2>Ticket cost: </h2>
-                            <Value
-                                className="ea"
-                                size="medium" value={event.priceForQty(1)} units='$' label="each"
-                            />
-                            <Box
-                                direction="row" responsive={false} justify="between"
-                                pad={{ between: 'medium' }}
-                            >
-                                <FormField fields={fields} name="qty" type="number" />
-                                <Value
-                                    className="total"
-
-                                    size="medium"
-                                    value={this.totalAmount} units='$'
-                                    label="total"
-                                />
-                            </Box>
-                        </Box>
-                    </Col>
-
-                </Row>
-            </Braintree>
-        );
+    onValidityChange(isValid) {
+        // if (isValid !== this.isValid) { this.isValid = isValid; }
     }
 
     render() {
@@ -198,7 +101,12 @@ class Purchase extends React.PureComponent {
                         </Col>
                     </Row>
 
-                    {this.renderForm()}
+                    <PurchaseForm
+                        setSave={form => this.formSaver = form}
+                        event={event}
+                        onValidityChange={this.onValidityChange}
+                        purchase={purchase}
+                    />
 
                 </Box>
                 <Footer
@@ -218,6 +126,3 @@ class Purchase extends React.PureComponent {
         );
     }
 }
-
-
-export default addFormFieldValidations(Purchase);

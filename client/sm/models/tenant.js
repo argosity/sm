@@ -1,25 +1,29 @@
 import {
     BaseModel, identifiedBy, field, identifier, computed,
 } from './base';
+import { get } from 'lodash';
+import { observable } from 'mobx';
 
-let CACHE;
+const CACHE = observable({
+    Tenant: undefined,
+});
 
 @identifiedBy('sm/tenant')
 export default class Tenant extends BaseModel {
 
     @identifier id;
-    @field slug;
+    @field slug = get(window, 'location.hostname', '').split('.')[0];
     @field name;
 
     @computed get url() {
         return `https://${this.slug}.showmaker.com`;
     }
 
-    static get current() {
-        if (!CACHE) {
-            CACHE = new Tenant();
-            CACHE.fetch({ query: 'current' });
+    @computed static get current() {
+        if (!CACHE.Tenant) {
+            CACHE.Tenant = new Tenant();
+            CACHE.Tenant.fetch({ query: 'current' });
         }
-        return CACHE;
+        return CACHE.Tenant;
     }
 }

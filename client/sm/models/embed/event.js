@@ -1,28 +1,21 @@
 import isPast   from 'date-fns/is_past';
 import isFuture from 'date-fns/is_future';
-
-import { renameProperties } from 'lanes/lib/util';
-import Big from 'big.js';
-import { sprintf } from 'sprintf-js';
-import { observe } from 'mobx';
-import { pick } from 'lodash';
 import Config from 'lanes/config';
-
-import Asset from './asset';
-
 import {
-    EmbeddedBaseModel, identifiedBy, identifier, session, belongsTo, computed, hasMany,
+    EmbeddedBaseModel, identifiedBy, session, belongsTo, computed,
 } from './model';
-
-
+import Asset from './asset';
 import Presenter from './presenter';
 import Venue from './venue';
-
+import { sprintf } from 'sprintf-js';
+import Big from 'big.js';
 @identifiedBy('sm/embedded/event')
 export default class EmbeddedEvent extends EmbeddedBaseModel {
 
     static fetch(embedId) {
-        return this.Collection.create().fetch({url: `${Config.api_path}/sm/public/events/${embedId}`});
+        return this.Collection
+            .create()
+            .fetch({ url: `${Config.api_path}/sm/embed/events/${embedId}` });
     }
 
     @session embed_identifier;
@@ -43,22 +36,12 @@ export default class EmbeddedEvent extends EmbeddedBaseModel {
 
     @belongsTo({ model: Venue }) venue;
 
-//             json_build_object(
-//               'file_data', event_asset.file_data
-//             ) as image,
+    @computed get canPurchase() {
+        return isPast(this.onsale_after) && isFuture(this.onsale_until);
+    }
 
-//             json_build_object(
-//               'name', presenter.name,
-//               'logo', presenter_asset.file_data
-//             ) as presenter,
-
-//             json_build_object(
-//               'name', venues.name,
-//               'address', venues.address,
-//               'phone_number', venues.phone_number,
-//               'logo', venue_asset.file_data
-//             ) as venue
-
-
+    priceForQty(qty) {
+        return sprintf('%0.2f', Big(this.price).times(qty || 1));
+    }
 
 }

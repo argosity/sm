@@ -56,13 +56,6 @@ export default class Event extends BaseModel {
         });
     }
 
-    @computed get canPurchase() {
-        return isPast(this.onsale_after) && isFuture(this.onsale_until);
-    }
-
-    priceForQty(qty) {
-        return sprintf('%0.2f', Big(this.price).times(qty || 1));
-    }
 
     set(attrs = {}) {
         renameProperties(attrs, {

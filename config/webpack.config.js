@@ -109,7 +109,7 @@ const config = {
             index: '/assets/app.html'
         },
         proxy: [{
-            context: [ '/api', '/signup', '/embed' ],
+            context: [ '/api', '/signup' ],
             target: 'http://localhost:9292',
         }],
         disableHostCheck: true,

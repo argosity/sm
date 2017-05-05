@@ -1,5 +1,4 @@
 import React from 'react';
-import { partial } from 'lodash';
 
 import Button from 'grommet/components/Button';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
@@ -10,8 +9,7 @@ export default function PurchaseButton({ event, onClick, label = 'Purchase' }) {
         <Button
             icon={<CreditCardIcon />}
             label={label}
-            onClick={partial(onClick, event)}
-            href='#'
+            onClick={onClick}
         />
     );
 }

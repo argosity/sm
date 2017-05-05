@@ -335,7 +335,10 @@ CREATE VIEW public_events AS
     ev.price,
     ev.capacity,
     json_build_object('file_data', event_asset.file_data) AS image,
-    json_build_object('name', presenter.name, 'logo', presenter_asset.file_data) AS presenter,
+        CASE
+            WHEN (presenter.* IS NULL) THEN NULL::json
+            ELSE json_build_object('name', presenter.name, 'logo', presenter_asset.file_data)
+        END AS presenter,
     json_build_object('name', venues.name, 'address', venues.address, 'phone_number', venues.phone_number, 'logo', venue_asset.file_data) AS venue
    FROM (((((((embeds em
      JOIN tenants tenant ON (((tenant.slug)::text IN ( SELECT unnest(em.tenants) AS unnest))))

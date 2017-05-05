@@ -4,18 +4,19 @@ import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
 import Box        from 'grommet/components/Box';
-import EventModel from 'sm/models/embed/event';
 import Footer from 'grommet/components/Footer';
 import PurchaseButton from './purchase-button';
+
+import PurchaseModel from '../../models/embed/purchase';
 
 import Layer from '../layer-wrapper';
 
 @observer
-export default class Information extends React.PureComponent {
+export default class PurchaseReceipt extends React.PureComponent {
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
         onPurchase: PropTypes.func.isRequired,
-        event: PropTypes.instanceOf(EventModel),
+        purchase: PropTypes.instanceOf(PurchaseModel),
     }
 
     @action.bound
@@ -50,11 +51,9 @@ export default class Information extends React.PureComponent {
                         justify="end"
                         pad={{ horizontal: 'small', between: 'small' }}
                     >
-                        <PurchaseButton
-                            label="Purchase"
-                            primary
-                            event={event}
-                            onClick={this.onPurchase}
+                        <Button
+                            label={'OK'}
+                            onClick={this.props.onCancel}
                         />
                     </Footer>
                 </Box>

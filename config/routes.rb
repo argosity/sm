@@ -4,8 +4,8 @@ Lanes::API.routes.for_extension 'sm' do
     resources SM::Embed
     resources SM::Presenter
 
-    resources SM::Event,    path: 'public/events',   controller: SM::Handlers::Events,   cors: '*', public: true
-    resources SM::Purchase, path: 'public/purchase', controller: SM::Handlers::Purchase, cors: '*', public: true
+    resources SM::Event,    path: 'embed/events',   controller: SM::Handlers::Events,   cors: '*', public: true
+    resources SM::Purchase, path: 'embed/purchase', controller: SM::Handlers::Purchase, cors: '*', public: true
 
     resources SM::Tenant,   controller: SM::Handlers::Tenant
 

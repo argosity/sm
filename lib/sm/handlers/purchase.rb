@@ -21,8 +21,9 @@ module SM
 
             def create
                 purchase = SM::Purchase.new(
-                    data.slice('name', 'phone', 'email', 'qty', 'event_id')
+                    data.slice('name', 'phone', 'email', 'qty')
                 )
+                purchase.event = SM::Event.find_by(identifier: data['event_identifer'])
                 SM::Purchase.transaction do
                     data['payments'].each do |payment_data|
                         purchase.payments.build(payment_data)
@@ -44,14 +45,17 @@ module SM
 
             private
 
-            def apply_payments(purchase)
-            end
-
             def process_charge(purchase, payment)
                 sale = BraintreeConfig.sale(
                     amount: payment.amount,
                     payment_method_nonce: payment.nonce,
-                    options: { submit_for_settlement: true }
+                    options: { submit_for_settlement: true },
+                    customer: {
+                        first_name: purchase.first_name,
+                        last_name: purchase.last_name,
+                        phone: purchase.phone,
+                        email: purchase.email
+                    }
                 )
                 Lanes.logger.warn "Processed CC transaction #{sale.transaction.id} for nonce #{payment['nonce']}, result: #{sale.success? ? 'success' : sale.message}"
                 if sale.success?
