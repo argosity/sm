@@ -1,8 +1,0 @@
-% <% so = @sales_order %>
-\begin{document}
-<%= partial( 'header', {
-  location: so.location, date: so.order_date, form_title: "Sales Order # #{so.visible_id}"
-} ) %>
-<%=partial 'bill_to_ship_to', record: so -%>
-<%=partial 'skus_table', record: so, lines: so.lines -%>
-\end{document}
