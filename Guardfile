@@ -7,7 +7,7 @@ Lanes::GuardTasks.run(self, name: "sh") do | tests |
     end
 
     tests.server do
-
+        watch(%r{^templates/latex/*}) { "spec/server/print_form_spec.rb" }
     end
 
 end
