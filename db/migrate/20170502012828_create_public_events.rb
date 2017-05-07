@@ -9,6 +9,7 @@ class CreatePublicEvents < ActiveRecord::Migration[5.0]
             ev.title,
             ev.sub_title,
             ev.description,
+            ev.external_url,
             ev.page_html,
             ev.occurs_at,
             ev.onsale_after,

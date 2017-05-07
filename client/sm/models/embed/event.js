@@ -31,6 +31,7 @@ export default class EmbeddedEvent extends EmbeddedBaseModel {
     @session onsale_until;
     @session price;
     @session capacity;
+    @session external_url;
 
     @belongsTo({ model: Asset }) image;
     @belongsTo({ model: Presenter }) presenter;

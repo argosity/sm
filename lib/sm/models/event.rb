@@ -14,26 +14,26 @@ module SM
 
         validates :capacity, presence: true
 
-        before_validation :set_defaults,  on: :create
+        before_validation :set_defaults
 
         has_one :image, as: :owner, class_name: 'Lanes::Asset', dependent: :destroy, export: true
 
         scope :with_details, lambda { |should_use = true|
-            compose_query_using_detail_view(
-                view: 'event_details', join_to: 'event_id'
-            ) if should_use
+            compose_query_using_detail_view(view: 'event_details', join_to: 'event_id') if should_use
         }, export: true
 
-        has_many :page_images, -> { where owner_type: "PageImage"},
-                class_name: 'Lanes::Asset', foreign_key: :owner_id,
-                foreign_type: :owner_type,
-                dependent: :destroy
-
+        has_many :page_images, -> { where owner_type: "PageImage" },
+                 class_name: 'Lanes::Asset', foreign_key: :owner_id,
+                 foreign_type: :owner_type,
+                 dependent: :destroy
 
         protected
 
         def set_defaults
             self.capacity ||= venue.capacity if venue.present?
+            if external_url.present? && !external_url.start_with?('http')
+                self.external_url = "http://#{external_url}"
+            end
         end
 
     end

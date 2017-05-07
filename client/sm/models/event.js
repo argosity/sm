@@ -34,6 +34,7 @@ export default class Event extends BaseModel {
     @field({ type: 'date' }) onsale_after;
     @field({ type: 'date' }) onsale_until;
 
+    @field external_url;
     @field page_src;
     @field page_html;
 

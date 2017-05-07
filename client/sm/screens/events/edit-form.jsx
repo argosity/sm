@@ -1,7 +1,7 @@
 import { action, observable, computed, autorun } from 'mobx';
 
 import {
-    Form, Field, FieldDefinitions, nonBlank, numberValue, stringValue, field, dateValue,
+    Form, Field, FieldDefinitions, nonBlank, numberValue, stringValue, field, dateValue, validURL,
 } from 'lanes/components/form';
 
 
@@ -47,6 +47,7 @@ export default class EditForm extends React.PureComponent {
         visible_after: nonBlank,
         onsale_until:  nonBlank,
         capacity:      numberValue,
+        external_url:  validURL,
     })
 
     componentWillMount() {
@@ -132,8 +133,6 @@ export default class EditForm extends React.PureComponent {
                         <Field type="number" name="price" xs={6} lg={3} />
                         <Field type="number" name="capacity" xs={6} lg={3} />
 
-
-
                         <Field type="date" name="visible_after" lg={3} xs={6} />
                         <Field type="date" name="visible_until" lg={3} xs={6} />
 
@@ -142,17 +141,19 @@ export default class EditForm extends React.PureComponent {
 
                     </Row>
                     <Row>
-                        <Asset model={event} name="image" lg={3} md={6} />
-                        <Col lg={9} md={6}>
+                        <Asset model={event} name="image" md={6} sm={12} />
+                        <Col md={6} xs={12}>
                             <Row>
-                                <Field type="date" name="occurs_at" lg={4} md={12} />
+                                <Field type="date" name="occurs_at" sm={12} xs={6} />
+
+                                <Field name="external_url" sm={12} xs={6} />
 
                                 <Field
-                                    name="venue_id" label="Venue" lg={4} md={12}
+                                    name="venue_id" label="Venue" sm={12} xs={6}
                                     type="select" collection={this.venues}
                                 />
                                 <Field
-                                    name="presenter_id" label="Presented By" lg={4} md={12}
+                                    name="presenter_id" label="Presented By" sm={12} xs={6}
                                     type="select" collection={this.presenters}
                                 />
                             </Row>
