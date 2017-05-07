@@ -17,7 +17,7 @@ FactoryGirl.define do
         price { (rand*100).round(2) }
         capacity { (rand*100).to_i }
 
-        association :venue, factory: :venue, strategy: :build
+        association :venue, factory: :venue
 
     end
 end

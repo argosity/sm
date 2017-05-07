@@ -1,0 +1,75 @@
+<% purchase = @purchase
+   event = purchase.event -%>
+\font\Anton="[<%= @root_path.join('fonts', 'Anton.ttf').to_s %>]" at 22pt
+\usepackage[boxed]{ticket}
+\unitlength=1mm
+\hoffset=-16.2mm
+\voffset=-6.6mm
+\ticketNumbers{1}{3}
+\ticketSize{200}{60}     % in unitlength
+\ticketDistance{0}{10}    % in unitlength
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage[]{qrcode}
+%
+\renewcommand{\ticketdefault}{%
+  \put(1,20){\begin{sideways}\Large Admit 1\end{sideways}}%
+<% top = 40 %>
+<% if event.presenter
+   top += 5
+%>
+  \put(48, <%= top %>){
+<% if (logo = event.presenter.logo).present? -%>
+      \raisebox{-1mm}{\includegraphics[height=8mm]{<%= logo.file[:original].download.path %>}}
+<% else -%>
+\textsf{\Huge <%= event.presenter.name -%>}
+<% end -%>
+\textsf{\Huge presents:}
+}%
+<% top -= 15; end # end of presenter -%>
+%
+  \put(48, <%= top %>){ 
+    \parbox[][40mm][c]{100mm}{
+      \raggedright\Anton <%=q event.title %>
+<% if event.sub_title -%>
+\par
+  \raggedleft\Large <%=q event.sub_title %>
+<% end -%>
+<% if event.description.present? -%>
+\par
+  \raggedright\normalsize <%= break_lines q(event.description) %>
+<% end -%>
+  }
+}
+<% if event.occurs_at -%>
+  \put(195,60){\rotatebox{270}{\parbox{60mm}{\centering\large <%=q event.occurs_at.strftime("%I:%M%P %a %b #{event.occurs_at.day.ordinalize}, %Y") %>}}}%
+<% end -%>
+<% if event.venue -%>
+  \put(95,1){\parbox{100mm}{\small\raggedleft <%=q event.venue.name %>, <%=q event.venue.address %>}}
+<% end -%>
+<% if (image = event.image).present? -%>
+\put(153, 30){
+ \begin{minipage}[c][50mm]{40mm}
+    \includegraphics[width=40mm]{<%= image.file[:original].download.path %>}
+ \end{minipage}
+}
+<% end -%>
+}
+%
+\newcommand{\filelabel}[4]{\ticket{%
+    \put(5,30){
+      \qrcode[height=40mm]{#2:#1}
+    }%
+    \put(4,5){\parbox{40mm}{\centering\large #2:#1}}
+}}
+%
+\begin{document}
+\large The tickets from order <%= purchase.identifier %> are listed below.
+\\[2mm]
+If you lose your tickets please arrive at the event with identification matching the name used for the purchase.
+\\[8mm]
+<% purchase.qty.times do | num | -%>
+  \filelabel{<%= num + 1 %>}{<%= purchase.identifier %>}{<%= event.title %>}
+    {<%= event.title %>}
+<% end -%>
+\end{document}

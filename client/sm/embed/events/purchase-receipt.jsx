@@ -42,6 +42,11 @@ export default class PurchaseReceipt extends React.PureComponent {
                     separator='horizontal'
                 >
                     <h2>Thank you for purchasing tickets to {event.title}!</h2>
+                    <Paragraph>
+                        The transaction id for this order is {purchase.identifier}.  If you
+                        need to contact us regarding the order, please mention this id so we
+                        can find your records.
+                    </Paragraph>
                     <Anchor
                         target="_blank"
                         href={purchase.tickets_url}
@@ -50,7 +55,6 @@ export default class PurchaseReceipt extends React.PureComponent {
                         align="center"
                         label={`Download and print ${this.ticketName}`}
                     />
-
                     <Paragraph size="large">
                         We’ve also emailed you a receipt with
                         the {this.ticketName} to {purchase.email}.

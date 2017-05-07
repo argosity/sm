@@ -75,7 +75,7 @@ export default class PurchaseForm extends React.PureComponent {
             this.getToken().then(({ nonce, details: { cardType: card_type, lastTwo: digits } }) => {
                 fields.persistTo(purchase);
                 extend(purchase, {
-                    event_identifier: event.event_identifier,
+                    event_identifier: event.identifier,
                     payments: [{
                         nonce, card_type, digits, amount: this.totalAmount,
                     }],

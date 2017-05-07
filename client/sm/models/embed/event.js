@@ -2,7 +2,7 @@ import isPast   from 'date-fns/is_past';
 import isFuture from 'date-fns/is_future';
 import Config from 'lanes/config';
 import {
-    EmbeddedBaseModel, identifiedBy, session, belongsTo, computed,
+    EmbeddedBaseModel, identifiedBy, session, belongsTo, computed, identifier,
 } from './model';
 import Asset from './asset';
 import Presenter from './presenter';
@@ -18,9 +18,10 @@ export default class EmbeddedEvent extends EmbeddedBaseModel {
             .fetch({ url: `${Config.api_path}/sm/embed/events/${embedId}` });
     }
 
+    @identifier({ type: 'string' }) identifier;
+
     @session embed_identifier;
     @session tenant_slug;
-    @session event_identifier;
     @session title;
     @session sub_title;
     @session description;

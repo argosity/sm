@@ -34,7 +34,8 @@ module SM
             tenant.url +
                 Lanes.config.api_path +
                 Lanes.config.print_path_prefix +
-                '/tickets' + identifier + '.pdf'
+                '/tickets/' + identifier + '.pdf'
         end
+
     end
 end
