@@ -32,10 +32,13 @@ export default class Purchase extends React.PureComponent {
         event: PropTypes.instanceOf(EventModel).isRequired,
     }
 
-    @observable formSaver; // getBTToken;
-    @observable isValid = true // false;
+    @observable formSaver;
+    @observable isFormValid = false;
 
     @observable isTokenizing = false;
+
+
+    formFields = PurchaseForm.fields()
 
     @action.bound
     onPurchase() {
@@ -46,7 +49,7 @@ export default class Purchase extends React.PureComponent {
             this.isTokenizing = false;
             if (purchase.isValid) {
                 purchase.save().then(() => {
-                    if (purchase.isValid()) {
+                    if (purchase.isValid) {
                         this.props.onPurchaseComplete();
                     }
                 });
@@ -58,19 +61,16 @@ export default class Purchase extends React.PureComponent {
     }
 
     @action.bound
-    onBTError(err) {
-        this.props.purchase.errors = {
-            card: err.message,
-        };
+    onValidityChange(isValid) {
+        this.isFormValid = isValid;
     }
 
-    @action.bound
-    onValidityChange(isValid) {
-        // if (isValid !== this.isValid) { this.isValid = isValid; }
+    @computed get isValid() {
+        return !!(this.isFormValid && this.formFields.isValid);
     }
 
     render() {
-        const { props: { purchase, event, onCancel } } = this;
+        const { formFields, props: { purchase, event, onCancel } } = this;
 
         return (
             <Layer
@@ -100,14 +100,13 @@ export default class Purchase extends React.PureComponent {
                             <h4>{event.sub_title}</h4>
                         </Col>
                     </Row>
-
                     <PurchaseForm
-                        setSave={form => this.formSaver = form}
                         event={event}
-                        onValidityChange={this.onValidityChange}
                         purchase={purchase}
+                        fields={formFields}
+                        setSave={form => this.formSaver = form}
+                        onValidityChange={this.onValidityChange}
                     />
-
                 </Box>
                 <Footer
                     margin="small"

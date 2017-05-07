@@ -7,12 +7,9 @@ import Box from 'grommet/components/Box';
 import { observable, action, computed } from 'mobx';
 import { findKey, mapValues, extend } from 'lodash';
 
-import {
-    addFormFieldValidations, setFieldsFromModel, nonBlank, stringValue, validEmail, numberValue, validPhone,
-} from 'lanes/lib/forms';
+import { Form, Field, FieldDefinitions, nonBlank, numberValue, validEmail, validPhone } from 'lanes/components/form';
 
 import Value from 'grommet/components/Value';
-import FormField from 'lanes/components/form-field';
 
 import PurchaseModel from '../../models/embed/purchase';
 import EventModel from '../../models/embed/event';
@@ -20,26 +17,29 @@ import EventModel from '../../models/embed/event';
 import CardField from './card-field';
 
 @observer
-class PurchaseForm extends React.PureComponent {
+export default class PurchaseForm extends React.PureComponent {
+    static fields() {
+        return new FieldDefinitions({
+            qty: numberValue,
+            name: nonBlank,
+            email: validEmail,
+            phone: validPhone,
+        });
+    }
+
     static propTypes = {
+        fields: PropTypes.instanceOf(FieldDefinitions).isRequired,
         purchase: PropTypes.instanceOf(PurchaseModel).isRequired,
         event: PropTypes.instanceOf(EventModel).isRequired,
         onValidityChange: PropTypes.func.isRequired,
         setSave: PropTypes.func.isRequired,
     }
 
-    static formFields = {
-        qty: numberValue,
-        name: nonBlank,
-        email: validEmail,
-        phone: validPhone,
-    }
-
     @observable cardIsValid;
     @observable getToken;
 
     @computed get totalAmount() {
-        return this.props.event.priceForQty(this.props.fields.qty.value);
+        return this.props.event.priceForQty(this.props.fields.get('qty').value);
     }
 
     @action.bound
@@ -47,7 +47,7 @@ class PurchaseForm extends React.PureComponent {
         const cardIsValid = !findKey(ev.fields, ({ isValid }) => !isValid);
         if (cardIsValid !== this.cardIsValid) {
             this.cardIsValid = cardIsValid;
-            this.props.onValidityChange(this.cardIsValid && this.props.formState.valid);
+            this.props.onValidityChange(this.cardIsValid);
         }
     }
 
@@ -57,14 +57,15 @@ class PurchaseForm extends React.PureComponent {
     }
 
     componentWillMount() {
-        setFieldsFromModel(this.props, this.props.purchase);
+        this.props.fields.setFromModel(this.props.purchase);
         this.props.setSave(this.saveState);
     }
 
-    componentWillReceiveProps(props) {
-        if (props.formState.valid !== this.props.formState.valid) {
-            this.props.onValidityChange(this.cardIsValid && props.formState.valid);
-        }
+    @action.bound
+    onBTError(err) {
+        this.props.purchase.errors = {
+            card: err.message,
+        };
     }
 
     @action.bound
@@ -72,9 +73,9 @@ class PurchaseForm extends React.PureComponent {
         const { fields } = this.props;
         return new Promise((resolve) => {
             this.getToken().then(({ nonce, details: { cardType: card_type, lastTwo: digits } }) => {
-                purchase.update(mapValues(fields, 'value'));
+                fields.persistTo(purchase);
                 extend(purchase, {
-                    event,
+                    event_identifier: event.event_identifier,
                     payments: [{
                         nonce, card_type, digits, amount: this.totalAmount,
                     }],
@@ -88,12 +89,12 @@ class PurchaseForm extends React.PureComponent {
     }
 
     render() {
-        const { purchase: { token }, event, fields } = this.props;
+        const { fields, purchase: { token }, event } = this.props;
 
         if (!token) { return null; }
 
         const fieldProps = {
-            sm: 6, xs: 12, fields,
+            sm: 6, xs: 12,
         };
 
         return (
@@ -112,22 +113,24 @@ class PurchaseForm extends React.PureComponent {
                     },
                 }}
             >
-                <Row>
+                <Form tag="div" className="row" fields={fields}>
 
-                    <FormField {...fieldProps} name="name" />
+                    <Field {...fieldProps} name="name" />
 
-                    <FormField {...fieldProps} name="email" />
+                    <Field {...fieldProps} name="email" />
 
-                    <FormField {...fieldProps} name="phone" xs={6} />
+                    <Field {...fieldProps} name="phone" xs={6} />
                     <CardField
                         {...fieldProps} xs={6} type="postalCode"
                         label="Zip Code" errorMessage="is not valid" />
 
-                    <CardField {...fieldProps} type="number" label="Card Number" errorMessage="Invalid Card" />
+                    <CardField
+                        {...fieldProps}
+                        type="number" label="Card Number" errorMessage="Invalid Card" />
 
                     <CardField
                         {...fieldProps} xs={6} type="expirationDate"
-                        label="Expiration" errorMessage="Invalid Date" />
+                        placeholder="MM / YY" label="Expiration" errorMessage="Invalid Date" />
 
                     <CardField
                         {...fieldProps} xs={6}
@@ -150,8 +153,7 @@ class PurchaseForm extends React.PureComponent {
                                 direction="row" responsive={false} justify="between"
                                 pad={{ between: 'medium' }}
                             >
-                                <FormField
-                                    fields={fields}
+                                <Field
                                     name="qty"
                                     type="number"
                                     min={1}
@@ -166,10 +168,8 @@ class PurchaseForm extends React.PureComponent {
                         </Box>
                     </Col>
 
-                </Row>
+                </Form>
             </Braintree>
         );
     }
 }
-
-export default addFormFieldValidations(PurchaseForm);

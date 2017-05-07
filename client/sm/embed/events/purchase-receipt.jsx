@@ -1,15 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action } from 'mobx';
+import { computed } from 'mobx';
 
 import Box        from 'grommet/components/Box';
 import Footer from 'grommet/components/Footer';
-import PurchaseButton from './purchase-button';
+import Button from 'grommet/components/Button';
 
 import PurchaseModel from '../../models/embed/purchase';
+import Paragraph from 'grommet/components/Paragraph';
 
 import Layer from '../layer-wrapper';
+import TicketIcon from 'grommet/components/icons/base/Ticket';
+import pluralize from 'pluralize';
+import Anchor from 'grommet/components/Anchor';
+
 
 @observer
 export default class PurchaseReceipt extends React.PureComponent {
@@ -19,14 +24,12 @@ export default class PurchaseReceipt extends React.PureComponent {
         purchase: PropTypes.instanceOf(PurchaseModel),
     }
 
-    @action.bound
-    onPurchase() {
-        this.props.onPurchase(this.props.event);
+    @computed get ticketName() {
+        return pluralize('ticket', this.props.purchase.qty);
     }
 
     render() {
-        const { event } = this.props;
-        if (!event) { return null; }
+        const { purchase, purchase: { event } } = this.props;
 
         return (
             <Layer
@@ -37,26 +40,35 @@ export default class PurchaseReceipt extends React.PureComponent {
                 <Box
                     className="contents"
                     separator='horizontal'
-                    full="horizontal"
-                    size="full"
-                    basis="xxlarge"
                 >
-                    <h1>{event.title}</h1>
-                    <div
-                        className="body"
-                        dangerouslySetInnerHTML={{ __html: event.page_html }}
+                    <h2>Thank you for purchasing tickets to {event.title}!</h2>
+                    <Anchor
+                        target="_blank"
+                        href={purchase.tickets_url}
+                        icon={<TicketIcon />}
+                        primary={true}
+                        align="center"
+                        label={`Download and print ${this.ticketName}`}
                     />
-                    <Footer
-                        margin="small"
-                        justify="end"
-                        pad={{ horizontal: 'small', between: 'small' }}
-                    >
-                        <Button
-                            label={'OK'}
-                            onClick={this.props.onCancel}
-                        />
-                    </Footer>
+
+                    <Paragraph size="large">
+                        We’ve also emailed you a receipt with
+                        the {this.ticketName} to {purchase.email}.
+                    </Paragraph>
+                    <h3>
+                        See you at the show!
+                    </h3>
                 </Box>
+                <Footer
+                    margin="small"
+                    justify="end"
+                    pad={{ horizontal: 'small', between: 'small' }}
+                >
+                    <Button
+                        label={'OK'}
+                        onClick={this.props.onCancel}
+                    />
+                </Footer>
             </Layer>
         );
     }

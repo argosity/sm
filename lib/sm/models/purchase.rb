@@ -25,5 +25,16 @@ module SM
         def pdf_download_url
             tenant.url
         end
+
+        def total
+            payments.sum(&:amount)
+        end
+
+        def tickets_url
+            tenant.url +
+                Lanes.config.api_path +
+                Lanes.config.print_path_prefix +
+                '/tickets' + identifier + '.pdf'
+        end
     end
 end

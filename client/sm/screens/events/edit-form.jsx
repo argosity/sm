@@ -1,8 +1,9 @@
 import { action, observable, computed, autorun } from 'mobx';
+
 import {
-    addFormFieldValidations, nonBlank, stringValue, numberValue, dateValue, anyValue,
-    setFieldsFromModel,
-} from 'lanes/lib/forms';
+    Form, Field, FieldDefinitions, nonBlank, numberValue, stringValue, field, dateValue,
+} from 'lanes/components/form';
+
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -15,9 +16,7 @@ import Button from 'grommet/components/Button';
 import DocumentTextIcon from 'grommet/components/icons/base/DocumentText';
 import SaveIcon from 'grommet/components/icons/base/Save';
 
-import Field from 'lanes/components/form-field';
 import Asset from 'lanes/components/asset';
-import Query from 'lanes/models/query';
 
 import PageEditor from './page-editor';
 import Venue from '../../models/venue';
@@ -26,41 +25,32 @@ import Presenter from '../../models/presenter';
 import NetworkActivityOverlay from 'lanes/components/network-activity-overlay';
 
 @observer
-class EditForm extends React.PureComponent {
+export default class EditForm extends React.PureComponent {
 
     static propTypes = {
-        query:      PropTypes.instanceOf(Query).isRequired,
         event:      PropTypes.instanceOf(Event).isRequired,
-        index:      PropTypes.number.isRequired,
         onComplete: PropTypes.func.isRequired,
-        formState:  PropTypes.shape({
-            touchd: PropTypes.bool,
-            valid:  PropTypes.bool,
-        }).isRequired,
-
-        fields: PropTypes.object.isRequired,
-        setDefaultValues: PropTypes.func.isRequired,
     }
 
     static desiredHeight = 300
 
-    static formFields = {
+    formFields = new FieldDefinitions({
         title:         nonBlank,
         sub_title:     stringValue,
         description:   stringValue,
         price:         numberValue,
         venue_id:      nonBlank,
-        presenter_id:  anyValue,
+        presenter_id:  field,
         occurs_at:     dateValue,
         onsale_after:  nonBlank,
         visible_until: nonBlank,
         visible_after: nonBlank,
         onsale_until:  nonBlank,
         capacity:      numberValue,
-    }
+    })
 
     componentWillMount() {
-        setFieldsFromModel(this.props, this.event);
+        this.formFields.setFromModel(this.event);
     }
 
     @observable isEditingPage = false;
@@ -79,15 +69,14 @@ class EditForm extends React.PureComponent {
 
     @action.bound
     onSave() {
-        this.event.set(
-            pick(mapValues(this.props.fields, 'value'), keys(this.constructor.formFields)),
-        );
-        this.event.save().then(this.onSaved);
+        this.formFields.persistTo(this.event)
+            .then(() => this.event.save())
+            .then(this.onSaved);
     }
 
     @action.bound
     onSaved() {
-        if (!this.event.errors) {
+        if (this.event.isValid) {
             this.onCancel();
         }
     }
@@ -103,7 +92,7 @@ class EditForm extends React.PureComponent {
     }
 
     @computed get isSavable() {
-        return this.props.formState.valid && !this.event.syncInProgress;
+        return this.formFields.isValid && !this.event.syncInProgress;
     }
 
     @action.bound
@@ -122,7 +111,7 @@ class EditForm extends React.PureComponent {
     }
 
     render() {
-        const { event, props: { fields, style } } = this;
+        const { event, props: { style } } = this;
 
         return (
             <Box
@@ -133,42 +122,43 @@ class EditForm extends React.PureComponent {
             >
                 <NetworkActivityOverlay model={event} />
                 {this.renderPage()}
-                <Row>
-                    <Field fields={fields} name="title" xs={6} lg={3} />
-                    <Field fields={fields} name="sub_title" xs={6} lg={3} />
+                <Form tag="div" fields={this.formFields}>
+                    <Row>
+                        <Field name="title" xs={6} lg={3} />
+                        <Field name="sub_title" xs={6} lg={3} />
 
-                    <Field fields={fields} name="description" xs={12} lg={6} />
+                        <Field name="description" xs={12} lg={6} />
 
-                    <Field type="number" fields={fields} name="price" xs={6} lg={3} />
-                    <Field type="number" fields={fields} name="capacity" xs={6} lg={3} />
+                        <Field type="number" name="price" xs={6} lg={3} />
+                        <Field type="number" name="capacity" xs={6} lg={3} />
 
 
 
-                    <Field type="date" fields={fields} name="visible_after" lg={3} xs={6} />
-                    <Field type="date" fields={fields} name="visible_until" lg={3} xs={6} />
+                        <Field type="date" name="visible_after" lg={3} xs={6} />
+                        <Field type="date" name="visible_until" lg={3} xs={6} />
 
-                    <Field type="date" fields={fields} name="onsale_after" lg={3} xs={6} />
-                    <Field type="date" fields={fields} name="onsale_until" lg={3} xs={6} />
+                        <Field type="date" name="onsale_after" lg={3} xs={6} />
+                        <Field type="date" name="onsale_until" lg={3} xs={6} />
 
-                </Row>
-                <Row>
-                    <Asset model={event} name="image" lg={3} md={6} />
-                    <Col lg={9} md={6}>
-                        <Row>
-                            <Field type="date" fields={fields} name="occurs_at" lg={4} md={12} />
+                    </Row>
+                    <Row>
+                        <Asset model={event} name="image" lg={3} md={6} />
+                        <Col lg={9} md={6}>
+                            <Row>
+                                <Field type="date" name="occurs_at" lg={4} md={12} />
 
-                            <Field
-                                fields={fields} name="venue_id" label="Venue" lg={4} md={12}
-                                type="select" collection={this.venues}
-                            />
-                            <Field
-                                fields={fields} name="presenter_id" label="Presented By" lg={4} md={12}
-                                type="select" collection={this.presenters}
-                            />
-                        </Row>
-                    </Col>
-                </Row>
-
+                                <Field
+                                    name="venue_id" label="Venue" lg={4} md={12}
+                                    type="select" collection={this.venues}
+                                />
+                                <Field
+                                    name="presenter_id" label="Presented By" lg={4} md={12}
+                                    type="select" collection={this.presenters}
+                                />
+                            </Row>
+                        </Col>
+                    </Row>
+                </Form>
                 <Footer
                     margin="small"
                     justify="end"
@@ -192,5 +182,3 @@ class EditForm extends React.PureComponent {
         );
     }
 }
-
-export default addFormFieldValidations(EditForm, 'desiredHeight');

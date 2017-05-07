@@ -5,7 +5,7 @@ class CreatePublicEvents < ActiveRecord::Migration[5.0]
           select
             em.identifier as embed_identifier,
             tenant.slug as tenant_slug,
-            ev.identifier as event_identifier,
+            ev.identifier,
             ev.title,
             ev.sub_title,
             ev.description,

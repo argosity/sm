@@ -1,49 +1,43 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { Row, Col } from 'react-flexbox-grid';
-import { addFormFieldValidations,
-         persistFieldValues,
-         stringValue,
-         setFieldsFromModel,
-} from 'lanes/lib/forms';
-
-
+import { Row } from 'react-flexbox-grid';
 import Heading from 'grommet/components/Heading';
-
-import Field from 'lanes/components/form-field';
+import { Form, Field, FieldDefinitions, nonBlank } from 'lanes/components/form';
 import Tenant from '../../models/tenant';
 
 @observer
-class TenantConfig extends React.PureComponent {
+export default class TenantConfig extends React.PureComponent {
 
-    static formFields = {
-        slug: stringValue,
-        name: stringValue,
+    static propTypes = {
+        registerForSave: PropTypes.func.isRequired,
     }
 
+    formFields = new FieldDefinitions({
+        slug: nonBlank,
+        name: nonBlank,
+    })
+
     onSave() {
-        persistFieldValues(this.props, Tenant.current)
+        this.formFields.persistTo(Tenant.current)
             .then(() => Tenant.current.save());
     }
 
     componentWillMount() {
         this.props.registerForSave('tn', this);
-        setFieldsFromModel(this.props, Tenant.current);
+        this.formFields.setFromModel(Tenant.current);
     }
 
     render() {
         const { fields } = this.props;
         return (
-            <div>
+            <Form tag="div" className="tenant-edit-form" fields={this.formFields}>
                 <Heading tag="h3">Account</Heading>
                 <Row>
-                    <Field md={4} xs={6} name="slug" label="Identifier" fields={fields} />
-                    <Field md={4} xs={6} name="name" fields={fields} />
+                    <Field md={4} xs={6} name="slug" label="Identifier" />
+                    <Field md={4} xs={6} name="name" />
                 </Row>
-            </div>
+            </Form>
         );
     }
 }
-
-export default addFormFieldValidations(TenantConfig);

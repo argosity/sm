@@ -2,7 +2,7 @@ import { React, Snapshot, getScreenInstance } from 'lanes/testing/index';
 
 import EventModel from 'sm/models/event';
 import EventEditForm from 'sm/screens/events/edit-form';
-import EVENT from '../../fixtures/sm/event/1.json';
+import EVENT from '../../../fixtures/sm/event/1.json';
 
 // import Events from 'sm/screens/events';
 // const screenInstance = getScreenInstance('events');

@@ -36,7 +36,7 @@ export default class PurchaseField extends React.PureComponent {
 
     render() {
         const {
-            label, type, className,
+            label, className, ...cardFieldProps
         } = getColumnProps(this.props);
         return (
             <div className={classnames('form-field', className)}>
@@ -46,7 +46,7 @@ export default class PurchaseField extends React.PureComponent {
                     ref={f => (this.wrapper = f)}
                 >
                     <HostedField
-                        type={type}
+                        {...cardFieldProps}
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
                         onValidityChange={this.onValidityChange}

@@ -6,9 +6,8 @@ describe SM::Handlers::Events, api: true, vcr: VCR_OPTS do
     let (:embed) { FactoryGirl.create :embed }
 
     it "retrieves own events" do
-        get "/api/sm/public/events/#{embed.random_identifier}.json"
+        get "/api/sm/public/events/#{embed.identifier}.json"
         expect(last_response).to be_ok
-        p last_response_json
 
 
         # with_payment_proccessor do

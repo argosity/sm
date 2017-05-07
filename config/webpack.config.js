@@ -18,7 +18,7 @@ const config = {
     },
     output: {
         path: '<%= directory.join('..','public', 'assets') %>',
-        publicPath: '<%= Lanes.env.production? ? '/assets/' : 'http://localhost:8889/assets/' %>',
+        publicPath: '<%= Lanes.env.production? ? '/assets/' : 'http://test.lanes.dev:8889/assets/' %>',
         filename: '[name].js',
     },
     resolve: {

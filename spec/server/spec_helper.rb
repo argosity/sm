@@ -5,7 +5,7 @@ require 'faker'
 require 'lanes/db'
 Lanes::DB.establish_connection
 
-TEST_TENANT = SM::Tenant.find_or_create_by(slug: 'test', name: 'testing tenant', email: 'test@test.com')
+TEST_TENANT = SM::Tenant.find_by_slug('test') || SM::Tenant.create!(slug: 'test', name: 'testing tenant', email: 'test@test.com')
 MultiTenant.with(TEST_TENANT) do
     require 'lanes/spec_helper'
 end
@@ -13,7 +13,6 @@ end
 
 module PaymentHelpers
     def with_payment_proccessor
-
         allow(SM::BraintreeConfig).to receive(:system_settings_values) {
             { 'merchant_id' => 'dshtky2jcjpr96z3',
               'public_key'  => 'hm7n6vc84jbr962w',

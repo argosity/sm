@@ -13,6 +13,9 @@ import Event from './event';
 
 import './listing.scss';
 
+// FIXME remove
+import PURCHASE from '../../../../spec/fixtures/sm/purchase/rNtaPreVqCAm.json'
+
 @observer
 export default class Listing extends React.PureComponent {
     static propTypes = {
@@ -21,9 +24,14 @@ export default class Listing extends React.PureComponent {
         ).isRequired,
     }
 
-    @observable displaying = {}
 
-    @observable purchase = new PurchaseModel();
+    //    @observable displaying = {}
+
+    // FIXME - testing remove
+    @observable purchase = new PurchaseModel(PURCHASE);
+    @observable displaying = {purchase: this.purchase, view: 'receipt'}
+
+    //  @observable purchase = new PurchaseModel();
 
     @action.bound
     onDisplayInfo(event) {
@@ -79,7 +87,7 @@ export default class Listing extends React.PureComponent {
                 <h1>{this.props.events.length} events</h1>
                 {this.props.events.map(event => (
                      <Event
-                         key={event.event_identifier}
+                         key={event.identifier}
                          event={event}
                          onPurchase={this.onPurchase}
                          displayEvent={this.onDisplayInfo}

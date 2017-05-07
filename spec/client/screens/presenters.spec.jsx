@@ -5,8 +5,6 @@ const screenInstance = getScreenInstance('events');
 
 describe('Screen Presenters', () => {
     it('renders and matches snapshot', () => {
-        const screen = shallow(<Presenters screen={screenInstance} />);
-        expect(screen).toHaveRendered('Presenters');
         expect(Snapshot(<Presenters screen={screenInstance} />)).toMatchSnapshot();
     });
 });

@@ -23,7 +23,7 @@ module SM
                 purchase = SM::Purchase.new(
                     data.slice('name', 'phone', 'email', 'qty')
                 )
-                purchase.event = SM::Event.find_by(identifier: data['event_identifer'])
+                purchase.event = SM::Event.find_by(identifier: data['event_identifier'])
                 SM::Purchase.transaction do
                     data['payments'].each do |payment_data|
                         purchase.payments.build(payment_data)
@@ -40,7 +40,19 @@ module SM
                     Lanes.logger.error "Failed to deliver email for purchase id #{purchase.id} : #{e}"
                 end
 
-                std_api_reply(:create, purchase, success: !purchase.new_record?)
+                std_api_reply(:create, purchase, {
+                                  success: !purchase.new_record?,
+                                  only: [:identifier, :name, :qty, :email],
+                                  methods: [:total, :tickets_url],
+                                  include: {
+                                      event: {
+                                          only: [
+                                              :identifier, :title, :sub_title,
+                                              :description, :price, :occurs_at
+                                          ]
+                                      }
+                                  }
+                              })
             end
 
             private

@@ -34,7 +34,7 @@ export default class Embeds extends React.PureComponent {
 
     @autobind
     rowRenderer(props) {
-        const { index, key } = props;
+        const { style, index, key } = props;
         const [
             id, tenants, name, identifier,
         ] = this.query.results.rows[index];
@@ -43,6 +43,7 @@ export default class Embeds extends React.PureComponent {
             <Row
                 className="row"
                 key={key}
+                style={style}
             >
                 <Col xs={12}><Heading tag='h3'>{name}</Heading></Col>
                 <Col xs={12}>
@@ -61,7 +62,7 @@ export default class Embeds extends React.PureComponent {
             <Screen screen={this.props.screen}>
                 <DataList
                     query={this.query}
-                    rowHeight={300}
+                    rowHeight={200}
                     rowRenderer={this.rowRenderer}
                 />
             </Screen>

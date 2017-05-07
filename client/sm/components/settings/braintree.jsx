@@ -1,63 +1,60 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { mapValues, pick, keys, isEmpty } from 'lodash';
+import { get } from 'lodash';
 import { Row } from 'react-flexbox-grid';
-import { addFormFieldValidations, stringValue } from 'lanes/lib/forms';
-import Field from 'lanes/components/form-field';
+
+import { Form, Field, FieldDefinitions, nonBlank } from 'lanes/components/form';
+
 import Heading from 'grommet/components/Heading';
 import BraintreeConfigModel from '../../models/brain-tree-config';
-import User from 'lanes/user';
 
 const KEY = 'braintree';
 
 @observer
-class BraintreeConfig extends React.PureComponent {
+export default class BraintreeConfig extends React.PureComponent {
 
-    static formFields = {
-        merchant_id: stringValue,
-        public_key:  stringValue,
-        private_key: stringValue,
+    static propTypes = {
+        registerForSave: PropTypes.func.isRequired,
     }
+
+    formFields = new FieldDefinitions({
+        merchant_id: nonBlank,
+        public_key:  nonBlank,
+        private_key: nonBlank,
+    })
 
     config = new BraintreeConfigModel()
 
     onSave() {
-        this.props.settings[KEY] = mapValues(this.props.fields, 'value');
+        if (!this.props.settings[KEY]) { this.props.settings[KEY] = {}; }
+        this.formFields.persistTo(this.props.settings[KEY]);
     }
 
     componentWillMount() {
         this.props.registerForSave('bt', this);
-        this.setDefaults(this.props);
+        this.setFields(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setDefaults(nextProps);
+        this.setFields(nextProps);
     }
 
-    setDefaults(props) {
-        const config = pick(props.settings[KEY] || {}, keys(this.constructor.formFields));
-        if (!isEmpty(config)) {
-            this.props.setDefaultValues(config);
-        }
+    setFields(props) {
+        const config = get(props, `settings.${KEY}`, {});
+        this.formFields.set(config);
     }
 
     render() {
-        const { fields } = this.props;
-
         return (
-            <div>
+            <Form tag="div" className="braintree-edit-form" fields={this.formFields}>
                 <Heading tag="h3">Braintree payment settings</Heading>
                 <Row>
-                    <Field md={4} xs={6} name="merchant_id" fields={fields} />
-                    <Field md={4} xs={6} name="public_key" fields={fields} />
-                    <Field md={4} xs={6} name="private_key" fields={fields} />
+                    <Field md={4} xs={6} name="merchant_id" />
+                    <Field md={4} xs={6} name="public_key" />
+                    <Field md={4} xs={6} name="private_key" />
                 </Row>
-            </div>
+            </Form>
         );
     }
-
 }
-
-
-export default addFormFieldValidations(BraintreeConfig);

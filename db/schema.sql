@@ -324,7 +324,7 @@ CREATE TABLE tenants (
 CREATE VIEW public_events AS
  SELECT em.identifier AS embed_identifier,
     tenant.slug AS tenant_slug,
-    ev.identifier AS event_identifier,
+    ev.identifier,
     ev.title,
     ev.sub_title,
     ev.description,

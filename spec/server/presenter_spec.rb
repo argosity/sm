@@ -1,10 +1,10 @@
 require_relative 'spec_helper'
 
-describe sh::Presenter do
+describe SM::Presenter do
 
     it "can be instantiated" do
-        model = sh::Presenter.new
-        expect( model ).to be_an(sh::Presenter)
+        model = SM::Presenter.new
+        expect( model ).to be_an(SM::Presenter)
     end
 
 end

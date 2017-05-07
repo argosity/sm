@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
+<div
+  className="events-listing"
+>
+  <h1>
+    3
+     events
+  </h1>
+  <div
+    className="event"
+    data-event-identifier="TnXMWyEL2dFe"
+  >
+    <div
+      className="info"
+    >
+      <h2
+        className="title"
+      >
+        Radiohead
+      </h2>
+      <h3
+        className="sub-title"
+      >
+        with Giant Domino
+      </h3>
+      <p
+        className="description"
+      >
+        Innovative motivating circuit
+      </p>
+    </div>
+    <div
+      className="actions"
+    >
+      <button
+        aria-label={undefined}
+        className="grommetux-button"
+        disabled={false}
+        href={undefined}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        type="button"
+      >
+        <span
+          className="grommetux-button__icon"
+        >
+          <svg
+            aria-label="credit-card"
+            className="grommetux-control-icon grommetux-control-icon-credit-card grommetux-control-icon--responsive"
+            height="24px"
+            role="img"
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="24px"
+          >
+            <path
+              d="M1,5.00087166 C1,4.4481055 1.43945834,4 2.00246167,4 L21.9975383,4 C22.5511826,4 23,4.44463086 23,5.00087166 L23,18.9991283 C23,19.5518945 22.5605417,20 21.9975383,20 L2.00246167,20 C1.44881738,20 1,19.5553691 1,18.9991283 L1,5.00087166 Z M1,8 L23,8 L23,10 L1,10 L1,8 Z M5,15 L7,15 L7,15.5 L5,15.5 L5,15 Z M10,15 L16,15 L16,15.5 L10,15.5 L10,15 Z"
+              fill="none"
+              stroke="#000"
+              strokeWidth="2"
+            />
+          </svg>
+        </span>
+        <span
+          className="grommetux-button__label"
+        >
+          Purchase
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    className="event"
+    data-event-identifier="sehR4uN224XV"
+  >
+    <div
+      className="info"
+    >
+      <h2
+        className="title"
+      >
+        Little Feat
+      </h2>
+      <h3
+        className="sub-title"
+      >
+        with Dark Venom
+      </h3>
+      <p
+        className="description"
+      >
+        Automated needs-based open system
+      </p>
+    </div>
+    <div
+      className="actions"
+    />
+  </div>
+  <div
+    className="event"
+    data-event-identifier="cwMx65DgEAfG"
+  >
+    <div
+      className="info"
+    >
+      <h2
+        className="title"
+      >
+        Genesis
+      </h2>
+      <h3
+        className="sub-title"
+      >
+        with Molten Man II
+      </h3>
+      <p
+        className="description"
+      >
+        Right-sized bottom-line customer loyalty
+      </p>
+    </div>
+    <div
+      className="actions"
+    >
+      <a
+        aria-label={undefined}
+        className="grommetux-button"
+        disabled={false}
+        href="#"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        type={undefined}
+      >
+        <span
+          className="grommetux-button__icon"
+        >
+          <svg
+            aria-label="circle-information"
+            className="grommetux-control-icon grommetux-control-icon-circle-information grommetux-control-icon--responsive"
+            height="24px"
+            role="img"
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="24px"
+          >
+            <path
+              d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,10 L12,18 M12,6 L12,8"
+              fill="none"
+              stroke="#000"
+              strokeWidth="2"
+            />
+          </svg>
+        </span>
+        <span
+          className="grommetux-button__label"
+        >
+          Information
+        </span>
+      </a>
+      <button
+        aria-label={undefined}
+        className="grommetux-button"
+        disabled={false}
+        href={undefined}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        type="button"
+      >
+        <span
+          className="grommetux-button__icon"
+        >
+          <svg
+            aria-label="credit-card"
+            className="grommetux-control-icon grommetux-control-icon-credit-card grommetux-control-icon--responsive"
+            height="24px"
+            role="img"
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="24px"
+          >
+            <path
+              d="M1,5.00087166 C1,4.4481055 1.43945834,4 2.00246167,4 L21.9975383,4 C22.5511826,4 23,4.44463086 23,5.00087166 L23,18.9991283 C23,19.5518945 22.5605417,20 21.9975383,20 L2.00246167,20 C1.44881738,20 1,19.5553691 1,18.9991283 L1,5.00087166 Z M1,8 L23,8 L23,10 L1,10 L1,8 Z M5,15 L7,15 L7,15.5 L5,15.5 L5,15 Z M10,15 L16,15 L16,15.5 L10,15.5 L10,15 Z"
+              fill="none"
+              stroke="#000"
+              strokeWidth="2"
+            />
+          </svg>
+        </span>
+        <span
+          className="grommetux-button__label"
+        >
+          Purchase
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
