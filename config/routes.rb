@@ -25,14 +25,13 @@ class Hippo::API::Root
         end
     end
 
-    # APP = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "app.html").expand_path
-    # HOMEPAGE = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "homepage.html").expand_path
-    # Hippo.logger.warn "Setting route, env = #{Hippo.env.to_s}"
-    # if Hippo.env.production?
-    #     get '/*' do
-    #         send_file MultiTenant.current_tenant ? APP : HOMEPAGE
-    #     end
-    # end
+    APP = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "app.html").expand_path
+    HOMEPAGE = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "homepage.html").expand_path
+    if Hippo.env.production?
+        get '/*' do
+            send_file MultiTenant.current_tenant ? APP : HOMEPAGE
+        end
+    end
 
 end
 
