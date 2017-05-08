@@ -15,7 +15,7 @@ module SM
         # the setBootstrapData method in client/sm/Extension.coffee
         # when the app boots
         def client_bootstrap_data
-            nil
+            { rollbar:  Hippo.config.secrets.dig('rollbar', 'client') }
         end
 
         def on_dev_console
@@ -28,7 +28,6 @@ module SM
         def view_templates
             ['app.html', 'homepage.html']
         end
-
 
     end
 

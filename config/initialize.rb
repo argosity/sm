@@ -6,10 +6,7 @@ Hippo.configure do | config |
     # You can specify a different initial vew by setting it here
     # It must be set if the "Workspace" extension is disabled in
     # lib/sh/extension.rb
-    # config.root_view = "Sh.Screens.<View Name>"
 end
-
-#FIXTURE_CONFIG = YAML.load(ERB.new(File.read("#{Rails.root}/path_to_your_file.yml.erb")).result)
 
 require 'braintree'
 
@@ -18,3 +15,13 @@ Braintree::Configuration.environment = :sandbox
 Braintree::Configuration.merchant_id = bt.merchant_id
 Braintree::Configuration.public_key  = bt.pub_key
 Braintree::Configuration.private_key = bt.priv_key
+
+require 'rollbar/middleware/sinatra'
+require 'rollbar/middleware/sinatra'
+Rollbar.configure do |config|
+    config.access_token = Hippo.config.secrets.dig('rollbar', 'server')
+end
+
+if Hippo::API.const_defined?(:Root)
+    Hippo::API::Root.use Rollbar::Middleware::Sinatra
+end

@@ -1,5 +1,5 @@
 FactoryGirl.define do
-    factory :user, class: Lanes::User do
+    factory :user, class: Hippo::User do
         association :tenant, factory: :tenant, strategy: :build
 
         name { Faker::Name.name }

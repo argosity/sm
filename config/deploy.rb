@@ -1,3 +1,6 @@
+require 'yaml'
+require 'pathname'
+
 set :application, 'stockor-saas'
 set :repo_url, 'https://github.com/argosity/sm.git'
 set :deploy_to, '/srv/www/showmaker.com'
@@ -7,6 +10,8 @@ set :linked_files, %w(config/database.yml config/secrets.yml)
 set :linked_dirs, %w(public/files log node_modules)
 set :passenger_restart_with_touch, false
 
+secrets = YAML.load(Pathname.new(__FILE__).dirname.join('secrets.yml').read)
+set :rollbar_token, secrets.dig('rollbar', 'server')
 set :rollbar_env, Proc.new { fetch :stage }
 set :rollbar_role, Proc.new { :app }
 

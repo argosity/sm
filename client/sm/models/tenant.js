@@ -11,12 +11,8 @@ const CACHE = observable({
 @identifiedBy('sm/tenant')
 export default class Tenant extends BaseModel {
 
-    @identifier id;
-    @field slug = get(window, 'location.hostname', '').split('.')[0];
-    @field name;
-
-    @computed get url() {
-        return `https://${this.slug}.showmaker.com`;
+    static get subdomain() {
+        return get(window, 'location.hostname', '').split('.')[0];
     }
 
     @computed static get current() {
@@ -26,4 +22,13 @@ export default class Tenant extends BaseModel {
         }
         return CACHE.Tenant;
     }
+
+    @identifier id;
+    @field slug = Tenant.subdomain;
+    @field name;
+
+    @computed get url() {
+        return `https://${this.slug}.showmaker.com`;
+    }
+
 }
