@@ -12,17 +12,6 @@ module SM
                 std_api_reply(:retrieve, SM::Embed.json_for(params['id']))
             end
 
-            private
-
-            # def build_query(query = model.all)
-            #     query = super
-            #     query.where("visible_after <= now() and visible_until >= now()")
-            # end
-
-            # private
-            # def query_scopes
-            #     ['with_details']
-            # end
         end
     end
 
