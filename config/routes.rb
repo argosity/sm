@@ -8,7 +8,6 @@ Hippo::API.routes.for_extension 'sm' do
     resources SM::Purchase, path: 'embed/purchase', controller: SM::Handlers::Purchase, cors: '*', public: true
 
     resources SM::Tenant,   controller: SM::Handlers::Tenant
-
 end
 
 
@@ -28,8 +27,10 @@ class Hippo::API::Root
     APP = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "app.html").expand_path
     HOMEPAGE = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "homepage.html").expand_path
     if Hippo.env.production?
-        get '/*' do
-            send_file MultiTenant.current_tenant ? APP : HOMEPAGE
+        Hippo::API::Routing.route_root_view = lambda do
+            Hippo::API::Root.get '/*' do
+                send_file MultiTenant.current_tenant ? APP : HOMEPAGE
+            end
         end
     end
 
