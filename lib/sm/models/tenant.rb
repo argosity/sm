@@ -52,7 +52,7 @@ module SM
             t.name = params['company']
             t.users.build(params.slice(:name, :email, :login, :password))
             if t.save
-                MultiTenant.with(t) do
+                MultiTenant.with(Tenant.system) do
                     mail = Hippo::Mailer.create
                     mail.to t.email
                     mail.subject 'Thanks for signing up for ShowMaker'
