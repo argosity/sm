@@ -16,7 +16,7 @@ module SM
             def variables
                 vars = {
                     'company_name' => purchase.tenant.name,
-                    'purchase' => purchase.as_json(only: %w{random_identifier name email qty}),
+                    'purchase' => purchase.as_json(only: %w{identifier name email qty}),
                     'event' => purchase.event
                                    .as_json(only: %w{title sub_title description occurs_at})
                                    .merge('image' => image_json(purchase.event.image))
