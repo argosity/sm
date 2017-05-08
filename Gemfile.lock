@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/argosity/lanes
-  revision: 3bab4803c7c09c53245bfa72848238cf4b496640
+  remote: https://github.com/argosity/hippo
+  revision: bbfaa4a8af6a2749a2979f4ed43f833244e78b7e
   branch: master
   specs:
-    lanes (0.8.3)
+    hippo-fw (0.9.1)
       actioncable (~> 5.0.0)
       activejob (~> 5.0.0)
       activerecord (~> 5.0.0)
@@ -207,7 +207,7 @@ GEM
     puma (3.8.2)
     rack (2.0.1)
     rack-cors (0.4.1)
-    rack-protection (2.0.0.rc2)
+    rack-protection (2.0.0)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -284,10 +284,10 @@ GEM
     shrine-memory (0.2.2)
       down
       shrine (~> 2.0)
-    sinatra (2.0.0.rc2)
-      mustermann (= 1.0.0)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.0.rc2)
+      rack-protection (= 2.0.0)
       tilt (~> 2.0)
     slop (3.6.0)
     sprockets (3.7.1)
@@ -334,7 +334,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl
   faker
-  lanes!
+  hippo-fw!
   puma
   rake
   rollbar

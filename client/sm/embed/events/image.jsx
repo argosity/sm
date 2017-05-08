@@ -1,5 +1,5 @@
 import React from 'react';
-import Config from 'lanes/config';
+import Config from 'hippo/config';
 import { getColumnProps } from 'react-flexbox-grid';
 import classname from 'classnames';
 

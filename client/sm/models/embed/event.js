@@ -1,6 +1,6 @@
 import isPast   from 'date-fns/is_past';
 import isFuture from 'date-fns/is_future';
-import Config from 'lanes/config';
+import Config from 'hippo/config';
 import {
     EmbeddedBaseModel, identifiedBy, session, belongsTo, computed, identifier,
 } from './model';

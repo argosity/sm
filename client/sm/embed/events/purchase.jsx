@@ -10,8 +10,8 @@ import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 
-import NetworkActivityOverlay from 'lanes/components/network-activity-overlay';
-import WarningNotification from 'lanes/components/warning-notification';
+import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
+import WarningNotification from 'hippo/components/warning-notification';
 
 import PurchaseModel from '../../models/embed/purchase';
 import EventModel from '../../models/embed/event';

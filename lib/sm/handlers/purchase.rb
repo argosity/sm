@@ -1,16 +1,16 @@
-require 'lanes/api/controller_base'
+require 'hippo/api/controller_base'
 require 'braintree'
 
 module SM
     module Handlers
-        class Purchase < Lanes::API::ControllerBase
+        class Purchase < Hippo::API::ControllerBase
 
             def show
                 begin
                     gw = ::Braintree::ClientTokenGateway.new(SM::BraintreeConfig.gateway)
                     std_api_reply(:get, token: gw.generate, success: true)
                 rescue Braintree::AuthenticationError, Braintree::ConfigurationError => e
-                    Lanes.logger.warn e
+                    Hippo.logger.warn e
                     std_api_reply(:get, {}, {
                                       message: 'Processor authentication failure',
                                       errors: { authentication: 'failed' } ,
@@ -37,7 +37,7 @@ module SM
                 begin # we've charged the card at this point and we must show the results page
                     email_receipt(purchase) if purchase.errors.none?
                 rescue => e
-                    Lanes.logger.error "Failed to deliver email for purchase id #{purchase.id} : #{e}"
+                    Hippo.logger.error "Failed to deliver email for purchase id #{purchase.id} : #{e}"
                 end
 
                 std_api_reply(:create, purchase, {
@@ -69,7 +69,7 @@ module SM
                         email: purchase.email
                     }
                 )
-                Lanes.logger.warn "Processed CC transaction #{sale.transaction.id} for nonce #{payment['nonce']}, result: #{sale.success? ? 'success' : sale.message}"
+                Hippo.logger.warn "Processed CC transaction #{sale.transaction.id} for nonce #{payment['nonce']}, result: #{sale.success? ? 'success' : sale.message}"
                 if sale.success?
                     payment.processor_transaction = sale.transaction.id
                 else
@@ -79,7 +79,7 @@ module SM
             end
 
             def email_receipt(purchase)
-                mail = Lanes::Mailer.create
+                mail = Hippo::Mailer.create
                 mail.content_type = 'text/html; charset=UTF-8'
                 mail.body = ::SM::Templates::Purchase.new(purchase).render
                 mail.to = purchase.email

@@ -6,7 +6,7 @@ const config = {
     entry: {
         app: [
             'react-hot-loader/patch',
-            '<%= "#{Lanes::Extensions.controlling.identifier}/index.js" %>',
+            '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
         ],
         'embedded-events': [
             'react-hot-loader/patch',
@@ -18,7 +18,7 @@ const config = {
     },
     output: {
         path: '<%= directory.join('..','public', 'assets') %>',
-        publicPath: '<%= Lanes.env.production? ? '/assets/' : 'http://test.lanes.dev:8889/assets/' %>',
+        publicPath: '<%= Hippo.env.production? ? '/assets/' : 'http://test.hippo.dev:8889/assets/' %>',
         filename: '[name].js',
     },
     resolve: {
@@ -89,7 +89,7 @@ const config = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
         }),
-<% if Lanes.env.production? %>
+<% if Hippo.env.production? %>
         new webpack.optimize.UglifyJsPlugin(), //minify everything
         new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
         new webpack.optimize.OccurrenceOrderPlugin(), // use smallest id for most used chuncks

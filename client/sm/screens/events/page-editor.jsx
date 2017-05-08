@@ -14,8 +14,8 @@ import SaveIcon from 'grommet/components/icons/base/Save';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 
-import NetworkActivityOverlay from 'lanes/components/network-activity-overlay';
-import Asset from 'lanes/models/asset';
+import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
+import Asset from 'hippo/models/asset';
 import Event from '../../models/event';
 import './page-editor.scss';
 

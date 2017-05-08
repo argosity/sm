@@ -4,19 +4,19 @@ import { observer } from 'mobx-react';
 import { action, computed, observable } from 'mobx';
 import { forIn } from 'lodash';
 import { Row, Col } from 'react-flexbox-grid';
-import Screen from 'lanes/components/screen';
-import Query from 'lanes/models/query';
-import RecordFinder from 'lanes/components/record-finder';
+import Screen from 'hippo/components/screen';
+import Query from 'hippo/models/query';
+import RecordFinder from 'hippo/components/record-finder';
 import Header   from 'grommet/components/Header';
 import Button   from 'grommet/components/Button';
 import SaveIcon from 'grommet/components/icons/base/Save';
 import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
-import Warning from 'lanes/components/warning-notification';
-import Asset from 'lanes/components/asset';
+import Warning from 'hippo/components/warning-notification';
+import Asset from 'hippo/components/asset';
 
 import {
     Form, Field, FieldDefinitions, nonBlank, numberValue, stringValue,
-} from 'lanes/components/form';
+} from 'hippo/components/form';
 
 import Venue from '../models/venue';
 

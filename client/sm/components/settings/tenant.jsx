@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { Row } from 'react-flexbox-grid';
 import Heading from 'grommet/components/Heading';
-import { Form, Field, FieldDefinitions, nonBlank } from 'lanes/components/form';
+import { Form, Field, FieldDefinitions, nonBlank } from 'hippo/components/form';
 import Tenant from '../../models/tenant';
 
 @observer

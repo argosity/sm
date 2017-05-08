@@ -32,8 +32,8 @@ module SM
 
         def tickets_url
             tenant.url +
-                Lanes.config.api_path +
-                Lanes.config.print_path_prefix +
+                Hippo.config.api_path +
+                Hippo.config.print_path_prefix +
                 '/tickets/' + identifier + '.pdf'
         end
 

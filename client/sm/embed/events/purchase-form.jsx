@@ -7,7 +7,7 @@ import Box from 'grommet/components/Box';
 import { observable, action, computed } from 'mobx';
 import { findKey, mapValues, extend } from 'lodash';
 
-import { Form, Field, FieldDefinitions, nonBlank, numberValue, validEmail, validPhone } from 'lanes/components/form';
+import { Form, Field, FieldDefinitions, nonBlank, numberValue, validEmail, validPhone } from 'hippo/components/form';
 
 import Value from 'grommet/components/Value';
 

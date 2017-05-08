@@ -1,6 +1,6 @@
 module SM
     module Templates
-        class Mail < Lanes::Templates::Liquid
+        class Mail < Hippo::Templates::Liquid
             extension_id :sm
 
             def pathname

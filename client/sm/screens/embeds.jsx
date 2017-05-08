@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Screen from 'lanes/components/screen';
+import Screen from 'hippo/components/screen';
 import { Row, Col } from 'react-flexbox-grid';
-import Query    from 'lanes/models/query';
-import DataList from 'lanes/components/data-list';
+import Query    from 'hippo/models/query';
+import DataList from 'hippo/components/data-list';
 import { autobind } from 'core-decorators';
 import Heading from 'grommet/components/Heading';
 

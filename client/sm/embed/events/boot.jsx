@@ -1,6 +1,6 @@
 import React from 'react';  // eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';
-import Config from 'lanes/config';
+import Config from 'hippo/config';
 import EmbeddedEvents from 'sm/models/embed/event';
 import { AppContainer } from 'react-hot-loader';
 

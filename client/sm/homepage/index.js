@@ -1,5 +1,5 @@
 import whenDomReady from 'when-dom-ready';
-import SmoothScroll from 'lanes/lib/smooth-scroll';
+import SmoothScroll from 'hippo/lib/smooth-scroll';
 import './homepage.scss';
 
 whenDomReady(() => {

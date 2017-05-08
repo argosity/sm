@@ -1,12 +1,12 @@
-import { BaseModel as LanesBaseModel } from 'lanes/models/base';
+import { BaseModel as HippoBaseModel } from 'hippo/models/base';
 
 export {
     identifiedBy, belongsTo, hasMany,
     action, autorun, field, session, identifier, observable, computed,
-} from 'lanes/models/base';
+} from 'hippo/models/base';
 
 
-export class EmbeddedBaseModel extends LanesBaseModel {
+export class EmbeddedBaseModel extends HippoBaseModel {
 
 
 }

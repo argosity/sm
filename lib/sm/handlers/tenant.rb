@@ -1,7 +1,7 @@
-require 'lanes/api/controller_base'
+require 'hippo/api/controller_base'
 
 module SM::Handlers
-    class Tenant < Lanes::API::ControllerBase
+    class Tenant < Hippo::API::ControllerBase
         PUBLIC_ATTRS = %w{slug name}
 
         def show

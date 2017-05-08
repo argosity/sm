@@ -7,7 +7,7 @@ module SM
 
         validates :name, :capacity, presence: true
 
-        has_one :logo, as: :owner, class_name: 'Lanes::Asset',
+        has_one :logo, as: :owner, class_name: 'Hippo::Asset',
                 dependent: :destroy, export: true
     end
 

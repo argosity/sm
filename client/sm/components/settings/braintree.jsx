@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { get } from 'lodash';
 import { Row } from 'react-flexbox-grid';
 
-import { Form, Field, FieldDefinitions, nonBlank } from 'lanes/components/form';
+import { Form, Field, FieldDefinitions, nonBlank } from 'hippo/components/form';
 
 import Heading from 'grommet/components/Heading';
 import BraintreeConfigModel from '../../models/brain-tree-config';

@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import { get } from 'lodash';
-import Config from 'lanes/config';
+import Config from 'hippo/config';
 
 import cn from 'classnames';
 import { Row, Col, getColumnProps } from 'react-flexbox-grid';

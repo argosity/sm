@@ -1,4 +1,4 @@
-import Query    from 'lanes/models/query';
+import Query    from 'hippo/models/query';
 
 
 export default function createEventQuery() {

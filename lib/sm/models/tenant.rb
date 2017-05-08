@@ -6,7 +6,7 @@ module SM
         validates :email, :presence => true
 
         has_random_identifier
-        has_many :users, class_name: 'Lanes::User', autosave: true
+        has_many :users, class_name: 'Hippo::User', autosave: true
         has_many :embeds, autosave: true
 
         accepts_nested_attributes_for :users
@@ -34,7 +34,7 @@ module SM
         def auto_assign_slug
             5.times do |i|
                 if slug.blank?
-                    newslug = Lanes::Strings.code_identifier(self.name, length: i + 5)
+                    newslug = Hippo::Strings.code_identifier(self.name, length: i + 5)
                     self.slug = newslug if Tenant.where(slug: newslug).none?
                 end
                 break if slug.present?
@@ -53,7 +53,7 @@ module SM
             t.users.build(params.slice(:name, :email, :login, :password))
             if t.save
                 MultiTenant.with(t) do
-                    mail = Lanes::Mailer.create(
+                    mail = Hippo::Mailer.create(
                         to: t.email, subject: 'Thanks for signing up for ShowMaker'
                     )
                     mail.body = SM::Templates::Signup.new(t).render

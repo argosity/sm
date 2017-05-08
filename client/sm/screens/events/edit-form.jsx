@@ -2,7 +2,7 @@ import { action, observable, computed, autorun } from 'mobx';
 
 import {
     Form, Field, FieldDefinitions, nonBlank, numberValue, stringValue, field, dateValue, validURL,
-} from 'lanes/components/form';
+} from 'hippo/components/form';
 
 
 import React from 'react';
@@ -16,13 +16,13 @@ import Button from 'grommet/components/Button';
 import DocumentTextIcon from 'grommet/components/icons/base/DocumentText';
 import SaveIcon from 'grommet/components/icons/base/Save';
 
-import Asset from 'lanes/components/asset';
+import Asset from 'hippo/components/asset';
 
 import PageEditor from './page-editor';
 import Venue from '../../models/venue';
 import Event from '../../models/event';
 import Presenter from '../../models/presenter';
-import NetworkActivityOverlay from 'lanes/components/network-activity-overlay';
+import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 
 @observer
 export default class EditForm extends React.PureComponent {

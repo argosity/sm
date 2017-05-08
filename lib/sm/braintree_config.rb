@@ -9,16 +9,16 @@ module SM
             def config
                 config = system_settings_values
                 Braintree::Configuration.new(
-                    environment: Lanes.env.production? ? :production : :sandbox,
+                    environment: Hippo.env.production? ? :production : :sandbox,
                     merchant_id: config['merchant_id'],
                     public_key:  config['public_key'],
                     private_key: config['private_key'],
-                    logger:      Lanes.logger
+                    logger:      Hippo.logger
                 )
             end
 
             def system_settings_values
-                Lanes::SystemSettings.config.for_ext(CONFIG_KEY)
+                Hippo::SystemSettings.config.for_ext(CONFIG_KEY)
             end
 
             def gateway

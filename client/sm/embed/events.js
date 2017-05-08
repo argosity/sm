@@ -1,4 +1,4 @@
-import Bootstrap from 'lanes/lib/bootstrap';
+import Bootstrap from 'hippo/lib/bootstrap';
 
 import './loading.scss';
 

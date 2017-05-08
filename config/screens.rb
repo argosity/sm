@@ -1,14 +1,14 @@
-Lanes::Screen.enabled_group_ids = [
+Hippo::Screen.enabled_group_ids = [
     'events', 'system-settings'
 ]
 
-Lanes::Screen.define_group 'events' do | group |
+Hippo::Screen.define_group 'events' do | group |
     group.title       = "Events"
     group.description = "Screens relating to Events"
     group.icon        = "heart"
 end
 
-Lanes::Screen.for_extension 'sm' do | screens |
+Hippo::Screen.for_extension 'sm' do | screens |
     screens.define "presenters" do | screen |
         screen.title       = "Presenters"
         screen.description = ""

@@ -1,5 +1,5 @@
 import { observe } from 'mobx';
-import Asset from 'lanes/models/asset';
+import Asset from 'hippo/models/asset';
 import {
     BaseModel, identifiedBy, identifier, belongsTo, field, computed,
 } from './base';

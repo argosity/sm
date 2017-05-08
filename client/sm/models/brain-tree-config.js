@@ -2,7 +2,7 @@ import {
     BaseModel, identifiedBy, field, identifier, computed,
 } from './base';
 
-import Config from 'lanes/config';
+import Config from 'hippo/config';
 
 @identifiedBy('sm/brain-tree-config')
 export default class BrainTreeConfig extends BaseModel {

@@ -1,4 +1,4 @@
-require "lanes"
+require "hippo"
 require 'require_all'
 require_relative "sm/version.rb"
 require_relative "sm/extension.rb"
@@ -6,7 +6,7 @@ require_relative "sm/tenant_domain_router"
 
 module SM
     def self.system_settings
-        Lanes::SystemSettings.for_ext('sm')
+        Hippo::SystemSettings.for_ext('sm')
     end
 end
 

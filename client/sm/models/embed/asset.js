@@ -3,7 +3,7 @@ import {
 } from './model';
 import { get } from 'lodash';
 import { computed } from 'mobx';
-import Config from 'lanes/config';
+import Config from 'hippo/config';
 
 @identifiedBy('sm/embedded/venue')
 export default class Asset extends EmbeddedBaseModel {

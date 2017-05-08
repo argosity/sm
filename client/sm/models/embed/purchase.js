@@ -1,5 +1,5 @@
-import Config from 'lanes/config';
-import Sync from 'lanes/models/sync';
+import Config from 'hippo/config';
+import Sync from 'hippo/models/sync';
 
 import {
     EmbeddedBaseModel, identifiedBy, field, identifier, computed, session, hasMany, belongsTo,

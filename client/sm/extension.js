@@ -2,7 +2,7 @@
 import React from 'react';
 import {
     BaseExtension, identifiedBy, identifier,
-} from 'lanes/extensions/base';
+} from 'hippo/extensions/base';
 
 import SystemSettings from './components/settings';
 
@@ -14,14 +14,14 @@ export default class SMExtension extends BaseExtension {
     @identifier id = 'sh';
 
     // This method is called when the extension is registered
-    // Not all of Lanes will be available yet
+    // Not all of Hippo will be available yet
     onRegistered() { }
 
-    // This method is called after Lanes is completly loaded
+    // This method is called after Hippo is completly loaded
     // and all extensions are registered
     onInitialized() { }
 
-    // All extenensions have been given their data and Lanes has completed startup
+    // All extenensions have been given their data and Hippo has completed startup
     onAvailable() { }
 
     // Data that is provided by SM::Extension#client_bootstrap_data

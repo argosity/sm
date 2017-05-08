@@ -2,7 +2,7 @@ require_relative "../sm"
 
 module SM
 
-    class Extension < Lanes::Extensions::Definition
+    class Extension < Hippo::Extensions::Definition
 
         identifier "sm"
 

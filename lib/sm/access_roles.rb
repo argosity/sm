@@ -1,8 +1,8 @@
-require 'lanes/access'
+require 'hippo/access'
 require_relative "model"
 
 # Access control
-module Lanes::Access
+module Hippo::Access
 
     module Roles
 

@@ -1,2 +1,2 @@
 require_relative 'lib/sm'
-require 'lanes/rake_tasks'
+require 'hippo/rake_tasks'

@@ -6,9 +6,9 @@ import { observable, action, computed } from 'mobx';
 import {
     CellMeasurer, CellMeasurerCache,
 } from 'react-virtualized';
-import Query    from 'lanes/models/query';
-import Screen   from 'lanes/components/screen';
-import DataList from 'lanes/components/data-list';
+import Query    from 'hippo/models/query';
+import Screen   from 'hippo/components/screen';
+import DataList from 'hippo/components/data-list';
 
 import Button   from 'grommet/components/Button';
 

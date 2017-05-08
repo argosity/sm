@@ -1,7 +1,7 @@
 module SM
 
     module Templates
-        class Ticket < Lanes::Templates::Latex
+        class Ticket < Hippo::Templates::Latex
             model ::SM::Purchase
             extension_id :sm
 

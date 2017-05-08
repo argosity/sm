@@ -3,7 +3,7 @@ require 'activerecord-multi-tenant'
 module SM
     # All models in SM will inherit from
     # this common base class.
-    class Model < Lanes::Model
+    class Model < Hippo::Model
         self.abstract_class = true
 
         def self.acts_as_tenant
