@@ -5,7 +5,7 @@ describe "Printing templates" do
     let(:presenter) { FactoryGirl.create :presenter }
     let(:event) { FactoryGirl.create :event, presenter: presenter }
     let(:purchase) { FactoryGirl.create :purchase, event: event }
-    let(:ticket) { Lanes::Templates::Latex.for_identifier('tickets') }
+    let(:ticket) { Hippo::Templates::Latex.for_identifier('tickets') }
 
     it "can generate a pdf for a ticket" do
         event.build_image({ file: Pathname.new(__FILE__).dirname.join('../fixtures/logo.png').open })

@@ -4,7 +4,7 @@
     "name":"nathan",
     "email": "test@test.com",
     "total":56.72,
-    "tickets_url": "http://test.lanes.dev:8889/api/print/tickets/rNtaPreVqCAm.pdf",
+    "tickets_url": "http://test.hippo.dev:8889/api/print/tickets/rNtaPreVqCAm.pdf",
     "event": {
         "identifier": "UukvbM9YPLwN",
         "title": "Iron Maiden",

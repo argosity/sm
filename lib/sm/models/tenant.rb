@@ -49,15 +49,13 @@ module SM
 
         def self.signup(params)
             t = Tenant.new(params.slice(:email))
-            t.name = params['company']
-            t.users.build(params.slice(:name, :email, :login, :password))
-            if t.save
-                MultiTenant.with(Tenant.system) do
-                    mail = Hippo::Mailer.create
-                    mail.to t.email
-                    mail.subject 'Thanks for signing up for ShowMaker'
-                    mail.body = SM::Templates::Signup.new(t).render
-                    mail.deliver
+            self.transaction do
+                t.name = params['company']
+                t.users.build(params.slice(:name, :email, :login, :password))
+                if t.save
+                    MultiTenant.with(Tenant.system) do
+                        SM::Templates::Signup.create(t).deliver
+                    end
                 end
             end
             t

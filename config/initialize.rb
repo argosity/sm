@@ -16,12 +16,14 @@ Braintree::Configuration.merchant_id = bt.merchant_id
 Braintree::Configuration.public_key  = bt.pub_key
 Braintree::Configuration.private_key = bt.priv_key
 
-require 'rollbar/middleware/sinatra'
-require 'rollbar/middleware/sinatra'
-Rollbar.configure do |config|
-    config.access_token = Hippo.config.secrets.dig('rollbar', 'server')
-end
-
-if Hippo::API.const_defined?(:Root)
-    Hippo::API::Root.use Rollbar::Middleware::Sinatra
+token = Hippo.config.secrets.dig('rollbar', 'server')
+if token
+    require 'rollbar/middleware/sinatra'
+    Rollbar.configure do |config|
+        config.access_token = token
+        config.enabled = Hippo.env.production?
+    end
+    if Hippo::API.const_defined?(:Root)
+        Hippo::API::Root.use Rollbar::Middleware::Sinatra
+    end
 end

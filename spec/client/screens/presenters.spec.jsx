@@ -1,4 +1,4 @@
-import { React, Snapshot, getScreenInstance } from 'lanes/testing';
+import { React, Snapshot, getScreenInstance } from 'hippo/testing';
 import Presenters from 'sm/screens/presenters';
 
 const screenInstance = getScreenInstance('events');

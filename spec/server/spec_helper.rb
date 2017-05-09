@@ -2,12 +2,12 @@ require_relative '../../lib/sm'
 require 'factory_girl'
 require 'faker'
 
-require 'lanes/db'
-Lanes::DB.establish_connection
+require 'hippo/db'
+Hippo::DB.establish_connection
 
 TEST_TENANT = SM::Tenant.find_by_slug('test') || SM::Tenant.create!(slug: 'test', name: 'testing tenant', email: 'test@test.com')
 MultiTenant.with(TEST_TENANT) do
-    require 'lanes/spec_helper'
+    require 'hippo/spec_helper'
 end
 
 
@@ -34,7 +34,7 @@ RSpec.configure do |config|
     end
     config.before(:suite) do
         MultiTenant.with(TEST_TENANT) do
-            Lanes::User.seed_admin_account
+            Hippo::User.seed_admin_account
         end
         SM::Tenant.find_or_create_by(slug: 'test', name: 'testing tenant', email: 'test@test.com')
     end

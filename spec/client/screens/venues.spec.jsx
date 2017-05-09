@@ -1,6 +1,6 @@
 import React from 'react';
 import Venues from 'sm/screens/venues';
-import { Snapshot, getScreenInstance } from 'lanes/testing/screens';
+import { Snapshot, getScreenInstance } from 'hippo/testing/screens';
 
 const screenInstance = getScreenInstance('events');
 

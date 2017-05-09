@@ -1,4 +1,4 @@
-import { React, Snapshot, getScreenInstance } from 'lanes/testing/index';
+import { React, Snapshot, getScreenInstance } from 'hippo/testing/index';
 import Embeds from 'sm/screens/embeds';
 
 const screenInstance = getScreenInstance('embeds');

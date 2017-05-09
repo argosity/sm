@@ -1,4 +1,4 @@
-import { React, Snapshot, getScreenInstance } from 'lanes/testing/index';
+import { React, Snapshot, getScreenInstance } from 'hippo/testing/index';
 
 import EventModel from 'sm/models/event';
 import EventEditForm from 'sm/screens/events/edit-form';

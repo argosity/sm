@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 77937306e4a6e2541ee4ce35ee8ef60f8ce6d2d1
+  revision: 9ca00d23425c3b53e327ab585caa83a3bb2708d5
   branch: master
   specs:
     hippo-fw (0.9.1)
@@ -205,7 +205,7 @@ GEM
       slop (~> 3.4)
     public_suffix (2.0.5)
     puma (3.8.2)
-    rack (2.0.1)
+    rack (2.0.2)
     rack-cors (0.4.1)
     rack-protection (2.0.0)
       rack

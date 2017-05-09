@@ -1,4 +1,4 @@
-lanes:
+hippo:
   smtp:
     server: 'test.localhost'
     login: 'test'
