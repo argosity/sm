@@ -14,7 +14,7 @@ end
 
 [:login, :email].each do |field|
     validator = Hippo::User._validators[field].find{|v| v.is_a? ActiveRecord::Validations::UniquenessValidator }
-    validator.instance_variable_set(:@options, validator.options.merge({ :scope => :tenant_id }))
+    validator.instance_variable_set(:@options, validator.options.merge({ :scope => :tenant }))
 end
 
 module Hippo

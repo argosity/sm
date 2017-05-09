@@ -1,7 +1,7 @@
 module SM
     # Tenant
     class Tenant < Model
-        validates :slug, uniqueness: true
+        validates :slug, uniqueness: { case_sensitive: false }
         validates :name, :presence => { message: 'for company' }
         validates :email, :presence => true
 
@@ -34,12 +34,11 @@ module SM
         def auto_assign_slug
             5.times do |i|
                 if slug.blank?
-                    newslug = Hippo::Strings.code_identifier(self.name, length: i + 5)
+                    newslug = Hippo::Strings.code_identifier(self.name, length: i + 5).downcase
                     self.slug = newslug if Tenant.where(slug: newslug).none?
                 end
                 break if slug.present?
             end
-            slug.downcase! if slug
         end
 
         # convenience method
@@ -51,10 +50,12 @@ module SM
             t = Tenant.new(params.slice(:email))
             self.transaction do
                 t.name = params['company']
-                t.users.build(params.slice(:name, :email, :login, :password))
-                if t.save
-                    MultiTenant.with(Tenant.system) do
-                        SM::Templates::Signup.create(t).deliver
+                MultiTenant.with(t) do
+                    t.users.build(params.slice(:name, :email, :login, :password))
+                    if t.save
+                        MultiTenant.with(Tenant.system) do
+                            SM::Templates::Signup.create(t).deliver
+                        end
                     end
                 end
             end
