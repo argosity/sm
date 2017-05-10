@@ -51,7 +51,8 @@ module SM
             self.transaction do
                 t.name = params['company']
                 MultiTenant.with(t) do
-                    t.users.build(params.slice(:name, :email, :login, :password))
+                    t.users.build(params.slice(:name, :email, :login, :password)
+                                      .merge(role_names: ["administrator"]))
                     if t.save
                         MultiTenant.with(Tenant.system) do
                             SM::Templates::Signup.create(t).deliver
