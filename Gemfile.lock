@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 9ca00d23425c3b53e327ab585caa83a3bb2708d5
+  revision: e603ae03f0fdded4fc1c2570352c74253b493626
   branch: master
   specs:
     hippo-fw (0.9.1)
@@ -122,7 +122,7 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.2)
-    database_cleaner (1.6.0)
+    database_cleaner (1.6.1)
     diff-lcs (1.3)
     down (2.5.0)
     erb_latex (1.0.0)
@@ -180,7 +180,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_magick (4.7.0)
     mini_portile2 (2.1.0)
-    minitest (5.10.1)
+    minitest (5.10.2)
     mixlib-shellout (2.2.7)
     mono_logger (1.1.0)
     multi_json (1.12.1)
@@ -190,7 +190,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
     nio4r (2.0.0)
-    nokogiri (1.7.1)
+    nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     nokogumbo (1.2.0)
       nokogiri
