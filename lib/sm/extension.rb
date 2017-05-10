@@ -22,7 +22,7 @@ module SM
             require 'faker'
             require 'factory_girl'
             FactoryGirl.find_definitions
-            MultiTenant.current_tenant = SM::Tenant.find_by_slug('test')
+            MultiTenant.current_tenant = SM::Tenant.system
         end
 
         def view_templates
