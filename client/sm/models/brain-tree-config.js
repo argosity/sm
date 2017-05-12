@@ -1,8 +1,9 @@
+import Config from 'hippo/config';
+
 import {
     BaseModel, identifiedBy, field, identifier, computed,
 } from './base';
 
-import Config from 'hippo/config';
 
 @identifiedBy('sm/brain-tree-config')
 export default class BrainTreeConfig extends BaseModel {
@@ -15,5 +16,4 @@ export default class BrainTreeConfig extends BaseModel {
     @computed get syncUrl() {
         return `${Config.api_path}/sm/payments-config`;
     }
-
 }

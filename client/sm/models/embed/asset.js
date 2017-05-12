@@ -1,9 +1,9 @@
-import {
-    EmbeddedBaseModel, session, belongsTo, identifiedBy,
-} from './model';
 import { get } from 'lodash';
 import { computed } from 'mobx';
 import Config from 'hippo/config';
+import {
+    EmbeddedBaseModel, session, identifiedBy,
+} from './model';
 
 @identifiedBy('sm/embedded/venue')
 export default class Asset extends EmbeddedBaseModel {

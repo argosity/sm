@@ -2,7 +2,7 @@
         {
             "embed_identifier": "xmKSubCYSWxv",
             "tenant_slug": "test",
-            "event_identifier": "TnXMWyEL2dFe",
+            "identifier": "TnXMWyEL2dFe",
             "title": "Radiohead",
             "sub_title": "with Giant Domino",
             "description": "Innovative motivating circuit",
@@ -60,7 +60,7 @@
         {
             "embed_identifier": "xmKSubCYSWxv",
             "tenant_slug": "test",
-            "event_identifier": "sehR4uN224XV",
+            "identifier": "sehR4uN224XV",
             "title": "Little Feat",
             "sub_title": "with Dark Venom",
             "description": "Automated needs-based open system",
@@ -118,7 +118,7 @@
         {
             "embed_identifier": "xmKSubCYSWxv",
             "tenant_slug": "test",
-            "event_identifier": "cwMx65DgEAfG",
+            "identifier": "cwMx65DgEAfG",
             "title": "Genesis",
             "sub_title": "with Molten Man II",
             "description": "Right-sized bottom-line customer loyalty",

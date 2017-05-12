@@ -31,7 +31,7 @@ export default class Event extends React.PureComponent {
         return (
             <div
                 className="event"
-                data-event-identifier={event.event_identifier}
+                data-event-identifier={event.identifier}
             >
                 <Image image={event.image} />
                 <div className="info">

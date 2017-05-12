@@ -1,8 +1,8 @@
+import { get } from 'lodash';
+import { observable } from 'mobx';
 import {
     BaseModel, identifiedBy, field, identifier, computed,
 } from './base';
-import { get } from 'lodash';
-import { observable } from 'mobx';
 
 const CACHE = observable({
     Tenant: undefined,

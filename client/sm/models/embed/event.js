@@ -1,5 +1,7 @@
 import isPast   from 'date-fns/is_past';
 import isFuture from 'date-fns/is_future';
+import { sprintf } from 'sprintf-js';
+import Big from 'big.js';
 import Config from 'hippo/config';
 import {
     EmbeddedBaseModel, identifiedBy, session, belongsTo, computed, identifier,
@@ -7,8 +9,7 @@ import {
 import Asset from './asset';
 import Presenter from './presenter';
 import Venue from './venue';
-import { sprintf } from 'sprintf-js';
-import Big from 'big.js';
+
 @identifiedBy('sm/embedded/event')
 export default class EmbeddedEvent extends EmbeddedBaseModel {
 

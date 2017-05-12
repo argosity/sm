@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-plugin-lodash": "^3.2.11",
+    "babel-preset-env": "^1.4.0",
     "braintree-web": "^3.12.0",
     "core-decorators": "^0.17.0",
     "date-fns": "^1.28.4",

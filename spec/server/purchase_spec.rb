@@ -9,7 +9,7 @@ describe SM::Purchase do
             event: event,
             payments: [
                 SM::Payment.new(
-                    card_type: 'Visa', digits: '22', processor_transaction: '1234'
+                    card_type: 'Visa', digits: '22', processor_transaction: '1234', amount: event.price
                 )
             ]
         )
@@ -24,6 +24,5 @@ describe SM::Purchase do
         })
         event.save!
         expect(purchase.save).to be(true)
-        # puts SM::Templates::Purchase.new(purchase).render
     end
 end

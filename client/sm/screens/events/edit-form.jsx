@@ -47,7 +47,7 @@ export default class EditForm extends React.PureComponent {
         visible_after: nonBlank,
         onsale_until:  nonBlank,
         capacity:      numberValue,
-        external_url:  validURL,
+        external_url:  validURL({ allowBlank: true }),
     })
 
     componentWillMount() {

@@ -13,6 +13,13 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
     data-event-identifier="TnXMWyEL2dFe"
   >
     <div
+      className="image"
+    >
+      <img
+        src="undefined/apiundefined/km2t/7t9x/xvdt/116057679f0ed7de0735437f45a635af.jpg"
+      />
+    </div>
+    <div
       className="info"
     >
       <h2
@@ -79,6 +86,13 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
     data-event-identifier="sehR4uN224XV"
   >
     <div
+      className="image"
+    >
+      <img
+        src="undefined/apiundefined/cf32/3571/qez4/e7aa365117af066cf62b115394f5eb4b.png"
+      />
+    </div>
+    <div
       className="info"
     >
       <h2
@@ -106,6 +120,13 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
     data-event-identifier="cwMx65DgEAfG"
   >
     <div
+      className="image"
+    >
+      <img
+        src="undefined/apiundefined/bjp5/c4sd/gmud/3fad2e44aac60c2a0bf56f4418c33235.png"
+      />
+    </div>
+    <div
       className="info"
     >
       <h2
@@ -127,17 +148,18 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
     <div
       className="actions"
     >
-      <a
+      <button
         aria-label={undefined}
         className="grommetux-button"
         disabled={false}
-        href="#"
+        href={undefined}
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
         onMouseDown={[Function]}
         onMouseUp={[Function]}
-        type={undefined}
+        target="_blank"
+        type="button"
       >
         <span
           className="grommetux-button__icon"
@@ -164,7 +186,7 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
         >
           Information
         </span>
-      </a>
+      </button>
       <button
         aria-label={undefined}
         className="grommetux-button"

@@ -4,8 +4,6 @@ import Sync from 'hippo/models/sync';
 import {
     EmbeddedBaseModel, identifiedBy, field, identifier, computed, session, hasMany, belongsTo,
 } from './model';
-
-import { observable } from 'mobx';
 import Payment from './payment';
 import Event from './event';
 
@@ -33,12 +31,6 @@ export default class Purchase extends EmbeddedBaseModel {
     @computed get syncUrl() {
         return `${Config.api_path}/sm/embed/purchase`;
     }
-
-
-    // set event(ev) {
-    //     this.event_identifier = ev.event_identifier;
-    //     this._event = ev;
-    // }
 
     constructor(attrs) {
         super(attrs);

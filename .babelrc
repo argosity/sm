@@ -11,11 +11,12 @@
     "presets": [
         ["es2015", {"modules": false}],
         "react",
-        "stage-1"
-    ],
-    "env": {
-        "test": {
-            "plugins": ["transform-es2015-modules-commonjs"]
-        }
-    }
+        "stage-1",
+        ["env", {
+            "targets": {
+                "browsers": ["> 1%"]
+            },
+            "debug": false
+        }]
+    ]
 }

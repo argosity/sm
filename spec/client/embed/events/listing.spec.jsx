@@ -25,7 +25,7 @@ describe('Embedded Events Listing', () => {
 
     it('renders events and matches snapshot', () => {
         DATA.forEach(ev =>
-            expect(listing).toHaveRendered(`[data-event-identifier="${ev.event_identifier}"]`),
+            expect(listing).toHaveRendered(`[data-event-identifier="${ev.identifier}"]`),
         );
         expect(Snapshot(<Listing events={events} />)).toMatchSnapshot();
     });
@@ -54,9 +54,6 @@ describe('Embedded Events Listing', () => {
     it('can display purchase from info', () => {
         listing.find('[data-event-identifier="cwMx65DgEAfG"] InfoButton Button').simulate('click');
         document.querySelector('.grommetux-layer__container footer button').click();
-
-
-
     });
 
 })

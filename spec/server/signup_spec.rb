@@ -21,7 +21,6 @@ describe "Tenant signup", api: true, vcr: VCR_OPTS do
 
     it "succeeds when required data is present" do
         3.times do |i|
-            p i
             expect do
                 post '/signup', {
                          name: 'Bob',

@@ -11,22 +11,14 @@ describe SM::Embed do
         }
     }
 
-    # it "can query events" do
-    #     titles = events.map(&:title)
-    #     expect(SM::Embed.json_for('f')).to(
-    #         include(a_collection_including(
-    #                     'title' => titles[0]
-    #                 )
-    #                )
-    #     )
-    # end
-
     it "updates event slugs" do
         slugs = embeds.map(&:tenants)
-        p slugs
         MultiTenant.with(tenant) do
-            SM::Embed.update_tenant_slugs(slugs[0][0], 'YELLOW')
-            p SM::Embed.pluck(:tenants)
+            old_slug = slugs[0][0]
+            SM::Embed.update_tenant_slugs(old_slug, 'YELLOW')
+            SM::Embed.pluck(:tenants).each do | slugs |
+                expect(slugs).to_not include(old_slug)
+            end
         end
     end
 
