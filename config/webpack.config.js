@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require('webpack');
 const path = require('path');
 
@@ -19,7 +20,7 @@ const config = {
     output: {
         path: '<%= directory.join('..','public', 'assets') %>',
         publicPath: '<%= Hippo.env.production? ? '/assets/' : 'http://test.hippo.dev:8889/assets/' %>',
-        filename: '[name].js',
+        filename: '[name]-[hash].js',
     },
     resolve: {
         modules: ["<%= module_paths.join('","') %>"],
@@ -93,6 +94,13 @@ const config = {
         new webpack.optimize.UglifyJsPlugin(), //minify everything
         new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
         new webpack.optimize.OccurrenceOrderPlugin(), // use smallest id for most used chuncks
+        new CompressionPlugin({
+          asset: "[path].gz[query]",
+          algorithm: "gzip",
+          test: /\.(js|html)$/,
+          threshold: 10240,
+          minRatio: 0.8
+        })
 <% else %>
         new webpack.NamedModulesPlugin(),
 <% end %>
