@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { bindAll } from 'lodash';
+import { bindAll, isEmpty } from 'lodash';
 import { observable, action, computed } from 'mobx';
 import {
     CellMeasurer, CellMeasurerCache,
@@ -9,7 +9,7 @@ import {
 import Query    from 'hippo/models/query';
 import Screen   from 'hippo/components/screen';
 import DataList from 'hippo/components/data-list';
-
+import MasterDetail from 'hippo/components/master-detail';
 import Button   from 'grommet/components/Button';
 
 import AddIcon  from 'grommet/components/icons/base/AddCircle';
@@ -74,7 +74,6 @@ export default class Events extends React.PureComponent {
     rowRenderer(props) {
         const { index, key, parent } = props;
         const row = this.query.results.rows[index];
-        const Tag = (this.editing.index === index) ? EditForm : Event;
 
         return (
             <CellMeasurer
@@ -84,7 +83,7 @@ export default class Events extends React.PureComponent {
                 rowIndex={index}
                 cache={this.sizeCache}
             >{({ measure }) =>
-                <Tag
+                <Event
                     row={row}
                     {...props}
                     measure={measure}
@@ -111,27 +110,49 @@ export default class Events extends React.PureComponent {
     }
 
     @action.bound
-    onEditRow(index) {
-        return this.query.results.fetchModelForRow(
-            index, { include: 'image', with: '' },
-        ).then((event) => {
-            this.editing = { index, event };
-            this.sizeCache.clear(index, 0);
-            this.listRef.recomputeRowHeights(index);
-        });
+    onEditRow(index, event) {
+        this.editing = { index, event };
+        this.sizeCache.clear(index, 0);
+        this.listRef.recomputeRowHeights(index);
+        //
+        // return this.query.results.fetchModelForRow(
+        //     index, { include: 'image', with: '' },
+        // ).then((event) => {
+        //     this.editing = { index, event };
+        //     this.sizeCache.clear(index, 0);
+        //     this.listRef.recomputeRowHeights(index);
+        // });
+    }
+
+    renderEditingForm() {
+        if (isEmpty(this.editing)) { return null; }
+        const row = this.query.results.rows[this.editing.index];
+        return (
+            <EditForm
+                row={row}
+                query={this.query}
+                event={this.editing.event}
+                onEdit={this.onEditRow}
+                onComplete={this.onEditComplete}
+            />
+        );
     }
 
     render() {
         return (
             <Screen {...this.props}>
                 <Button icon={<AddIcon />} onClick={this.onAdd} plain />
-                <DataList
-                    query={this.query}
-                    rowRenderer={this.rowRenderer}
-                    ref={list => (this.listRef = list)}
-                    rowHeight={this.sizeCache.rowHeight}
-                    deferredMeasurementCache={this.sizeCache}
-                    keyChange={this.listRenderKey}
+                <MasterDetail
+                    master={
+                        <DataList
+                            query={this.query}
+                            rowRenderer={this.rowRenderer}
+                            ref={list => (this.listRef = list)}
+                            rowHeight={this.sizeCache.rowHeight}
+                            deferredMeasurementCache={this.sizeCache}
+                            keyChange={this.listRenderKey}
+                        />}
+                    detail={this.renderEditingForm()}
                 />
             </Screen>
         );

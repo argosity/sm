@@ -1,5 +1,5 @@
 import React from 'react';
-import { action } from 'mobx';
+import { action, observable, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { get } from 'lodash';
 import Config from 'hippo/config';
@@ -10,6 +10,7 @@ import formatDate from 'date-fns/format';
 
 import Button   from 'grommet/components/Button';
 import EditIcon  from 'grommet/components/icons/base/Edit';
+import Spinning from 'grommet/components/icons/Spinning';
 
 function dt(date) {
     return formatDate(date, 'h:mma MMM Do YYYY');
@@ -42,9 +43,21 @@ export default class Event extends React.PureComponent {
         this.props.measure();
     }
 
+    @observable isEditing = false;
+
     @action.bound
     onEdit() {
-        this.props.onEdit(this.props.index);
+        this.isEditing = true;
+        return this.props.query.results.fetchModelForRow(
+            this.props.index, { include: 'image', with: '' },
+        ).then((event) => {
+            this.props.onEdit(this.props.index, event);
+            this.isEditing = false;
+        });
+    }
+
+    @computed get editIcon() {
+        return this.isEditing ? <Spinning /> : <EditIcon />;
     }
 
     render() {
@@ -72,7 +85,10 @@ export default class Event extends React.PureComponent {
                             <span className="occurs">
                                 {dt(occurs_at)}
                             </span>
-                            <Button icon={<EditIcon />} onClick={this.onEdit} plain />
+                            <Button
+                                icon={this.editIcon}
+                                onClick={this.onEdit} plain
+                            />
                         </div>
                         <div className="description">
                             {description}
