@@ -94,11 +94,11 @@ CREATE TABLE ar_internal_metadata (
 
 CREATE TABLE assets (
     id integer NOT NULL,
-    owner_type character varying NOT NULL,
+    tenant_id integer NOT NULL,
+    owner_type character varying,
     owner_id integer NOT NULL,
     "order" integer,
-    file_data jsonb DEFAULT '{}'::jsonb NOT NULL,
-    tenant_id integer NOT NULL
+    file_data jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 
 
@@ -404,9 +404,9 @@ CREATE TABLE schema_migrations (
 
 CREATE TABLE system_settings (
     id integer NOT NULL,
+    tenant_id integer NOT NULL,
     configuration_id integer,
-    settings jsonb DEFAULT '{}'::jsonb NOT NULL,
-    tenant_id integer NOT NULL
+    settings jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 
 
@@ -454,6 +454,7 @@ ALTER SEQUENCE tenants_id_seq OWNED BY tenants.id;
 
 CREATE TABLE users (
     id integer NOT NULL,
+    tenant_id integer NOT NULL,
     login character varying NOT NULL,
     name character varying NOT NULL,
     email character varying NOT NULL,
@@ -461,8 +462,7 @@ CREATE TABLE users (
     role_names character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     options jsonb DEFAULT '{}'::jsonb NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    tenant_id integer NOT NULL
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -587,7 +587,7 @@ ALTER TABLE ONLY ar_internal_metadata
 --
 
 ALTER TABLE ONLY assets
-    ADD CONSTRAINT assets_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT assets_pkey PRIMARY KEY (id, tenant_id);
 
 
 --
@@ -643,7 +643,7 @@ ALTER TABLE ONLY schema_migrations
 --
 
 ALTER TABLE ONLY system_settings
-    ADD CONSTRAINT system_settings_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT system_settings_pkey PRIMARY KEY (id, tenant_id);
 
 
 --
@@ -659,7 +659,7 @@ ALTER TABLE ONLY tenants
 --
 
 ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id, tenant_id);
 
 
 --
@@ -675,6 +675,13 @@ ALTER TABLE ONLY venues
 --
 
 CREATE INDEX index_assets_on_owner_id_and_owner_type ON assets USING btree (owner_id, owner_type);
+
+
+--
+-- Name: index_assets_on_owner_type_and_owner_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_assets_on_owner_type_and_owner_id ON assets USING btree (owner_type, owner_id);
 
 
 --
@@ -720,13 +727,6 @@ CREATE UNIQUE INDEX index_purchases_on_identifier ON purchases USING btree (iden
 
 
 --
--- Name: index_system_settings_on_id_and_tenant_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_system_settings_on_id_and_tenant_id ON system_settings USING btree (id, tenant_id);
-
-
---
 -- Name: index_tenants_on_identifier; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -748,13 +748,6 @@ CREATE UNIQUE INDEX index_users_on_login_and_tenant_id ON users USING btree (log
 
 
 --
--- Name: index_users_on_role_names; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_users_on_role_names ON users USING gin (role_names);
-
-
---
 -- PostgreSQL database dump complete
 --
 
@@ -763,15 +756,14 @@ SET search_path TO "$user", public;
 INSERT INTO "schema_migrations" (version) VALUES
 ('1'),
 ('2'),
-('20140615031600'),
-('20170305000101'),
-('20170305000102'),
 ('20170305000201'),
 ('20170305000202'),
 ('20170305000314'),
 ('20170319000314'),
 ('20170406005123'),
 ('20170501012828'),
-('20170502012828');
+('20170502012828'),
+('3'),
+('4');
 
 

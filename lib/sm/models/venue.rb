@@ -1,7 +1,7 @@
 module SM
 
     class Venue < Model
-        acts_as_tenant
+        belongs_to_tenant
 
         has_code_identifier from: :name
 

@@ -5,7 +5,7 @@ import {
     BaseExtension, identifiedBy, identifier,
 } from 'hippo/extensions/base';
 
-import Tenant from './models/tenant';
+import Tenant from 'hippo/models/tenant';
 import SystemSettings from './components/settings';
 
 @identifiedBy('extensions/sm')

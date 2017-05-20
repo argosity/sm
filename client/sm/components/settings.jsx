@@ -6,7 +6,6 @@ import { invoke, extend } from 'lodash';
 import { Row, Col } from 'react-flexbox-grid';
 
 import Braintree from './settings/braintree';
-import TenantConfig from './settings/tenant';
 
 import { autobind } from 'core-decorators';
 
@@ -36,7 +35,6 @@ export default class SMSystemSettings extends React.PureComponent {
 
         return (
             <div>
-                <TenantConfig {...childProps} />
                 <Braintree {...childProps} />
             </div>
         );

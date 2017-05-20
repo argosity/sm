@@ -8,7 +8,7 @@ import { autobind } from 'core-decorators';
 import Heading from 'grommet/components/Heading';
 
 import EmbedModel from '../models/embed';
-import Tenant from '../models/tenant';
+import Tenant from 'hippo/models/tenant';
 
 import './embeds/embed-styles.scss';
 

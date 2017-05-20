@@ -2,7 +2,7 @@ module SM
 
     class Event < Model
 
-        acts_as_tenant
+        belongs_to_tenant
         has_random_identifier
 
         belongs_to :venue

@@ -3,7 +3,7 @@ require 'braintree'
 module SM
 
     class Payment < Model
-        acts_as_tenant
+        belongs_to_tenant
 
         belongs_to :purchase
 

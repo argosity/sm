@@ -35,6 +35,8 @@ task :assets do
     end
 end
 
-after 'bundler:install', :yarn
+
+after 'bundler:install', :migrate
+after :migrate, :yarn
 after :yarn, :assets
 after :assets, :migrate

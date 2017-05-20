@@ -18,17 +18,6 @@ module SM
             { rollbar:  Hippo.config.secrets.dig('rollbar', 'client') }
         end
 
-        def on_dev_console
-            require 'faker'
-            require 'factory_girl'
-            FactoryGirl.find_definitions
-            MultiTenant.current_tenant = SM::Tenant.system
-        end
-
-        def view_templates
-            ['app.html', 'homepage.html', 'homepage-script-tag.html']
-        end
-
     end
 
 end

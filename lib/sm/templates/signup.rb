@@ -16,13 +16,11 @@ module SM
                 'Thanks for signing up for ShowMaker'
             end
 
-#           def mail.body = SM::Templates::Signup.new(t).render
-
             def variables
                 vars = {
                     'slug' => tenant.slug,
                     'signup_url' => tenant.url,
-                    'login' => tenant.users.first.login,
+                    'login' => self.tenant.users.first.login,
                 }
             end
 

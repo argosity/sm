@@ -1,6 +1,6 @@
 module SM
     class Purchase < Model
-        acts_as_tenant
+        belongs_to_tenant
         has_random_identifier
 
         belongs_to :event

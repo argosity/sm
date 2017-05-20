@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-describe SM::Tenant do
+describe Hippo::Tenant do
     let(:tenant) { FactoryGirl.create :tenant  }
 
     it "updates embed slugs when it's slug is changed" do

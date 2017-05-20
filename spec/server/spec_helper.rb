@@ -1,15 +1,10 @@
 require_relative '../../lib/sm'
 require 'factory_girl'
 require 'faker'
+require 'hippo/spec_helper'
 
 require 'hippo/db'
 Hippo::DB.establish_connection
-
-TEST_TENANT = SM::Tenant.find_by_slug('test') || SM::Tenant.create!(slug: 'test', name: 'testing tenant', email: 'test@test.com')
-MultiTenant.with(TEST_TENANT) do
-    require 'hippo/spec_helper'
-end
-
 
 module PaymentHelpers
     def with_payment_proccessor
@@ -27,15 +22,5 @@ end
 RSpec.configure do |config|
 
     config.include PaymentHelpers
-    config.around(:each) do |example|
-        MultiTenant.with(TEST_TENANT) do
-            example.run
-        end
-    end
-    config.before(:suite) do
-        MultiTenant.with(TEST_TENANT) do
-            Hippo::User.seed_admin_account
-        end
-        SM::Tenant.find_or_create_by(slug: 'test', name: 'testing tenant', email: 'test@test.com')
-    end
+
 end
