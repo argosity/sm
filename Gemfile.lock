@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: fdd3f2c581aa19592d5902d1a7c8446692985ca9
+  revision: b6c098be160a1e22c43e460929a667447c58eeec
   branch: master
   specs:
     hippo-fw (0.9.1)
@@ -312,7 +312,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    webpack_driver (0.3.1)
+    webpack_driver (0.3.2)
       childprocess (~> 0.5)
       concurrent-ruby (~> 1.0.4)
       knitter (~> 0.2.0)
