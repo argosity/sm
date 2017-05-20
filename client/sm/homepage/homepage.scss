@@ -196,7 +196,6 @@ body.homepage {
 /* We want to give the content area some more padding */
 .content {
     margin-top: 65px;
-    padding: 1em 1em 3em;
 }
 
 /* This is the class used for the main content headers (<h2>) */
@@ -231,6 +230,10 @@ body.homepage {
     position: fixed;
     bottom: 0;
     width: 100%;
+    color: #7f8c8d;
+    a {
+        color: #7f8c8d;
+    }
 }
 
 /*

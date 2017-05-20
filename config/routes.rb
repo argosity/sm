@@ -24,17 +24,23 @@ class Hippo::API::Root
         end
     end
 
-    APP = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "app.html").expand_path
-    HOMEPAGE = Pathname.new(__FILE__).dirname.join("..", "public", "assets", "homepage.html").expand_path
-    if Hippo.env.production?
-        Hippo::API::Routing.route_root_view = lambda do
-            Hippo::API::Root.get '/*' do
-                send_file MultiTenant.current_tenant ? APP : HOMEPAGE
+    get '/signup' do
+        erb :signup, locals: { tenant: false }
+    end
+
+    get '/terms' do
+        erb :terms
+    end
+
+    Hippo::API::Routing.route_root_view = lambda do
+        Hippo::API::Root.get '/*' do
+            if MultiTenant.current_tenant
+                erb :app, layout: false
+            else
+                erb :homepage
             end
         end
     end
-
 end
-
 
 Hippo::API::Root.use SM::TenantDomainRouter

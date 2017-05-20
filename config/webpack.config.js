@@ -1,29 +1,38 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require('webpack');
 const path = require('path');
 
+
+const entries = {
+    app: [
+        '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
+    ],
+    homepage: [
+        'sm/homepage/index.js',
+    ],
+    'embedded-events': [
+        'sm/embed/events.js',
+    ],
+};
+
+<% unless Hippo.env.production? -%>
+    for (var key in entries) {
+        entries[key].unshift('react-hot-loader/patch');
+    }
+<% end -%>
+
 const config = {
-    entry: {
-        app: [
-            'react-hot-loader/patch',
-            '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
-        ],
-        'embedded-events': [
-            'react-hot-loader/patch',
-            'sm/embed/events.js',
-        ],
-        homepage: [
-            'sm/homepage/index.js',
-        ],
-    },
+    entry: entries,
     output: {
-        path: '<%= directory.join('..','public', 'assets') %>',
+        path: '<%= config_directory.join('..','public', 'assets') %>',
         publicPath: '<%= Hippo.env.production? ? '/assets/' : 'http://test.hippo.dev:8889/assets/' %>',
         filename: '[name]-[hash].js',
     },
     resolve: {
-        modules: ["<%= module_paths.join('","') %>"],
+        modules: [
+            "<%= Hippo::Extensions.client_module_paths.join('","') %>",
+            "<%= generated_directory.to_s %>",
+        ],
         extensions: ['.js', '.jsx'],
     },
     module: {
@@ -77,16 +86,6 @@ const config = {
     },
     devtool: 'source-map',
     plugins: [
-        new HtmlWebpackPlugin({
-            filename: 'app.html',
-            template: '<%= directory.join('app.html') %>',
-            chunks: ['app'],
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'homepage.html',
-            template: '<%= directory.join('homepage.html') %>',
-            chunks: ['homepage'],
-        }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
         }),
@@ -117,9 +116,14 @@ const config = {
             index: '/assets/app.html'
         },
         proxy: [{
-            context: [ '/api', '/signup' ],
+            context: [ '/api', '/signup', '/terms', '/tour' ],
             target: 'http://localhost:9292',
         }],
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+        },
         disableHostCheck: true,
         stats: {
             colors: true,

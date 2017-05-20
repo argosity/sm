@@ -26,7 +26,7 @@ module SM
         end
 
         def view_templates
-            ['app.html', 'homepage.html']
+            ['app.html', 'homepage.html', 'homepage-script-tag.html']
         end
 
     end

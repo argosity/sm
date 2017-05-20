@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 # For development while Hippo is evolving track master branch
 gem "hippo-fw", git: "https://github.com/argosity/hippo", branch: 'master'
 
+# gem "webpack_driver", git: "https://github.com/nathanstitt/webpack_driver", branch: 'master'
+
 gem "activerecord-multi-tenant", git: "https://github.com/nathanstitt/activerecord-multi-tenant", branch: 'fix/rails-version'
 gem 'shrine-memory'
 # gem "hippo", '0.8.3'
