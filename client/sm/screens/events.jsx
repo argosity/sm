@@ -114,14 +114,6 @@ export default class Events extends React.PureComponent {
         this.editing = { index, event };
         this.sizeCache.clear(index, 0);
         this.listRef.recomputeRowHeights(index);
-        //
-        // return this.query.results.fetchModelForRow(
-        //     index, { include: 'image', with: '' },
-        // ).then((event) => {
-        //     this.editing = { index, event };
-        //     this.sizeCache.clear(index, 0);
-        //     this.listRef.recomputeRowHeights(index);
-        // });
     }
 
     renderEditingForm() {
