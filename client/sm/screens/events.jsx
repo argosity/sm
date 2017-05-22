@@ -33,6 +33,10 @@ export default class Events extends React.PureComponent {
     constructor(props) {
         super(props);
         bindAll(this, 'rowRenderer');
+        // setTimeout(
+        //     () => this.onEditRow(0, this.query.results.modelForRow(0)),
+        //     2000
+        // )
     }
 
     query = new Query({
@@ -63,12 +67,11 @@ export default class Events extends React.PureComponent {
     @action.bound
     onEditComplete() {
         const { index, event } = this.editing;
-        this.editing = {};
-        this.sizeCache.clear(index, 0);
-        this.listRef.recomputeRowHeights(index);
         if (event.isNew) {
             this.query.results.removeRow(index);
         }
+        this.editing = {};
+        this.sizeCache.clear(index, 0);
     }
 
     rowRenderer(props) {

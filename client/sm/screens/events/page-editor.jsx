@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Editor, defaultEditorState, defaultToolbar  } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
 
-import { EditorState, ContentState, convertToRaw, convertFromRaw, convertFromHTML } from 'draft-js';
 import { last } from 'lodash';
 
 import Box from 'grommet/components/Box';
@@ -16,8 +13,12 @@ import Button from 'grommet/components/Button';
 
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import Asset from 'hippo/models/asset';
+
+import Quill from '../../components/quill';
+
 import Event from '../../models/event';
 import './page-editor.scss';
+
 
 @observer
 export default class PageEditor extends React.PureComponent {
@@ -34,28 +35,28 @@ export default class PageEditor extends React.PureComponent {
             .then(asset => ({ data: { link: asset.urlFor('medium') } }));
     }
 
-    @observable editorState = EditorState.createEmpty()
+//    @observable editorState = EditorState.createEmpty()
 
     componentWillMount() {
-        if (this.props.event.page_src) {
-            this.editorState = EditorState.createWithContent(
-                convertFromRaw(JSON.parse(this.props.event.page_src)),
-            );
-        }
+        // if (this.props.event.page_src) {
+        //     this.editorState = EditorState.createWithContent(
+        //         convertFromRaw(JSON.parse(this.props.event.page_src)),
+        //     );
+        // }
     }
 
-    @action.bound
-    onEditorStateChange(state) {
-        this.editorState = state;
-    }
+    // @action.bound
+    // onEditorStateChange(state) {
+    //     this.editorState = state;
+    // }
 
     @action.bound
     onSave() {
-        const contentState = convertToRaw(this.editorState.getCurrentContent());
-        this.props.event.set({
-            page_src:  JSON.stringify(contentState),
-            page_html: draftToHtml(contentState),
-        }).save();
+        // const contentState = convertToRaw(this.editorState.getCurrentContent());
+        // this.props.event.set({
+        //     page_src:  JSON.stringify(contentState),
+        //     page_html: draftToHtml(contentState),
+        // }).save();
     }
 
     render() {
@@ -69,18 +70,9 @@ export default class PageEditor extends React.PureComponent {
                     size="full"
                     basis="xxlarge"
                 >
-                    <Editor
+                    <Quill
                         ref={e => (this.editor = e)}
                         wrapperClassName="page-editor"
-                        editorState={editorState}
-                        onEditorStateChange={this.onEditorStateChange}
-                        toolbar={{
-                            options: [
-                                'inline', 'blockType', 'fontSize', 'fontFamily', 'list',
-                                'textAlign', 'colorPicker', 'link', 'embedded', 'image', 'remove', 'history',
-                            ],
-                            image: { uploadCallback: this.onImageUpload },
-                        }}
                     />
                     <Footer
                         margin="small"

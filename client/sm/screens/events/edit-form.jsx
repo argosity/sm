@@ -52,6 +52,11 @@ export default class EditForm extends React.PureComponent {
 
     componentWillMount() {
         this.formFields.setFromModel(this.event);
+
+        // setTimeout(
+        //     () => this.editPage(),
+        //     1000
+        // )
     }
 
     @observable isEditingPage = false;
