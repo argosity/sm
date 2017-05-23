@@ -42,7 +42,7 @@ export default class Events extends React.PureComponent {
     query = new Query({
         src: EventModel,
         autoFetch: true,
-        sort: { occurs_at: 'DESC' },
+        sort: { occurs_at: 'ASC' },
         syncOptions: { with: 'with_details' },
         fields: [
             { id: 'id', visible: false },
@@ -62,6 +62,7 @@ export default class Events extends React.PureComponent {
     sizeCache = new CellMeasurerCache({
         fixedWidth: true,
         minHeight: 40,
+        defaultWidth: '100%',
     })
 
     @action.bound
@@ -93,6 +94,7 @@ export default class Events extends React.PureComponent {
                     query={this.query}
                     event={this.editing.event}
                     onEdit={this.onEditRow}
+                    keyChange={this.listRenderKey}
                     onComplete={this.onEditComplete}
                 />
              }</CellMeasurer>
@@ -142,6 +144,7 @@ export default class Events extends React.PureComponent {
                         <DataList
                             query={this.query}
                             rowRenderer={this.rowRenderer}
+                            invalidateCellSizeAfterRender={true}
                             ref={list => (this.listRef = list)}
                             rowHeight={this.sizeCache.rowHeight}
                             deferredMeasurementCache={this.sizeCache}

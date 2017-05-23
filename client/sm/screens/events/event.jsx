@@ -18,7 +18,7 @@ function dt(date) {
 
 
 function Image(props) {
-    const { image, size } = props;
+    const { image, size, onLoad } = props;
     const fd = get(image, `file_data.${size}`);
     if (!fd) { return null; }
     const { id: url, metadata: { height, width } } = fd;
@@ -28,6 +28,7 @@ function Image(props) {
                 src={`${Config.api_path}${Config.assets_path_prefix}/${url}`}
                 height={height}
                 width={width}
+                onLoad={onLoad}
             />
         </div>
     );
@@ -35,13 +36,13 @@ function Image(props) {
 
 @observer
 export default class Event extends React.PureComponent {
-    componentDidMount() {
-        this.props.measure();
-    }
+    // componentDidMount() {
+    //     this.props.measure();
+    // }
 
-    componentDidUpdate() {
-        this.props.measure();
-    }
+    // componentDidUpdate() {
+
+    // }
 
     @observable isEditing = false;
 
@@ -67,9 +68,8 @@ export default class Event extends React.PureComponent {
             visible_after, visible_until,
             onsale_after, onsale_until,
         ] = row;
-
         return (
-            <div className="event" style={{ ...style, height: 'auto' }}>
+            <div className="event" style={{ ...style }}>
 
                 <Row>
                     <Col sm={3}>
