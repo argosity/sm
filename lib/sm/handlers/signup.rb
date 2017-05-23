@@ -9,13 +9,13 @@ module SM::Handlers
                 Hippo::Tenant.transaction do
                     tenant.name = params['company']
                     tenant.perform do
-                        tenant.users.build(params.slice(:name, :email, :login, :password)
+                        user = tenant.users.build(params.slice(:name, :email, :login, :password)
                                                .merge(role_names: ["administrator"]))
                         if tenant.save
+                            SM::Embed.create(name: 'My events', tenants: [tenant.slug])
                             Hippo::Tenant.system.perform do
-                                SM::Templates::Signup.create(tenant).deliver
+                                SM::Templates::Signup.create(tenant, user).deliver
                             end
-                            tenant.embeds.create(name: 'My events', tenants: [tenant.slug])
                         end
                     end
                 end

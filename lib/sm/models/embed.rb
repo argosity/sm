@@ -1,11 +1,5 @@
 module SM
     class Embed < Model
-        # belongs_to :tenant, class_name: "Hippo::Tenant",
-        #            inverse_of: :embeds,
-        #            listen: { update: :on_tenant_update }
-
-        # multi_tenant :tenant
-
         belongs_to_tenant
         has_random_identifier
 

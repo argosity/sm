@@ -10,9 +10,9 @@ describe Hippo::Tenant do
 
 
     it 'sends an email for signup' do
-        tenant.users.create({ login: 'test' })
+        user = tenant.users.create({ login: 'test' })
         expect {
-            SM::Templates::Signup.create(tenant).deliver
+            SM::Templates::Signup.create(tenant, user).deliver
         }.to change { Mail::TestMailer.deliveries.length }.by(1)
     end
 

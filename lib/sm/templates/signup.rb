@@ -2,14 +2,13 @@ module SM
     module Templates
         class Signup < Mail
 
-            attr_reader :tenant
-
-            def initialize(tenant)
+            def initialize(tenant, user)
                 @tenant = tenant
+                @user = user
             end
 
             def to
-                tenant.email
+                @tenant.email
             end
 
             def subject
@@ -17,10 +16,10 @@ module SM
             end
 
             def variables
-                vars = {
-                    'slug' => tenant.slug,
-                    'signup_url' => tenant.url,
-                    'login' => self.tenant.users.first.login,
+                {
+                    'slug' => @tenant.slug,
+                    'login' => @user.login,
+                    'signup_url' => @tenant.url
                 }
             end
 

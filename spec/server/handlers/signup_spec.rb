@@ -31,7 +31,6 @@ describe "Tenant signup", api: true, vcr: VCR_OPTS do
                      }
                 expect(last_response).to be_ok
             end.to change { Hippo::Tenant.count }.by(1)
-
         end
         tenant = Hippo::Tenant.where(slug: 'co2xx').first
         tenant.perform do
