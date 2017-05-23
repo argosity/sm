@@ -6,7 +6,7 @@ gem "hippo-fw", git: "https://github.com/argosity/hippo", branch: 'master'
 # gem "webpack_driver", git: "https://github.com/nathanstitt/webpack_driver", branch: 'master'
 
 # gem "activerecord-multi-tenant", git: 'https://github.com/citusdata/activerecord-multi-tenant.git', branch: 'release-0.5.1'
-gem "activerecord-multi-tenant", git: "https://github.com/nathanstitt/activerecord-multi-tenant", branch: 'query_rewriter'
+gem "activerecord-multi-tenant", git: "https://github.com/nathanstitt/activerecord-multi-tenant", branch: 'fix/rails-version' # query_rewriter'
 # gem 'shrine-memory'
 # gem "hippo", '0.8.3'
 
