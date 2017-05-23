@@ -15,6 +15,7 @@ module SM::Handlers
                             Hippo::Tenant.system.perform do
                                 SM::Templates::Signup.create(tenant).deliver
                             end
+                            tenant.embeds.create(name: 'My events', tenants: [tenant.slug])
                         end
                     end
                 end
