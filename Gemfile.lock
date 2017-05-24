@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: b0a6d9fb0f1882e34d9d2eec677fa7baaec37862
+  revision: 87ea886c27544923b42e76f7de4be9a5c6f477fd
   branch: master
   specs:
     hippo-fw (0.9.1)
@@ -45,11 +45,11 @@ GIT
       webpack_driver (~> 0.3.5)
 
 GIT
-  remote: https://github.com/nathanstitt/activerecord-multi-tenant
-  revision: f365c8f27ec1b3fdbe4feb272154c5245ba480bc
-  branch: fix/rails-version
+  remote: https://github.com/citusdata/activerecord-multi-tenant.git
+  revision: 3832bb87a3e6ec24c83b7077c54981fdc0b0e68f
+  branch: release-0.5.1
   specs:
-    activerecord-multi-tenant (0.4.0)
+    activerecord-multi-tenant (0.5.0)
       rails (>= 3.1)
       request_store (>= 1.0.5)
 
@@ -124,7 +124,7 @@ GEM
     crass (1.0.2)
     database_cleaner (1.6.1)
     diff-lcs (1.3)
-    down (2.5.1)
+    down (3.0.0)
     erb_latex (1.0.0)
     erubis (2.7.0)
     execjs (2.7.0)

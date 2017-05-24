@@ -11,7 +11,7 @@ describe SM::Event do
         image.file = Pathname.new(__FILE__).dirname.join("..","fixtures", 'stitt-spark-plug-logo.gif').open
         expect(event.save).to be true
 
-        event = SM::Event.find( event.id )
+        event = SM::Event.find(event.id)
         expect(event.image).not_to be_nil
         expect(event.page_images.length).to eq(1)
     end

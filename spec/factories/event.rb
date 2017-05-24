@@ -1,6 +1,6 @@
 FactoryGirl.define do
     factory :event, class: SM::Event do
-        association :tenant, factory: :tenant, strategy: :build
+#        association :tenant, factory: :tenant, strategy: :build
 
         title { Faker::RockBand.name }
         sub_title { "with #{Faker::Superhero.name}" }

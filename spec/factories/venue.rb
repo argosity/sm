@@ -1,7 +1,5 @@
 FactoryGirl.define do
     factory :venue, class: SM::Venue do
-        association :tenant, factory: :tenant, strategy: :build
-
         code { Hippo::Strings.random(10) }
         name { Faker::Name.name }
         phone_number { Faker::PhoneNumber.phone_number }
