@@ -1,14 +1,13 @@
-import { action, observable, computed, autorun } from 'mobx';
+import { action, observable, computed, observe } from 'mobx';
 
 import {
     Form, Field, FieldDefinitions, nonBlank, numberValue, stringValue, field, dateValue, validURL,
 } from 'hippo/components/form';
 
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
-import { pick, mapValues, keys } from 'lodash';
+import { find } from 'lodash';
 import { observer }   from 'mobx-react';
 import Box from 'grommet/components/Box';
 import Footer from 'grommet/components/Footer';
@@ -17,12 +16,12 @@ import DocumentTextIcon from 'grommet/components/icons/base/DocumentText';
 import SaveIcon from 'grommet/components/icons/base/Save';
 
 import Asset from 'hippo/components/asset';
+import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 
 import PageEditor from './page-editor';
 import Venue from '../../models/venue';
 import Event from '../../models/event';
 import Presenter from '../../models/presenter';
-import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 
 @observer
 export default class EditForm extends React.PureComponent {
@@ -50,13 +49,24 @@ export default class EditForm extends React.PureComponent {
         external_url:  validURL({ allowBlank: true }),
     })
 
+    componentWillUnmount() {
+        this.detachVenueObserver();
+    }
+
+    @action.bound
+    onVenueChange({ newValue }) {
+        if (!newValue) { return; }
+        const venue = find(Venue.sharedCollection, { id: newValue });
+        if (venue) {
+            this.formFields.get('capacity').value = venue.capacity;
+        }
+    }
+
     componentWillMount() {
         this.formFields.setFromModel(this.event);
-
-        // setTimeout(
-        //     () => this.editPage(),
-        //     1000
-        // )
+        this.detachVenueObserver = observe(
+            this.formFields.get('venue_id'), 'value', this.onVenueChange,
+        );
     }
 
     @observable isEditingPage = false;

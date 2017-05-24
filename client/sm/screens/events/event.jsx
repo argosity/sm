@@ -16,7 +16,6 @@ function dt(date) {
     return formatDate(date, 'h:mma MMM Do YYYY');
 }
 
-
 function Image(props) {
     const { image, size, onLoad } = props;
     const fd = get(image, `file_data.${size}`);
@@ -36,13 +35,6 @@ function Image(props) {
 
 @observer
 export default class Event extends React.PureComponent {
-    // componentDidMount() {
-    //     this.props.measure();
-    // }
-
-    // componentDidUpdate() {
-
-    // }
 
     @observable isEditing = false;
 
