@@ -32,7 +32,7 @@ export default class Embeds extends React.PureComponent {
         ev.target.select();
     }
 
-    url = `${window.location.protocol}://${window.location.host}`;
+    url = `${window.location.protocol}//${window.location.host}`;
 
     @autobind
     rowRenderer(props) {
