@@ -32,6 +32,8 @@ export default class Embeds extends React.PureComponent {
         ev.target.select();
     }
 
+    url = `${window.location.protocol}://${window.location.host}`;
+
     @autobind
     rowRenderer(props) {
         const { style, index, key } = props;
@@ -50,7 +52,7 @@ export default class Embeds extends React.PureComponent {
                     <textarea
                         onFocus={this.onFocus}
                         readOnly
-                        value={`<script src="${Tenant.url}/assets/embedded-events.js" data-render-to="#showmaker-events-listing" data-embed-id="${identifier}"></script>\n<div id="showmaker-events-listing">${Tenant.current.slug}</div>`}
+                        value={`<script src="${this.url}/assets/embedded-events.js" data-render-to="#showmaker-events-listing" data-embed-id="${identifier}"></script>\n<div id="showmaker-events-listing">${Tenant.current.slug}</div>`}
                     />
                 </Col>
             </Row>

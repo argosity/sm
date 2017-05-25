@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: b33de2d9f16f394ee5683464e8f8a916a2ffc690
+  revision: 169c1bea750a8addfbd1c68e844fb4110f01f9aa
   branch: master
   specs:
     hippo-fw (0.9.1)
@@ -42,7 +42,7 @@ GIT
       thor (~> 0.19)
       vcr (~> 3.0)
       webmock (~> 3.0)
-      webpack_driver (~> 0.3.5)
+      webpack_driver (~> 0.3.7)
 
 GIT
   remote: https://github.com/citusdata/activerecord-multi-tenant.git
@@ -312,7 +312,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    webpack_driver (0.3.5)
+    webpack_driver (0.3.7)
       childprocess (~> 0.5)
       concurrent-ruby (~> 1.0.4)
       knitter (~> 0.2.0)

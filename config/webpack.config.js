@@ -115,10 +115,6 @@ const config = {
         historyApiFallback: {
             index: '/assets/app.html'
         },
-        proxy: [{
-            context: [ '/api', '/signup', '/terms', '/tour' ],
-            target: 'http://localhost:9292',
-        }],
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
