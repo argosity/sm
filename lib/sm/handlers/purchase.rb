@@ -9,11 +9,13 @@ module SM
                 begin
                     gw = ::Braintree::ClientTokenGateway.new(SM::BraintreeConfig.gateway)
                     std_api_reply(:get, token: gw.generate, success: true)
-                rescue Braintree::AuthenticationError, Braintree::ConfigurationError => e
+                rescue Braintree::NotFoundError,
+                       Braintree::ConfigurationError,
+                       Braintree::AuthenticationError => e
                     Hippo.logger.warn e
                     std_api_reply(:get, {}, {
                                       message: 'Processor authentication failure',
-                                      errors: { authentication: 'failed' } ,
+                                      errors: { payment_processor_authentication: 'failed' } ,
                                       success: false
                                   })
                 end
