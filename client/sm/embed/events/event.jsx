@@ -7,11 +7,12 @@ import EventModel from '../../models/embed/event';
 
 import InfoButton from './info-button';
 import PurchaseButton from './purchase-button';
+import Presenter from './presenter';
 
 @observer
 export default class Event extends React.PureComponent {
     static propTypes = {
-        event: PropTypes.instanceOf(EventModel),
+        event: PropTypes.instanceOf(EventModel).isRequired,
         displayEvent:  PropTypes.func.isRequired,
         onPurchase: PropTypes.func.isRequired,
     }
@@ -35,7 +36,10 @@ export default class Event extends React.PureComponent {
             >
                 <Image image={event.image} />
                 <div className="info">
-                    <h2 className="title">{event.title}</h2>
+                    <div className="title">
+                        <Presenter presenter={event.presenter} />
+                        <h2>{event.title}</h2>
+                    </div>
                     <h3 className="sub-title">{event.sub_title}</h3>
                     <p className="description">{event.description}</p>
                 </div>

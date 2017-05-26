@@ -6,8 +6,6 @@ import classname from 'classnames';
 export default function Image({ image, size = 'medium', ...props }) {
     const { className } = getColumnProps(props);
     return (
-        <div className={classname('image', className)}>
-            <img src={image.urlFor(size)} />
-        </div>
+        <img className={classname('image', className)} src={image.urlFor(size)} />
     );
 }

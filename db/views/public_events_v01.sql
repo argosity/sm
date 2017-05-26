@@ -20,10 +20,12 @@ select
   case
   when presenter IS NULL then null
   else
-        json_build_object(
-          'name', presenter.name,
-          'logo', presenter_asset.file_data
-         )
+    json_build_object(
+      'name', presenter.name,
+      'logo', json_build_object(
+         'file_data', presenter_asset.file_data
+       )
+     )
   END as presenter,
 
   json_build_object(
