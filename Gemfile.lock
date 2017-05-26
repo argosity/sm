@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 169c1bea750a8addfbd1c68e844fb4110f01f9aa
+  revision: fc5084dda5ab202815d20adb35dff005922fe644
   branch: master
   specs:
     hippo-fw (0.9.1)
@@ -36,6 +36,7 @@ GIT
       resque (~> 1.27)
       rspec-rails (~> 3.6)
       sanitize (~> 3.0)
+      scenic (~> 1.4)
       shrine (~> 2.4)
       shrine-memory (~> 0.2)
       sinatra (~> 2.0.0)
@@ -278,6 +279,9 @@ GEM
       crass (~> 1.0.1)
       nokogiri (>= 1.4.4)
       nokogumbo (= 1.2.0)
+    scenic (1.4.0)
+      activerecord (>= 4.0.0)
+      railties (>= 4.0.0)
     shellany (0.0.1)
     shrine (2.6.1)
       down (>= 2.3.6)
