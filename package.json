@@ -10,7 +10,7 @@
     "compression-webpack-plugin": "^0.4.0",
     "core-decorators": "^0.17.0",
     "date-fns": "^1.28.4",
-    "hippo-fw": "argosity/hippo",
+    "hippo-fw": "^0.9.1",
     "jest": "^19.0.2",
     "mobx-decorated-models": "^0.5.1",
     "mobx-observer": "^0.1.1",

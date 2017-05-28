@@ -15,7 +15,7 @@ import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
 import {
-    Form, Field, FieldDefinitions, nonBlank,
+    Form, Field, FormState, nonBlank,
 } from 'hippo/components/form';
 
 
@@ -28,10 +28,7 @@ export default class Presenters extends React.PureComponent {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
 
-    formFields = new FieldDefinitions({
-        code: nonBlank,
-        name: nonBlank,
-    })
+    formState = new FormState()
 
     query = new Query({
         src: Presenter,
@@ -49,12 +46,12 @@ export default class Presenters extends React.PureComponent {
     @action.bound
     onRecordFound(presenter) {
         this.presenter = presenter;
-        this.formFields.set(presenter);
+        this.formState.set(presenter);
     }
 
     @action.bound
     onSave() {
-        this.formFields.persistTo(this.presenter)
+        this.formState.persistTo(this.presenter)
             .then(() => this.presenter.save())
             .then(this.onSaved);
     }
@@ -62,25 +59,25 @@ export default class Presenters extends React.PureComponent {
     @action.bound
     onReset() {
         this.presenter = new Presenter();
-        this.formFields.set(this.presenter);
+        this.formState.set(this.presenter);
     }
 
     @action.bound
     onSaved(presenter) {
         if (!presenter.errors) {
-            this.formFields.set(presenter);
+            this.formState.set(presenter);
         }
     }
 
     @computed get isSavable() {
-        return this.formFields.isValid && !this.presenter.syncInProgress;
+        return this.formState.isValid && !this.presenter.syncInProgress;
     }
 
     render() {
         const { screen } = this.props;
 
         return (
-            <Form fields={this.formFields}>
+            <Form state={this.formState}>
                 <Screen screen={screen}>
                     <Header colorIndex="light-2" align="center" pad={{ between: 'small' }}>
                         <Button
@@ -104,9 +101,10 @@ export default class Presenters extends React.PureComponent {
                             recordsTitle='Presenter'
                             onRecordFound={this.onRecordFound}
                             query={this.query} name="code"
+                            validate={nonBlank}
                             autoFocus
                         />
-                        <Field xs={8} name="name" />
+                        <Field xs={8} name="name" validate={nonBlank} />
                     </Row>
                     <Row>
                         <Asset xs={12} sm={6} model={this.presenter} name="logo" />

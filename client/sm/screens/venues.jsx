@@ -15,7 +15,7 @@ import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
 
 import {
-    Form, Field, FieldDefinitions, nonBlank, numberValue, stringValue,
+    Form, Field, FormState, nonBlank, numberValue, stringValue,
 } from 'hippo/components/form';
 
 import Venue from '../models/venue';
@@ -27,12 +27,7 @@ export default class Venues extends React.PureComponent {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
 
-    formFields = new FieldDefinitions({
-        code: stringValue,
-        name: nonBlank,
-        address: stringValue,
-        capacity: numberValue,
-    })
+    formState = new FormState()
 
     query = new Query({
         src: Venue,
@@ -52,12 +47,12 @@ export default class Venues extends React.PureComponent {
     @action.bound
     onRecordFound(venue) {
         this.venue = venue;
-        this.formFields.set(venue);
+        this.formState.set(venue);
     }
 
     @action.bound
     onSave() {
-        this.formFields.persistTo(this.venue)
+        this.formState.persistTo(this.venue)
             .then(venue => venue.save())
             .then(this.onSaved);
     }
@@ -72,20 +67,20 @@ export default class Venues extends React.PureComponent {
     onSaved(venue) {
         this.errorMessage = venue.errors ? venue.lastServerMessage : '';
         if (!venue.errors) {
-            this.formFields.set(venue);
+            this.formState.set(venue);
         }
     }
 
     @computed get isSavable() {
-        return this.formFields.isValid && !this.venue.syncInProgress;
+        return this.formState.isValid && !this.venue.syncInProgress;
     }
 
     render() {
-        const { fields, screen } = this.props;
+        const { screen } = this.props;
 
         return (
             <Screen screen={screen}>
-                <Form fields={this.formFields} tag="div">
+                <Form state={this.formState} tag="div">
                     <Header colorIndex="light-2" align="center" pad={{ between: 'small' }}>
                         <Button
                             primary
@@ -104,22 +99,21 @@ export default class Venues extends React.PureComponent {
                     <Warning message={this.errorMessage} />
                     <Row>
                         <RecordFinder
-                            xs={4}
-                            recordsTitle='Venue'
-                            onRecordFound={this.onRecordFound}
-                            query={this.query} name="code"
-                            autoFocus
+                            name="code" recordsTitle='Venue' onRecordFound={this.onRecordFound}
+                            query={this.query} xs={4} validate={nonBlank} autoFocus
                         />
-                        <Field xs={8} name="name" />
+                        <Field xs={8} name="name" validate={nonBlank} />
                     </Row>
                     <Row>
-                        <Field xs={12} name="address"  />
+                        <Field xs={12} name="address" />
                     </Row>
                     <Row>
                         <Asset xs={12} sm={6} model={this.venue} name="logo" />
                         <Col lg={9} xs={6}>
                             <Row>
-                                <Field type="number" name="capacity" lg={6} xs={12} />
+                                <Field
+                                    type="number" name="capacity" lg={6} xs={12}
+                                    validate={numberValue} />
                             </Row>
                         </Col>
 

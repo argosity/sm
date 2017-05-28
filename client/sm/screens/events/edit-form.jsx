@@ -1,7 +1,7 @@
 import { action, observable, computed, observe } from 'mobx';
 
 import {
-    Form, Field, FieldDefinitions, nonBlank, numberValue, stringValue, field, dateValue, validURL,
+    Form, Field, FormState, nonBlank, numberValue, stringValue, field, dateValue, validURL,
 } from 'hippo/components/form';
 
 import React from 'react';
@@ -33,24 +33,17 @@ export default class EditForm extends React.PureComponent {
 
     static desiredHeight = 300
 
-    formFields = new FieldDefinitions({
-        title:         nonBlank,
-        sub_title:     stringValue,
-        description:   stringValue,
-        price:         numberValue,
-        venue_id:      nonBlank,
-        presenter_id:  field,
-        occurs_at:     dateValue,
-        onsale_after:  nonBlank,
-        visible_until: nonBlank,
-        visible_after: nonBlank,
-        onsale_until:  nonBlank,
-        capacity:      numberValue,
-        external_url:  validURL({ allowBlank: true }),
-    })
+    formState = new FormState()
 
     componentWillUnmount() {
         this.detachVenueObserver();
+    }
+
+    componentDidMount() {
+        this.formState.setFromModel(this.event);
+        this.detachVenueObserver = observe(
+            this.formState.get('venue_id'), 'value', this.onVenueChange,
+        );
     }
 
     @action.bound
@@ -60,13 +53,6 @@ export default class EditForm extends React.PureComponent {
         if (venue) {
             this.formFields.get('capacity').value = venue.capacity;
         }
-    }
-
-    componentWillMount() {
-        this.formFields.setFromModel(this.event);
-        this.detachVenueObserver = observe(
-            this.formFields.get('venue_id'), 'value', this.onVenueChange,
-        );
     }
 
     @observable isEditingPage = false;
@@ -85,7 +71,7 @@ export default class EditForm extends React.PureComponent {
 
     @action.bound
     onSave() {
-        this.formFields.persistTo(this.event)
+        this.formState.persistTo(this.event)
             .then(() => this.event.save())
             .then(this.onSaved);
     }
@@ -108,7 +94,7 @@ export default class EditForm extends React.PureComponent {
     }
 
     @computed get isSavable() {
-        return this.formFields.isValid && !this.event.syncInProgress;
+        return this.formState.isValid && !this.event.syncInProgress;
     }
 
     @action.bound
@@ -138,34 +124,39 @@ export default class EditForm extends React.PureComponent {
             >
                 <NetworkActivityOverlay model={event} />
                 {this.renderPage()}
-                <Form tag="div" fields={this.formFields}>
+                <Form tag="div" state={this.formState}>
                     <Row>
-                        <Field name="title" xs={6} lg={3} />
+                        <Field name="title" xs={6} lg={3} validate={nonBlank} />
                         <Field name="sub_title" xs={6} lg={3} />
-
                         <Field name="description" xs={12} lg={6} />
-
-                        <Field type="number" name="price" xs={6} lg={3} />
-                        <Field type="number" name="capacity" xs={6} lg={3} />
-
-                        <Field type="date" name="visible_after" lg={3} xs={6} />
-                        <Field type="date" name="visible_until" lg={3} xs={6} />
-
-                        <Field type="date" name="onsale_after" lg={3} xs={6} />
-                        <Field type="date" name="onsale_until" lg={3} xs={6} />
-
+                        <Field type="number" name="price" xs={6} lg={3}
+                            validate={numberValue} />
+                        <Field type="number" name="capacity" xs={6} lg={3}
+                            validate={numberValue} />
+                        <Field type="date" name="visible_after" lg={3} xs={6}
+                            validate={dateValue} />
+                        <Field type="date" name="visible_until" lg={3} xs={6}
+                            validate={dateValue} />
+                        <Field type="date" name="onsale_after" lg={3} xs={6}
+                            validate={dateValue} />
+                        <Field type="date" name="onsale_until" lg={3} xs={6}
+                            validate={dateValue} />
                     </Row>
                     <Row>
                         <Asset model={event} name="image" md={6} sm={12} />
                         <Col md={6} xs={12}>
                             <Row>
-                                <Field type="date" name="occurs_at" sm={12} xs={6} />
+                                <Field
+                                    type="date" name="occurs_at" sm={12} xs={6}
+                                    validate={dateValue} />
 
-                                <Field name="external_url" sm={12} xs={6} />
+                                <Field
+                                    name="external_url" sm={12} xs={6}
+                                    validate={validURL({ allowBlank: true })} />
 
                                 <Field
                                     name="venue_id" label="Venue" sm={12} xs={6}
-                                    type="select" collection={this.venues}
+                                    type="select" collection={this.venues} validate={nonBlank}
                                 />
                                 <Field
                                     name="presenter_id" label="Presented By" sm={12} xs={6}

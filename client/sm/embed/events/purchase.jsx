@@ -19,7 +19,7 @@ import EventModel from '../../models/embed/event';
 import Layer from '../layer-wrapper';
 
 import Image from './image';
-
+import { FormState } from 'hippo/components/form';
 import PurchaseForm from './purchase-form';
 
 @observer
@@ -37,8 +37,7 @@ export default class Purchase extends React.PureComponent {
 
     @observable isTokenizing = false;
 
-
-    formFields = PurchaseForm.fields()
+    formState = new FormState();
 
     @action.bound
     onPurchase() {
@@ -66,11 +65,11 @@ export default class Purchase extends React.PureComponent {
     }
 
     @computed get isValid() {
-        return !!(this.isFormValid && this.formFields.isValid);
+        return !!(this.isFormValid && this.formState.isValid);
     }
 
     render() {
-        const { formFields, props: { purchase, event, onCancel } } = this;
+        const { formState, props: { purchase, event, onCancel } } = this;
 
         return (
             <Layer
@@ -103,7 +102,7 @@ export default class Purchase extends React.PureComponent {
                     <PurchaseForm
                         event={event}
                         purchase={purchase}
-                        fields={formFields}
+                        formState={formState}
                         setSave={form => this.formSaver = form}
                         onValidityChange={this.onValidityChange}
                     />

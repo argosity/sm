@@ -1,45 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { Braintree } from 'react-braintree-fields';
 import { observer } from 'mobx-react';
-import { Row, Col } from 'react-flexbox-grid';
+import { Col } from 'react-flexbox-grid';
 import Box from 'grommet/components/Box';
 import { observable, action, computed } from 'mobx';
-import { findKey, mapValues, extend } from 'lodash';
+import { findKey, extend } from 'lodash';
 
-import { Form, Field, FieldDefinitions, nonBlank, numberValue, validEmail, validPhone } from 'hippo/components/form';
+import { Form, Field, nonBlank, numberValue, validEmail, validPhone } from 'hippo/components/form';
 
 import Value from 'grommet/components/Value';
-
-import PurchaseModel from '../../models/embed/purchase';
-import EventModel from '../../models/embed/event';
 
 import CardField from './card-field';
 
 @observer
 export default class PurchaseForm extends React.PureComponent {
-    static fields() {
-        return new FieldDefinitions({
-            qty: numberValue,
-            name: nonBlank,
-            email: validEmail,
-            phone: validPhone,
-        });
-    }
-
-    static propTypes = {
-        fields: PropTypes.instanceOf(FieldDefinitions).isRequired,
-        purchase: PropTypes.instanceOf(PurchaseModel).isRequired,
-        event: PropTypes.instanceOf(EventModel).isRequired,
-        onValidityChange: PropTypes.func.isRequired,
-        setSave: PropTypes.func.isRequired,
-    }
 
     @observable cardIsValid;
     @observable getToken;
 
+    componentDidMount() {
+        this.props.formState.setFromModel(this.props.purchase);
+        this.props.setSave(this.saveState);
+    }
+
     @computed get totalAmount() {
-        return this.props.event.priceForQty(this.props.fields.get('qty').value);
+        return this.props.event.priceForQty(this.props.formState.get('qty.value', 1));
     }
 
     @action.bound
@@ -56,11 +42,6 @@ export default class PurchaseForm extends React.PureComponent {
         this.getToken = token;
     }
 
-    componentWillMount() {
-        this.props.fields.setFromModel(this.props.purchase);
-        this.props.setSave(this.saveState);
-    }
-
     @action.bound
     onBTError(err) {
         this.props.purchase.errors = {
@@ -70,10 +51,10 @@ export default class PurchaseForm extends React.PureComponent {
 
     @action.bound
     saveState({ purchase, event }) {
-        const { fields } = this.props;
+        const { formState } = this.props;
         return new Promise((resolve) => {
             this.getToken().then(({ nonce, details: { cardType: card_type, lastTwo: digits } }) => {
-                fields.persistTo(purchase);
+                formState.persistTo(purchase);
                 extend(purchase, {
                     event_identifier: event.identifier,
                     payments: [{
@@ -89,7 +70,7 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
     render() {
-        const { fields, purchase: { token }, event } = this.props;
+        const { formState, purchase: { token }, event } = this.props;
 
         if (!token) { return null; }
 
@@ -113,13 +94,13 @@ export default class PurchaseForm extends React.PureComponent {
                     },
                 }}
             >
-                <Form tag="div" className="row" fields={fields}>
+                <Form tag="div" className="row" state={formState}>
 
-                    <Field {...fieldProps} name="name" />
+                    <Field {...fieldProps} name="name" validate={nonBlank} />
 
-                    <Field {...fieldProps} name="email" />
+                    <Field {...fieldProps} name="email" validate={validEmail} />
 
-                    <Field {...fieldProps} name="phone" xs={6} />
+                    <Field {...fieldProps} name="phone" xs={6} validate={validPhone} />
                     <CardField
                         {...fieldProps} xs={6} type="postalCode"
                         label="Zip Code" errorMessage="is not valid" />
@@ -157,6 +138,7 @@ export default class PurchaseForm extends React.PureComponent {
                                     name="qty"
                                     type="number"
                                     min={1}
+                                    validate={numberValue}
                                 />
                                 <Value
                                     className="total"

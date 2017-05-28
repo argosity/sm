@@ -2990,9 +2990,9 @@ he@1.1.x:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
-hippo-fw@argosity/hippo:
-  version "0.7.0"
-  resolved "https://codeload.github.com/argosity/hippo/tar.gz/5594887afdf3433d5d22158de56e2c2e5d296473"
+hippo-fw@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/hippo-fw/-/hippo-fw-0.9.1.tgz#33896e3eda2071a03c26e375dfee19f8638246b4"
   dependencies:
     babel-core "^6.21.0"
     babel-eslint latest
@@ -5511,9 +5511,9 @@ react-dropzone@^3.10.0:
     attr-accept "^1.0.3"
     prop-types "^15.5.7"
 
-"react-flexbox-grid@https://github.com/nathanstitt/react-flexbox-grid.git#devel":
+"react-flexbox-grid@git+https://github.com/nathanstitt/react-flexbox-grid.git#devel":
   version "0.10.2"
-  resolved "https://github.com/nathanstitt/react-flexbox-grid.git#d3bbf9a5e530ed146a0c31a893708082cb46c2f6"
+  resolved "git+https://github.com/nathanstitt/react-flexbox-grid.git#d3bbf9a5e530ed146a0c31a893708082cb46c2f6"
   dependencies:
     flexboxgrid "^6.3.0"
 
