@@ -7,6 +7,10 @@ module SM
                 Hippo::Templates::Latex::ALL << klass
             end
 
+            def root_path
+                SM::ROOT_PATH.join('templates', 'latex')
+            end
+
         end
     end
 end
