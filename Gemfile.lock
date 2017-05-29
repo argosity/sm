@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 404af7d33593fb2b9b2de00286be28008e6e319c
+  revision: 2703cc335a0f9feccddafe0070c709d05b852f70
   branch: master
   specs:
     hippo-fw (0.9.1)
@@ -103,6 +103,7 @@ GEM
     braintree (2.76.0)
       builder (>= 2.0.0)
     builder (3.2.3)
+    byebug (9.0.6)
     capistrano (3.8.1)
       airbrussh (>= 1.0.0)
       i18n
@@ -331,19 +332,15 @@ PLATFORMS
 DEPENDENCIES
   activerecord-multi-tenant!
   braintree (~> 2.73)
+  byebug
   capistrano (~> 3.8)
   capistrano-bundler (~> 1.2)
   capistrano-passenger (~> 0.2)
   capistrano-rails (~> 1.2)
-  database_cleaner
-  factory_girl
-  faker
   hippo-fw!
   puma
   rake
   rollbar
-  vcr (~> 3.0)
-  webmock (~> 3.0)
 
 BUNDLED WITH
    1.14.6

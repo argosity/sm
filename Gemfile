@@ -11,11 +11,7 @@ gem "activerecord-multi-tenant", git: 'https://github.com/citusdata/activerecord
 # gem "hippo", '0.8.3'
 
 group :test, :development do
-    gem 'factory_girl'
-    gem 'faker'
-    gem 'vcr', '~> 3.0'
-    gem 'webmock', '~> 3.0'
-    gem 'database_cleaner'
+    gem 'byebug'
     gem 'capistrano', '~> 3.8'
     gem 'capistrano-bundler', '~> 1.2'
     gem 'capistrano-rails', '~> 1.2'
