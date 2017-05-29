@@ -84,13 +84,6 @@ module SM
                 Hippo::Mailer.from_template(
                     ::SM::Templates::Purchase.new(purchase)
                 ).deliver
-
-                # mail = Hippo::Mailer.create
-                # mail.content_type = 'text/html; charset=UTF-8'
-                # mail.body = ::SM::Templates::Purchase.new(purchase).render
-                # mail.to = purchase.email
-                # mail.subject = "Your tickets for #{purchase.event.title}"
-                # mail.deliver
             end
 
         end
