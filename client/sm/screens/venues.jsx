@@ -60,7 +60,8 @@ export default class Venues extends React.PureComponent {
     @action.bound
     onReset() {
         this.venue = new Venue();
-        this.props.clearForm();
+        this.formState.reset();
+
     }
 
     @action.bound
@@ -100,7 +101,7 @@ export default class Venues extends React.PureComponent {
                     <Row>
                         <RecordFinder
                             name="code" recordsTitle='Venue' onRecordFound={this.onRecordFound}
-                            query={this.query} xs={4} validate={nonBlank} autoFocus
+                            query={this.query} xs={4} validate={nonBlank}
                         />
                         <Field xs={8} name="name" validate={nonBlank} />
                     </Row>
