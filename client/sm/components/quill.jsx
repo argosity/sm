@@ -38,10 +38,23 @@ export default class QuillComponent extends React.PureComponent {
         'link', 'image', 'video'
     ]
 
+    get HTML() {
+        return this.editor.getEditor().root.innerHTML;
+    }
+
+    get content() {
+        return this.editor.getEditor().getContents();
+    }
+
+    set content(json) {
+        this.editor.getEditor().setContents(json);
+    }
+
     render() {
         return (
             <div className="quill-editor-wrapper">
                 <ReactQuill
+                    ref={e => (this.editor = e)}
                     modules={this.modules}
                     formats={this.formats}
                 />

@@ -7,7 +7,7 @@ import { last } from 'lodash';
 
 import Box from 'grommet/components/Box';
 import Layer from 'grommet/components/Layer';
-import SaveIcon from 'grommet/components/icons/base/Save';
+import DocumentTransferIcon from 'grommet/components/icons/base/DocumentTransfer';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 
@@ -35,32 +35,25 @@ export default class PageEditor extends React.PureComponent {
             .then(asset => ({ data: { link: asset.urlFor('medium') } }));
     }
 
-//    @observable editorState = EditorState.createEmpty()
 
-    componentWillMount() {
-        // if (this.props.event.page_src) {
-        //     this.editorState = EditorState.createWithContent(
-        //         convertFromRaw(JSON.parse(this.props.event.page_src)),
-        //     );
-        // }
+    componentDidMount() {
+        if (this.props.event.page_src) {
+            this.editor.content = this.props.event.page_src.ops.peek();
+        }
     }
 
-    // @action.bound
-    // onEditorStateChange(state) {
-    //     this.editorState = state;
-    // }
 
     @action.bound
-    onSave() {
-        // const contentState = convertToRaw(this.editorState.getCurrentContent());
-        // this.props.event.set({
-        //     page_src:  JSON.stringify(contentState),
-        //     page_html: draftToHtml(contentState),
-        // }).save();
+    onDone() {
+        this.props.event.set({
+            page_src:  { ops: this.editor.content.ops },
+            page_html: this.editor.HTML,
+        });
+        this.props.onComplete();
     }
 
     render() {
-        const { editorState, props: { event } } = this;
+        const { props: { event } } = this;
         return (
             <Layer onClose={this.props.onComplete} closer>
                 <NetworkActivityOverlay model={event} />
@@ -81,9 +74,9 @@ export default class PageEditor extends React.PureComponent {
                     >
                         <Button label="Cancel" onClick={this.props.onComplete} accent />
                         <Button
-                            label="Save"
-                            icon={<SaveIcon />}
-                            onClick={this.onSave}
+                            label="Done"
+                            icon={<DocumentTransferIcon />}
+                            onClick={this.onDone}
                             primary
                         />
                     </Footer>

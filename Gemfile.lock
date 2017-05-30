@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 721a97990b5d74f5945c9ee503408fb5dd487c26
+  revision: 74239a01347f7ea6cda1e01cfd4146de1edd7c85
   branch: master
   specs:
     hippo-fw (0.9.1)
@@ -191,7 +191,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
-    nio4r (2.0.0)
+    nio4r (2.1.0)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     nokogumbo (1.2.0)

@@ -166,7 +166,7 @@ CREATE TABLE events (
     title text NOT NULL,
     external_url text,
     page_html text,
-    page_src text,
+    page_src jsonb,
     sub_title text,
     description text,
     occurs_at timestamp without time zone NOT NULL,

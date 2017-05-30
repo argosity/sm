@@ -7,7 +7,8 @@ class CreateEvents < ActiveRecord::Migration[5.0]
 
             t.text :title, null: false
             t.text :external_url
-            t.text :page_html, :page_src,
+            t.jsonb :page_src
+            t.text :page_html,
                    :sub_title,
                    :description
 
