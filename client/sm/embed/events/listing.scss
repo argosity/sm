@@ -1,6 +1,12 @@
-@import '~grommet/scss/hpe/index';
+@import '~grommet/scss/hpe/hpe.defaults';
+
+.hippo {
+    @import '~grommet/scss/grommet-core/index';
+
+}
 
 .events-listing {
+
     min-height: 200px;
 
     .event {
@@ -10,6 +16,7 @@
         padding: 1rem;
         display: flex;
         max-height: 240px;
+
         .image {
             max-width: 240px;
             img {
@@ -19,10 +26,23 @@
             }
         }
         .info {
+            margin: 0 10px;
             flex: 1;
+            flex-direction: column;
+            min-width: 0;
             .title {
                 display: flex;
                 align-items: center;
+                flex-wrap: wrap;
+
+                // &::after {
+                //     clear: both;
+                // }
+
+                h2, h3, p {
+                    min-width: 0;
+                    word-wrap: break-word;
+                }
                 img {
                     max-height: 50px;
                     margin-right: 1rem;
@@ -44,8 +64,13 @@
         }
         @media only screen and (max-width: 720px) {
             flex-wrap: wrap;
+            max-height: inherit;
             .image, .info, .actions {
                 min-width: 100%;
+            }
+            .actions {
+                flex-direction: row;
+                justify-content: space-around;
             }
         }
     }

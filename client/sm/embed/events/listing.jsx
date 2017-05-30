@@ -73,7 +73,7 @@ export default class Listing extends React.PureComponent {
 
     render() {
         return (
-            <div className="events-listing">
+            <div className="hippo events-listing">
                 {this.actionsLayer}
                 <h1>{this.props.events.length} events</h1>
                 {this.props.events.map(event => (

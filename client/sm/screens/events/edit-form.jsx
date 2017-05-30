@@ -51,7 +51,7 @@ export default class EditForm extends React.PureComponent {
         if (!newValue) { return; }
         const venue = find(Venue.sharedCollection, { id: newValue });
         if (venue) {
-            this.formFields.get('capacity').value = venue.capacity;
+            this.formState.get('capacity').value = venue.capacity;
         }
     }
 
