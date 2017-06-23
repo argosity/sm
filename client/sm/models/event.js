@@ -8,7 +8,6 @@ import {
 
 @identifiedBy('sm/event')
 export default class Event extends BaseModel {
-
     @identifier id;
 
     @field identifier = '';
@@ -65,5 +64,4 @@ export default class Event extends BaseModel {
     @computed get image_details() {
         return this.image ? pick(this.image, 'id', 'file_data') : {};
     }
-
 }

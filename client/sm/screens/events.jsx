@@ -33,10 +33,6 @@ export default class Events extends React.PureComponent {
     constructor(props) {
         super(props);
         bindAll(this, 'rowRenderer');
-        // setTimeout(
-        //     () => this.onEditRow(0, this.query.results.modelForRow(0)),
-        //     2000
-        // )
     }
 
     query = new Query({

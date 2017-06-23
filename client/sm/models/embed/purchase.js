@@ -10,7 +10,6 @@ import Event from './event';
 
 @identifiedBy('sm/purchase')
 export default class Purchase extends EmbeddedBaseModel {
-
     @identifier({ type: 'string' }) identifier;
 
     @session token;

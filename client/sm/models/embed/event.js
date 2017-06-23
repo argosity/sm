@@ -1,6 +1,5 @@
-import isPast   from 'date-fns/is_past';
-import isFuture from 'date-fns/is_future';
 import { sprintf } from 'sprintf-js';
+import moment from 'moment';
 import Big from 'big.js';
 import Config from 'hippo/config';
 import {
@@ -12,7 +11,6 @@ import Venue from './venue';
 
 @identifiedBy('sm/embedded/event')
 export default class EmbeddedEvent extends EmbeddedBaseModel {
-
     static fetch(embedId) {
         return this.Collection
             .create()
@@ -40,11 +38,11 @@ export default class EmbeddedEvent extends EmbeddedBaseModel {
     @belongsTo({ model: Venue }) venue;
 
     @computed get canPurchase() {
-        return isPast(this.onsale_after) && isFuture(this.onsale_until);
+        const now = moment();
+        return now.isAfter(this.onsale_after) && now.isBefore(this.onsale_until);
     }
 
     priceForQty(qty) {
         return sprintf('%0.2f', Big(this.price).times(qty || 1));
     }
-
 }

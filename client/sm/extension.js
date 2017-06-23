@@ -1,6 +1,6 @@
 // This is the client-side version of SM::Extension
 
-import Rollbar from 'rollbar-browser';
+import Rollbar from 'rollbar';
 import {
     BaseExtension, identifiedBy, identifier,
 } from 'hippo/extensions/base';
@@ -10,7 +10,6 @@ import SystemSettings from './components/settings';
 
 @identifiedBy('extensions/sm')
 export default class SMExtension extends BaseExtension {
-
     // must match the server-side identier in config/screens.rb
     // and lib/sm/extension.rb
     @identifier id = 'sm';

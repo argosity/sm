@@ -6,14 +6,14 @@ import Config from 'hippo/config';
 
 import cn from 'classnames';
 import { Row, Col, getColumnProps } from 'react-flexbox-grid';
-import formatDate from 'date-fns/format';
+import moment from 'moment';
 
 import Button   from 'grommet/components/Button';
 import EditIcon  from 'grommet/components/icons/base/Edit';
 import Spinning from 'grommet/components/icons/Spinning';
 
 function dt(date) {
-    return formatDate(date, 'h:mma MMM Do YYYY');
+    return moment(date).format('h:mma MMM Do YYYY');
 }
 
 function Image(props) {

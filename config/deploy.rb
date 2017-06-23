@@ -23,9 +23,9 @@ task :migrate do
     end
 end
 
-task :yarn do
+task :npm do
     on roles(:web) do
-        execute "cd #{release_path}; yarn install"
+        execute "cd #{release_path}; npm install"
     end
 end
 
@@ -37,6 +37,6 @@ end
 
 
 after 'bundler:install', :migrate
-after :migrate, :yarn
-after :yarn, :assets
+after :migrate, :npm
+after :npm, :assets
 after :assets, :migrate
