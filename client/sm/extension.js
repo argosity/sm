@@ -1,6 +1,6 @@
 // This is the client-side version of SM::Extension
 
-import * as Rollbar from 'rollbar';
+import Rollbar from 'rollbar';
 import {
     BaseExtension, identifiedBy, identifier,
 } from 'hippo/extensions/base';
@@ -30,11 +30,9 @@ export default class SMExtension extends BaseExtension {
     // the Base class will simply store the provided data as @data
     setBootstrapData(data) {
         if (data.rollbar) {
-            this.rollbar = Rollbar.init({
-                accessToken: data.rollbar,
-                captureUncaught: true,
-            });
+            this.rollbar = new Rollbar(data.rollbar);
             this.rollbar.configure({
+                captureUncaught: true,
                 payload: {
                     tenant: Tenant.subdomain,
                 },
