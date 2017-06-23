@@ -1,6 +1,6 @@
 // This is the client-side version of SM::Extension
 
-import Rollbar from 'rollbar';
+import * as Rollbar from 'rollbar';
 import {
     BaseExtension, identifiedBy, identifier,
 } from 'hippo/extensions/base';
