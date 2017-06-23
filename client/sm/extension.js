@@ -7,6 +7,7 @@ import {
 
 import Tenant from 'hippo/models/tenant';
 import SystemSettings from './components/settings';
+import AboutShowMaker from './components/about-show-maker';
 
 @identifiedBy('extensions/sm')
 export default class SMExtension extends BaseExtension {
@@ -43,5 +44,9 @@ export default class SMExtension extends BaseExtension {
 
     get systemSettingsComponent() {
         return SystemSettings;
+    }
+
+    rootView() {
+        return AboutShowMaker;
     }
 }
