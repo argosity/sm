@@ -1,24 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import moment from 'moment';
 import { action, computed, observable } from 'mobx';
-import { forIn } from 'lodash';
 import { Row, Col } from 'react-flexbox-grid';
-import Screen from 'hippo/components/screen';
-import Query from 'hippo/models/query';
-import RecordFinder from 'hippo/components/record-finder';
 import Header   from 'grommet/components/Header';
 import Button   from 'grommet/components/Button';
 import SaveIcon from 'grommet/components/icons/base/Save';
+import RecordFinder from 'hippo/components/record-finder';
 import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
-import Warning from 'hippo/components/warning-notification';
-import Asset from 'hippo/components/asset';
 
 import {
-    Form, Field, FormState, nonBlank, numberValue, stringValue,
+    Form, Field, FormState, nonBlank, numberValue,
 } from 'hippo/components/form';
-
+import Warning from 'hippo/components/warning-notification';
+import Asset from 'hippo/components/asset';
+import Screen from 'hippo/components/screen';
+import Query from 'hippo/models/query';
 import Venue from '../models/venue';
+
 
 @observer
 export default class Venues extends React.PureComponent {
@@ -61,8 +61,9 @@ export default class Venues extends React.PureComponent {
     onReset() {
         this.venue = new Venue();
         this.formState.reset();
-
     }
+
+    @observable dt = moment();
 
     @action.bound
     onSaved(venue) {
@@ -98,6 +99,7 @@ export default class Venues extends React.PureComponent {
 
                     </Header>
                     <Warning message={this.errorMessage} />
+
                     <Row>
                         <RecordFinder
                             name="code" recordsTitle='Venue' onRecordFound={this.onRecordFound}
