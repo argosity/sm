@@ -24,7 +24,7 @@ export default class EmbeddedEvent extends EmbeddedBaseModel {
     @session title;
     @session sub_title;
     @session description;
-    @session page_html;
+    @session page;
     @session occurs_at;
     @session onsale_after;
     @session onsale_until;

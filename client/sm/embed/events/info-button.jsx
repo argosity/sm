@@ -14,8 +14,8 @@ export default class InfoButton extends React.PureComponent {
     }
 
     @computed get Icon() {
-        const { page_html, external_url } = this.props.event;
-        if (page_html) {
+        const { page, external_url } = this.props.event;
+        if (page) {
             return CircleInformationIcon;
         } else if (external_url) {
             return LinkIcon;
@@ -25,7 +25,7 @@ export default class InfoButton extends React.PureComponent {
 
     @action.bound
     onClick(ev) {
-        if (this.props.event.page_html) {
+        if (this.props.event.page) {
             ev.preventDefault();
             this.props.onClick();
         }

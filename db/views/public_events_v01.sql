@@ -6,7 +6,7 @@ select
   ev.sub_title,
   ev.description,
   ev.external_url,
-  ev.page_html,
+  ev.page,
   ev.occurs_at,
   ev.onsale_after,
   ev.onsale_until,
