@@ -8,7 +8,7 @@ development:
   adapter: postgresql
   database: sm-dev
   host: /tmp
-  pool:  5
+  pool:  10
 
 test:
   adapter: postgresql
