@@ -6,9 +6,10 @@ import { action } from 'mobx';
 import Box        from 'grommet/components/Box';
 import EventModel from 'sm/models/embed/event';
 import Footer from 'grommet/components/Footer';
+import PageRenderer from 'hippo/components/text-editor/renderer';
 import PurchaseButton from './purchase-button';
-
 import Layer from '../layer-wrapper';
+
 
 @observer
 export default class Information extends React.PureComponent {
@@ -41,10 +42,7 @@ export default class Information extends React.PureComponent {
                     basis="xxlarge"
                 >
                     <h1>{event.title}</h1>
-                    <div
-                        className="body"
-                        dangerouslySetInnerHTML={{ __html: event.page_html }}
-                    />
+                    <PageRenderer className="body" content={event.page} />
                     <Footer
                         margin="small"
                         justify="end"
