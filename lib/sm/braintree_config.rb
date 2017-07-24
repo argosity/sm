@@ -9,7 +9,7 @@ module SM
             def config
                 config = system_settings_values
                 Braintree::Configuration.new(
-                    environment: Hippo.env.production? ? :production : :sandbox,
+                    environment: config['sandbox_mode'] ? :sandbox : :production,
                     merchant_id: config['merchant_id'],
                     public_key:  config['public_key'],
                     private_key: config['private_key'],

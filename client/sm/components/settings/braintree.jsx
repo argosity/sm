@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { get } from 'lodash';
 import { Row } from 'react-flexbox-grid';
-
+import Config from 'hippo/config';
 import { Form, Field, FormState, nonBlank } from 'hippo/components/form';
 
 import Heading from 'grommet/components/Heading';
@@ -46,9 +46,10 @@ export default class BraintreeConfig extends React.PureComponent {
             <Form tag="div" className="braintree-edit-form" state={this.formState}>
                 <Heading tag="h3">Braintree payment settings</Heading>
                 <Row>
-                    <Field md={4} xs={6} name="merchant_id" validate={nonBlank} />
-                    <Field md={4} xs={6} name="public_key" validate={nonBlank} />
-                    <Field md={4} xs={6} name="private_key" validate={nonBlank} />
+                    <Field md={3} sm={6} type="checkbox" name="sandbox_mode" label="Sandbox Mode?" />
+                    <Field md={3} sm={6} name="merchant_id" validate={nonBlank} />
+                    <Field md={3} sm={6} name="public_key" validate={nonBlank} />
+                    <Field md={3} sm={6} name="private_key" validate={nonBlank} />
                 </Row>
             </Form>
         );
