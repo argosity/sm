@@ -2,6 +2,7 @@ import { sprintf } from 'sprintf-js';
 import moment from 'moment';
 import Big from 'big.js';
 import Config from 'hippo/config';
+import { isEmpty } from 'lodash';
 import {
     EmbeddedBaseModel, identifiedBy, session, belongsTo, computed, identifier,
 } from './model';
@@ -40,6 +41,10 @@ export default class EmbeddedEvent extends EmbeddedBaseModel {
     @computed get canPurchase() {
         const now = moment();
         return now.isAfter(this.onsale_after) && now.isBefore(this.onsale_until);
+    }
+
+    @computed get hasPage() {
+        return !isEmpty(this.page);
     }
 
     priceForQty(qty) {

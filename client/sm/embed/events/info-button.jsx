@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { computed, action } from 'mobx';
+import { isEmpty } from 'lodash';
 import Button from 'grommet/components/Button';
 import LinkIcon from 'grommet/components/icons/base/Link';
 import CircleInformationIcon from 'grommet/components/icons/base/CircleInformation';
@@ -14,11 +15,11 @@ export default class InfoButton extends React.PureComponent {
     }
 
     @computed get Icon() {
-        const { page, external_url } = this.props.event;
-        if (page) {
-            return CircleInformationIcon;
-        } else if (external_url) {
+        const { hasPage, external_url } = this.props.event;
+        if (external_url) {
             return LinkIcon;
+        } else if (hasPage) {
+            return CircleInformationIcon;
         }
         return null;
     }

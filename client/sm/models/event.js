@@ -1,7 +1,7 @@
 import Asset from 'hippo/models/asset';
 import { renameProperties } from 'hippo/lib/util';
 import { observe } from 'mobx';
-import { pick } from 'lodash';
+import { pick, isEmpty } from 'lodash';
 import {
     BaseModel, identifiedBy, identifier, field, belongsTo, computed, hasMany,
 } from './base';
@@ -62,5 +62,9 @@ export default class Event extends BaseModel {
 
     @computed get image_details() {
         return this.image ? pick(this.image, 'id', 'file_data') : {};
+    }
+
+    @computed get hasPage() {
+        return !isEmpty(this.page);
     }
 }
