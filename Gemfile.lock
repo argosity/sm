@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: ae2b3bed2f52e4fa650b159f6195524aedb39303
+  revision: 29ec8f78c7fdde1a67aa8aa0672d5a451473b179
   branch: master
   specs:
     hippo-fw (0.9.5)

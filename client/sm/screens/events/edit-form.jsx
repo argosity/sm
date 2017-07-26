@@ -71,6 +71,10 @@ export default class EditForm extends React.PureComponent {
 
     @action.bound
     onSave() {
+        if (!this.isSavable) {
+            this.formState.exposeErrors();
+            return;
+        }
         this.formState.persistTo(this.event)
             .then(() => this.event.save())
             .then(this.onSaved);
@@ -179,7 +183,7 @@ export default class EditForm extends React.PureComponent {
                     <Button
                         label="Save"
                         icon={<SaveIcon />}
-                        onClick={this.isSavable ? this.onSave : null}
+                        onClick={this.onSave}
                         primary
                     />
 
