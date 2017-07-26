@@ -4,7 +4,8 @@ import Presenters from 'sm/screens/presenters';
 const screenInstance = getScreenInstance('events');
 
 describe('Screen Presenters', () => {
-    it('renders and matches snapshot', () => {
-        expect(Snapshot(<Presenters screen={screenInstance} />)).toMatchSnapshot();
+    it('renders', () => {
+        const presenters = mount(<Presenters screen={screenInstance} />);
+        expect(presenters.exists()).toBe(true);
     });
 });

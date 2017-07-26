@@ -44,9 +44,8 @@ describe('Embedded Events Listing', () => {
         expect(listing).not.toHaveRendered('Information');
         listing.find('[data-event-identifier="cwMx65DgEAfG"] InfoButton Button').simulate('click');
         expect(listing).toHaveRendered('Information');
-
         const layer = document.querySelector('.grommetux-layer__container');
-        expect(layer.querySelector('.body').textContent).toContain('test of stuff');
+        expect(layer.textContent).toContain('test of stuff');
         layer.querySelector('.grommetux-layer__closer button').click();
         expect(document.querySelector('.grommetux-layer__container')).toBeNull();
     });
@@ -56,4 +55,4 @@ describe('Embedded Events Listing', () => {
         document.querySelector('.grommetux-layer__container footer button').click();
     });
 
-})
+});

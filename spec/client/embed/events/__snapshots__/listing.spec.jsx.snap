@@ -2,7 +2,7 @@
 
 exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
 <div
-  className="events-listing"
+  className="hippo events-listing"
 >
   <h1>
     3
@@ -12,21 +12,20 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
     className="event"
     data-event-identifier="TnXMWyEL2dFe"
   >
-    <div
+    <img
       className="image"
-    >
-      <img
-        src="undefined/apiundefined/km2t/7t9x/xvdt/116057679f0ed7de0735437f45a635af.jpg"
-      />
-    </div>
+      src="undefined/apiundefined/km2t/7t9x/xvdt/116057679f0ed7de0735437f45a635af.jpg"
+    />
     <div
       className="info"
     >
-      <h2
+      <div
         className="title"
       >
-        Radiohead
-      </h2>
+        <h2>
+          Radiohead
+        </h2>
+      </div>
       <h3
         className="sub-title"
       >
@@ -85,21 +84,20 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
     className="event"
     data-event-identifier="sehR4uN224XV"
   >
-    <div
+    <img
       className="image"
-    >
-      <img
-        src="undefined/apiundefined/cf32/3571/qez4/e7aa365117af066cf62b115394f5eb4b.png"
-      />
-    </div>
+      src="undefined/apiundefined/cf32/3571/qez4/e7aa365117af066cf62b115394f5eb4b.png"
+    />
     <div
       className="info"
     >
-      <h2
+      <div
         className="title"
       >
-        Little Feat
-      </h2>
+        <h2>
+          Little Feat
+        </h2>
+      </div>
       <h3
         className="sub-title"
       >
@@ -119,21 +117,20 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
     className="event"
     data-event-identifier="cwMx65DgEAfG"
   >
-    <div
+    <img
       className="image"
-    >
-      <img
-        src="undefined/apiundefined/bjp5/c4sd/gmud/3fad2e44aac60c2a0bf56f4418c33235.png"
-      />
-    </div>
+      src="undefined/apiundefined/bjp5/c4sd/gmud/3fad2e44aac60c2a0bf56f4418c33235.png"
+    />
     <div
       className="info"
     >
-      <h2
+      <div
         className="title"
       >
-        Genesis
-      </h2>
+        <h2>
+          Genesis
+        </h2>
+      </div>
       <h3
         className="sub-title"
       >
