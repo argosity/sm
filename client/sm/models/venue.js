@@ -28,7 +28,9 @@ export default class Venue extends BaseModel {
     }
 
     @computed static get sharedCollection() {
-        return this.$cachedCollection ||
-            (this.$cachedCollection = this.Collection.create([], { fetch: true }));
+        this.$cachedCollection = (
+            this.$cachedCollection || this.Collection.create([], { fetch: true })
+        );
+        return this.$cachedCollection;
     }
 }
