@@ -1,12 +1,12 @@
 import { sprintf } from 'sprintf-js';
 import moment from 'moment';
 import Big from 'big.js';
-import Config from 'hippo/config';
 import { isEmpty } from 'lodash';
+import Config from 'hippo/config';
+import Asset from 'hippo/models/asset';
 import {
     EmbeddedBaseModel, identifiedBy, session, belongsTo, computed, identifier,
 } from './model';
-import Asset from './asset';
 import Presenter from './presenter';
 import Venue from './venue';
 

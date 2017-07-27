@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
+import Heading    from 'grommet/components/Heading';
 import Box        from 'grommet/components/Box';
 import EventModel from 'sm/models/embed/event';
 import Footer from 'grommet/components/Footer';
@@ -41,7 +42,7 @@ export default class Information extends React.PureComponent {
                     size="full"
                     basis="xxlarge"
                 >
-                    <h1>{event.title}</h1>
+                    <Heading>{event.title}</Heading>
                     <PageRenderer className="body" content={event.page} />
                     <Footer
                         margin="small"

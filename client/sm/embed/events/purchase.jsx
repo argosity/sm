@@ -6,8 +6,9 @@ import { findKey, each, delay, mapValues } from 'lodash';
 import { Row, Col } from 'react-flexbox-grid';
 import Box from 'grommet/components/Box';
 
-import Footer from 'grommet/components/Footer';
-import Button from 'grommet/components/Button';
+import Heading        from 'grommet/components/Heading';
+import Footer         from 'grommet/components/Footer';
+import Button         from 'grommet/components/Button';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
@@ -83,7 +84,7 @@ export default class Purchase extends React.PureComponent {
                     full="horizontal"
                     size="full"
                     pad={{ vertical: 'medium' }}
-                    basis="xlarge"
+                    basis="xxlarge"
                     flex
                 >
                     <NetworkActivityOverlay
@@ -92,13 +93,14 @@ export default class Purchase extends React.PureComponent {
                         model={purchase}
                     />
                     <WarningNotification message={purchase.errorMessage} />
-                    <Row>
-                        <Image xs={3} sm={2}  md={1} image={event.image} size="thumbnail" />
-                        <Col   xs={9} sm={10} md={11}>
-                            <h3>{event.title}</h3>
-                            <h4>{event.sub_title}</h4>
-                        </Col>
-                    </Row>
+                    <div className="top-info">
+                        <Image image={event.image} size="thumbnail" />
+                        <div className="description">
+                            <Heading>{event.title}</Heading>
+                            <h3 className="sub-title">{event.sub_title}</h3>
+                            <p className="description">{event.description}</p>
+                        </div>
+                    </div>
                     <PurchaseForm
                         event={event}
                         purchase={purchase}

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Image from './image';
 import { observer } from 'mobx-react';
-import { action, observable, computed } from 'mobx';
+import { action } from 'mobx';
+import Image from './image';
 import EventModel from '../../models/embed/event';
-
 import InfoButton from './info-button';
 import PurchaseButton from './purchase-button';
 import Presenter from './presenter';

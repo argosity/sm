@@ -29,6 +29,9 @@
             align-self: center;
             max-width: 240px;
         }
+        .presenter {
+            padding-right: 0.5rem;
+        }
         .info {
             margin: 0 10px;
             flex: 1;
@@ -47,6 +50,7 @@
                 h2, h3, p {
                     min-width: 0;
                     word-wrap: break-word;
+                    margin: 0;
                 }
                 img {
                     max-height: 50px;
@@ -54,7 +58,6 @@
                 }
                 h2 {
                     font-size: 30px;
-                    margin: 0;
                 }
             }
         }
@@ -114,5 +117,15 @@
         .form-field {
             min-width: 200px;
         }
+    }
+    .top-info {
+        display: flex;
+
+        .image {
+            align-self: center;
+            max-width: 240px;
+            margin-right: 1rem;
+        }
+
     }
 }
