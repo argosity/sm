@@ -1,7 +1,7 @@
 class CreateVenues < ActiveRecord::Migration[5.0]
     def change
-        create_table :venues, partition_key: :tenant_id do |t|
-            t.integer :tenant_id, null: false
+        create_table :venues do |t|
+            t.references :tenant, null: false, foreign_key: true
 
             t.string :code, null: false
 

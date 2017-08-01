@@ -18,7 +18,7 @@ group :test, :development do
     gem 'capistrano-passenger', '~> 0.2'
 
 end
-
+gem 'actioncable'
 gem 'rollbar'
 gem 'puma'
 gem 'rake'

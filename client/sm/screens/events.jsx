@@ -19,7 +19,7 @@ import Event from './events/event';
 import EditForm from './events/edit-form';
 
 import './events/events-styles.scss';
-
+import { autobind } from 'core-decorators';
 
 @observer
 export default class Events extends React.PureComponent {
@@ -29,11 +29,6 @@ export default class Events extends React.PureComponent {
     }
 
     @observable editing = {};
-
-    constructor(props) {
-        super(props);
-        bindAll(this, 'rowRenderer');
-    }
 
     query = new Query({
         src: EventModel,
@@ -48,10 +43,8 @@ export default class Events extends React.PureComponent {
             'description',
             'image_details',
             'venue_details',
-            'occurs_at',
-            'visible_after', 'visible_until',
-            'onsale_after', 'onsale_until',
-            'capacity',
+            'occurrences',
+            'visible_during',
         ],
     });
 
@@ -71,6 +64,7 @@ export default class Events extends React.PureComponent {
         this.sizeCache.clear(index, 0);
     }
 
+    @autobind
     rowRenderer(props) {
         const { index, key, parent } = props;
         const row = this.query.results.rows[index];
@@ -93,7 +87,7 @@ export default class Events extends React.PureComponent {
                     keyChange={this.listRenderKey}
                     onComplete={this.onEditComplete}
                 />
-             }</CellMeasurer>
+            }</CellMeasurer>
         );
     }
 
@@ -139,12 +133,12 @@ export default class Events extends React.PureComponent {
                     master={
                         <DataList
                             query={this.query}
-                            rowRenderer={this.rowRenderer}
-                            invalidateCellSizeAfterRender={true}
-                            ref={list => (this.listRef = list)}
-                            rowHeight={this.sizeCache.rowHeight}
-                            deferredMeasurementCache={this.sizeCache}
-                            keyChange={this.listRenderKey}
+                                  rowRenderer={this.rowRenderer}
+                                  invalidateCellSizeAfterRender={true}
+                                  ref={list => (this.listRef = list)}
+                                  rowHeight={this.sizeCache.rowHeight}
+                                  deferredMeasurementCache={this.sizeCache}
+                                  keyChange={this.listRenderKey}
                         />}
                     detail={this.renderEditingForm()}
                 />

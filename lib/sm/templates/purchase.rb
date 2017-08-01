@@ -13,6 +13,14 @@ module SM
                 root_path.join('mail', filename)
             end
 
+            def subject
+                "Your tickets for #{purchase.event.title}"
+            end
+
+            def to
+                purchase.email
+            end
+
             def variables
                 vars = {
                     'company_name' => purchase.tenant.name,

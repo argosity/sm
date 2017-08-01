@@ -1,10 +1,8 @@
+import React from 'react';
 import { action, observable, computed, observe } from 'mobx';
-
 import {
     Form, Field, FormState, nonBlank, numberValue, stringValue, field, dateValue, validURL,
 } from 'hippo/components/form';
-
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
 import { find } from 'lodash';
@@ -17,11 +15,13 @@ import SaveIcon from 'grommet/components/icons/base/Save';
 
 import Asset from 'hippo/components/asset';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
+import { observePubSub } from 'hippo/models/pub_sub';
 
 import PageEditor from './page-editor';
 import Venue from '../../models/venue';
 import Event from '../../models/event';
 import Presenter from '../../models/presenter';
+import Occurrences from './occurrences';
 
 @observer
 export default class EditForm extends React.PureComponent {
@@ -30,8 +30,6 @@ export default class EditForm extends React.PureComponent {
         event:      PropTypes.instanceOf(Event).isRequired,
         onComplete: PropTypes.func.isRequired,
     }
-
-    static desiredHeight = 300
 
     formState = new FormState()
 
@@ -76,7 +74,7 @@ export default class EditForm extends React.PureComponent {
             return;
         }
         this.formState.persistTo(this.event)
-            .then(() => this.event.save())
+            .then(() => this.event.save({ include: 'occurrences' }))
             .then(this.onSaved);
     }
 
@@ -118,6 +116,7 @@ export default class EditForm extends React.PureComponent {
 
     render() {
         const { event, props: { style } } = this;
+        observePubSub(event);
 
         return (
             <Box
@@ -133,41 +132,33 @@ export default class EditForm extends React.PureComponent {
                         <Field name="title" xs={6} lg={3} validate={nonBlank} />
                         <Field name="sub_title" xs={6} lg={3} />
                         <Field name="description" xs={12} lg={6} />
-                        <Field type="number" name="price" xs={6} lg={3}
-                            validate={numberValue} />
-                        <Field type="number" name="capacity" xs={6} lg={3}
-                            validate={numberValue} />
-                        <Field type="date" name="visible_after" lg={3} xs={6}
-                            validate={dateValue} />
-                        <Field type="date" name="visible_until" lg={3} xs={6}
-                            validate={dateValue} />
-                        <Field type="date" name="onsale_after" lg={3} xs={6}
-                            validate={dateValue} />
-                        <Field type="date" name="onsale_until" lg={3} xs={6}
-                            validate={dateValue} />
+                        <Field
+                            name="venue_id" label="Venue" xs={6} lg={3}
+                            type="select" collection={this.venues} validate={nonBlank}
+                        />
+                        <Field
+                            name="presenter_id" label="Presented By" xs={6} lg={3}
+                            type="select" collection={this.presenters}
+                        />
+
+                        <Field type="number" name="price" xs={6} lg={3} validate={numberValue} />
+                        <Field type="number" name="capacity" xs={6} lg={3} validate={numberValue} />
+                        <Field
+                            type="date" label="Visible After" name="visible_during.start"
+                            xs={6} lg={3} validate={dateValue} />
+                        <Field
+                            type="date" label="Visible Until" name="visible_during.end"
+                            xs={6} lg={3} validate={dateValue} />
+                        <Field
+                            name="external_url" xs={12} lg={6}
+                            validate={validURL({ allowBlank: true })} />
+
                     </Row>
                     <Row>
-                        <Asset model={event} name="image" md={6} sm={12} />
-                        <Col md={6} xs={12}>
-                            <Row>
-                                <Field
-                                    type="date" name="occurs_at" sm={12} xs={6}
-                                    validate={dateValue} />
+                        <Asset model={event} name="image" md={5} sm={12} />
 
-                                <Field
-                                    name="external_url" sm={12} xs={6}
-                                    validate={validURL({ allowBlank: true })} />
+                        <Occurrences event={event} md={7} sm={12}/>
 
-                                <Field
-                                    name="venue_id" label="Venue" sm={12} xs={6}
-                                    type="select" collection={this.venues} validate={nonBlank}
-                                />
-                                <Field
-                                    name="presenter_id" label="Presented By" sm={12} xs={6}
-                                    type="select" collection={this.presenters}
-                                />
-                            </Row>
-                        </Col>
                     </Row>
                 </Form>
                 <Footer

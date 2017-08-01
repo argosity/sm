@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
+import Value from 'grommet/components/Value';
+
 import Image from './image';
 import EventModel from '../../models/embed/event';
 import InfoButton from './info-button';
@@ -26,6 +28,11 @@ export default class Event extends React.PureComponent {
         this.props.onPurchase(this.props.event);
     }
 
+    renderPurchaseTime() {
+        if (!this.props.event.commonTime) { return null; }
+        return <span className="common-time">{this.props.event.commonTime}</span>;
+    }
+
     render() {
         const { event } = this.props;
         return (
@@ -41,6 +48,14 @@ export default class Event extends React.PureComponent {
                     </div>
                     <h3 className="sub-title">{event.sub_title}</h3>
                     <p className="description">{event.description}</p>
+                    <div className="event-occurrences">
+                        {this.renderPurchaseTime()}
+                        <ul className="dates">
+                            {event.occurrences.map(occ =>
+                                <li key={occ.identifier} className="date">{occ.formattedOccursAt}</li>,
+                            )}
+                        </ul>
+                    </div>
                 </div>
                 <div className="actions">
                     <InfoButton onClick={this.onInfo} event={event} />

@@ -11,6 +11,7 @@ module Hippo::Access
             grant SM::Event
             grant SM::Venue
             grant SM::Presenter
+            grant SM::EventOccurrence
         end
 
     end

@@ -25,7 +25,8 @@ module SM
                 purchase = SM::Purchase.new(
                     data.slice('name', 'phone', 'email', 'qty')
                 )
-                purchase.event = SM::Event.find_by(identifier: data['event_identifier'])
+                purchase.occurrence = SM::EventOccurrence.find_by(identifier: data['occurrence_identifier'])
+
                 SM::Purchase.transaction do
                     data['payments'].each do |payment_data|
                         purchase.payments.build(payment_data)
@@ -81,9 +82,9 @@ module SM
             end
 
             def email_receipt(purchase)
-                Hippo::Mailer.from_template(
-                    ::SM::Templates::Purchase.new(purchase)
-                ).deliver
+                Hippo::Tenant.system.perform do
+                    SM::Templates::Purchase.create(purchase).deliver
+                end
             end
 
         end

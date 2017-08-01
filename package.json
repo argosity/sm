@@ -13,6 +13,7 @@
     "hippo-fw": "git+https://github.com/argosity/hippo.git",
     "history": "^4.6.3",
     "jest": "^20.0.4",
+    "mobx-decorated-models": "^0.6.0",
     "mockdate": "^2.0.1",
     "pluralize": "^6.0.0",
     "purecss": "^1.0.0",

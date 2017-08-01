@@ -1,10 +1,13 @@
 import Asset from 'hippo/models/asset';
-import { renameProperties } from 'hippo/lib/util';
 import { observe } from 'mobx';
-import { pick, isEmpty } from 'lodash';
+import { pick, isEmpty, uniqBy, map } from 'lodash';
+import moment from 'moment';
+import DateRange from 'hippo/lib/date-range';
+import { toSentence, renameProperties } from 'hippo/lib/util';
 import {
     BaseModel, identifiedBy, identifier, field, belongsTo, computed, hasMany,
 } from './base';
+import Occurrence from './event_occurrence';
 
 @identifiedBy('sm/event')
 export default class Event extends BaseModel {
@@ -21,23 +24,19 @@ export default class Event extends BaseModel {
 
     @field price;
 
-    @field({ type: 'date' }) occurs_at;
-
-    @field({ type: 'date' }) visible_after;
-    @field({ type: 'date' }) visible_until;
-
-    @field({ type: 'date' }) onsale_after;
-    @field({ type: 'date' }) onsale_until;
+    @field({ model: DateRange }) visible_during;
 
     @field external_url;
     @field({ type: 'object' }) page;
 
     @field capacity;
+    @field can_purchase;
 
     @belongsTo({ model: 'sm/venue' }) venue;
     @belongsTo({ model: 'sm/presenter' }) presenter;
     @belongsTo({ model: Asset, inverseOf: 'owner' }) image;
 
+    @hasMany({ model: Occurrence, inverseOf: 'event' }) occurrences;
     @hasMany({ model: Asset, inverseOf: 'owner' }) page_images;
 
     constructor(attrs) {
@@ -50,7 +49,6 @@ export default class Event extends BaseModel {
             }
         });
     }
-
 
     set(attrs = {}) {
         renameProperties(attrs, {
@@ -67,4 +65,5 @@ export default class Event extends BaseModel {
     @computed get hasPage() {
         return !isEmpty(this.page);
     }
+
 }

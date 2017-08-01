@@ -33,19 +33,20 @@ export default class Purchase extends React.PureComponent {
         event: PropTypes.instanceOf(EventModel).isRequired,
     }
 
-    @observable formSaver;
-    @observable isFormValid = false;
-
     @observable isTokenizing = false;
 
     formState = new FormState();
 
     @action.bound
     onPurchase() {
-        const { event, purchase } = this.props;
+        if (!this.form.isValid) {
+            this.form.exposeErrors();
+            return;
+        }
+        const { purchase } = this.props;
         purchase.errors = null;
         this.isTokenizing = true;
-        this.formSaver({ purchase, event }).then(() => {
+        this.form.saveState().then(() => {
             this.isTokenizing = false;
             if (purchase.isValid) {
                 purchase.save().then(() => {
@@ -60,14 +61,6 @@ export default class Purchase extends React.PureComponent {
         });
     }
 
-    @action.bound
-    onValidityChange(isValid) {
-        this.isFormValid = isValid;
-    }
-
-    @computed get isValid() {
-        return !!(this.isFormValid && this.formState.isValid);
-    }
 
     render() {
         const { formState, props: { purchase, event, onCancel } } = this;
@@ -105,8 +98,7 @@ export default class Purchase extends React.PureComponent {
                         event={event}
                         purchase={purchase}
                         formState={formState}
-                        setSave={form => this.formSaver = form}
-                        onValidityChange={this.onValidityChange}
+                        ref={form => this.form = form}
                     />
                 </Box>
                 <Footer
@@ -119,7 +111,7 @@ export default class Purchase extends React.PureComponent {
                         primary
                         icon={<CreditCardIcon />}
                         label='Purchase'
-                        onClick={this.isValid ? this.onPurchase : null}
+                        onClick={this.onPurchase}
                     />
                 </Footer>
             </Layer>

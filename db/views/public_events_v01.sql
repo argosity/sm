@@ -6,10 +6,12 @@ select
   ev.sub_title,
   ev.description,
   ev.external_url,
+  ev.can_purchase,
   ev.page,
-  ev.occurs_at,
-  ev.onsale_after,
-  ev.onsale_until,
+  ev.visible_during,
+
+  event_occurrences.occurrences,
+
   ev.price,
   ev.capacity,
 
@@ -36,20 +38,19 @@ select
   ) as venue
 
 from embeds em
-
   join tenants tenant on tenant.slug in (select unnest(em.tenants))
-
-  join events ev on ev.tenant_id = tenant.id
-      and ev.visible_after <= now() and ev.visible_until >= now()
-
+  join events ev on ev.tenant_id = tenant.id -- and now()::timestamp <@ visible_during
+  left join (
+    select
+      evo.event_id,
+      json_agg((select x from (select evo.identifier, evo.occurs_at, evo.price, evo.capacity) x) order by evo.occurs_at) AS occurrences
+    from event_occurrences evo group by evo.event_id
+  ) event_occurrences on event_occurrences.event_id = ev.id
   left join venues on venues.id = ev.venue_id
   left join presenters presenter on presenter.id = ev.presenter_id
-
   left join assets as event_asset on event_asset.owner_type = 'SM::Event'
        and event_asset.owner_id = ev.id
-
   left join assets as presenter_asset on presenter_asset.owner_type = 'SM::Presenter'
        and presenter_asset.owner_id = presenter.id
-
   left join assets as venue_asset on venue_asset.owner_type = 'SM::Venue'
        and venue_asset.owner_id = ev.venue_id

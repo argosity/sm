@@ -47,9 +47,9 @@ export default class BraintreeConfig extends React.PureComponent {
                 <Heading tag="h3">Braintree payment settings</Heading>
                 <Row>
                     <Field md={3} sm={6} type="checkbox" name="sandbox_mode" label="Sandbox Mode?" />
-                    <Field md={3} sm={6} name="merchant_id" validate={nonBlank} />
                     <Field md={3} sm={6} name="public_key" validate={nonBlank} />
                     <Field md={3} sm={6} name="private_key" validate={nonBlank} />
+                    <Field md={3} sm={6} name="merchant_id" validate={nonBlank} />
                 </Row>
             </Form>
         );

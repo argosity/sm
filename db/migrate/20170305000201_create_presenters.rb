@@ -1,7 +1,7 @@
 class CreatePresenters < ActiveRecord::Migration[5.0]
     def change
-        create_table :presenters, partition_key: :tenant_id  do |t|
-            t.integer :tenant_id, null: false
+        create_table :presenters do |t|
+            t.references :tenant, null: false, foreign_key: true
             t.string :code, :name, null: false
             t.timestamps null: false
         end

@@ -41,9 +41,7 @@
 <% end -%>
   }
 }
-<% if event.occurs_at -%>
-  \put(195,60){\rotatebox{270}{\parbox{60mm}{\centering\large <%=q event.occurs_at.strftime("%I:%M%P %a %b #{event.occurs_at.day.ordinalize}, %Y") %>}}}%
-<% end -%>
+\put(195,60){\rotatebox{270}{\parbox{60mm}{\centering\large <%=q purchase.occurrence.occurs_at.strftime("%I:%M%P %a %b #{purchase.occurrence.occurs_at.day.ordinalize}, %Y") %>}}}%
 <% if event.venue -%>
   \put(95,1){\parbox{100mm}{\small\raggedleft <%=q event.venue.name %>, <%=q event.venue.address %>}}
 <% end -%>

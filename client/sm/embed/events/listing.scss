@@ -14,6 +14,34 @@
 @import '~grommet/scss/hpe/objects.anchor-hpe';
 
 
+.event-occurrences {
+    margin-left: 0;
+    padding-left: 0;
+    .common-time {
+        font-size: 110%;
+    }
+    .dates {
+        display: inline;
+        margin-left: 1rem;
+    }
+    .date {
+        list-style: none;
+        display: inline;
+        margin-left: 0.5rem;
+        &:before {
+            content: ":";
+            color: $border-color;
+            margin-right: 0.5rem;
+        }
+        &:first-child {
+            margin-left: 0;
+            &:before {
+                content: "";
+            }
+        }
+    }
+}
+
 .events-listing {
 
     min-height: 200px;
@@ -43,10 +71,6 @@
                 align-items: center;
                 flex-wrap: wrap;
 
-                // &::after {
-                //     clear: both;
-                // }
-
                 h2, h3, p {
                     min-width: 0;
                     word-wrap: break-word;
@@ -61,11 +85,13 @@
                 }
             }
         }
+
         .actions {
             display: flex;
             align-items: flex-start;
             flex-direction: column;
             align-items: stretch;
+            margin: 0 10px;
             .grommetux-button {
                 margin-top: 10px;
             }
@@ -77,7 +103,10 @@
             }
             .actions {
                 flex-direction: row;
-                justify-content: space-around;
+                justify-content: flex-end;
+                .grommetux-button + .grommetux-button {
+                    margin-left: 0.5rem;
+                }
             }
         }
     }
@@ -112,12 +141,31 @@
     }
 
     .totals-line {
+        margin-top: 0.5rem;
         h2 { margin: 0; }
         .ea { flex: 1; }
         .form-field {
             min-width: 200px;
         }
+        .total {
+            min-width: 200px;
+        }
+        .occurrences {
+            min-width: 250px;
+        }
     }
+    .grommetux-value {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        .grommetux-value__annotated div {
+            display: flex;
+            flex-direction: row-reverse;
+            margin-right: 0.5rem;
+        }
+    }
+
     .top-info {
         display: flex;
 
@@ -127,5 +175,10 @@
             margin-right: 1rem;
         }
 
+    }
+}
+.grommet.grommetux-drop {
+    .grommetux-select__options {
+        margin-left: 0;
     }
 }

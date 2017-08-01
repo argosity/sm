@@ -7,9 +7,11 @@
             "sub_title": "with Giant Domino",
             "description": "Innovative motivating circuit",
             "page": null,
-            "occurs_at": "2017-05-04T02:26:17.850Z",
-            "onsale_after": "2017-04-30T02:26:17.850Z",
-            "onsale_until": "2017-05-09T02:26:17.850Z",
+            "occurrences": [
+                "2017-05-01T02:30:00.000Z",
+                "2017-05-04T07:30:00.000Z",
+                "2017-05-05T09:00:00.000Z"
+            ],
             "price": "62.73",
             "capacity": 36,
             "image": {
@@ -65,9 +67,10 @@
             "sub_title": "with Dark Venom",
             "description": "Automated needs-based open system",
             "page": null,
-            "occurs_at": "2017-05-05T02:26:19.941Z",
-            "onsale_after": "2017-05-04T02:26:19.941Z",
-            "onsale_until": "2017-05-11T02:26:19.941Z",
+            "occurrences": [
+                "2017-05-03T05:00:00.000Z",
+                "2017-05-04T07:30:00.000Z"
+            ],
             "price": "37.4",
             "capacity": 95,
             "image": {
@@ -119,13 +122,14 @@
             "embed_identifier": "xmKSubCYSWxv",
             "tenant_slug": "test",
             "identifier": "cwMx65DgEAfG",
+            "can_purchase": true,
             "title": "Genesis",
             "sub_title": "with Molten Man II",
             "description": "Right-sized bottom-line customer loyalty",
             "page": {"id": "d42786e6-6469-4b34-b1bb-fa7320ced384", "cells": [{"id": "76858322-c2e7-41fa-8aa9-717256a1f8e6", "rows": [{"id": "42a87a25-6ed4-4b8f-b05d-1d03b0af7e2f", "cells": [{"id": "967bf2c2-86e2-495f-9c11-c88b121f1fcd", "size": 12, "inline": null, "content": {"state": {"src": "http://test.hippo.dev:9292/api/assets/7as6/kpqc/9fth/fedde63c93a62eec0e5fd9d7fb13e18e.jpg", "link": "http://test.hippo.dev:9292/api/assets/lbsr/t1s9/0e4d/f925a2aee80ac2bbf3a4a8dc44a71fea.jpg", "assetId": 34}, "plugin": {"name": "ory/editor/core/content/image", "version": "0.0.1"}}}]}, {"id": "507d5eb3-73cf-414d-8ef9-a0e39670b2ca", "cells": [{"id": "55e30ceb-e60c-43f6-bd73-c04118093487", "size": 12, "inline": null, "content": {"state": {"serialized": {"nodes": [{"kind": "block", "type": "HEADINGS/HEADING-ONE", "nodes": [{"kind": "text", "text": "test of stuff"}]}]}}, "plugin": {"name": "ory/editor/core/content/slate", "version": "0.0.1"}}}]}], "size": 6, "inline": null}, {"id": "4866d786-408b-402b-8993-9fa24edf2488", "size": 6, "inline": null, "content": {"state": {"src": "http://test.hippo.dev:9292/api/assets/23i0/bz13/moh5/bd2efc3b9cfea2bf3be6b549e9e9f66f.png"}, "plugin": {"name": "ory/editor/core/content/image", "version": "0.0.1"}}}]},
-            "occurs_at": "2017-05-05T02:26:21.533Z",
-            "onsale_after": "2017-04-29T02:26:21.532Z",
-            "onsale_until": "2017-05-10T02:26:21.532Z",
+            "occurrences": [
+                "2017-05-01T05:00:00.000Z"
+            ],
             "price": "31.79",
             "capacity": 39,
             "image": {

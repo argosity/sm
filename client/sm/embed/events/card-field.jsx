@@ -34,6 +34,13 @@ export default class PurchaseField extends React.PureComponent {
         this.errorMessage = isPotentiallyValid ? '' : this.props.errorMessage;
     }
 
+    exposeError() {
+        if (!this.isValid) {
+            this.errorMessage = this.props.errorMessage;
+        }
+    }
+
+
     render() {
         const {
             label, className, ...cardFieldProps

@@ -1,8 +1,7 @@
 class CreateEvents < ActiveRecord::Migration[5.0]
     def change
-        create_table :events, partition_key: :tenant_id do |t|
-            t.integer :tenant_id, null: false
-
+        create_table :events do |t|
+            t.references :tenant, null: false, foreign_key: true
             t.string :identifier, null: false
 
             t.text :title, null: false
@@ -11,11 +10,10 @@ class CreateEvents < ActiveRecord::Migration[5.0]
             t.text :sub_title,
                    :description
 
-            t.datetime :occurs_at,
-                       :visible_after, :visible_until,
-                       :onsale_after, :onsale_until, null: false
+            t.tsrange :visible_during
+            t.boolean :can_purchase, null: false
 
-            t.decimal  :price, precision: 15, scale: 2, null: false
+            t.decimal :price, precision: 15, scale: 2, null: false
             t.integer :capacity, null: false
 
             t.references :presenter
@@ -23,10 +21,7 @@ class CreateEvents < ActiveRecord::Migration[5.0]
 
             t.timestamps null: false
         end
-
-        add_index :events, :identifier, :unique => true
-
-        add_index :events, [:tenant_id, :visible_after, :visible_until]
-
+        add_index :events, :identifier, unique: true
+        add_index :events, [:tenant_id, :visible_during]
     end
 end

@@ -6,6 +6,7 @@ Hippo::API.routes.for_extension 'sm' do
     resources SM::Venue
     resources SM::Presenter
     resources SM::Embed
+    resources SM::EventOccurrence
 end
 
 

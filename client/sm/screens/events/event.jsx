@@ -1,13 +1,13 @@
 import React from 'react';
 import { action, observable, computed } from 'mobx';
 import { observer } from 'mobx-react';
-import { get } from 'lodash';
+import { get, map } from 'lodash';
 import Config from 'hippo/config';
 
 import cn from 'classnames';
 import { Row, Col, getColumnProps } from 'react-flexbox-grid';
 import moment from 'moment';
-
+import DateRange from 'hippo/lib/date-range';
 import Button   from 'grommet/components/Button';
 import EditIcon  from 'grommet/components/icons/base/Edit';
 import Spinning from 'grommet/components/icons/Spinning';
@@ -42,7 +42,7 @@ export default class Event extends React.PureComponent {
     onEdit() {
         this.isEditing = true;
         return this.props.query.results.fetchModelForRow(
-            this.props.index, { include: 'image', with: '' },
+            this.props.index, { include: ['image', 'occurrences'], with: '' },
         ).then((event) => {
             this.props.onEdit(this.props.index, event);
             this.isEditing = false;
@@ -56,10 +56,10 @@ export default class Event extends React.PureComponent {
     render() {
         const { row, style, index: _, measure } = this.props;
         const [
-            id, slug, title, sub_title, description, image, venue, occurs_at,
-            visible_after, visible_until,
-            onsale_after, onsale_until,
+            id, slug, title, sub_title, description, image, venue, occurances, visible_range,
         ] = row;
+        const visible = new DateRange(visible_range);
+
         return (
             <div className="event" style={{ ...style }}>
 
@@ -74,9 +74,6 @@ export default class Event extends React.PureComponent {
                                 <h2>{title}</h2>
                                 <h3>{sub_title}</h3>
                             </div>
-                            <span className="occurs">
-                                {dt(occurs_at)}
-                            </span>
                             <Button
                                 icon={this.editIcon}
                                 onClick={this.onEdit} plain
@@ -90,12 +87,13 @@ export default class Event extends React.PureComponent {
                 <Row className="dates">
                     <Col sm={6}>
                         <b>Visible:</b>
-                        <div>{dt(visible_after)} ~ {dt(visible_until)}</div>
+                        <div>{dt(visible.start)} ~ {dt(visible.end)}</div>
                     </Col>
-                    <Col sm={6}>
-                        <b>On Sale:</b>
-                        <div>{dt(onsale_after)} ~ {dt(onsale_until)}</div>
+                    <Col sm={6} className="occurs">
+                        <b>Occurs:</b>
+                        <ul>{map(occurances, o => <li key={o.id}>{dt(o.occurs_at)}</li>)}</ul>
                     </Col>
+
                 </Row>
             </div>
         );

@@ -1,28 +1,18 @@
 require_relative 'spec_helper'
 
 describe SM::Purchase do
-    let (:event) { FactoryGirl.create :event }
+    let (:event) { FactoryGirl.create :event, number_of_occurances: 1 }
 
     it "can be instantiated" do
+        expect(event.occurrences.length).not_to equal(0)
         purchase = SM::Purchase.new(
-            qty: 1, name: 'Test',
-            event: event,
+            qty: 1, name: 'Test', event: event, occurrence: event.occurrences.first,
             payments: [
                 SM::Payment.new(
                     card_type: 'Visa', digits: '22', processor_transaction: '1234', amount: event.price
                 )
             ]
         )
-        tf=Tempfile.new
-        tf.write fixtures_path.join('logo.png').read
-        tf.rewind
-        event.build_image(file: {
-            type: "image/png", name: "file",
-            filename: "Screen Shot 2016-10-28 at 5.15.37 PM.png",
-            head: "Content-Disposition: form-data; name=\"file\"; filename=\"Screen Shot 2016-10-28 at 5.15.37 PM.png\"\r\nContent-Type: image/png\r\n",
-            tempfile: tf
-        })
-        event.save!
         expect(purchase.save).to be(true)
     end
 end

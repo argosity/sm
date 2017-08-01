@@ -1,7 +1,7 @@
 class CreateEmbeds < ActiveRecord::Migration[5.0]
     def change
-        create_table :embeds, partition_key: :tenant_id do |t|
-            t.integer :tenant_id, null: false
+        create_table :embeds do |t|
+            t.references :tenant, null: false, foreign_key: true
             t.text :name, null: false
             t.text :identifier, :name, null: false
             t.text :tenants, array: true, default: []
