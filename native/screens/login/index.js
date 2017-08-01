@@ -101,7 +101,6 @@ export default class LoginScreen extends React.PureComponent {
 
     @action.bound
     attemptLogin() {
-//        debugger
         Config.api_host = `http://${this.identifier}.hippo.dev:9292`;
         // api_root_domain = 'hippo.dev:9292'; //showmaker.com';
         // Config.protocol = 'http:';

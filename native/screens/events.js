@@ -9,16 +9,22 @@ import {
 import { observer } from 'mobx-react/native';
 import { partial } from 'lodash';
 // import { action, observable } from 'mobx';
-
+import User from 'hippo/user';
 import EventModel from 'sm/models/event.js';
 import Query from 'hippo/models/query.js';
 import { autobind } from 'core-decorators';
+import moment from 'moment';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    titleText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
 });
+
 
 
 @observer
@@ -34,14 +40,26 @@ export default class EventsScreen extends React.PureComponent {
             'title',
             'sub_title',
             'description',
+            'occurs_at',
             'image_details',
             'venue_details',
-            'occurs_at',
             'visible_after', 'visible_until',
             'onsale_after', 'onsale_until',
             'capacity',
         ],
     });
+
+    constructor(props) {
+        super(props);
+        // if you want to listen on navigator events, set this up
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
+    onNavigatorEvent({ type, id }) {
+        if ('NavBarButtonPress' === type && 'logout' === id) {
+            User.logout();
+        }
+    }
 
     componentDidMount() {
         this.query.open();
@@ -58,15 +76,17 @@ export default class EventsScreen extends React.PureComponent {
     }
 
     @autobind
-    renderEvent({ item: row, index }) {
+    renderEvent({ item: [id, identifier, title, sub_title, description, occurs_at], index }) {
         return (
             <TouchableHighlight
                 onPress={partial(this.onEventSelect, index)}
             >
                 <View
-                    style={{ flexDirection: 'row', height: 100, padding: 20 }}
+                    style={{ flexDirection: 'column', height: 100, padding: 20 }}
                 >
-                    <Text>{row[2]}</Text>
+                    <Text style={styles.titleText}>{title}</Text>
+                    <Text>{sub_title}</Text>
+                    <Text>{moment(occurs_at).format('YYYY-MM-DD')}</Text>
                 </View>
             </TouchableHighlight>
         );

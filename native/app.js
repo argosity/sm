@@ -2,6 +2,7 @@ import { Navigation } from 'react-native-navigation';
 import User from 'hippo/user';
 import Config from 'hippo/config';
 import { autorun, when } from 'mobx';
+import { onBoot } from 'hippo/models/pub_sub';
 import registerScreens from './screens';
 
 registerScreens();
@@ -18,12 +19,21 @@ function showLogin() {
 }
 
 function showApp() {
+    onBoot();
+
     Navigation.startSingleScreenApp({
         screen: {
             screen: 'showmaker.events',
             title: 'Events',
             navigatorStyle: {},
-            navigatorButtons: {},
+            navigatorButtons: {
+                leftButtons: [
+                    {
+                        title: 'Logout', // for a textual button, provide the button title (label)
+                        id: 'logout',
+                    },
+                ],
+            },
         },
     });
 }
