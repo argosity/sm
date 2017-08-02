@@ -223,11 +223,7 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
-<<<<<<< HEAD
-    oj (3.3.2)
-=======
     oj (3.3.4)
->>>>>>> fec024b... rebase to occur
     os (0.9.6)
     pg (0.21.0)
     pry (0.10.4)
