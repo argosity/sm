@@ -39,7 +39,7 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
       <p
         className="occurs"
       >
-        12:00:00 am on Aug 8th 2017, Aug 8th 2017 and Aug 8th 2017
+        12:00:00 am on Aug 9th 2017, Aug 9th 2017 and Aug 9th 2017
       </p>
     </div>
     <div
@@ -77,7 +77,7 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
       <p
         className="occurs"
       >
-        12:00:00 am on Aug 8th 2017 and Aug 8th 2017
+        12:00:00 am on Aug 9th 2017 and Aug 9th 2017
       </p>
     </div>
     <div
@@ -115,7 +115,7 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
       <p
         className="occurs"
       >
-        12:00:00 am on Aug 8th 2017
+        12:00:00 am on Aug 9th 2017
       </p>
     </div>
     <div

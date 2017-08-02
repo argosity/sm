@@ -1,6 +1,5 @@
 import { React, Snapshot, getScreenInstance } from 'hippo/testing/index';
-import { delay } from 'lodash';
-import MockDate from 'mockdate';
+import chronokinesis from 'chronokinesis';
 
 import EventModel from 'sm/models/embed/event';
 
@@ -14,15 +13,14 @@ describe('Embedded Events Listing', () => {
     let listing;
     beforeEach(() => {
         events = observable.array(DATA.map(ev => new EventModel(ev)));
-        MockDate.set('2017-05-01');
+        chronokinesis.travel(new Date('2017-05-01T21:00:00.000Z'));
         listing = mount(<Listing events={events} />);
         // grommit layer needs container
         document.body.appendChild(document.createElement('div'));
     });
     afterEach(() => {
-        MockDate.reset();
+        chronokinesis.reset();
     });
-
     it('renders events and matches snapshot', () => {
         DATA.forEach(ev =>
             expect(listing).toHaveRendered(`[data-event-identifier="${ev.identifier}"]`),

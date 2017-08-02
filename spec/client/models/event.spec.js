@@ -1,7 +1,15 @@
 import Event from 'sm/models/event';
 import DateRange from 'hippo/lib/date-range';
+import chronokinesis from 'chronokinesis';
+import moment from 'moment';
 
 describe('Model Event', () => {
+    beforeEach(() => {
+        chronokinesis.travel(new Date('2017-05-01'));
+    });
+    afterEach(() => {
+        chronokinesis.reset();
+    });
     it('can be instantiated', () => {
         const model = new Event(fixture('event').first);
         expect(model).toBeInstanceOf(Event);
@@ -31,7 +39,7 @@ describe('Model Event', () => {
         });
         expect(event.commonTime).toEqual('');
         event.occurrences[0].occurs_at = '2017-07-26T15:30:15.000Z';
-        expect(event.commonTime).toEqual('12:00:00 am');
+        expect(event.commonTime).toEqual('12:00am');
     });
 
     it('#occurrencesString', () => {
@@ -39,8 +47,12 @@ describe('Model Event', () => {
             { occurs_at: '2017-07-26T15:45:15.000Z' },
             { occurs_at: '2017-08-03T15:30:15.000Z' },
         ] });
-        expect(event.occurrencesString).toEqual('10:45am Jul 26th 2017 and 10:30am Aug 3rd 2017');
-        event.occurrences[0].occurs_at = '2017-07-26T15:30:15.000Z';
-        expect(event.occurrencesString).toEqual('12:00:00 am on Jul 26th 2017 and Aug 3rd 2017');
+        expect(event.occurrencesString).toEqual(
+            `${moment(event.occurrences[0].occurs_at).format('h:mma MMM Do YYYY')} and ${moment(event.occurrences[1].occurs_at).format('h:mma MMM Do YYYY')}`,
+        );
+        event.occurrences[0].occurs_at = new Date('2017-07-26T15:30:15.000Z');
+        expect(event.occurrencesString).toEqual(
+            `${event.commonTime} on ${moment(event.occurrences[0].occurs_at).format('MMM Do YYYY')} and ${moment(event.occurrences[1].occurs_at).format('MMM Do YYYY')}`,
+        );
     });
 });
