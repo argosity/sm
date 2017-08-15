@@ -1,0 +1,60 @@
+@import 'hippo/styles/global';
+
+#hippo-root .screen.box-office {
+
+    .attendees {
+        flex: 1;
+        .ReactVirtualized__List {
+            border: 1px solid $border-color;
+            border-width: 1px 0;
+        }
+        .data-list.selectable {
+            .ReactVirtualized__Grid__innerScrollContainer {
+                cursor: inherit; // override grid default
+
+                .attendee {
+                    padding: 10px 0;
+                    margin-bottom: 10px;
+                    border-bottom: 1px solid $border-color;
+                    overflow: hidden;
+                    h4 { margin: 0; }
+                    .icon {
+                        align-self: center;
+                        text-align: right;
+                    }
+                    &:not(.full) {
+                        cursor: pointer;
+                    }
+                    > .row {
+                        flex: 1;
+                    }
+                    div {
+                        align-self: center;
+//                        word-wrap: break-word;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.grommetux-layer.box-office-redemption {
+
+    h3 {
+        margin: 0;
+        height: 45px;
+        display: flex;
+        align-items: center;
+    }
+
+    .name {
+        font-size: 120%;
+        margin-bottom: 10px;
+    }
+
+    .grommetux-number-input {
+        display: flex;
+        justify-content: space-around;
+    }
+}

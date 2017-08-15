@@ -47,7 +47,7 @@ export default class CheckInScreen extends React.PureComponent {
 
         return (
             <View
-                style={{ flexDirection: 'row', height: 100, padding: 20 }}
+                style={{ flexDirection: 'column', padding: 20 }}
             >
                 <Text
                     onPress={this.onPress}

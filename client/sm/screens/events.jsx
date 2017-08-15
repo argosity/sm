@@ -133,13 +133,13 @@ export default class Events extends React.PureComponent {
                     master={
                         <DataList
                             query={this.query}
-                                  rowRenderer={this.rowRenderer}
-                                  invalidateCellSizeAfterRender={true}
-                                  ref={list => (this.listRef = list)}
-                                  rowHeight={this.sizeCache.rowHeight}
-                                  deferredMeasurementCache={this.sizeCache}
-                                  keyChange={this.listRenderKey}
-                        />}
+                            rowRenderer={this.rowRenderer}
+                            invalidateCellSizeAfterRender={true}
+                            ref={list => (this.listRef = list)}
+                            rowHeight={this.sizeCache.rowHeight}
+                            deferredMeasurementCache={this.sizeCache}
+                            keyChange={this.listRenderKey}
+                    />}
                     detail={this.renderEditingForm()}
                 />
             </Screen>

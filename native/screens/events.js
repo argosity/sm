@@ -14,7 +14,7 @@ import EventModel from 'sm/models/event.js';
 import Query from 'hippo/models/query.js';
 import { autobind } from 'core-decorators';
 import moment from 'moment';
-
+import { map } from 'lodash';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -40,11 +40,10 @@ export default class EventsScreen extends React.PureComponent {
             'title',
             'sub_title',
             'description',
-            'occurs_at',
+            'occurrences',
             'image_details',
             'venue_details',
-            'visible_after', 'visible_until',
-            'onsale_after', 'onsale_until',
+            'visible_during',
             'capacity',
         ],
     });
@@ -76,17 +75,24 @@ export default class EventsScreen extends React.PureComponent {
     }
 
     @autobind
-    renderEvent({ item: [id, identifier, title, sub_title, description, occurs_at], index }) {
+    renderEvent({ item: [id, identifier, title, sub_title, description, occurrences], index }) {
         return (
             <TouchableHighlight
                 onPress={partial(this.onEventSelect, index)}
             >
                 <View
-                    style={{ flexDirection: 'column', height: 100, padding: 20 }}
+                    style={{ flexDirection: 'column', margin: 20 }}
                 >
                     <Text style={styles.titleText}>{title}</Text>
                     <Text>{sub_title}</Text>
-                    <Text>{moment(occurs_at).format('YYYY-MM-DD')}</Text>
+                    <View
+                        style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around' }}
+                    >
+                        {map(occurrences, occurrence =>
+                            <Text key={occurrence.id}>{moment(occurrence.occurs_at).format('YYYY-MM-DD')}</Text>
+                        )}
+
+                    </View>
                 </View>
             </TouchableHighlight>
         );

@@ -9,6 +9,12 @@
 # end
 
 Hippo::Screen.for_extension 'sm' do | screens |
+    screens.define "box-office" do | screen |
+        screen.title       = "Box Office"
+        screen.description = ""
+        screen.icon        = ""
+        screen.group_id    = ""
+    end
 
     screens.define "events" do | screen |
         screen.title       = "Events"

@@ -6,7 +6,7 @@ module SM
         belongs_to :event
         belongs_to :occurrence, class_name: 'SM::EventOccurrence'
         has_many :payments, autosave: true
-
+        has_many :redemptions, inverse_of: :purchase
         before_validation :set_defaults
 
         validates :event, presence: true
@@ -41,10 +41,13 @@ module SM
                 '/tickets/' + identifier + '.pdf'
         end
 
+        def unredeemed_qty
+            self.qty - redemptions.sum(:qty)
+        end
+
         protected
 
         def set_defaults
-            Hippo.logger_debug "Has EveOcc: #{occurrence}"
             self.event ||= occurrence.event if occurrence
         end
     end

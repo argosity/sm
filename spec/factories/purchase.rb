@@ -1,10 +1,13 @@
 FactoryGirl.define do
     factory :purchase, class: SM::Purchase do
-        association :tenant, factory: :tenant, strategy: :build
-        association :event, factory: :event
+        tenant {  Hippo::Tenant.current }
+
+        association :occurrence, factory: :event_occurrence
 
         qty { (rand * 4).to_i + 1 }
         name { Faker::Name.name }
-        payments { build_list :payment, 1, amount: event.price }
+        email { Faker::Internet.email }
+        phone { Faker::PhoneNumber.phone_number  }
+        payments { build_list :payment, 1, amount: occurrence.price }
     end
 end
