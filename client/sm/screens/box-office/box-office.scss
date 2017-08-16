@@ -13,25 +13,53 @@
                 cursor: inherit; // override grid default
 
                 .attendee {
-                    padding: 10px 0;
-                    margin-bottom: 10px;
-                    border-bottom: 1px solid $border-color;
-                    overflow: hidden;
-                    h4 { margin: 0; }
-                    .icon {
-                        align-self: center;
-                        text-align: right;
-                    }
                     &:not(.full) {
                         cursor: pointer;
                     }
-                    > .row {
-                        flex: 1;
-                    }
-                    div {
-                        align-self: center;
-//                        word-wrap: break-word;
-                    }
+                }
+            }
+        }
+
+
+        .attendee {
+            padding: 10px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid $border-color;
+            overflow: hidden;
+            h4 { margin: 0; }
+            .icon {
+                align-self: center;
+                text-align: right;
+            }
+            display: flex;
+            .grid {
+                flex: 1;
+                display: grid;
+                grid-gap: 0.5rem;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr) ) ;
+                align-items: center;
+                > * {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+            }
+
+            .icon {
+                flex-basis: 40px;
+                svg { max-width: 100%; }
+            }
+            @include media-query(lap-and-up) {
+                .grid {
+                    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr) ) ;
+                }
+            }
+            @include media-query(palm) {
+                .grid {
+                    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) ) ;
+                }
+                .icon {
+                    flex-basis: 24px;
                 }
             }
         }

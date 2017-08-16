@@ -32,58 +32,23 @@ function Attendee({ style, onClick, row }) {
     const full = ((row[QTY] - redeemed) <= 0);
     const doneIcon = full ? <DoneIcon size="medium" /> : null;
     return (
-        <Row
+        <div
+            className={cn('attendee', { full })}
             onClick={full ? null : onClick}
-            style={style} className={cn('attendee', { full })}
+            style={style}
         >
-            <Col sm={9} xs={11}>
-                <Row>
-                    <Col sm={6} xs={12}>
-                        <Row>
-                            <Col sm={7} xs={12}>
-                                <Row>
-                                    <Col xs={7} sm={12}>
-                                        <h4>{row[NAME]}</h4>
-                                    </Col>
-                                    <Col xs={5} sm={12}>
-                                        {row[IDENTIFIER]}
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col sm={5} xs={12}>
-                                <Row>
-                                    <Col sm={12} xs={8}>
-                                        Redeemed/Sold
-                                    </Col>
-                                    <Col sm={12} xs={4}>
-                                        <b>{redeemed}</b> / <b>{row[QTY]}</b>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                    </Col>
-
-                    <Col sm={6} xs={12}>
-                        <Row>
-                            <Col xs={6} sm={12}>
-                                {row[PHONE]}
-                            </Col>
-                            <Col xs={6} sm={12}>
-                                {row[EMAIL]}
-                            </Col>
-                        </Row>
-
-                    </Col>
-                </Row>
-            </Col>
-            <Col sm={2} xs={11}>
-                {moment(row[DATE]).format('dd, MMM Do, h:mm:ss a')}
-            </Col>
-            <Col xs={1} className="icon">
-                {doneIcon}
-            </Col>
-        </Row>
+            <div className="grid">
+                <div className="name">{row[NAME]}</div>
+                <div className="ident">{row[IDENTIFIER]}</div>
+                <div className="rs">
+                    Purchased: <b>{row[QTY]}</b>; Redeemed: <b>{redeemed}</b>
+                </div>
+                <div className="phone">{row[PHONE]}</div>
+                <div className="email">{row[EMAIL]}</div>
+                <div className="date">{moment(row[DATE]).format('dd, MMM Do, h:mm:ss a')}</div>
+            </div>
+            <div className="icon">{doneIcon}</div>
+        </div>
     );
 }
 
@@ -106,7 +71,6 @@ export default class Attendees extends React.PureComponent {
             'name', 'phone', 'email', 'qty', 'created_at', 'redemptions',
         ],
     })
-
 
     constructor(props) {
         super(props);
