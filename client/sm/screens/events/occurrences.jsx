@@ -1,6 +1,5 @@
 import React from 'react';
-import Event from '../../models/event';
-import { observer }   from 'mobx-react';
+import { observer }  from 'mobx-react';
 import { action } from 'mobx';
 import PropTypes from 'prop-types';
 import { autobind } from 'core-decorators';
@@ -12,32 +11,26 @@ import Box from 'grommet/components/Box';
 import { columnClasses } from 'hippo/lib/util';
 import { Table, AutoSizer, Column } from 'react-virtualized';
 import DateTime from 'hippo/components/date-time';
+import Event from '../../models/event';
 
-const ValueInput = observer(({ name, occurrence }) => {
-    return (
-        <input
-            value={occurrence[name] || ''}
-            onChange={({ target: { value } }) => (occurrence[name] = value)}
-        />
-    );
-});
+const ValueInput = observer(({ name, occurrence }) => (
+    <input
+        value={occurrence[name] || ''}
+        onChange={({ target: { value } }) => { occurrence[name] = value; }}
+    />
+));
 
 
-const DateInput = observer(({ name, occurrence }) => {
-    return (
-        <DateTime
-            value={occurrence.occurs_at}
-            format="M/D/YYYY h:mm a"
-            onChange={value => (occurrence.occurs_at = value)}
-        />
-    );
-
-});
+const DateInput = observer(({ occurrence }) => (
+    <DateTime
+        value={occurrence.occurs_at}
+        format="M/D/YYYY h:mm a"
+        onChange={(value) => { occurrence.occurs_at = value; }}
+    />
+));
 
 @observer
 export default class OccurrencesEditor extends React.PureComponent {
-
-
     static propTypes = {
         event: PropTypes.instanceOf(Event).isRequired,
     }
@@ -106,13 +99,13 @@ export default class OccurrencesEditor extends React.PureComponent {
                 <AutoSizer>
                     {({ height, width }) =>
                         <Table
-                            height={height-50}
+                            height={height - 50}
                             width={width}
                             rowHeight={40}
                             rowGetter={this.rowAtIndex}
                             headerHeight={40}
                             rowCount={occurrences.length}
-                            >
+                        >
                             <Column
                                 dataKey="occurs_at" label="Date/Time"
                                 width={200} flexGrow={1} headerRenderer={this.headerRenderer}
@@ -138,5 +131,4 @@ export default class OccurrencesEditor extends React.PureComponent {
             </div>
         );
     }
-
 }

@@ -1,0 +1,19 @@
+.purchase-form {
+
+    .braintree-hosted-field {
+        height: 36px;
+        padding-left: 22px;
+    }
+
+    .heading {
+        .title {
+            min-width: 200px;
+        }
+        .form-field {
+            min-width: 160px;
+        }
+        .total {
+            min-width: 200px;
+        }
+    }
+}

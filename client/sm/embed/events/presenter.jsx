@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Image from './image';
 import { observer } from 'mobx-react';
-import { action, observable, computed } from 'mobx';
-import PresenterModel from '../../models/embed/presenter';
-
+import Image from './image';
+import PresenterModel from '../../models/presenter';
 
 @observer
 export default class Event extends React.PureComponent {

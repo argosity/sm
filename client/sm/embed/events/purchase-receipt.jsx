@@ -7,7 +7,7 @@ import Box        from 'grommet/components/Box';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 
-import PurchaseModel from '../../models/embed/purchase';
+import PurchaseModel from '../../models/purchase';
 import Paragraph from 'grommet/components/Paragraph';
 
 import Layer from '../layer-wrapper';
@@ -29,7 +29,7 @@ export default class PurchaseReceipt extends React.PureComponent {
     }
 
     render() {
-        const { purchase, purchase: { event } } = this.props;
+        const { purchase, purchase: { occurrence: { event } } } = this.props;
 
         return (
             <Layer

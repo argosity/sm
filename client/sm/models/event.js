@@ -1,16 +1,25 @@
 import Asset from 'hippo/models/asset';
 import { observe } from 'mobx';
-import { pick, isEmpty, uniqBy, map } from 'lodash';
+import { pick, uniqBy, filter, isEmpty } from 'lodash';
 import moment from 'moment';
 import DateRange from 'hippo/lib/date-range';
-import { toSentence, renameProperties } from 'hippo/lib/util';
+import Config from 'hippo/config';
+import { renameProperties } from 'hippo/lib/util';
 import {
     BaseModel, identifiedBy, identifier, field, belongsTo, computed, hasMany,
 } from './base';
-import Occurrence from './event_occurrence';
+import Occurrence from './event-occurrence';
+
+const formatTime = occurs => moment(occurs.occurs_at).format('h:mma');
 
 @identifiedBy('sm/event')
 export default class Event extends BaseModel {
+    static fetchEmbedded(embedId) {
+        return this.Collection
+            .create()
+            .fetch({ url: `${Config.api_path}/sm/embed/events/${embedId}` });
+    }
+
     @identifier id;
 
     @field identifier = '';
@@ -30,6 +39,7 @@ export default class Event extends BaseModel {
     @field({ type: 'object' }) page;
 
     @field capacity;
+    @field can_purchase;
     @field can_purchase;
 
     @belongsTo({ model: 'sm/venue' }) venue;
@@ -66,4 +76,16 @@ export default class Event extends BaseModel {
         return !isEmpty(this.page);
     }
 
+    @computed get futureOccurrences() {
+        return filter(this.occurrences, o => o.isFuture);
+    }
+
+    @computed get commonTime() {
+        const times = uniqBy(this.occurrences, formatTime);
+        return 1 === times.length ? formatTime(times[0]) : null;
+    }
+
+    @computed get canPurchase() {
+        return this.can_purchase;
+    }
 }

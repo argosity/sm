@@ -1,15 +1,19 @@
 import moment from 'moment';
 import Big from 'big.js';
 import { sprintf } from 'sprintf-js';
+import { action } from 'mobx';
+import { get } from 'lodash';
 import {
-    EmbeddedBaseModel, identifiedBy, field, identifier, belongsTo, computed,
-} from './model';
+    BaseModel, identifiedBy, field, identifier, belongsTo, computed, session,
+} from './base';
 
-@identifiedBy('sm/embedded/event_occurrence')
-export default class EventOccurrence extends EmbeddedBaseModel {
-    @identifier({ type: 'string' }) identifier;
+@identifiedBy('sm/event-occurrence')
+export default class EventOccurrence extends BaseModel {
+    @identifier id;
 
-    @belongsTo({ model: 'sm/embedded/event' }) event;
+    @session identifier;
+
+    @belongsTo({ model: 'sm/event' }) event;
 
     @field price;
     @field capacity;
@@ -29,6 +33,14 @@ export default class EventOccurrence extends EmbeddedBaseModel {
     }
 
     @computed get pricedEvent() {
-        return Big(this.price || this.event.price);
+        return Big(this.price || get(this.event, 'price', 0));
+    }
+
+    @action.bound
+    onDelete() {
+        if (!this.event.isNew) {
+            this.destroy();
+        }
+        this.event.occurrences.remove(this);
     }
 }

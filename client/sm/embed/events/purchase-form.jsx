@@ -16,7 +16,6 @@ import CardField from './card-field';
 
 @observer
 export default class PurchaseForm extends React.PureComponent {
-
     @observable cardIsValid;
     @observable getToken;
 
@@ -140,7 +139,7 @@ export default class PurchaseForm extends React.PureComponent {
                     className="occurrences"
                     value={
                         this.props.purchase.occurrence ?
-                           this.props.purchase.occurrence.formattedOccurs : ''
+                            this.props.purchase.occurrence.formattedOccurs : ''
                     }
                     onChange={this.onOccurrenceChange}
                     options={this.occurrenceOptions}

@@ -25,7 +25,6 @@ import Occurrences from './occurrences';
 
 @observer
 export default class EditForm extends React.PureComponent {
-
     static propTypes = {
         event:      PropTypes.instanceOf(Event).isRequired,
         onComplete: PropTypes.func.isRequired,

@@ -2,30 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
-import { findKey, each, delay, mapValues } from 'lodash';
+import { map, findKey, each, delay, mapValues } from 'lodash';
 import { Row, Col } from 'react-flexbox-grid';
-import Box from 'grommet/components/Box';
-
-import Heading        from 'grommet/components/Heading';
-import Footer         from 'grommet/components/Footer';
-import Button         from 'grommet/components/Button';
+import Box       from 'grommet/components/Box';
+import Heading   from 'grommet/components/Heading';
+import Footer    from 'grommet/components/Footer';
+import Button    from 'grommet/components/Button';
+import FormField from 'grommet/components/FormField';
+import Select    from 'grommet/components/Select';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import WarningNotification from 'hippo/components/warning-notification';
 
-import PurchaseModel from '../../models/embed/purchase';
-import EventModel from '../../models/embed/event';
+import PurchaseModel from '../../models/purchase';
+import EventModel from '../../models/event';
 
 import Layer from '../layer-wrapper';
 
 import Image from './image';
 import { FormState } from 'hippo/components/form';
-import PurchaseForm from './purchase-form';
+import PurchaseForm from 'sm/components/purchase/form';
 
 @observer
 export default class Purchase extends React.PureComponent {
-
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
         onPurchaseComplete: PropTypes.func.isRequired,
@@ -37,33 +37,47 @@ export default class Purchase extends React.PureComponent {
 
     formState = new FormState();
 
-    @action.bound
-    onPurchase() {
-        if (!this.form.isValid) {
-            this.form.exposeErrors();
-            return;
-        }
-        const { purchase } = this.props;
-        purchase.errors = null;
-        this.isTokenizing = true;
-        this.form.saveState().then(() => {
-            this.isTokenizing = false;
-            if (purchase.isValid) {
-                purchase.save().then(() => {
-                    if (purchase.isValid) {
-                        this.props.onPurchaseComplete();
-                    }
-                });
-            }
-        }).catch((err) => {
-            purchase.errors = { invalid: err.message }; // eslint-disable-line
-            this.isTokenizing = false;
-        });
+
+    @computed get occurrenceOptions() {
+        return map(this.props.event.futureOccurrences, o => ({
+            occurrence: o,
+            label: (
+                <Box key={o.identifier} direction='row' justify='between' responsive={false}>
+                    <span>{o.formattedOccursAt}</span>
+                    <span>{o.formattedPrice}</span>
+                </Box>
+            ),
+        }));
     }
 
+    @action.bound
+    onOccurrenceChange({ value: { occurrence } }) {
+        this.props.purchase.occurrence = occurrence;
+    }
+
+    @action.bound
+    onComplete() {
+        this.props.onPurchaseComplete(this.props.purchase);
+    }
+
+    renderOccurrences() {
+        return (
+            <FormField label='Event'>
+                <Select
+                    className="occurrences"
+                    value={
+                        this.props.purchase.occurrence ?
+                            this.props.purchase.occurrence.formattedOccursAt : ''
+                    }
+                    onChange={this.onOccurrenceChange}
+                    options={this.occurrenceOptions}
+                />
+            </FormField>
+        );
+    }
 
     render() {
-        const { formState, props: { purchase, event, onCancel } } = this;
+        const { props: { purchase, event, onCancel } } = this;
 
         return (
             <Layer
@@ -95,25 +109,16 @@ export default class Purchase extends React.PureComponent {
                         </div>
                     </div>
                     <PurchaseForm
-                        event={event}
                         purchase={purchase}
-                        formState={formState}
+                        onComplete={this.onComplete}
                         ref={form => this.form = form}
-                    />
+                        heading={this.renderOccurrences()}
+                        controls={
+                            <Button label="Cancel" onClick={onCancel} accent />
+                        }
+                    >
+                    </PurchaseForm>
                 </Box>
-                <Footer
-                    margin="small"
-                    justify="end"
-                    pad={{ horizontal: 'small', between: 'small' }}
-                >
-                    <Button label="Cancel" onClick={onCancel} accent />
-                    <Button
-                        primary
-                        icon={<CreditCardIcon />}
-                        label='Purchase'
-                        onClick={this.onPurchase}
-                    />
-                </Footer>
             </Layer>
         );
     }

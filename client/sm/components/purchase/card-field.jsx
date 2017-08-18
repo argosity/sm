@@ -45,7 +45,7 @@ export default class PurchaseField extends React.PureComponent {
             label, className, ...cardFieldProps
         } = getColumnProps(this.props);
         return (
-            <div className={classnames('form-field', className)}>
+            <div className={classnames('card form-field', className)}>
                 <FieldWrapper
                     error={this.errorMessage}
                     label={label}

@@ -24,8 +24,7 @@ describe SM::Handlers::Purchase, api: true, vcr: VCR_OPTS do
     it "saves a transaction" do
         with_payment_proccessor do
             expect {
-                response = post '/api/sm/embed/purchase.json', request_data.to_json
-                puts response.body
+                response = post '/api/sm/purchase.json', request_data.to_json
             }.to change { SM::Purchase.count }.by(1)
             expect(last_response).to be_ok
         end
@@ -35,7 +34,7 @@ describe SM::Handlers::Purchase, api: true, vcr: VCR_OPTS do
         event.update_attributes(price: '2001.00')
         with_payment_proccessor do
             expect {
-                post '/api/sm/embed/purchase.json', request_data.to_json
+                post '/api/sm/purchase.json', request_data.to_json
                 expect(last_response_json['errors']).to eq({'payment' => 'Insufficient Funds'})
                 expect(last_response_json['message']).to eq('Create failed: Payment Insufficient Funds')
             }.to change { SM::Purchase.count }.by(0)
@@ -46,7 +45,7 @@ describe SM::Handlers::Purchase, api: true, vcr: VCR_OPTS do
     it 'sends email' do
         with_payment_proccessor do
             expect {
-                post '/api/sm/embed/purchase.json', request_data.to_json
+                post '/api/sm/purchase.json', request_data.to_json
             }.to change { SM::Purchase.count }.by(1)
             expect(last_response).to be_ok
             purchase = SM::Purchase.find_by_identifier(response_data['identifier'])

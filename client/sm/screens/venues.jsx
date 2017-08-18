@@ -22,7 +22,6 @@ import Venue from '../models/venue';
 
 @observer
 export default class Venues extends React.PureComponent {
-
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }

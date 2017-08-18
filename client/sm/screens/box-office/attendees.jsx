@@ -12,20 +12,20 @@ import DataList from 'hippo/components/data-list';
 import Box from 'grommet/components/Box';
 import QueryBuilder from 'hippo/components/query-builder';
 import Sale from '../../models/sale';
-import Occurrence from '../../models/event_occurrence';
+import Occurrence from '../../models/event-occurrence';
 import Redemption from '../../models/redemption';
 import Redeem from './redeem';
 import DoneIcon from 'grommet/components/icons/base/Compliance';
 
 const ID          = 0,
-      PURCHASE_ID = 1,
+    PURCHASE_ID = 1,
       IDENTIFIER  = 2, // eslint-disable-line
-      NAME        = 3,
-      PHONE       = 4,
-      EMAIL       = 5,
-      QTY         = 6,
+    NAME        = 3,
+    PHONE       = 4,
+    EMAIL       = 5,
+    QTY         = 6,
       DATE        = 7, // eslint-disable-line
-      REDEMPTIONS = 8;
+    REDEMPTIONS = 8;
 
 function Attendee({ style, onClick, row }) {
     const redeemed = sumBy(row[REDEMPTIONS], 'qty');
@@ -54,7 +54,6 @@ function Attendee({ style, onClick, row }) {
 
 @observer
 export default class Attendees extends React.PureComponent {
-
     static propTypes = {
         occurrence: PropTypes.instanceOf(Occurrence).isRequired,
     }
@@ -75,9 +74,11 @@ export default class Attendees extends React.PureComponent {
     constructor(props) {
         super(props);
         this.setQuery(props);
-        this.mql = window.matchMedia('(min-width: 800px)');
-        this.mql.addListener(this.onMediaQueryChanged);
-        this.onMediaQueryChanged();
+        if (window.matchMedia) {
+            this.mql = window.matchMedia('(min-width: 800px)');
+            this.mql.addListener(this.onMediaQueryChanged);
+            this.onMediaQueryChanged();
+        }
     }
 
     componentWillUnmount() {

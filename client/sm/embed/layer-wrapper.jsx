@@ -3,7 +3,6 @@ import React from 'react';
 import Layer from 'grommet/components/Layer';
 
 export default class LayerWrapper extends React.PureComponent {
-
     componentDidMount() {
         this.originalOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';

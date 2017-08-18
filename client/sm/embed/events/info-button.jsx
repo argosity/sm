@@ -6,7 +6,7 @@ import Button from 'grommet/components/Button';
 import LinkIcon from 'grommet/components/icons/base/Link';
 import CircleInformationIcon from 'grommet/components/icons/base/CircleInformation';
 
-import EventModel from '../../models/embed/event';
+import EventModel from '../../models/event';
 
 export default class InfoButton extends React.PureComponent {
     static propTypes = {

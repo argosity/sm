@@ -5,7 +5,7 @@ import { action } from 'mobx';
 
 import Heading    from 'grommet/components/Heading';
 import Box        from 'grommet/components/Box';
-import EventModel from 'sm/models/embed/event';
+import EventModel from 'sm/models/event';
 import Footer from 'grommet/components/Footer';
 import PageRenderer from 'hippo/components/text-editor/renderer';
 import PurchaseButton from './purchase-button';

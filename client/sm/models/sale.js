@@ -1,9 +1,7 @@
 import { sumBy } from 'lodash';
-import { observable } from 'mobx';
 import {
-    BaseModel, identifiedBy, identifier, session, field, belongsTo, computed, hasMany,
+    BaseModel, identifiedBy, identifier, session, computed,
 } from './base';
-import Redemption from './redemption';
 
 @identifiedBy('sm/sale')
 export default class Sale extends BaseModel {
@@ -18,11 +16,9 @@ export default class Sale extends BaseModel {
     @session email;
     @session qty;
     @session({ type: 'date' }) created_at;
-
     @session({ type: 'object' }) redemptions;
 
     @computed get remainingQty() {
         return this.qty - sumBy(this.redemptions, 'qty');
     }
-
 }

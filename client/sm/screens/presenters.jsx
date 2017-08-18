@@ -23,7 +23,6 @@ import Presenter from '../models/presenter';
 
 @observer
 export default class Presenters extends React.PureComponent {
-
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }

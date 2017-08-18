@@ -13,7 +13,6 @@ import Redemption  from '../../models/redemption';
 
 @observer
 export default class Redeem extends React.PureComponent {
-
     static propTypes = {
         redemption: PropTypes.instanceOf(Redemption),
         onComplete: PropTypes.func.isRequired,

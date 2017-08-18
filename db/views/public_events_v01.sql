@@ -39,12 +39,12 @@ select
 
 from embeds em
   join tenants tenant on tenant.slug in (select unnest(em.tenants))
-  join events ev on ev.tenant_id = tenant.id -- and now()::timestamp <@ visible_during
-  left join (
+  join events ev on ev.tenant_id = tenant.id
+  join (
     select
       evo.event_id,
       json_agg((select x from (select evo.identifier, evo.occurs_at, evo.price, evo.capacity) x) order by evo.occurs_at) AS occurrences
-    from event_occurrences evo group by evo.event_id
+    from event_occurrences evo where evo.occurs_at > now() group by evo.event_id
   ) event_occurrences on event_occurrences.event_id = ev.id
   left join venues on venues.id = ev.venue_id
   left join presenters presenter on presenter.id = ev.presenter_id

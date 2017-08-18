@@ -36,11 +36,29 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
       >
         Innovative motivating circuit
       </p>
-      <p
-        className="occurs"
+      <div
+        className="event-occurrences"
       >
-        12:00:00 am on Aug 9th 2017, Aug 9th 2017 and Aug 9th 2017
-      </p>
+        <ul
+          className="dates"
+        >
+          <li
+            className="date"
+          >
+            3:56pm Aug 24th 2017
+          </li>
+          <li
+            className="date"
+          >
+            6:59am Aug 25th 2017
+          </li>
+          <li
+            className="date"
+          >
+            11:59am Aug 26th 2017
+          </li>
+        </ul>
+      </div>
     </div>
     <div
       className="actions"
@@ -74,11 +92,24 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
       >
         Automated needs-based open system
       </p>
-      <p
-        className="occurs"
+      <div
+        className="event-occurrences"
       >
-        12:00:00 am on Aug 9th 2017 and Aug 9th 2017
-      </p>
+        <ul
+          className="dates"
+        >
+          <li
+            className="date"
+          >
+            11:59am Aug 26th 2017
+          </li>
+          <li
+            className="date"
+          >
+            6:10am Sep 2nd 2017
+          </li>
+        </ul>
+      </div>
     </div>
     <div
       className="actions"
@@ -112,11 +143,24 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
       >
         Right-sized bottom-line customer loyalty
       </p>
-      <p
-        className="occurs"
+      <div
+        className="event-occurrences"
       >
-        12:00:00 am on Aug 9th 2017
-      </p>
+        <ul
+          className="dates"
+        >
+          <li
+            className="date"
+          >
+            11:59am Aug 26th 2017
+          </li>
+          <li
+            className="date"
+          >
+            6:10am Sep 2nd 2017
+          </li>
+        </ul>
+      </div>
     </div>
     <div
       className="actions"

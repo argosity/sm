@@ -1,7 +1,7 @@
-import React from 'react';  // eslint-disable-line no-unused-vars
+import React from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';
 import Config from 'hippo/config';
-import EmbeddedEvents from 'sm/models/embed/event';
+import Events from 'sm/models/event';
 import { AppContainer } from 'react-hot-loader';
 import { when } from 'mobx';
 import Listing from './listing';
@@ -33,10 +33,10 @@ export default function boot({ host, data, root }) {
 
             rootElement = root;
             rootElement.classList.remove('loading');
-            EmbeddedEvents.fetch(data.embedId).then((c) => {
+            Events.fetchEmbedded(data.embedId).then((c) => {
                 eventsListing = c;
                 render();
             });
-        }
-    )
+        },
+    );
 }

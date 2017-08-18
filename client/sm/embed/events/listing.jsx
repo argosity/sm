@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
 
-import EventModel from '../../models/embed/event';
-import PurchaseModel from '../../models/embed/purchase';
+import EventModel from '../../models/event';
+import PurchaseModel from '../../models/purchase';
 import Information from './information';
 import Purchase from './purchase';
 import Receipt from './purchase-receipt';
@@ -22,7 +22,6 @@ export default class Listing extends React.PureComponent {
     }
 
     @observable displaying = {}
-    @observable purchase = new PurchaseModel();
 
     @action.bound
     onDisplayInfo(event) {
@@ -31,7 +30,7 @@ export default class Listing extends React.PureComponent {
 
     @action.bound
     onPurchase(event) {
-        this.displaying = { event, view: 'purchase', purchase: this.purchase };
+        this.displaying = { event, view: 'purchase', purchase: new PurchaseModel({ event }) };
     }
 
     @action.bound
@@ -40,9 +39,8 @@ export default class Listing extends React.PureComponent {
     }
 
     @action.bound
-    onPurchaseComplete() {
-        this.displaying = { view: 'receipt', purchase: this.purchase };
-        this.purchase = new PurchaseModel();
+    onPurchaseComplete(purchase) {
+        this.displaying = { view: 'receipt', purchase };
     }
 
     @computed get Layer() {
@@ -83,7 +81,7 @@ export default class Listing extends React.PureComponent {
                         onPurchase={this.onPurchase}
                         displayEvent={this.onDisplayInfo}
                     />
-                 ))}
+                ))}
             </div>
         );
     }

@@ -1,7 +1,8 @@
-import { React, Snapshot, getScreenInstance } from 'hippo/testing/index';
+import React from 'react'; // eslint-disable-line no-unused-vars
+import { Snapshot } from 'hippo/testing/index';
 import chronokinesis from 'chronokinesis';
 
-import EventModel from 'sm/models/embed/event';
+import EventModel from 'sm/models/event';
 
 import Listing from 'sm/embed/events/listing';
 import { observable } from 'mobx';
@@ -52,5 +53,4 @@ describe('Embedded Events Listing', () => {
         listing.find('[data-event-identifier="cwMx65DgEAfG"] InfoButton Button').simulate('click');
         document.querySelector('.grommetux-layer__container footer button').click();
     });
-
 });

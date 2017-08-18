@@ -5,7 +5,7 @@ import { action } from 'mobx';
 import Value from 'grommet/components/Value';
 
 import Image from './image';
-import EventModel from '../../models/embed/event';
+import EventModel from '../../models/event';
 import InfoButton from './info-button';
 import PurchaseButton from './purchase-button';
 import Presenter from './presenter';

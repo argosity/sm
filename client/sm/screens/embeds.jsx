@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import Screen from 'hippo/components/screen';
 import { Row, Col } from 'react-flexbox-grid';
@@ -14,9 +15,8 @@ import './embeds/embed-styles.scss';
 
 @observer
 export default class Embeds extends React.PureComponent {
-
     static propTypes = {
-        screen: React.PropTypes.instanceOf(Screen.Instance).isRequired,
+        screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
 
     query = new Query({

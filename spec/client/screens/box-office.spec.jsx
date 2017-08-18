@@ -1,12 +1,11 @@
-import { React, Snapshot, getScreenInstance } from 'hippo/testing/index';
-import Gate from 'sm/screens/gate';
+import React from 'react'; // eslint-disable-line no-unused-vars
+import { Snapshot, getScreenInstance } from 'hippo/testing/index';
+import BoxOffice from 'sm/screens/box-office';
 
-const screenInstance = getScreenInstance('gate');
+const screenInstance = getScreenInstance('box-office');
 
 describe('Screen Gate', () => {
     it('renders and matches snapshot', () => {
-        const screen = shallow(<Gate screen={screenInstance} />);
-        expect(screen).toHaveRendered('Gate');
-        expect(Snapshot(<Gate screen={screenInstance} />)).toMatchSnapshot();
+        expect(Snapshot(<BoxOffice screen={screenInstance} />)).toMatchSnapshot();
     });
 });

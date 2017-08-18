@@ -35,7 +35,6 @@ function Image(props) {
 
 @observer
 export default class Event extends React.PureComponent {
-
     @observable isEditing = false;
 
     @action.bound
@@ -54,9 +53,9 @@ export default class Event extends React.PureComponent {
     }
 
     render() {
-        const { row, style, index: _, measure } = this.props;
+        const { row, style, measure } = this.props;
         const [
-            id, slug, title, sub_title, description, image, venue, occurances, visible_range,
+            _, __, title, sub_title, description, image, venue, occurances, visible_range,
         ] = row;
         const visible = new DateRange(visible_range);
 
@@ -98,5 +97,4 @@ export default class Event extends React.PureComponent {
             </div>
         );
     }
-
 }

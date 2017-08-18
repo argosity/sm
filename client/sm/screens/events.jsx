@@ -23,7 +23,6 @@ import { autobind } from 'core-decorators';
 
 @observer
 export default class Events extends React.PureComponent {
-
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
@@ -78,16 +77,16 @@ export default class Events extends React.PureComponent {
                 cache={this.sizeCache}
             >{({ measure }) =>
                 <Event
-                    row={row}
-                    {...props}
-                    measure={measure}
-                    query={this.query}
-                    event={this.editing.event}
-                    onEdit={this.onEditRow}
-                    keyChange={this.listRenderKey}
-                    onComplete={this.onEditComplete}
-                />
-            }</CellMeasurer>
+                        row={row}
+                        {...props}
+                        measure={measure}
+                        query={this.query}
+                        event={this.editing.event}
+                        onEdit={this.onEditRow}
+                        keyChange={this.listRenderKey}
+                        onComplete={this.onEditComplete}
+                    />
+                }</CellMeasurer>
         );
     }
 
@@ -139,7 +138,7 @@ export default class Events extends React.PureComponent {
                             rowHeight={this.sizeCache.rowHeight}
                             deferredMeasurementCache={this.sizeCache}
                             keyChange={this.listRenderKey}
-                    />}
+                        />}
                     detail={this.renderEditingForm()}
                 />
             </Screen>

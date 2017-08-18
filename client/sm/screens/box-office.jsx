@@ -10,26 +10,26 @@ import Button from 'grommet/components/Button';
 import Box from 'grommet/components/Box';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 import SearchIcon from 'grommet/components/icons/base/Search';
-import EventOccurrence from '../models/event_occurrence';
+import EventOccurrence from '../models/event-occurrence';
 import Attendees from './box-office/attendees';
+import Purchase from '../models/purchase';
+import PurchaseLayer from '../components/purchase/layer';
 import './box-office/box-office.scss';
-import Occurrence from '../models/event_occurrence';
-
 
 const DateCell = ({ cellData }) => moment(cellData).format('YYYY-MM-DD hh:mma');
 
 @observer
 export default class BoxOffice extends React.PureComponent {
-
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
 
-    @observable occurrence = new EventOccurrence;
+    @observable occurrence = new EventOccurrence();
     @observable isShowingSearch = false;
+    @observable purchase;
 
     query = new Query({
-        src: Occurrence,
+        src: EventOccurrence,
         syncOptions: { include: 'event', order: { occurs_at: 'desc' } },
         fields: [
             { id: 'id', visible: false, queryable: false },
@@ -43,18 +43,16 @@ export default class BoxOffice extends React.PureComponent {
         this.occurrence = occur;
         this.isShowingSearch = false;
     }
-
-    @action.bound
-    onSaleClick() {
-
+    @action.bound onSaleClick() {
+        this.purchase = new Purchase({ occurrence: this.occurrence });
     }
-
+    @action.bound onPurchaseComplete() { this.purchase = null; }
+    @action.bound onPurchaseCancel() { this.purchase = null; }
     @action.bound onSearchClick() { this.isShowingSearch = true; }
     @action.bound onSearchClose() { this.isShowingSearch = false; }
 
     componentDidMount() {
-        this.query.fetchSingle({ id: 351 })
-            .then(o => this.onRecordFound(o));
+        this.query.fetchSingle({ id: 351 }).then(o => this.onRecordFound(o));
     }
 
     render() {
@@ -68,6 +66,12 @@ export default class BoxOffice extends React.PureComponent {
                     visible={isShowingSearch}
                     onRecordSelect={this.onRecordFound}
                     onClose={this.onSearchClose}
+                />
+
+                <PurchaseLayer
+                    purchase={this.purchase}
+                    onCancel={this.onPurchaseCancel}
+                    onComplete={this.onPurchaseComplete}
                 />
 
                 <Box direction="row" wrap justify="between" align="baseline">
@@ -87,11 +91,11 @@ export default class BoxOffice extends React.PureComponent {
 
                 <Box direction="row" justify="end">
                     {occurrence.isNew ? null : (
-                     <Button
-                         icon={<CreditCardIcon />}
-                         label={'Sale'}
-                         onClick={this.onSaleClick}
-                    />)}
+                        <Button
+                            icon={<CreditCardIcon />}
+                            label={'Sale'}
+                            onClick={this.onSaleClick}
+                        />)}
                 </Box>
 
                 <Attendees occurrence={occurrence} />
