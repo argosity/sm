@@ -1,5 +1,4 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { Snapshot } from 'hippo/testing/index';
 import EventModel from 'sm/models/event';
 import EventEditForm from 'sm/screens/events/edit-form';
 import EVENT from '../../fixtures/sm/event/1.json';
@@ -13,10 +12,6 @@ describe('Screen Events', () => {
             event,
             onComplete: jest.fn(),
         };
-    });
-
-    it('renders', () => {
-        expect(Snapshot(<EventEditForm {...props} />)).toMatchSnapshot();
     });
 
     it('edits', () => {

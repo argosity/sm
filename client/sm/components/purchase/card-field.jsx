@@ -39,6 +39,8 @@ export default class PurchaseField extends React.PureComponent {
         }
     }
 
+    @action.bound
+    setRef(f) { this.wrapper = f; }
 
     render() {
         const {
@@ -49,7 +51,7 @@ export default class PurchaseField extends React.PureComponent {
                 <FieldWrapper
                     error={this.errorMessage}
                     label={label}
-                    ref={f => (this.wrapper = f)}
+                    ref={this.setRef}
                 >
                     <HostedField
                         {...cardFieldProps}

@@ -9,8 +9,6 @@ import { autobind } from 'core-decorators';
 import Heading from 'grommet/components/Heading';
 
 import EmbedModel from '../models/embed';
-import Tenant from 'hippo/models/tenant';
-
 import './embeds/embed-styles.scss';
 
 @observer
@@ -38,7 +36,7 @@ export default class Embeds extends React.PureComponent {
     rowRenderer(props) {
         const { style, index, key } = props;
         const [
-            id, tenants, name, identifier,
+            _, __, name, identifier,
         ] = this.query.results.rows[index];
 
         return (

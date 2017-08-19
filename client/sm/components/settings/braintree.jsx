@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { get } from 'lodash';
 import { Row } from 'react-flexbox-grid';
-import Config from 'hippo/config';
 import { Form, Field, FormState, nonBlank } from 'hippo/components/form';
 
 import Heading from 'grommet/components/Heading';

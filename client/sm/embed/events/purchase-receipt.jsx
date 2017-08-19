@@ -1,19 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes    from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-
-import Box        from 'grommet/components/Box';
-import Footer from 'grommet/components/Footer';
-import Button from 'grommet/components/Button';
+import TicketIcon   from 'grommet/components/icons/base/Ticket';
+import pluralize    from 'pluralize';
+import Anchor       from 'grommet/components/Anchor';
+import Box          from 'grommet/components/Box';
+import Footer       from 'grommet/components/Footer';
+import Button       from 'grommet/components/Button';
+import Paragraph    from 'grommet/components/Paragraph';
 
 import PurchaseModel from '../../models/purchase';
-import Paragraph from 'grommet/components/Paragraph';
-
 import Layer from '../layer-wrapper';
-import TicketIcon from 'grommet/components/icons/base/Ticket';
-import pluralize from 'pluralize';
-import Anchor from 'grommet/components/Anchor';
 
 
 @observer

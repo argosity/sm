@@ -1,35 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { find, sumBy } from 'lodash';
+import { sumBy } from 'lodash';
 import { action, observable } from 'mobx';
 import cn from 'classnames';
 import moment from 'moment';
-import { Row, Col } from 'react-flexbox-grid';
-import { autobind } from 'core-decorators';
+import Box from 'grommet/components/Box';
+import DoneIcon from 'grommet/components/icons/base/Compliance';
 import Query from 'hippo/models/query';
 import DataList from 'hippo/components/data-list';
-import Box from 'grommet/components/Box';
 import QueryBuilder from 'hippo/components/query-builder';
 import Sale from '../../models/sale';
 import Occurrence from '../../models/event-occurrence';
 import Redemption from '../../models/redemption';
 import Redeem from './redeem';
-import DoneIcon from 'grommet/components/icons/base/Compliance';
 
-const ID          = 0,
+const // eslint-disable-line one-var
+    ID          = 0,
     PURCHASE_ID = 1,
-      IDENTIFIER  = 2, // eslint-disable-line
+    IDENTIFIER  = 2,
     NAME        = 3,
     PHONE       = 4,
     EMAIL       = 5,
     QTY         = 6,
-      DATE        = 7, // eslint-disable-line
+    DATE        = 7,
     REDEMPTIONS = 8;
 
 function Attendee({ style, onClick, row }) {
     const redeemed = sumBy(row[REDEMPTIONS], 'qty');
-    const full = ((row[QTY] - redeemed) <= 0);
+    const full = (0 === (row[QTY] - redeemed));
     const doneIcon = full ? <DoneIcon size="medium" /> : null;
     return (
         <div

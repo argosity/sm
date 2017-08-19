@@ -2,27 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
-import { map, findKey, each, delay, mapValues } from 'lodash';
-import { Row, Col } from 'react-flexbox-grid';
+import { map } from 'lodash';
 import Box       from 'grommet/components/Box';
 import Heading   from 'grommet/components/Heading';
-import Footer    from 'grommet/components/Footer';
 import Button    from 'grommet/components/Button';
 import FormField from 'grommet/components/FormField';
 import Select    from 'grommet/components/Select';
-import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 
+import { FormState } from 'hippo/components/form';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import WarningNotification from 'hippo/components/warning-notification';
 
 import PurchaseModel from '../../models/purchase';
 import EventModel from '../../models/event';
+import PurchaseForm from '../../components/purchase/form';
 
 import Layer from '../layer-wrapper';
-
 import Image from './image';
-import { FormState } from 'hippo/components/form';
-import PurchaseForm from 'sm/components/purchase/form';
 
 @observer
 export default class Purchase extends React.PureComponent {
@@ -59,6 +55,9 @@ export default class Purchase extends React.PureComponent {
     onComplete() {
         this.props.onPurchaseComplete(this.props.purchase);
     }
+
+    @action.bound
+    setFormRef(form) { this.form = form; }
 
     renderOccurrences() {
         return (
@@ -111,7 +110,7 @@ export default class Purchase extends React.PureComponent {
                     <PurchaseForm
                         purchase={purchase}
                         onComplete={this.onComplete}
-                        ref={form => this.form = form}
+                        ref={this.setFormRef}
                         heading={this.renderOccurrences()}
                         controls={
                             <Button label="Cancel" onClick={onCancel} accent />

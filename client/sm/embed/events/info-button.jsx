@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { computed, action } from 'mobx';
-import { isEmpty } from 'lodash';
 import Button from 'grommet/components/Button';
 import LinkIcon from 'grommet/components/icons/base/Link';
 import CircleInformationIcon from 'grommet/components/icons/base/CircleInformation';

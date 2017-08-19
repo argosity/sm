@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 
 import Button from 'grommet/components/Button';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';

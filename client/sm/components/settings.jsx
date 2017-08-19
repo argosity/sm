@@ -1,13 +1,10 @@
 import React from 'react';
-
 import { observer } from 'mobx-react';
-
+import { autobind } from 'core-decorators';
 import { invoke, extend } from 'lodash';
-import { Row, Col } from 'react-flexbox-grid';
 
 import Braintree from './settings/braintree';
 
-import { autobind } from 'core-decorators';
 
 @observer
 export default class SMSystemSettings extends React.PureComponent {

@@ -1,14 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React        from 'react';
+import PropTypes    from 'prop-types';
 import { observer } from 'mobx-react';
-import { action } from 'mobx';
-import Value from 'grommet/components/Value';
+import { action }   from 'mobx';
 
-import Image from './image';
-import EventModel from '../../models/event';
-import InfoButton from './info-button';
+import Image          from './image';
+import EventModel     from '../../models/event';
+import InfoButton     from './info-button';
 import PurchaseButton from './purchase-button';
-import Presenter from './presenter';
+import Presenter      from './presenter';
 
 @observer
 export default class Event extends React.PureComponent {

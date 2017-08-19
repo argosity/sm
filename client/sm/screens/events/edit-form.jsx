@@ -1,10 +1,10 @@
 import React from 'react';
 import { action, observable, computed, observe } from 'mobx';
 import {
-    Form, Field, FormState, nonBlank, numberValue, stringValue, field, dateValue, validURL,
+    Form, Field, FormState, nonBlank, numberValue, dateValue, validURL,
 } from 'hippo/components/form';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row } from 'react-flexbox-grid';
 import { find } from 'lodash';
 import { observer }   from 'mobx-react';
 import Box from 'grommet/components/Box';

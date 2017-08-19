@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { autobind } from 'core-decorators';
 import { observer } from 'mobx-react';
-import { bindAll, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { observable, action, computed } from 'mobx';
 import {
     CellMeasurer, CellMeasurerCache,
@@ -19,7 +20,6 @@ import Event from './events/event';
 import EditForm from './events/edit-form';
 
 import './events/events-styles.scss';
-import { autobind } from 'core-decorators';
 
 @observer
 export default class Events extends React.PureComponent {
@@ -68,6 +68,19 @@ export default class Events extends React.PureComponent {
         const { index, key, parent } = props;
         const row = this.query.results.rows[index];
 
+        const renderFn = ({ measure }) => (
+            <Event
+                row={row}
+                {...props}
+                measure={measure}
+                query={this.query}
+                event={this.editing.event}
+                onEdit={this.onEditRow}
+                keyChange={this.listRenderKey}
+                onComplete={this.onEditComplete}
+            />
+        );
+
         return (
             <CellMeasurer
                 key={key}
@@ -75,18 +88,7 @@ export default class Events extends React.PureComponent {
                 columnIndex={0}
                 rowIndex={index}
                 cache={this.sizeCache}
-            >{({ measure }) =>
-                <Event
-                        row={row}
-                        {...props}
-                        measure={measure}
-                        query={this.query}
-                        event={this.editing.event}
-                        onEdit={this.onEditRow}
-                        keyChange={this.listRenderKey}
-                        onComplete={this.onEditComplete}
-                    />
-                }</CellMeasurer>
+            >{renderFn}</CellMeasurer>
         );
     }
 
@@ -108,6 +110,11 @@ export default class Events extends React.PureComponent {
         this.editing = { index, event };
         this.sizeCache.clear(index, 0);
         this.listRef.recomputeRowHeights(index);
+    }
+
+    @action.bound
+    setListRef(list) {
+        this.listRef = list;
     }
 
     renderEditingForm() {
@@ -134,7 +141,7 @@ export default class Events extends React.PureComponent {
                             query={this.query}
                             rowRenderer={this.rowRenderer}
                             invalidateCellSizeAfterRender={true}
-                            ref={list => (this.listRef = list)}
+                            ref={this.setListRef}
                             rowHeight={this.sizeCache.rowHeight}
                             deferredMeasurementCache={this.sizeCache}
                             keyChange={this.listRenderKey}

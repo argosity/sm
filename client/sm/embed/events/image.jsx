@@ -1,5 +1,4 @@
-import React from 'react';
-import Config from 'hippo/config';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { getColumnProps } from 'react-flexbox-grid';
 import classname from 'classnames';
 

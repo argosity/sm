@@ -5,9 +5,6 @@ import { observer } from 'mobx-react';
 import Box from 'grommet/components/Box';
 import Layer from 'grommet/components/Layer';
 
-import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
-import WarningNotification from 'hippo/components/warning-notification';
-
 import PurchaseForm from './form';
 
 @observer
