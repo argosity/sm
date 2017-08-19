@@ -1,77 +1,78 @@
-    <div class="splash-container">
-      <div class="splash">
-        <h1 class="splash-head">Show Maker</h1>
-        <p class="splash-subhead">
-          Successfull events made easy
-        </p>
-        <p>
-          <a href="#signup" class="signup-link pure-button pure-button-primary">Signup</a>
-        </p>
-      </div>
+<div class="splash-container">
+  <div class="splash">
+    <h1 class="splash-head">Show Maker</h1>
+    <p class="splash-subhead">
+      Successfull events made easy
+    </p>
+    <p>
+      <a href="#signup" class="signup-link">Signup</a>
+    </p>
+  </div>
+</div>
+
+
+<div class="content-wrapper">
+  <div class="content">
+    <h2 class="content-head is-center">ShowMaker can help you:</h2>
+
+
+    <h3 class="content-subhead">
+      <i class="fa fa-rocket"></i>
+      Take your events to the next level
+    </h3>
+    <p>
+      We're creating a platform for clubs and promoters to use to drive interest in their shows and to conduct ticket sales online and at the door.
+    </p>
+
+    <h3 class="content-subhead">
+      <i class="fa fa-bullhorn"></i>
+      Engage your audience.
+    </h3>
+    <p>
+      Booking the best acts in the world won't help you if no-one knows they're coming to your venue.  Use our tools to run a cross-media campaign with integrated mailing lists, FB, Twitter & Instagram postings.
+    </p>
+
+
+    <h3 class="content-subhead">
+      <i class="fa fa-ticket"></i>
+      Sell tickets online and at the door
+    </h3>
+    <p>
+      Embed an upcoming show listing into your existing website and sell tickets right from the listings.
+    </p>
+    <p>
+      Use our app to scan the tickets at the door, or take door sales using credit cards.
+    </p>
+
+    <h3 class="content-subhead">
+      <i class="fa fa-users"></i>
+      No show too large or small.
+    </h3>
+    <p>
+      ShowMaker was born out of the frustration we felt as event center owners who
+      book and promote acts.  It's a lot of work to put together a successful event,
+      but our software can make it easier.
+    </p>
+
+
+  </div>
+
+  <div class="content ribbon">
+    <div class="card">
+        <header>
+          <h2>Try us for free!</h2>
+        </header>
+      <p>
+        You can list, promote and embed events with ShowMaker completely for free.
+
+      </p>
+      <p>
+        For a small monthly fee (details TBD), you can also sell tickets online.
+      </p>
     </div>
+  </div>
 
-    <div class="content-wrapper">
-      <div class="content">
-        <h2 class="content-head is-center">ShowMaker can help you:</h2>
-        <div class="pure-g">
-          <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
-            <h3 class="content-subhead">
-              <i class="fa fa-rocket"></i>
-              Take your events to the next level
-            </h3>
-            <p>
-              We're creating a platform for clubs and promoters to use to drive interest in their shows and to conduct ticket sales online and at the door.
-            </p>
-          </div>
-          <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
-            <h3 class="content-subhead">
-              <i class="fa fa-bullhorn"></i>
-              Engage your audience.
-            </h3>
-            <p>
-              Booking the best acts in the world won't help you if no-one knows they're coming to your venue.  Use our tools to run a cross-media campaign with integrated mailing lists, FB, Twitter & Instagram postings.
-            </p>
-          </div>
-          <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
-            <h3 class="content-subhead">
-              <i class="fa fa-ticket"></i>
-              Sell tickets online and at the door
-            </h3>
-            <p>
-              Embed an upcoming show listing into your existing website and sell tickets right from the listings.
-            </p>
-            <p>
-              Use our app to scan the tickets at the door, or take door sales using credit cards.
-            </p>
-          </div>
-
-          <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
-            <h3 class="content-subhead">
-              <i class="fa fa-users"></i>
-              No show too large or small.
-            </h3>
-            <p>
-              ShowMaker was born out of the frustration we felt as event center owners who
-              book and promote acts.  It's a lot of work to put together a successful event,
-              but our software can make it easier.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="ribbon l-box-lrg pure-g">
-        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-3-5">
-          <h2 class="content-head content-head-ribbon">Try us for free!</h2>
-          <p>
-            You can list, promote and embed events with ShowMaker completely for free.
-
-          </p>
-          <p>
-            For a small monthly fee (details TBD), you can also sell tickets online.
-          </p>
-        </div>
-      </div>
-
-      <div class="content">
-        <%= erb :signup, locals: { params: {}, tenant: false } %>
-      </div>
+  <div class="content">
+    <%= erb :signup, locals: { params: {}, tenant: false } %>
+  </div>
+</div>
