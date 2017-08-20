@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { Snapshot } from 'hippo/testing/index';
 import chronokinesis from 'chronokinesis';
-
+import moment from 'moment-timezone';
 import EventModel from 'sm/models/event';
 
 import Listing from 'sm/embed/events/listing';
@@ -12,9 +12,11 @@ import DATA from './data.json';
 describe('Embedded Events Listing', () => {
     let events;
     let listing;
+
     beforeEach(() => {
         events = observable.array(DATA.map(ev => new EventModel(ev)));
         chronokinesis.travel(new Date('2017-05-01T21:00:00.000Z'));
+        moment.tz.setDefault('America/Los_Angeles');
         listing = mount(<Listing events={events} />);
         // grommit layer needs container
         document.body.appendChild(document.createElement('div'));
