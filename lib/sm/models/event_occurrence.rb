@@ -4,6 +4,7 @@ module SM
 
         belongs_to_tenant
         belongs_to :event, export: true
+        has_many :redemptions, inverse_of: :occurrence, listen: { create: :on_redemption }
 
         validates :occurs_at, presence: true
 
@@ -14,6 +15,18 @@ module SM
         def price
             ours = super
             ours.blank? ? event.price : ours
+        end
+
+        private
+
+        def on_redemption(redemption)
+            Hippo::API::PubSub.publish(
+                "/event/redemption/#{self.id}", {
+                    purchase_id: redemption.purchase_id,
+                    created_at: redemption.created_at,
+                    qty: redemption.qty,
+                }
+            )
         end
     end
 end
