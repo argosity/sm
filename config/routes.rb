@@ -27,7 +27,7 @@ end
 Hippo::API::Routing.root_view_route = lambda do
     Hippo::API::Root.get '/*' do
         if MultiTenant.current_tenant
-            erb :app, layout: false
+            erb :hippo_root_view, layout: false
         else
             erb :homepage
         end
