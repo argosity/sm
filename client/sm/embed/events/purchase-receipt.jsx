@@ -61,16 +61,17 @@ export default class PurchaseReceipt extends React.PureComponent {
                         See you at the show!
                     </h3>
                 </Box>
-                <Footer
-                    margin="small"
+                <Box
+                    direction="row"
+                    margin={{ vertical: 'small' }}
                     justify="end"
-                    pad={{ horizontal: 'small', between: 'small' }}
+                    pad={{ between: 'small' }}
                 >
                     <Button
                         label={'OK'}
                         onClick={this.props.onCancel}
                     />
-                </Footer>
+                </Box>
             </Layer>
         );
     }
