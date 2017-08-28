@@ -73,7 +73,6 @@ export default class Listing extends React.PureComponent {
         return (
             <div className="hippo events-listing">
                 {this.actionsLayer}
-                <h1>{this.props.events.length} events</h1>
                 {this.props.events.map(event => (
                     <Event
                         key={event.identifier}
