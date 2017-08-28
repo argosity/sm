@@ -85,7 +85,7 @@ export default class PurchaseForm extends React.PureComponent {
                 });
                 resolve(purchase);
             }).catch((err) => {
-                purchase.errors = { credit_card: err.message }; // eslint-disable-line
+                purchase.errors = { credit_card: err.message };
                 resolve();
             });
         });
