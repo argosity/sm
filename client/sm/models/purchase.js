@@ -1,6 +1,6 @@
 import Sync from 'hippo/models/sync';
 import { sprintf } from 'sprintf-js';
-import { action } from 'mobx';
+import { action, computed } from 'mobx';
 import {
     BaseModel, identifiedBy, field, identifier, session, hasMany, belongsTo,
 } from './base';
@@ -30,6 +30,17 @@ export default class Purchase extends BaseModel {
         if (attrs.event && attrs.event.occurrences.length) {
             this.occurrence = attrs.event.occurrences[0];
         }
+    }
+
+    @computed get activityMessage() {
+        if (this.errorMessage) { return this.errorMessage; }
+        if (this.syncInProgress) {
+            if (this.syncInProgress.isFetch) {
+                return 'Loading…';
+            }
+            return 'Purchasing…';
+        }
+        return '';
     }
 
     @action

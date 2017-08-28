@@ -94,7 +94,7 @@ export default class Purchase extends React.PureComponent {
                     flex
                 >
                     <NetworkActivityOverlay
-                        message={purchase.errorMessage || 'Purchasing…'}
+                        message={purchase.activityMessage}
                         visible={this.isTokenizing}
                         model={purchase}
                     />
