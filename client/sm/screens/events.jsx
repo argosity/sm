@@ -12,7 +12,7 @@ import Screen   from 'hippo/components/screen';
 import DataList from 'hippo/components/data-list';
 import MasterDetail from 'hippo/components/master-detail';
 import Button   from 'grommet/components/Button';
-
+import Header from 'grommet/components/Header';
 import AddIcon  from 'grommet/components/icons/base/AddCircle';
 
 import EventModel from '../models/event';
@@ -131,21 +131,30 @@ export default class Events extends React.PureComponent {
         );
     }
 
+    renderEventList() {
+        return (
+            <div className="events-list">
+                <Header justify="end">
+                    <Button icon={<AddIcon />} onClick={this.onAdd} plain />
+                </Header>
+                <DataList
+                    query={this.query}
+                    rowRenderer={this.rowRenderer}
+                    invalidateCellSizeAfterRender={true}
+                    ref={this.setListRef}
+                    rowHeight={this.sizeCache.rowHeight}
+                    deferredMeasurementCache={this.sizeCache}
+                    keyChange={this.listRenderKey}
+                />
+            </div>
+        );
+    }
+
     render() {
         return (
             <Screen {...this.props}>
-                <Button icon={<AddIcon />} onClick={this.onAdd} plain />
                 <MasterDetail
-                    master={
-                        <DataList
-                            query={this.query}
-                            rowRenderer={this.rowRenderer}
-                            invalidateCellSizeAfterRender={true}
-                            ref={this.setListRef}
-                            rowHeight={this.sizeCache.rowHeight}
-                            deferredMeasurementCache={this.sizeCache}
-                            keyChange={this.listRenderKey}
-                        />}
+                    master={this.renderEventList()}
                     detail={this.renderEditingForm()}
                 />
             </Screen>
