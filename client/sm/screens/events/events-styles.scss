@@ -1,53 +1,62 @@
 @import 'hippo/styles/global';
 
-.event {
-    flex: 1;
-    padding: 0.5em;
-    min-height: 120px;
-    margin: 0.5em 0;
-    border: 1px solid lightgrey;
+.screen[data-screen-id="events"] {
 
-    .medium img {
-        max-height: 200px;
-        max-width: 100%;
-    }
-    .thumbnail img {
-        max-height: 80px;
-        max-width: 80px;
-    }
-    .title {
-        display: flex;
-        align-items: flex-start;
+    .events-list {
         flex: 1;
-        h2, h3 {
-            margin-bottom: inherit;
-        }
-        .center {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        .data-list {
             flex: 1;
+            align-self: stretch;
         }
     }
-    .info {
 
-    }
+    .event {
+        flex: 1;
+        padding: 0.5em;
+        min-height: 120px;
+        margin: 0.5em 0;
+        border: 1px solid lightgrey;
 
-
-}
-
-.event-edit-form {
-    .occurrences {
-        margin-top: 0.5rem;
-//        height: 100%;
-        input {
-            border: $input-border-width solid $border-color;
+        .medium img {
+            max-height: 200px;
             max-width: 100%;
-            padding: 0;
-            border-radius: 1px;
-            padding: 3px;
         }
-        .grommetux-date-time {
-            width: 100%;
+        .thumbnail img {
+            max-height: 80px;
+            max-width: 80px;
+        }
+        .title {
+            display: flex;
+            align-items: flex-start;
+            flex: 1;
+            h2, h3 {
+                margin-bottom: inherit;
+            }
+            .center {
+                flex: 1;
+            }
+        }
+    }
+
+    .event-edit-form {
+        .occurrences {
+            margin-top: 0.5rem;
+            min-height: 250px;
             input {
-                border: 0;
+                border: $input-border-width solid $border-color;
+                max-width: 100%;
+                padding: 0;
+                border-radius: 1px;
+                padding: 3px;
+            }
+            .grommetux-date-time {
+                width: 100%;
+                input {
+                    border: 0;
+                }
             }
         }
     }
