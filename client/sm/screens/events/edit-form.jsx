@@ -119,7 +119,6 @@ export default class EditForm extends React.PureComponent {
 
         return (
             <Box
-                separator='horizontal'
                 pad={{ vertical: 'medium' }}
                 className="event-edit-form"
                 style={{ ...style, height: 'auto' }}
@@ -154,10 +153,8 @@ export default class EditForm extends React.PureComponent {
 
                     </Row>
                     <Row>
-                        <Asset model={event} name="image" md={5} sm={12} />
-
-                        <Occurrences event={event} md={7} sm={12}/>
-
+                        <Asset model={event} name="image" sm={5} xs={12} />
+                        <Occurrences event={event} sm={7} xs={12}/>
                     </Row>
                 </Form>
                 <Footer
