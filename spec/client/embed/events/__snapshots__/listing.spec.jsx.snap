@@ -4,10 +4,6 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
 <div
   className="hippo events-listing"
 >
-  <h1>
-    3
-     events
-  </h1>
   <div
     className="event"
     data-event-identifier="TnXMWyEL2dFe"

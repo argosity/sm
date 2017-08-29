@@ -6,7 +6,7 @@
     "setupTestFrameworkScriptFile": "<rootDir>/spec/client/setup.js",
     "moduleFileExtensions": [ "", "js", "jsx", "json", "css", "less", "scss" ],
     "transformIgnorePatterns": [
-        "/node_modules/(?!flexboxgrid)"
+        "/node_modules/(?!resolve-pathname|value-equal)"
     ],
     "roots": [
         "<%= extension_path %>/client",
