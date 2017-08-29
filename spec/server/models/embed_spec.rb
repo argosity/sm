@@ -32,8 +32,11 @@ describe SM::Embed do
     end
 
     it "can query events" do
-        event_identifier = events.first.identifier
-        json = SM::Embed.json_for(embeds.first.identifier)
-        expect(json.map { |e| e['identifier'] }).to include(event_identifier)
+        visible_event = events.find{|ev| ev.occurrences.find{|oc| oc.occurs_at > Time.now } }
+        if visible_event.present?
+            json = SM::Embed.json_for(embeds.first.identifier)
+            ids = json.map { |e| e['identifier'] }
+            expect(ids).to include(visible_event.identifier)
+        end
     end
 end
