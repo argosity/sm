@@ -6,7 +6,6 @@ import TicketIcon   from 'grommet/components/icons/base/Ticket';
 import pluralize    from 'pluralize';
 import Anchor       from 'grommet/components/Anchor';
 import Box          from 'grommet/components/Box';
-import Footer       from 'grommet/components/Footer';
 import Button       from 'grommet/components/Button';
 import Paragraph    from 'grommet/components/Paragraph';
 

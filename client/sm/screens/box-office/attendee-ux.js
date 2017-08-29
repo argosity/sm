@@ -6,7 +6,6 @@ import Redemption from '../../models/redemption';
 import Occurrence from '../../models/event-occurrence';
 
 export default class AttendeeUX {
-
     static FIELDS = {
         ID:          0,
         PURCHASE_ID: 1,

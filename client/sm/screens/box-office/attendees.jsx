@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { sumBy } from 'lodash';
-import { action, observable } from 'mobx';
 import cn from 'classnames';
 import moment from 'moment';
 import Box from 'grommet/components/Box';
