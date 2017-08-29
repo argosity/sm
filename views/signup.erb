@@ -1,30 +1,36 @@
 <h2 class="content-head is-center">Signup for Show Maker</h2>
 
-<div class="pure-g" id="signup">
-  <div class="l-box-lrg pure-u-1 pure-u-md-2-5">
-    <form class="pure-form pure-form-stacked" method="post" action="/signup">
-      <fieldset>
+<form id="signup" method="post" action="/signup">
 
-        <% if tenant && tenant.errors.any? %>
-          <h4 class="invalid"><%= tenant.errors.full_messages.to_sentence %></h4>
-        <% end %>
-        <label for="name">Your Name</label>
-        <input id="name" name="name" type="text" placeholder="Your Name" value="<%= params['name'] %>">
+    <% if tenant && tenant.errors.any? %>
+    <h4 class="invalid"><%= tenant.errors.full_messages.to_sentence %></h4>
+    <% end %>
 
-        <label for="company">Company Name</label>
-        <input id="company" name="company" type="text" placeholder="Company" value="<%= params['company'] %>">
+    <label>
+      Your Name
+      <input id="name" name="name" type="text" placeholder="Your Name" value="<%= params['name'] %>">
+    </label>
 
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="Email Address" value="<%= params['email'] %>">
+    <label>
+      Company Name
+      <input id="company" name="company" type="text" placeholder="Company" value="<%= params['company'] %>">
+    </label>
 
-        <label for="login">Login</label>
-        <input id="login" name="login" type="text" placeholder="Your Login">
+    <label>
+      Email
+      <input id="email" name="email" type="email" placeholder="Email Address" value="<%= params['email'] %>">
+    </label>
 
-        <label for="password">Password</label>
-        <input id="password" name="password" type="password" placeholder="Your Password" value="<%= params['password'] %>">
+    <label>
+      Login
+      <input id="login" name="login" type="text" placeholder="Your Login">
+    </label>
 
-        <button type="submit" class="pure-button">Sign Up</button>
-      </fieldset>
-    </form>
-  </div>
-</div>
+    <label for="password">
+      Password
+      <input id="password" name="password" type="password" placeholder="Your Password" value="<%= params['password'] %>">
+    </label>
+
+    <button type="submit" class="pure-button">Sign Up</button>
+
+</form>

@@ -39,84 +39,10 @@
 @import '~picnic/src/plugins/tooltip/plugin';
 
 body.homepage {
-    .pure-button {
-        background-color: #1f8dd6;
-        color: white;
-        padding: 0.5em 2em;
-        border-radius: 5px;
-    }
 
-    a.pure-button-primary {
-        background: white;
-        color: #1f8dd6;
-        border-radius: 5px;
-        font-size: 120%;
-    }
-}
-
-/*
- * -- PURE FORM STYLES --
- * Style the form inputs and labels
- */
-.pure-form label {
-    margin: 1em 0 0;
-    font-weight: bold;
-    font-size: 100%;
-}
-
-.pure-form input[type] {
-    border: 2px solid #ddd;
-    box-shadow: none;
-    font-size: 100%;
-    width: 100%;
-    margin-bottom: 1em;
 }
 
 
-/*
- * -- MENU STYLES --
- * I want to customize how my .pure-menu looks at the top of the page
- */
-
-.top-menu {
-    padding: 0.5em;
-    text-align: center;
-    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
-    background: #2d3e50;
-    &.pure-menu.pure-menu-fixed {
-        /* Fixed menus normally have a border at the bottom. */
-        border-bottom: none;
-        /* I need a higher z-index here because of the scroll-over effect. */
-        z-index: 4;
-    }
-    .pure-menu-heading {
-        color: white;
-        font-weight: 400;
-        font-size: 120%;
-    }
-    .pure-menu-selected {
-        a,
-        a.pure-menu-link {
-            color: #6FBEF3;
-        }
-    }
-    a {
-        color: #6FBEF3;
-    }
-    li {
-        a:hover,
-        a:focus {
-            background: none;
-            border: none;
-            color: #AECFE5;
-        }
-    }
-}
-
-/*
- * -- SPLASH STYLES --
- * This is the blue top section that appears on the page.
- */
 
 .splash-container {
     z-index: 1;
@@ -133,43 +59,50 @@ body.homepage {
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: 100%;
+    $purple: rgba(91, 100, 144, 1.0);
 
     .splash {
-        /* absolute center .splash within .splash-container */
+        background-color: transparentize($purple, 0.3);
+        color: white;
         width: 80%;
         max-width: 400px;
-        height: 50%;
         margin: auto;
-        //position: absolute;
-        margin-top: 150px;
+        margin-top: 45px;
         text-align: center;
         text-transform: uppercase;
+        padding: 30px 0;
+        box-shadow: 0px 0px 10px 10px rgba(255, 238, 0, 0.6);
+        padding: 1rem;
     }
 
-    /* This is the main heading that appears on the blue section */
     .splash-head {
-        font-size: 20px;
+        font-size: 200%;
         font-weight: bold;
-        color: white;
-        border: 3px solid white;
         padding: 1em 1.6em;
         font-weight: 100;
         border-radius: 5px;
         line-height: 1em;
     }
-
-    /* This is the subheading that appears on the blue section */
     .splash-subhead {
         color: white;
         letter-spacing: 0.05em;
         opacity: 0.8;
     }
+    .signup-link {
+        color: white;
+        display: inline-block;
+        padding: 10px 30px;
+        margin-top: 20px;
+        border: 3px solid #7a73b7;
+        border-radius: 3px;
+        background-color: transparentize($purple, 0.3);
+        &:hover {
+            color: #e2e2e2;
+            background-color: transparentize($purple, 0.1);
+        }
+    }
 }
 
-/*
- * -- CONTENT STYLES --
- * This represents the content area (everything below the blue section)
- */
 .content-wrapper {
     /* These styles are required for the "scroll-over" effect */
     position: absolute;
@@ -180,14 +113,11 @@ body.homepage {
     min-height: 12%;
     z-index: 2;
     background: white;
-
-
 }
 
 /* We want to give the content area some more padding */
 .content {
     margin-top: 65px;
-
     max-width: 800px;
     margin: auto;
     padding: 20px;
@@ -228,8 +158,6 @@ body.homepage {
 
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
- * On tablets and other medium-sized devices, we want to customize some
- * of the mobile styles.
  */
 @media (min-width: 48em) {
 
@@ -246,40 +174,14 @@ body.homepage {
             float: right;
         }
     }
-
-    /* We decrease the width of the .splash, since we have more width
-    to work with */
-    .splash {
-        width: 50%;
-        height: 50%;
-
-        .splash-head {
-
+    .splash-container {
+        .splash {
+            margin-top: 100px;
+            .splash-subhead {
+                font-weight: bold;
+                border-radius: 8px;
+            }
         }
-
-        .splash-subhead {
-            font-weight: bold;
-            background-color: rgba(102, 51, 153, 0.31);
-            border-radius: 8px;
-        }
-    }
-
-    /* We remove the border-separator assigned to .l-box-lrg */
-    .l-box-lrg {
-        border: none;
-    }
-
-}
-
-/*
- * -- DESKTOP (AND UP) MEDIA QUERIES --
- * On desktops and other large devices, we want to over-ride some
- * of the mobile and tablet styles.
- */
-@media (min-width: 78em) {
-    /* We increase the header font size even more */
-    .splash-head {
-        font-size: 300%;
     }
 }
 
@@ -288,4 +190,11 @@ body.homepage {
     border-color: 1px solid #e9322d;
     padding: 20px;
     background-color: #fff4f4;
+}
+
+form#signup {
+    label {
+        padding-bottom: 1rem;
+        display: block;
+    }
 }
