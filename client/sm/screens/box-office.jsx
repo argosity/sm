@@ -51,10 +51,6 @@ export default class BoxOffice extends React.PureComponent {
     @action.bound onSearchClick() { this.isShowingSearch = true; }
     @action.bound onSearchClose() { this.isShowingSearch = false; }
 
-    componentDidMount() {
-        this.query.fetchSingle({ id: 351 }).then(o => this.onRecordFound(o));
-    }
-
     render() {
         const { occurrence, query, isShowingSearch } = this;
 
@@ -62,7 +58,7 @@ export default class BoxOffice extends React.PureComponent {
             <Screen screen={this.props.screen}>
                 <QueryLayer
                     query={query}
-                    title={'Find Event'}
+                    title={'Select Event'}
                     visible={isShowingSearch}
                     onRecordSelect={this.onRecordFound}
                     onClose={this.onSearchClose}
