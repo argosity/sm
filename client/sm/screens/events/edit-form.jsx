@@ -128,27 +128,35 @@ export default class EditForm extends React.PureComponent {
                 <Form tag="div" state={this.formState}>
                     <Row>
                         <Field name="title" xs={6} lg={3} validate={nonBlank} />
-                        <Field name="sub_title" xs={6} lg={3} />
-                        <Field name="description" xs={12} lg={6} />
+
+                        <Field name="sub_title" sm={6} lg={3} />
+
+                        <Field name="description" sm={12} lg={6} />
+
                         <Field
-                            name="venue_id" label="Venue" xs={6} lg={3}
+                            name="venue_id" label="Venue"
                             type="select" collection={this.venues} validate={nonBlank}
-                        />
-                        <Field
-                            name="presenter_id" label="Presented By" xs={6} lg={3}
-                            type="select" collection={this.presenters}
+                            sm={6} md={4} lg={3}
                         />
 
-                        <Field type="number" name="price" xs={6} lg={3} validate={numberValue} />
-                        <Field type="number" name="capacity" xs={6} lg={3} validate={numberValue} />
+                        <Field
+                            name="presenter_id" label="Presented By"
+                            type="select" collection={this.presenters} sm={6} md={4} lg={3}
+                        />
+
+                        <Field type="number" name="price" validate={numberValue} sm={6} md={4} lg={3} />
+                        <Field type="number" name="capacity" validate={numberValue} sm={6} md={4} lg={3} />
                         <Field
                             type="date" label="Visible After" name="visible_during.start"
-                            xs={6} lg={3} validate={dateValue} />
+                            validate={dateValue} sm={6} md={4} lg={3} />
                         <Field
                             type="date" label="Visible Until" name="visible_during.end"
-                            xs={6} lg={3} validate={dateValue} />
+                            validate={dateValue} sm={6} md={4} lg={3} />
+
+                        <Field type="checkbox" name="can_purchase" sm={6} md={4} lg={3} />
+
                         <Field
-                            name="external_url" xs={12} lg={6}
+                            name="external_url" sm={6} md={4} lg={3}
                             validate={validURL({ allowBlank: true })} />
 
                     </Row>
