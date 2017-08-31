@@ -39,8 +39,7 @@ export default class Event extends BaseModel {
     @field({ type: 'object' }) page;
 
     @field capacity;
-    @field can_purchase;
-    @field can_purchase;
+    @field can_purchase = false;
 
     @belongsTo({ model: 'sm/venue' }) venue;
     @belongsTo({ model: 'sm/presenter' }) presenter;
