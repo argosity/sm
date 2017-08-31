@@ -11,7 +11,7 @@ class CreateEvents < ActiveRecord::Migration[5.0]
                    :description
 
             t.tsrange :visible_during
-            t.boolean :can_purchase, null: false
+            t.boolean :can_purchase, null: false, default: 'f'
 
             t.decimal :price, precision: 15, scale: 2, null: false
             t.integer :capacity, null: false
