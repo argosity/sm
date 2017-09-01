@@ -4,6 +4,7 @@ FactoryGirl.define do
         name { Faker::Name.name }
         phone_number { Faker::PhoneNumber.phone_number }
         capacity { (rand*100).to_i }
+        timezone { ActiveSupport::TimeZone::MAPPING.values.sample }
         address do
             "#{Faker::Address.street_address} #{Faker::Address.city} #{Faker::Address.state}"
         end

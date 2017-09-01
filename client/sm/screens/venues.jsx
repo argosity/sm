@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
 import { Row, Col } from 'react-flexbox-grid';
 import Header   from 'grommet/components/Header';
@@ -9,7 +9,6 @@ import Button   from 'grommet/components/Button';
 import SaveIcon from 'grommet/components/icons/base/Save';
 import RecordFinder from 'hippo/components/record-finder';
 import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
-
 import {
     Form, Field, FormState, nonBlank, numberValue,
 } from 'hippo/components/form';
@@ -116,9 +115,12 @@ export default class Venues extends React.PureComponent {
                                 <Field
                                     type="number" name="capacity" lg={6} xs={12}
                                     validate={numberValue} />
+                                <Field
+                                    name="timezone" type="timezone"
+                                    label="Time Zone" lg={6} xs={12}
+                                />
                             </Row>
                         </Col>
-
                     </Row>
                 </Form>
             </Screen>

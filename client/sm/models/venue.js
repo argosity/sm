@@ -13,6 +13,7 @@ export default class Venue extends BaseModel {
     @field address = '';
     @field phone_number;
     @field capacity;
+    @field timezone;
 
     @belongsTo({ model: Asset, inverseOf: 'owner' }) logo;
 

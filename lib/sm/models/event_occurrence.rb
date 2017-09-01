@@ -17,6 +17,10 @@ module SM
             ours.blank? ? event.price : ours
         end
 
+        def occurs_at_in_venue_tz
+            event.venue.time_in_zone(occurs_at)
+        end
+
         private
 
         def on_redemption(redemption)
