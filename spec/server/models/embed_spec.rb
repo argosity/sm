@@ -28,7 +28,7 @@ describe SM::Embed do
 
     it "a default is created along with tenant" do
         tenant = FactoryGirl.create :tenant
-        expect(SM::Embed.where(tenant: tenant, name: 'default').any?).to be(true)
+        expect(SM::Embed.where(tenant: tenant, name: 'My events').any?).to be(true)
     end
 
     it "can query events" do

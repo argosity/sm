@@ -25,7 +25,5 @@ Hippo::Tenant.observe(:update) do |tenant|
 end
 
 Hippo::Tenant.observe(:create) do |tenant|
-    SM::Embed.create(name: 'default', tenant: tenant, tenants: [tenant.slug])
-#     chg = tenant.changes['slug']
-#     SM::Embed.update_tenant_slugs(chg.first, chg.last) if chg
+    SM::Embed.create(name: 'My events', tenant: tenant, tenants: [tenant.slug])
 end

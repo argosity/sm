@@ -12,7 +12,6 @@ module SM::Handlers
                         user = tenant.users.build(params.slice(:name, :email, :login, :password)
                                                .merge(role_names: ["administrator"]))
                         if tenant.save
-                            SM::Embed.create(name: 'My events', tenants: [tenant.slug])
                             Hippo::Tenant.system.perform do
                                 SM::Templates::Signup.create(tenant, user).deliver
                             end

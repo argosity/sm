@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require 'sm/models/embed'
 
 describe "Tenant signup", api: true, vcr: VCR_OPTS do
 
@@ -45,4 +46,15 @@ describe "Tenant signup", api: true, vcr: VCR_OPTS do
         end
     end
 
+    it 'creates a single embed' do
+        post '/signup', { name: 'Bob', company: "My Place Is Awesome",
+                          email: 'test@test.com', login: 'admin', password: 'password123' }
+        Hippo::Tenant.last.perform do
+            expect(SM::Embed.count).to eq(1)
+            t = Hippo::Tenant.current
+            t.slug = 'AbaCa'
+            t.save!
+            expect(SM::Embed.last.tenants).to eq(['abaca'])
+        end
+    end
 end
