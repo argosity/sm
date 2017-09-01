@@ -14,6 +14,8 @@ from event_occurrences evo
   left join (
     select
       rd.purchase_id,
-      json_agg((select x from (select rd.qty, rd.created_at) x)) AS redemptions
+      json_agg((select x from (
+          select rd.qty, rd.created_at at time zone 'UTC' as created_at
+      ) x)) AS redemptions
     from redemptions rd group by rd.purchase_id
   ) redemptions on redemptions.purchase_id = pur.id

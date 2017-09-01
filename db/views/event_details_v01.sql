@@ -17,7 +17,14 @@ from events ev
   left join (
     select
       evo.event_id,
-      json_agg((select x from (select evo.id, evo.identifier, evo.occurs_at, evo.price, evo.capacity) x)) AS occurrences
+      json_agg((select x from (
+          select
+              evo.id
+              ,evo.identifier
+              ,evo.occurs_at at time zone 'UTC' as occurs_at
+              ,evo.price
+              ,evo.capacity
+      ) x)) AS occurrences
     from event_occurrences evo group by evo.event_id
   ) event_occurrences on event_occurrences.event_id = ev.id
   left join assets as event_asset on event_asset.owner_type = 'SM::Event'

@@ -43,7 +43,13 @@ from embeds em
   join (
     select
       evo.event_id,
-      json_agg((select x from (select evo.identifier, evo.occurs_at, evo.price, evo.capacity) x) order by evo.occurs_at) AS occurrences
+      json_agg((select x from (
+          select
+              evo.identifier
+              ,evo.occurs_at at time zone 'UTC' as occurs_at
+              ,evo.price
+              ,evo.capacity
+      ) x) order by evo.occurs_at) AS occurrences
     from event_occurrences evo where evo.occurs_at > now() group by evo.event_id
   ) event_occurrences on event_occurrences.event_id = ev.id
   left join venues on venues.id = ev.venue_id
