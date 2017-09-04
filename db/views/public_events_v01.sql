@@ -9,16 +9,13 @@ select
   ev.can_purchase,
   ev.page,
   ev.visible_during,
-
-  event_occurrences.occurrences,
-
   ev.price,
   ev.capacity,
-
+  event_occurrences.first_occurrence,
+  coalesce(event_occurrences.occurrences, '[]'::json) as occurrences,
   json_build_object(
     'file_data', event_asset.file_data
   ) as image,
-
   case
   when presenter IS NULL then null
   else
@@ -40,9 +37,10 @@ select
 from embeds em
   join tenants tenant on tenant.slug in (select unnest(em.tenants))
   join events ev on ev.tenant_id = tenant.id
-  join (
+  left join (
     select
       evo.event_id,
+      min(evo.occurs_at) first_occurrence,
       json_agg((select x from (
           select
               evo.identifier

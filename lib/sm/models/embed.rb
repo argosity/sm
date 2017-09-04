@@ -5,7 +5,7 @@ module SM
 
         def self.json_for(identifier)
             res = connection.select_all(
-                "select * from public_events where embed_identifier = #{connection.quote(identifier)}"
+                "select * from public_events where embed_identifier = #{connection.quote(identifier)} order by first_occurrence"
             )
             res.to_a.map { |r| r.each { |k, v| r[k] = res.column_types[k].deserialize(v) } }
         end
