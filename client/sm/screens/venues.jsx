@@ -18,13 +18,14 @@ import Screen from 'hippo/components/screen';
 import Query from 'hippo/models/query';
 import Venue from '../models/venue';
 
-
 @observer
 export default class Venues extends React.PureComponent {
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
 
+    @observable venue = new Venue();
+    @observable errorMessage = '';
     formState = new FormState()
 
     query = new Query({
@@ -39,8 +40,9 @@ export default class Venues extends React.PureComponent {
         ],
     })
 
-    @observable venue = new Venue();
-    @observable errorMessage = '';
+    componentWillMount() {
+        this.formState.setFromModel(this.venue);
+    }
 
     @action.bound
     onRecordFound(venue) {
