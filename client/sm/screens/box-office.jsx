@@ -58,7 +58,7 @@ export default class BoxOffice extends React.PureComponent {
             <Screen screen={this.props.screen}>
                 <QueryLayer
                     query={query}
-                    title={'Select Event'}
+                    title={'Find Event'}
                     visible={isShowingSearch}
                     onRecordSelect={this.onRecordFound}
                     onClose={this.onSearchClose}
