@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
-
 import ShowModel from '../../models/show';
 import PurchaseModel from '../../models/purchase';
+import NoShowsFoundMessage from './none-found-message';
 import Information from './information';
 import Purchase from './purchase';
 import Receipt from './purchase-receipt';
@@ -70,10 +70,11 @@ export default class Listing extends React.PureComponent {
     }
 
     render() {
+        const { shows } = this.props;
         return (
             <div className="hippo shows-listing">
                 {this.actionsLayer}
-                {this.props.shows.map(show => (
+                {shows.map(show => (
                     <Show
                         key={show.identifier}
                         show={show}
@@ -81,6 +82,7 @@ export default class Listing extends React.PureComponent {
                         displayShow={this.onDisplayInfo}
                     />
                 ))}
+                <NoShowsFoundMessage shows={shows} />
             </div>
         );
     }

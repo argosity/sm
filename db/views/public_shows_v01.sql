@@ -39,16 +39,16 @@ from embeds em
   join shows ev on ev.tenant_id = tenant.id
   left join (
     select
-      evo.show_id,
-      min(evo.occurs_at) first_show_time,
+      st.show_id,
+      min(st.occurs_at) first_show_time,
       json_agg((select x from (
           select
-              evo.identifier
-              ,evo.occurs_at at time zone 'UTC' as occurs_at
-              ,evo.price
-              ,evo.capacity
-      ) x) order by evo.occurs_at) AS show_times
-    from show_times evo where evo.occurs_at > now() group by evo.show_id
+              st.identifier
+              ,st.occurs_at at time zone 'UTC' as occurs_at
+              ,st.price
+              ,st.capacity
+      ) x) order by st.occurs_at) AS show_times
+    from show_times st where st.occurs_at > now() group by st.show_id
   ) times_info on times_info.show_id = ev.id
   left join venues on venues.id = ev.venue_id
   left join presenters presenter on presenter.id = ev.presenter_id
