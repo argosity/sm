@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 8c41717dce81521a2f3f94678abfd5ecaeb0c66a
+  revision: ced5cb1233c3b2dfe3f58839d089bb46f12e82de
   branch: master
   specs:
     hippo-fw (0.9.6)
@@ -121,7 +121,7 @@ GEM
       capistrano-bundler (~> 1.1)
     childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
-    coderay (1.1.1)
+    coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
