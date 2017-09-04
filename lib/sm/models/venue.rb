@@ -11,8 +11,7 @@ module SM
                 dependent: :destroy, export: true
 
         def time_in_zone(time)
-            tz = ActiveSupport::TimeZone::MAPPING[self.timezone]
-            time.in_time_zone(tz)
+            ActiveSupport::TimeZone.find_tzinfo(self.timezone).utc_to_local(time)
         end
     end
 
