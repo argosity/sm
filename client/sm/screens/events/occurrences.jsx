@@ -75,7 +75,7 @@ export default class OccurrencesEditor extends React.PureComponent {
         return (
             <Box direction="row" align="center" justify="between">
                 <Heading tag='h4'>
-                    Occurrences
+                    Show Dates/Times
                 </Heading>
                 <Button icon={<AddCircleIcon />} onClick={this.onAddOccurrence}/>
             </Box>
