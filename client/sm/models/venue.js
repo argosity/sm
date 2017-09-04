@@ -3,6 +3,7 @@ import Asset from 'hippo/models/asset';
 import {
     BaseModel, identifiedBy, identifier, belongsTo, field, computed,
 } from './base';
+import moment from 'moment-timezone';
 
 @identifiedBy('sm/venue')
 export default class Venue extends BaseModel {
@@ -13,7 +14,7 @@ export default class Venue extends BaseModel {
     @field address = '';
     @field phone_number;
     @field capacity;
-    @field timezone;
+    @field timezone = moment.tz.guess();
 
     @belongsTo({ model: Asset, inverseOf: 'owner' }) logo;
 
