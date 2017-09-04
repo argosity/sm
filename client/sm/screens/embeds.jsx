@@ -50,7 +50,7 @@ export default class Embeds extends React.PureComponent {
                     <textarea
                         onFocus={this.onFocus}
                         readOnly
-                        value={`<script src="${this.url}/assets/embedded-events.js" data-render-to="#showmaker-events-listing" data-embed-id="${identifier}"></script>\n<div id="showmaker-events-listing"></div>`}
+                        value={`<script src="${this.url}/assets/embedded-shows.js" data-render-to="#showmaker-shows-listing" data-embed-id="${identifier}"></script>\n<div id="showmaker-shows-listing"></div>`}
                     />
                 </Col>
             </Row>

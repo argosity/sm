@@ -14,7 +14,7 @@ module SM
             end
 
             def subject
-                "Your tickets for #{purchase.event.title}"
+                "Your tickets for #{purchase.show.title}"
             end
 
             def to
@@ -25,14 +25,14 @@ module SM
                 vars = {
                     'company_name' => purchase.tenant.name,
                     'purchase' => purchase.as_json(only: %w{identifier name email qty}),
-                    'event' => purchase.event
+                    'show' => purchase.show
                                    .as_json(only: %w{title sub_title description occurs_at})
-                                   .merge('image' => image_json(purchase.event.image))
+                                   .merge('image' => image_json(purchase.show.image))
                 }
-                if purchase.event.presenter
-                    vars['presenter'] = purchase.event.presenter
+                if purchase.show.presenter
+                    vars['presenter'] = purchase.show.presenter
                                             .as_json(only: %w{name})
-                                            .merge('logo' => image_json(purchase.event.presenter.logo))
+                                            .merge('logo' => image_json(purchase.show.presenter.logo))
                 end
                 vars
             end

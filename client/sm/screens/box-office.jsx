@@ -10,7 +10,7 @@ import Button from 'grommet/components/Button';
 import Box from 'grommet/components/Box';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 import SearchIcon from 'grommet/components/icons/base/Search';
-import EventOccurrence from '../models/event-occurrence';
+import Occurrence from '../models/occurrence';
 import Attendees from './box-office/attendees';
 import Purchase from '../models/purchase';
 import PurchaseLayer from '../components/purchase/layer';
@@ -24,16 +24,16 @@ export default class BoxOffice extends React.PureComponent {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
 
-    @observable occurrence = new EventOccurrence();
+    @observable occurrence = new Occurrence();
     @observable isShowingSearch = false;
     @observable purchase;
 
     query = new Query({
-        src: EventOccurrence,
-        syncOptions: { include: 'event', order: { occurs_at: 'desc' } },
+        src: Occurrence,
+        syncOptions: { include: 'show', order: { occurs_at: 'desc' } },
         fields: [
             { id: 'id', visible: false, queryable: false },
-            { id: 'events.title', label: 'Title', flexGrow: 1 },
+            { id: 'shows.title', label: 'Title', flexGrow: 1 },
             { id: 'occurs_at', cellRenderer: DateCell, flexGrow: 0, width: 160, textAlign: 'right' },
         ],
     })
@@ -58,7 +58,7 @@ export default class BoxOffice extends React.PureComponent {
             <Screen screen={this.props.screen}>
                 <QueryLayer
                     query={query}
-                    title={'Find Event'}
+                    title={'Find Show'}
                     visible={isShowingSearch}
                     onRecordSelect={this.onRecordFound}
                     onClose={this.onSearchClose}
@@ -76,7 +76,7 @@ export default class BoxOffice extends React.PureComponent {
                             plain
                             className="grommetux-control-icon-search"
                             icon={<SearchIcon />}
-                            label={occurrence.isNew ? 'Click to find Event' : occurrence.event.title}
+                            label={occurrence.isNew ? 'Click to find Show' : occurrence.show.title}
                             onClick={this.onSearchClick}
                         />
                     </h3>

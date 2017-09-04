@@ -1,13 +1,3 @@
-# Hippo::Screen.enabled_group_ids = [
-#     'events', 'system-settings'
-# ]
-
-# Hippo::Screen.define_group 'events' do | group |
-#     group.title       = "Events"
-#     group.description = "Screens relating to Events"
-#     group.icon        = "heart"
-# end
-
 Hippo::Screen.for_extension 'sm' do | screens |
     screens.define "box-office" do | screen |
         screen.title       = "Box Office"
@@ -15,8 +5,8 @@ Hippo::Screen.for_extension 'sm' do | screens |
         screen.group_id    = ""
     end
 
-    screens.define "events" do | screen |
-        screen.title       = "Events"
+    screens.define "shows" do | screen |
+        screen.title       = "Shows"
         screen.description = ""
         screen.icon        = "id-card-o"
         screen.group_id    = ""

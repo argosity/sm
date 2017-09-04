@@ -25,7 +25,7 @@ module SM
                 purchase = SM::Purchase.new(
                     data.slice('name', 'phone', 'email', 'qty')
                 )
-                purchase.occurrence = SM::EventOccurrence.find_by(identifier: data['occurrence_identifier'])
+                purchase.occurrence = SM::Occurrence.find_by(identifier: data['occurrence_identifier'])
 
                 SM::Purchase.transaction do
                     data['payments'].each do |payment_data|
@@ -48,7 +48,7 @@ module SM
                                   only: [:identifier, :name, :qty, :email],
                                   methods: [:total, :tickets_url],
                                   include: {
-                                      event: {
+                                      show: {
                                           only: [
                                               :identifier, :title, :sub_title,
                                               :description, :price, :occurs_at

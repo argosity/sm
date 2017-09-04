@@ -5,7 +5,7 @@ module SM
 
         def self.json_for(identifier)
             res = connection.select_all(
-                "select * from public_events where embed_identifier = #{connection.quote(identifier)} order by first_occurrence"
+                "select * from public_shows where embed_identifier = #{connection.quote(identifier)} order by first_occurrence"
             )
             res.to_a.map { |r| r.each { |k, v| r[k] = res.column_types[k].deserialize(v) } }
         end
@@ -25,5 +25,5 @@ Hippo::Tenant.observe(:update) do |tenant|
 end
 
 Hippo::Tenant.observe(:create) do |tenant|
-    SM::Embed.create(name: 'My events', tenant: tenant, tenants: [tenant.slug])
+    SM::Embed.create(name: 'My Shows', tenant: tenant, tenants: [tenant.slug])
 end

@@ -3,7 +3,7 @@ import Query from 'hippo/models/query';
 import PubSub from 'hippo/models/pub_sub';
 import Sale from '../../models/sale';
 import Redemption from '../../models/redemption';
-import Occurrence from '../../models/event-occurrence';
+import Occurrence from '../../models/occurrence';
 
 export default class AttendeeUX {
     static FIELDS = {
@@ -65,7 +65,7 @@ export default class AttendeeUX {
     pubSubUnsubscribe() {
         if (this.occurrence.isNew) { return; }
         PubSub.channel.unsubscribe(
-            `/event/redemption/${this.props.occurrence.id}`,
+            `/show/redemption/${this.props.occurrence.id}`,
             this.onRedemption,
         );
     }
@@ -83,7 +83,7 @@ export default class AttendeeUX {
                 { field: this.query.fields[this.fields.NAME], value: '' },
             ]);
             this.pubSubUnsubscribe();
-            PubSub.channel.subscribe(`/event/redemption/${props.occurrence.id}`, this.onRedemption);
+            PubSub.channel.subscribe(`/show/redemption/${props.occurrence.id}`, this.onRedemption);
         } else {
             this.query.autoFetch = false;
             this.query.reset();

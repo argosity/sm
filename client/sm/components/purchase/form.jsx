@@ -88,7 +88,7 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
     @computed get heading() {
-        return this.props.heading || <h3>{get(this.props.purchase, 'occurrence.event.title')}</h3>;
+        return this.props.heading || <h3>{get(this.props.purchase, 'occurrence.show.title')}</h3>;
     }
 
     @action
@@ -112,7 +112,7 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
     @computed get occurrenceOptions() {
-        return map(this.props.event.futureOccurrences, o => ({
+        return map(this.props.show.futureOccurrences, o => ({
             occurrence: o,
             label: (
                 <Box direction='row' justify='between' responsive={false}>

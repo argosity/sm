@@ -4,10 +4,10 @@ module SM
         belongs_to_tenant
 
         belongs_to :purchase
-        belongs_to :event
-        belongs_to :occurrence, class_name: 'SM::EventOccurrence'
+        belongs_to :show
+        belongs_to :occurrence, class_name: 'SM::Occurrence'
 
-        validates :event, :purchase, :occurrence, presence: true
+        validates :show, :purchase, :occurrence, presence: true
         validate :ensure_qty_is_correct
         before_validation :set_defaults
 
@@ -21,7 +21,7 @@ module SM
 
         def set_defaults
             self.occurrence ||= purchase.occurrence if purchase
-            self.event ||= occurrence.event if occurrence
+            self.show ||= occurrence.show if occurrence
         end
     end
 

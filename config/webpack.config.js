@@ -10,8 +10,8 @@ const entries = {
     homepage: [
         'sm/homepage/index.js',
     ],
-    'embedded-events': [
-        'sm/embed/events.js',
+    'embedded-shows': [
+        'sm/embed/shows.js',
     ],
 };
 

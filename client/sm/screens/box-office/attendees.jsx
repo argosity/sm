@@ -8,7 +8,7 @@ import Box from 'grommet/components/Box';
 import DoneIcon from 'grommet/components/icons/base/Compliance';
 import DataList from 'hippo/components/data-list';
 import QueryBuilder from 'hippo/components/query-builder';
-import Occurrence from '../../models/event-occurrence';
+import Occurrence from '../../models/occurrence';
 import Redeem from './redeem';
 
 import UX from './attendee-ux';

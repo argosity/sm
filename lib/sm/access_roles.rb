@@ -8,10 +8,10 @@ module Hippo::Access
 
         # anyone can edit
         class BasicUser
-            grant SM::Event
+            grant SM::Show
             grant SM::Venue
             grant SM::Presenter
-            grant SM::EventOccurrence
+            grant SM::Occurrence
         end
 
     end

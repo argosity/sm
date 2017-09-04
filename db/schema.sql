@@ -156,10 +156,10 @@ ALTER SEQUENCE embeds_id_seq OWNED BY embeds.id;
 
 
 --
--- Name: events; Type: TABLE; Schema: public; Owner: -
+-- Name: shows; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE events (
+CREATE TABLE shows (
     id integer NOT NULL,
     tenant_id integer NOT NULL,
     identifier character varying NOT NULL,
@@ -201,24 +201,24 @@ CREATE TABLE venues (
 
 
 --
--- Name: event_details; Type: VIEW; Schema: public; Owner: -
+-- Name: show_details; Type: VIEW; Schema: public; Owner: -
 --
 
-CREATE VIEW event_details AS
- SELECT ev.id AS event_id,
-    json_build_object('id', event_asset.id, 'file_data', event_asset.file_data) AS image_details,
+CREATE VIEW show_details AS
+ SELECT ev.id AS show_id,
+    json_build_object('id', show_asset.id, 'file_data', show_asset.file_data) AS image_details,
     json_build_object('id', venues.id, 'name', venues.name, 'address', venues.address, 'phone_number', venues.phone_number, 'logo', venue_asset.file_data) AS venue_details
-   FROM (((events ev
+   FROM (((shows ev
      LEFT JOIN venues ON ((venues.id = ev.venue_id)))
-     LEFT JOIN assets event_asset ON ((((event_asset.owner_type)::text = 'SM::Event'::text) AND (event_asset.owner_id = ev.id))))
+     LEFT JOIN assets show_asset ON ((((show_asset.owner_type)::text = 'SM::Show'::text) AND (show_asset.owner_id = ev.id))))
      LEFT JOIN assets venue_asset ON ((((venue_asset.owner_type)::text = 'SM::Venue'::text) AND (venue_asset.owner_id = ev.venue_id))));
 
 
 --
--- Name: events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: shows_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE events_id_seq
+CREATE SEQUENCE shows_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -227,10 +227,10 @@ CREATE SEQUENCE events_id_seq
 
 
 --
--- Name: events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: shows_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE events_id_seq OWNED BY events.id;
+ALTER SEQUENCE shows_id_seq OWNED BY shows.id;
 
 
 --
@@ -319,10 +319,10 @@ CREATE TABLE tenants (
 
 
 --
--- Name: public_events; Type: VIEW; Schema: public; Owner: -
+-- Name: public_shows; Type: VIEW; Schema: public; Owner: -
 --
 
-CREATE VIEW public_events AS
+CREATE VIEW public_shows AS
  SELECT em.identifier AS embed_identifier,
     tenant.slug AS tenant_slug,
     ev.identifier,
@@ -336,7 +336,7 @@ CREATE VIEW public_events AS
     ev.onsale_until,
     ev.price,
     ev.capacity,
-    json_build_object('file_data', event_asset.file_data) AS image,
+    json_build_object('file_data', show_asset.file_data) AS image,
         CASE
             WHEN (presenter.* IS NULL) THEN NULL::json
             ELSE json_build_object('name', presenter.name, 'logo', json_build_object('file_data', presenter_asset.file_data))
@@ -344,10 +344,10 @@ CREATE VIEW public_events AS
     json_build_object('name', venues.name, 'address', venues.address, 'phone_number', venues.phone_number, 'logo', venue_asset.file_data) AS venue
    FROM (((((((embeds em
      JOIN tenants tenant ON (((tenant.slug)::text IN ( SELECT unnest(em.tenants) AS unnest))))
-     JOIN events ev ON (((ev.tenant_id = tenant.id) AND (ev.visible_after <= now()) AND (ev.visible_until >= now()))))
+     JOIN shows ev ON (((ev.tenant_id = tenant.id) AND (ev.visible_after <= now()) AND (ev.visible_until >= now()))))
      LEFT JOIN venues ON ((venues.id = ev.venue_id)))
      LEFT JOIN presenters presenter ON ((presenter.id = ev.presenter_id)))
-     LEFT JOIN assets event_asset ON ((((event_asset.owner_type)::text = 'SM::Event'::text) AND (event_asset.owner_id = ev.id))))
+     LEFT JOIN assets show_asset ON ((((show_asset.owner_type)::text = 'SM::Show'::text) AND (show_asset.owner_id = ev.id))))
      LEFT JOIN assets presenter_asset ON ((((presenter_asset.owner_type)::text = 'SM::Presenter'::text) AND (presenter_asset.owner_id = presenter.id))))
      LEFT JOIN assets venue_asset ON ((((venue_asset.owner_type)::text = 'SM::Venue'::text) AND (venue_asset.owner_id = ev.venue_id))));
 
@@ -359,7 +359,7 @@ CREATE VIEW public_events AS
 CREATE TABLE purchases (
     id integer NOT NULL,
     tenant_id integer NOT NULL,
-    event_id integer NOT NULL,
+    show_id integer NOT NULL,
     qty integer NOT NULL,
     identifier text NOT NULL,
     name text NOT NULL,
@@ -519,10 +519,10 @@ ALTER TABLE ONLY embeds ALTER COLUMN id SET DEFAULT nextval('embeds_id_seq'::reg
 
 
 --
--- Name: events id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: shows id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY events ALTER COLUMN id SET DEFAULT nextval('events_id_seq'::regclass);
+ALTER TABLE ONLY shows ALTER COLUMN id SET DEFAULT nextval('shows_id_seq'::regclass);
 
 
 --
@@ -599,11 +599,11 @@ ALTER TABLE ONLY embeds
 
 
 --
--- Name: events events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: shows shows_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY events
-    ADD CONSTRAINT events_pkey PRIMARY KEY (id, tenant_id);
+ALTER TABLE ONLY shows
+    ADD CONSTRAINT shows_pkey PRIMARY KEY (id, tenant_id);
 
 
 --
@@ -692,31 +692,31 @@ CREATE UNIQUE INDEX index_embeds_on_identifier ON embeds USING btree (identifier
 
 
 --
--- Name: index_events_on_identifier; Type: INDEX; Schema: public; Owner: -
+-- Name: index_shows_on_identifier; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_events_on_identifier ON events USING btree (identifier);
-
-
---
--- Name: index_events_on_presenter_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_events_on_presenter_id ON events USING btree (presenter_id);
+CREATE UNIQUE INDEX index_shows_on_identifier ON shows USING btree (identifier);
 
 
 --
--- Name: index_events_on_tenant_id_and_visible_after_and_visible_until; Type: INDEX; Schema: public; Owner: -
+-- Name: index_shows_on_presenter_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_events_on_tenant_id_and_visible_after_and_visible_until ON events USING btree (tenant_id, visible_after, visible_until);
+CREATE INDEX index_shows_on_presenter_id ON shows USING btree (presenter_id);
 
 
 --
--- Name: index_events_on_venue_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_shows_on_tenant_id_and_visible_after_and_visible_until; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_events_on_venue_id ON events USING btree (venue_id);
+CREATE INDEX index_shows_on_tenant_id_and_visible_after_and_visible_until ON shows USING btree (tenant_id, visible_after, visible_until);
+
+
+--
+-- Name: index_shows_on_venue_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_shows_on_venue_id ON shows USING btree (venue_id);
 
 
 --

@@ -5,7 +5,7 @@ import {
     BaseModel, identifiedBy, field, identifier, session, hasMany, belongsTo,
 } from './base';
 import Payment from './payment';
-import EventOccurrence from './event-occurrence';
+import Occurrence from './occurrence';
 
 @identifiedBy('sm/purchase')
 export default class Purchase extends BaseModel {
@@ -23,12 +23,12 @@ export default class Purchase extends BaseModel {
     @field tickets_url;
 
     @hasMany({ model: Payment }) payments;
-    @belongsTo({ model: EventOccurrence }) occurrence;
+    @belongsTo({ model: Occurrence }) occurrence;
 
     constructor(attrs = {}) {
         super(attrs);
-        if (attrs.event && attrs.event.occurrences.length) {
-            this.occurrence = attrs.event.occurrences[0];
+        if (attrs.show && attrs.show.occurrences.length) {
+            this.occurrence = attrs.show.occurrences[0];
         }
     }
 
@@ -50,6 +50,6 @@ export default class Purchase extends BaseModel {
 
     priceForQty(qty = 1) {
         if (!this.occurrence) { return '0.00'; }
-        return sprintf('%0.2f', this.occurrence.pricedEvent.times(qty));
+        return sprintf('%0.2f', this.occurrence.pricedShow.times(qty));
     }
 }

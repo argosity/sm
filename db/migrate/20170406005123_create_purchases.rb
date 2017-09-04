@@ -4,7 +4,7 @@ class CreatePurchases < ActiveRecord::Migration[5.0]
             t.references :tenant, null: false, foreign_key: true
 
             t.integer :qty, null: false
-            t.references :event, null: false
+            t.references :show, null: false
             t.references :occurrence, null: false
 
             t.text    :identifier, :name, null: false

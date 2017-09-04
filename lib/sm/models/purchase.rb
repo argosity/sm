@@ -3,13 +3,13 @@ module SM
         belongs_to_tenant
         has_random_identifier
 
-        belongs_to :event
-        belongs_to :occurrence, class_name: 'SM::EventOccurrence'
+        belongs_to :show
+        belongs_to :occurrence, class_name: 'SM::Occurrence'
         has_many :payments, autosave: true
         has_many :redemptions, inverse_of: :purchase
         before_validation :set_defaults
 
-        validates :event, presence: true
+        validates :show, presence: true
         validates :occurrence, presence: true
         validates :qty, :name, presence: true
         validates :payments, associated: true, presence: true, length: { is: 1 }
@@ -48,7 +48,7 @@ module SM
         protected
 
         def set_defaults
-            self.event ||= occurrence.event if occurrence
+            self.show ||= occurrence.show if occurrence
         end
     end
 end

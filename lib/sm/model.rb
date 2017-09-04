@@ -9,8 +9,8 @@ module SM
 end
 
 require_relative "models/presenter"
-require_relative "models/event"
-require_relative "models/event_occurrence"
+require_relative "models/show"
+require_relative "models/occurrence"
 require_relative "models/venue"
 require_relative "models/payment"
 require_relative "models/purchase"
