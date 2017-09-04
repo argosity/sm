@@ -7,8 +7,8 @@ import {
     BaseModel, identifiedBy, field, identifier, belongsTo, computed, session,
 } from './base';
 
-@identifiedBy('sm/occurrence')
-export default class Occurrence extends BaseModel {
+@identifiedBy('sm/show-time')
+export default class ShowTime extends BaseModel {
     @identifier id;
 
     @session identifier;
@@ -41,6 +41,6 @@ export default class Occurrence extends BaseModel {
         if (!this.show.isNew) {
             this.destroy();
         }
-        this.show.occurrences.remove(this);
+        this.show.times.remove(this);
     }
 }

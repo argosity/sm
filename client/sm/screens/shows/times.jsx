@@ -13,24 +13,24 @@ import { Table, AutoSizer, Column } from 'react-virtualized';
 import DateTime from 'hippo/components/date-time';
 import Show from '../../models/show';
 
-const ValueInput = observer(({ name, occurrence }) => (
+const ValueInput = observer(({ name, time }) => (
     <input
-        value={occurrence[name] || ''}
-        onChange={({ target: { value } }) => { occurrence[name] = value; }}
+        value={time[name] || ''}
+        onChange={({ target: { value } }) => { time[name] = value; }}
     />
 ));
 
 
-const DateInput = observer(({ occurrence }) => (
+const DateInput = observer(({ time }) => (
     <DateTime
-        value={occurrence.occurs_at}
+        value={time.occurs_at}
         format="M/D/YYYY h:mm a"
-        onChange={({ target: { value } }) => { occurrence.occurs_at = value; }}
+        onChange={({ target: { value } }) => { time.occurs_at = value; }}
     />
 ));
 
 @observer
-export default class OccurrencesEditor extends React.PureComponent {
+export default class ShowTimesEditor extends React.PureComponent {
     static propTypes = {
         show: PropTypes.instanceOf(Show).isRequired,
     }
@@ -41,22 +41,22 @@ export default class OccurrencesEditor extends React.PureComponent {
 
     @autobind
     rowAtIndex({ index }) {
-        return this.props.show.occurrences[index];
+        return this.props.show.times[index];
     }
 
     @autobind
     renderCapacity({ rowData }) {
-        return <ValueInput occurrence={rowData} name="capacity" />;
+        return <ValueInput time={rowData} name="capacity" />;
     }
 
     @autobind
     renderPrice({ rowData }) {
-        return <ValueInput occurrence={rowData} name="price" />;
+        return <ValueInput time={rowData} name="price" />;
     }
 
     @autobind
     renderOccurs({ rowData }) {
-        return <DateInput occurrence={rowData} />;
+        return <DateInput time={rowData} />;
     }
 
     @autobind
@@ -67,8 +67,8 @@ export default class OccurrencesEditor extends React.PureComponent {
     }
 
     @action.bound
-    onAddOccurrence() {
-        this.props.show.occurrences.unshift({});
+    onAddTime() {
+        this.props.show.times.unshift({});
     }
 
     renderHeader() {
@@ -77,24 +77,24 @@ export default class OccurrencesEditor extends React.PureComponent {
                 <Heading tag='h4'>
                     Show Dates/Times
                 </Heading>
-                <Button icon={<AddCircleIcon />} onClick={this.onAddOccurrence}/>
+                <Button icon={<AddCircleIcon />} onClick={this.onAddTime}/>
             </Box>
         );
     }
 
     render() {
-        const { occurrences } = this.props.show;
+        const { times } = this.props.show;
 
-        if (!occurrences || !occurrences.length) {
+        if (!times || !times.length) {
             return (
-                <div className={columnClasses(this.props, 'occurrences')}>
+                <div className={columnClasses(this.props, 'times')}>
                     {this.renderHeader()}
                 </div>
             );
         }
 
         return (
-            <div className={columnClasses(this.props, 'occurrences')}>
+            <div className={columnClasses(this.props, 'times')}>
                 {this.renderHeader()}
                 <AutoSizer>
                     {({ height, width }) =>
@@ -104,7 +104,7 @@ export default class OccurrencesEditor extends React.PureComponent {
                             rowHeight={40}
                             rowGetter={this.rowAtIndex}
                             headerHeight={40}
-                            rowCount={occurrences.length}
+                            rowCount={times.length}
                         >
                             <Column
                                 dataKey="occurs_at" label="Date/Time"

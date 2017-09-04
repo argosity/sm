@@ -9,7 +9,7 @@ export default class Sale extends BaseModel {
 
     @session purchase_id;
     @session show_id;
-    @session show_occurrence_id;
+    @session show_time_id;
     @session purchase_identifier;
     @session name;
     @session phone;

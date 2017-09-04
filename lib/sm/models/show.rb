@@ -15,7 +15,7 @@ module SM
                  foreign_type: :owner_type,
                  dependent: :destroy
 
-        has_many :occurrences, class_name: 'SM::Occurrence', dependent: :destroy, export: { writable: true }
+        has_many :times, class_name: 'SM::ShowTime', dependent: :destroy, export: { writable: true }
 
         before_validation :set_defaults
         validates :venue, :title, :price, :visible_during, presence: true

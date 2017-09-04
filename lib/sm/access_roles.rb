@@ -11,7 +11,7 @@ module Hippo::Access
             grant SM::Show
             grant SM::Venue
             grant SM::Presenter
-            grant SM::Occurrence
+            grant SM::ShowTime
         end
 
     end

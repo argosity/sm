@@ -4,13 +4,13 @@ module SM
         has_random_identifier
 
         belongs_to :show
-        belongs_to :occurrence, class_name: 'SM::Occurrence'
+        belongs_to :time, class_name: 'SM::Time'
         has_many :payments, autosave: true
         has_many :redemptions, inverse_of: :purchase
         before_validation :set_defaults
 
         validates :show, presence: true
-        validates :occurrence, presence: true
+        validates :time, presence: true
         validates :qty, :name, presence: true
         validates :payments, associated: true, presence: true, length: { is: 1 }
 
@@ -48,7 +48,7 @@ module SM
         protected
 
         def set_defaults
-            self.show ||= occurrence.show if occurrence
+            self.show ||= time.show if time
         end
     end
 end

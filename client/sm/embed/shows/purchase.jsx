@@ -34,9 +34,9 @@ export default class Purchase extends React.PureComponent {
     formState = new FormState();
 
 
-    @computed get occurrenceOptions() {
-        return map(this.props.show.futureOccurrences, o => ({
-            occurrence: o,
+    @computed get timeOptions() {
+        return map(this.props.show.futureTimes, o => ({
+            time: o,
             label: (
                 <Box key={o.identifier} direction='row' justify='between' responsive={false}>
                     <span>{o.formattedOccursAt}</span>
@@ -47,8 +47,8 @@ export default class Purchase extends React.PureComponent {
     }
 
     @action.bound
-    onOccurrenceChange({ value: { occurrence } }) {
-        this.props.purchase.occurrence = occurrence;
+    onTimeChange({ value: { time } }) {
+        this.props.purchase.time = time;
     }
 
     @action.bound
@@ -59,17 +59,17 @@ export default class Purchase extends React.PureComponent {
     @action.bound
     setFormRef(form) { this.form = form; }
 
-    renderOccurrences() {
+    renderTimes() {
         return (
             <FormField label='Show'>
                 <Select
-                    className="occurrences"
+                    className="times"
                     value={
-                        this.props.purchase.occurrence ?
-                            this.props.purchase.occurrence.formattedOccursAt : ''
+                        this.props.purchase.time ?
+                            this.props.purchase.time.formattedOccursAt : ''
                     }
-                    onChange={this.onOccurrenceChange}
-                    options={this.occurrenceOptions}
+                    onChange={this.onTimeChange}
+                    options={this.timeOptions}
                 />
             </FormField>
         );
@@ -111,7 +111,7 @@ export default class Purchase extends React.PureComponent {
                         purchase={purchase}
                         onComplete={this.onComplete}
                         ref={this.setFormRef}
-                        heading={this.renderOccurrences()}
+                        heading={this.renderTimes()}
                         controls={
                             <Button label="Cancel" onClick={onCancel} accent />
                         }

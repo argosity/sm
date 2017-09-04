@@ -42,7 +42,7 @@ export default class Shows extends React.PureComponent {
             'description',
             'image_details',
             'venue_details',
-            'occurrences',
+            'show_times',
             'visible_during',
         ],
     });

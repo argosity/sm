@@ -3,7 +3,7 @@ import Query from 'hippo/models/query';
 import PubSub from 'hippo/models/pub_sub';
 import Sale from '../../models/sale';
 import Redemption from '../../models/redemption';
-import Occurrence from '../../models/occurrence';
+import ShowTime from '../../models/show-time';
 
 export default class AttendeeUX {
     static FIELDS = {
@@ -26,7 +26,7 @@ export default class AttendeeUX {
     @observable redemption;
 
     query = new Query({
-        src: Occurrence,
+        src: ShowTime,
         syncOptions: { with: ['sales'], order: { occurs_at: 'desc' } },
         fields: [
             { id: 'id', queryable: false, dataType: 'number' },
@@ -63,32 +63,32 @@ export default class AttendeeUX {
     }
 
     pubSubUnsubscribe() {
-        if (this.occurrence.isNew) { return; }
+        if (this.time.isNew) { return; }
         PubSub.channel.unsubscribe(
-            `/show/redemption/${this.props.occurrence.id}`,
+            `/show/redemption/${this.props.time.id}`,
             this.onRedemption,
         );
     }
 
     update(props) {
-        if (!props.occurrence.isNew && props.occurrence !== this.occurrence) {
+        if (!props.time.isNew && props.time !== this.time) {
             this.query.autoFetch = true;
             this.query.clauses.replace([
                 {
                     field: this.query.fields[this.fields.ID],
                     visible: false,
-                    value: props.occurrence.id,
+                    value: props.time.id,
                     operator: this.query.fields[this.fields.ID].preferredOperator,
                 },
                 { field: this.query.fields[this.fields.NAME], value: '' },
             ]);
             this.pubSubUnsubscribe();
-            PubSub.channel.subscribe(`/show/redemption/${props.occurrence.id}`, this.onRedemption);
+            PubSub.channel.subscribe(`/show/redemption/${props.time.id}`, this.onRedemption);
         } else {
             this.query.autoFetch = false;
             this.query.reset();
         }
-        this.occurrence = props.occurrence;
+        this.time = props.time;
     }
 
     @action.bound

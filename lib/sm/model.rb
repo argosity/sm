@@ -10,7 +10,7 @@ end
 
 require_relative "models/presenter"
 require_relative "models/show"
-require_relative "models/occurrence"
+require_relative "models/show_time"
 require_relative "models/venue"
 require_relative "models/payment"
 require_relative "models/purchase"

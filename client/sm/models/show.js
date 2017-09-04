@@ -8,7 +8,7 @@ import { renameProperties } from 'hippo/lib/util';
 import {
     BaseModel, identifiedBy, identifier, field, belongsTo, computed, hasMany,
 } from './base';
-import Occurrence from './occurrence';
+import ShowTime from './show-time';
 
 const formatTime = occurs => moment(occurs.occurs_at).format('h:mma');
 
@@ -45,7 +45,7 @@ export default class Show extends BaseModel {
     @belongsTo({ model: 'sm/presenter' }) presenter;
     @belongsTo({ model: Asset, inverseOf: 'owner' }) image;
 
-    @hasMany({ model: Occurrence, inverseOf: 'show' }) occurrences;
+    @hasMany({ model: ShowTime, inverseOf: 'show' }) times;
     @hasMany({ model: Asset, inverseOf: 'owner' }) page_images;
 
     constructor(attrs) {
@@ -75,12 +75,12 @@ export default class Show extends BaseModel {
         return !isEmpty(this.page);
     }
 
-    @computed get futureOccurrences() {
-        return filter(this.occurrences, o => o.isFuture);
+    @computed get futureTimes() {
+        return filter(this.times, o => o.isFuture);
     }
 
     @computed get commonTime() {
-        const times = uniqBy(this.occurrences, formatTime);
+        const times = uniqBy(this.times, formatTime);
         return 1 === times.length ? formatTime(times[0]) : null;
     }
 

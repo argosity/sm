@@ -78,7 +78,7 @@ export default class PurchaseForm extends React.PureComponent {
             this.getToken().then(({ nonce, details: { cardType: card_type, lastTwo: digits } }) => {
                 formState.persistTo(purchase);
                 extend(purchase, {
-                    occurrence_identifier: purchase.occurrence.identifier,
+                    time_identifier: purchase.time.identifier,
                     payments: [{
                         nonce, card_type, digits, amount: this.totalAmount,
                     }],
@@ -92,9 +92,9 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
 
-    @computed get occurrenceOptions() {
-        return map(this.props.show.futureOccurrences, o => ({
-            occurrence: o,
+    @computed get timeOptions() {
+        return map(this.props.show.futureTimes, o => ({
+            time: o,
             label: (
                 <Box direction='row' justify='between' responsive={false}>
                     <span>{o.formattedOccurs}</span>
@@ -105,8 +105,8 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
     @action.bound
-    onOccurrenceChange({ value: { occurrence } }) {
-        this.props.purchase.occurrence = occurrence;
+    onTimeChange({ value: { time } }) {
+        this.props.purchase.time = time;
     }
 
     @action.bound
@@ -118,7 +118,7 @@ export default class PurchaseForm extends React.PureComponent {
 
     renderOccurs() {
         const { show } = this.props;
-        if (1 === show.occurrences.length) {
+        if (1 === show.times.length) {
             return (
                 <Box direction="row" justify="between">
                     <h2>Ticket cost: </h2>
@@ -136,13 +136,13 @@ export default class PurchaseForm extends React.PureComponent {
         return (
             <FormField label='Show'>
                 <Select
-                    className="occurrences"
+                    className="times"
                     value={
-                        this.props.purchase.occurrence ?
-                            this.props.purchase.occurrence.formattedOccurs : ''
+                        this.props.purchase.time ?
+                            this.props.purchase.time.formattedOccurs : ''
                     }
-                    onChange={this.onOccurrenceChange}
-                    options={this.occurrenceOptions}
+                    onChange={this.onTimeChange}
+                    options={this.timeOptions}
                 />
             </FormField>
         );

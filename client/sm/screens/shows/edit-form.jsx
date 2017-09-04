@@ -21,7 +21,7 @@ import PageEditor from './page-editor';
 import Venue from '../../models/venue';
 import Show from '../../models/show';
 import Presenter from '../../models/presenter';
-import Occurrences from './occurrences';
+import ShowTimes from './times';
 
 @observer
 export default class EditForm extends React.PureComponent {
@@ -73,7 +73,7 @@ export default class EditForm extends React.PureComponent {
             return;
         }
         this.formState.persistTo(this.show)
-            .then(() => this.show.save({ include: 'occurrences' }))
+            .then(() => this.show.save({ include: 'times' }))
             .then(this.onSaved);
     }
 
@@ -162,7 +162,7 @@ export default class EditForm extends React.PureComponent {
                     </Row>
                     <Row>
                         <Asset model={show} name="image" sm={5} xs={12} />
-                        <Occurrences show={show} sm={7} xs={12}/>
+                        <ShowTimes show={show} sm={7} xs={12}/>
                     </Row>
                 </Form>
                 <Footer

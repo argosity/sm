@@ -1,15 +1,15 @@
 module SM
-    class Occurrence < Model
+    class ShowTime < Model
         has_random_identifier
 
         belongs_to_tenant
         belongs_to :show, export: true
-        has_many :redemptions, inverse_of: :occurrence, listen: { create: :on_redemption }
+        has_many :redemptions, inverse_of: :time, listen: { create: :on_redemption }
 
         validates :occurs_at, presence: true
 
         scope :sales, lambda { |*|
-            compose_query_using_detail_view(view: 'show_sales', join_to: 'show_occurrence_id')
+            compose_query_using_detail_view(view: 'show_sales', join_to: 'show_time_id')
         }, export: true
 
         def price

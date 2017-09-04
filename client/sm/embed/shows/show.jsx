@@ -47,10 +47,10 @@ export default class Show extends React.PureComponent {
                     </div>
                     <h3 className="sub-title">{show.sub_title}</h3>
                     <p className="description">{show.description}</p>
-                    <div className="show-occurrences">
+                    <div className="show-times">
                         {this.renderPurchaseTime()}
                         <ul className="dates">
-                            {show.occurrences.map(occ =>
+                            {show.times.map(occ =>
                                 <li key={occ.identifier} className="date">{occ.formattedOccursAt}</li>,
                             )}
                         </ul>

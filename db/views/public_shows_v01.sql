@@ -11,8 +11,8 @@ select
   ev.visible_during,
   ev.price,
   ev.capacity,
-  show_occurrences.first_occurrence,
-  coalesce(show_occurrences.occurrences, '[]'::json) as occurrences,
+  times_info.first_show_time,
+  coalesce(times_info.show_times, '[]'::json) as show_times,
   json_build_object(
     'file_data', show_asset.file_data
   ) as image,
@@ -40,16 +40,16 @@ from embeds em
   left join (
     select
       evo.show_id,
-      min(evo.occurs_at) first_occurrence,
+      min(evo.occurs_at) first_show_time,
       json_agg((select x from (
           select
               evo.identifier
               ,evo.occurs_at at time zone 'UTC' as occurs_at
               ,evo.price
               ,evo.capacity
-      ) x) order by evo.occurs_at) AS occurrences
-    from occurrences evo where evo.occurs_at > now() group by evo.show_id
-  ) show_occurrences on show_occurrences.show_id = ev.id
+      ) x) order by evo.occurs_at) AS show_times
+    from show_times evo where evo.occurs_at > now() group by evo.show_id
+  ) times_info on times_info.show_id = ev.id
   left join venues on venues.id = ev.venue_id
   left join presenters presenter on presenter.id = ev.presenter_id
   left join assets as show_asset on show_asset.owner_type = 'SM::Show'

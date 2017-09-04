@@ -5,9 +5,9 @@ module SM
 
         belongs_to :purchase
         belongs_to :show
-        belongs_to :occurrence, class_name: 'SM::Occurrence'
+        belongs_to :time, class_name: 'SM::Time'
 
-        validates :show, :purchase, :occurrence, presence: true
+        validates :show, :purchase, :time, presence: true
         validate :ensure_qty_is_correct
         before_validation :set_defaults
 
@@ -20,8 +20,8 @@ module SM
         end
 
         def set_defaults
-            self.occurrence ||= purchase.occurrence if purchase
-            self.show ||= occurrence.show if occurrence
+            self.time ||= purchase.time if purchase
+            self.show ||= time.show if time
         end
     end
 

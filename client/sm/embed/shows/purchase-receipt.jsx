@@ -26,7 +26,7 @@ export default class PurchaseReceipt extends React.PureComponent {
     }
 
     render() {
-        const { purchase, purchase: { occurrence: { show } } } = this.props;
+        const { purchase, purchase: { time: { show } } } = this.props;
 
         return (
             <Layer

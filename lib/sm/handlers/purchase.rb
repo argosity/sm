@@ -25,7 +25,7 @@ module SM
                 purchase = SM::Purchase.new(
                     data.slice('name', 'phone', 'email', 'qty')
                 )
-                purchase.occurrence = SM::Occurrence.find_by(identifier: data['occurrence_identifier'])
+                purchase.time = SM::Time.find_by(identifier: data['time_identifier'])
 
                 SM::Purchase.transaction do
                     data['payments'].each do |payment_data|

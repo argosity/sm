@@ -5,7 +5,7 @@ class CreatePurchases < ActiveRecord::Migration[5.0]
 
             t.integer :qty, null: false
             t.references :show, null: false
-            t.references :occurrence, null: false
+            t.references :show_time, null: false
 
             t.text    :identifier, :name, null: false
             t.text    :phone, :email

@@ -8,7 +8,7 @@ import Box from 'grommet/components/Box';
 import DoneIcon from 'grommet/components/icons/base/Compliance';
 import DataList from 'hippo/components/data-list';
 import QueryBuilder from 'hippo/components/query-builder';
-import Occurrence from '../../models/occurrence';
+import ShowTime from '../../models/show-time';
 import Redeem from './redeem';
 
 import UX from './attendee-ux';
@@ -43,7 +43,7 @@ function Attendee({ style, onClick, row }) {
 @observer
 export default class Attendees extends React.PureComponent {
     static propTypes = {
-        occurrence: PropTypes.instanceOf(Occurrence).isRequired,
+        time: PropTypes.instanceOf(ShowTime).isRequired,
     }
 
     ux = new UX(this.props);
@@ -57,7 +57,7 @@ export default class Attendees extends React.PureComponent {
     }
 
     render() {
-        if (this.ux.occurrence.isNew) { return null; }
+        if (this.ux.time.isNew) { return null; }
 
         return (
             <Box

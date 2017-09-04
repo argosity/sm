@@ -10,7 +10,7 @@ import Button from 'grommet/components/Button';
 import Box from 'grommet/components/Box';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 import SearchIcon from 'grommet/components/icons/base/Search';
-import Occurrence from '../models/occurrence';
+import ShowTime from '../models/show-time';
 import Attendees from './box-office/attendees';
 import Purchase from '../models/purchase';
 import PurchaseLayer from '../components/purchase/layer';
@@ -24,12 +24,12 @@ export default class BoxOffice extends React.PureComponent {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
 
-    @observable occurrence = new Occurrence();
+    @observable time = new ShowTime();
     @observable isShowingSearch = false;
     @observable purchase;
 
     query = new Query({
-        src: Occurrence,
+        src: ShowTime,
         syncOptions: { include: 'show', order: { occurs_at: 'desc' } },
         fields: [
             { id: 'id', visible: false, queryable: false },
@@ -40,11 +40,11 @@ export default class BoxOffice extends React.PureComponent {
 
     @action.bound
     onRecordFound(occur) {
-        this.occurrence = occur;
+        this.time = occur;
         this.isShowingSearch = false;
     }
     @action.bound onSaleClick() {
-        this.purchase = new Purchase({ occurrence: this.occurrence });
+        this.purchase = new Purchase({ time: this.time });
     }
     @action.bound onPurchaseComplete() { this.purchase = null; }
     @action.bound onPurchaseCancel() { this.purchase = null; }
@@ -52,7 +52,7 @@ export default class BoxOffice extends React.PureComponent {
     @action.bound onSearchClose() { this.isShowingSearch = false; }
 
     render() {
-        const { occurrence, query, isShowingSearch } = this;
+        const { time, query, isShowingSearch } = this;
 
         return (
             <Screen screen={this.props.screen}>
@@ -76,17 +76,17 @@ export default class BoxOffice extends React.PureComponent {
                             plain
                             className="grommetux-control-icon-search"
                             icon={<SearchIcon />}
-                            label={occurrence.isNew ? 'Click to find Show' : occurrence.show.title}
+                            label={time.isNew ? 'Click to find Show' : time.show.title}
                             onClick={this.onSearchClick}
                         />
                     </h3>
                     <div>
-                        {occurrence.isNew ? '' : moment(occurrence.occurs_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                        {time.isNew ? '' : moment(time.occurs_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}
                     </div>
                 </Box>
 
                 <Box direction="row" justify="end">
-                    {occurrence.isNew ? null : (
+                    {time.isNew ? null : (
                         <Button
                             icon={<CreditCardIcon />}
                             label={'Sale'}
@@ -94,7 +94,7 @@ export default class BoxOffice extends React.PureComponent {
                         />)}
                 </Box>
 
-                <Attendees occurrence={occurrence} />
+                <Attendees time={time} />
             </Screen>
         );
     }
