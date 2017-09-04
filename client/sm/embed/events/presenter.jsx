@@ -13,8 +13,9 @@ export default class Event extends React.PureComponent {
     render() {
         const { presenter } = this.props;
         if (!presenter) { return null; }
-
-        return presenter.logo.exists ? <Image image={presenter.logo} className="presenter" size="thumbnail" /> : (
+        return presenter.logo.exists ? (
+            <Image image={presenter.logo} className="presenter" size="thumbnail" />
+        ) : (
             <h3 className="presenter">{presenter.name} presents:</h3>
         );
     }
