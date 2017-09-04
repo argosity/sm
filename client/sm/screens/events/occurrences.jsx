@@ -25,7 +25,7 @@ const DateInput = observer(({ occurrence }) => (
     <DateTime
         value={occurrence.occurs_at}
         format="M/D/YYYY h:mm a"
-        onChange={(value) => { occurrence.occurs_at = value; }}
+        onChange={({ target: { value } }) => { occurrence.occurs_at = value; }}
     />
 ));
 
