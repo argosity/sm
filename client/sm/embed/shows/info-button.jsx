@@ -26,7 +26,7 @@ export default class InfoButton extends React.PureComponent {
     @action.bound
     onClick(ev) {
         if (this.props.show.page) {
-            ev.prshowDefault();
+            ev.preventDefault();
             this.props.onClick();
         }
     }
