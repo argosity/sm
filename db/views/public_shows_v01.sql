@@ -12,7 +12,7 @@ select
   ev.price,
   ev.capacity,
   times_info.first_show_time,
-  coalesce(times_info.show_times, '[]'::json) as show_times,
+  coalesce(times_info.show_times, '[]'::json) as times,
   json_build_object(
     'file_data', show_asset.file_data
   ) as image,
