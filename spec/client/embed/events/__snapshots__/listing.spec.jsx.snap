@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
+exports[`Embedded Shows Listing renders shows and matches snapshot 1`] = `
 <div
-  className="hippo events-listing"
+  className="hippo shows-listing"
 >
   <div
-    className="event"
-    data-event-identifier="TnXMWyEL2dFe"
+    className="show"
+    data-show-identifier="TnXMWyEL2dFe"
   >
     <img
       className="image"
@@ -33,27 +33,11 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
         Innovative motivating circuit
       </p>
       <div
-        className="event-occurrences"
+        className="show-times"
       >
         <ul
           className="dates"
-        >
-          <li
-            className="date"
-          >
-            1:56pm Aug 24th 2017
-          </li>
-          <li
-            className="date"
-          >
-            4:59am Aug 25th 2017
-          </li>
-          <li
-            className="date"
-          >
-            9:59am Aug 26th 2017
-          </li>
-        </ul>
+        />
       </div>
     </div>
     <div
@@ -61,8 +45,8 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
     />
   </div>
   <div
-    className="event"
-    data-event-identifier="sehR4uN224XV"
+    className="show"
+    data-show-identifier="sehR4uN224XV"
   >
     <img
       className="image"
@@ -89,22 +73,11 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
         Automated needs-based open system
       </p>
       <div
-        className="event-occurrences"
+        className="show-times"
       >
         <ul
           className="dates"
-        >
-          <li
-            className="date"
-          >
-            9:59am Aug 26th 2017
-          </li>
-          <li
-            className="date"
-          >
-            4:10am Sep 2nd 2017
-          </li>
-        </ul>
+        />
       </div>
     </div>
     <div
@@ -112,8 +85,8 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
     />
   </div>
   <div
-    className="event"
-    data-event-identifier="cwMx65DgEAfG"
+    className="show"
+    data-show-identifier="cwMx65DgEAfG"
   >
     <img
       className="image"
@@ -140,22 +113,11 @@ exports[`Embedded Events Listing renders events and matches snapshot 1`] = `
         Right-sized bottom-line customer loyalty
       </p>
       <div
-        className="event-occurrences"
+        className="show-times"
       >
         <ul
           className="dates"
-        >
-          <li
-            className="date"
-          >
-            9:59am Aug 26th 2017
-          </li>
-          <li
-            className="date"
-          >
-            4:10am Sep 2nd 2017
-          </li>
-        </ul>
+        />
       </div>
     </div>
     <div

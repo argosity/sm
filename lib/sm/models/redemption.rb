@@ -5,7 +5,7 @@ module SM
 
         belongs_to :purchase
         belongs_to :show
-        belongs_to :time, class_name: 'SM::Time'
+        belongs_to :time, class_name: 'SM::ShowTime'
 
         validates :show, :purchase, :time, presence: true
         validate :ensure_qty_is_correct

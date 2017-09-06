@@ -4,13 +4,13 @@ module SM
         has_random_identifier
 
         belongs_to :show
-        belongs_to :time, class_name: 'SM::Time'
+        belongs_to :show_time
         has_many :payments, autosave: true
         has_many :redemptions, inverse_of: :purchase
         before_validation :set_defaults
 
         validates :show, presence: true
-        validates :time, presence: true
+        validates :show_time, presence: true
         validates :qty, :name, presence: true
         validates :payments, associated: true, presence: true, length: { is: 1 }
 
@@ -48,7 +48,7 @@ module SM
         protected
 
         def set_defaults
-            self.show ||= time.show if time
+            self.show ||= show_time.show if show_time
         end
     end
 end

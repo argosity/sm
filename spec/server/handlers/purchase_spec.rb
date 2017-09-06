@@ -3,18 +3,18 @@ require_relative '../spec_helper'
 
 describe SM::Handlers::Purchase, api: true, vcr: VCR_OPTS do
     let (:venue) { FactoryGirl.create :venue }
-    let (:event) { FactoryGirl.create :event, venue: venue }
+    let (:show) { FactoryGirl.create :show, venue: venue }
     let (:request_data) {
         {
             name: "nathan",
             phone: "6522",
             email: "test@test.com",
             qty: "1",
-            occurrence_identifier: event.occurrences.first.identifier,
+            time_identifier: show.times.first.identifier,
             payments: [
 
                 { nonce: "fake-valid-nonce",
-                  amount: event.price,
+                  amount: show.price,
                   card_type: "Visa",
                   digits: "11" }
             ]
@@ -31,7 +31,7 @@ describe SM::Handlers::Purchase, api: true, vcr: VCR_OPTS do
     end
 
     it 'sends meaninful error messages when card fails' do
-        event.update_attributes(price: '2001.00')
+        show.update_attributes(price: '2001.00')
         with_payment_proccessor do
             expect {
                 post '/api/sm/purchase.json', request_data.to_json
@@ -52,7 +52,7 @@ describe SM::Handlers::Purchase, api: true, vcr: VCR_OPTS do
             expect(purchase.email).to eq 'test@test.com'
             email = Mail::TestMailer.deliveries.last
             expect(email.to).to eq([purchase.email])
-            expect(email.subject).to include("tickets for #{event.title}")
+            expect(email.subject).to include("tickets for #{show.title}")
         end
     end
 

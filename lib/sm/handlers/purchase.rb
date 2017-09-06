@@ -25,7 +25,7 @@ module SM
                 purchase = SM::Purchase.new(
                     data.slice('name', 'phone', 'email', 'qty')
                 )
-                purchase.time = SM::Time.find_by(identifier: data['time_identifier'])
+                purchase.show_time = SM::ShowTime.find_by(identifier: data['time_identifier'])
 
                 SM::Purchase.transaction do
                     data['payments'].each do |payment_data|

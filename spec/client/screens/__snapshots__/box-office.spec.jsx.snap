@@ -49,7 +49,7 @@ exports[`Screen Gate renders and matches snapshot 1`] = `
         <span
           className="grommetux-button__label"
         >
-          Click to find Event
+          Click to find Show
         </span>
       </button>
     </h3>

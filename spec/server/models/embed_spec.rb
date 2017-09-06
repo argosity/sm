@@ -2,8 +2,8 @@ require_relative '../spec_helper'
 
 describe SM::Embed do
 
-    let(:events) { 3.times.map{
-                        FactoryGirl.create :event,
+    let(:shows) { 3.times.map{
+                        FactoryGirl.create :show,
                         visible_during: (3.days.ago...3.days.from_now)
                     } }
     let(:embeds) {
@@ -17,7 +17,7 @@ describe SM::Embed do
         }
     }
 
-    it "updates event slugs" do
+    it "updates show slugs" do
         slugs = embeds.map(&:tenants)
         old_slug = slugs[0][0]
         SM::Embed.update_tenant_slugs(old_slug, 'YELLOW')
@@ -28,15 +28,15 @@ describe SM::Embed do
 
     it "a default is created along with tenant" do
         tenant = FactoryGirl.create :tenant
-        expect(SM::Embed.where(tenant: tenant, name: 'My events').any?).to be(true)
+        expect(SM::Embed.where(tenant: tenant, name: 'My Shows').any?).to be(true)
     end
 
-    it "can query events" do
-        visible_event = events.find{|ev| ev.occurrences.find{|oc| oc.occurs_at > Time.now } }
-        if visible_event.present?
+    it "can query shows" do
+        visible_show = shows.find{|s| s.times.find{|st| st.occurs_at > Time.now } }
+        if visible_show.present?
             json = SM::Embed.json_for(embeds.first.identifier)
             ids = json.map { |e| e['identifier'] }
-            expect(ids).to include(visible_event.identifier)
+            expect(ids).to include(visible_show.identifier)
         end
     end
 end

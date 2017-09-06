@@ -1,5 +1,5 @@
 <% purchase = @purchase
-   event = purchase.event -%>
+   show = purchase.show -%>
 \font\Anton="[<%= @root_path.join('fonts', 'Anton.ttf').to_s %>]" at 22pt
 \usepackage[boxed]{ticket}
 \unitlength=1mm
@@ -15,38 +15,38 @@
 \renewcommand{\ticketdefault}{%
   \put(1,20){\begin{sideways}\Large Admit 1\end{sideways}}%
 <% top = 40 %>
-<% if event.presenter
+<% if show.presenter
    top += 5
 %>
   \put(48, <%= top %>){
-<% if (logo = event.presenter.logo).present? -%>
+<% if (logo = show.presenter.logo).present? -%>
       \raisebox{-1mm}{\includegraphics[height=8mm]{<%= logo.file[:original].download.path %>}}
 <% else -%>
-\textsf{\Huge <%= event.presenter.name -%>}
+\textsf{\Huge <%= show.presenter.name -%>}
 <% end -%>
 \textsf{\Huge presents:}
 }%
 <% top -= 15; end # end of presenter -%>
 %
-  \put(48, <%= top %>){ 
+  \put(48, <%= top %>){
     \parbox[][40mm][c]{100mm}{
-      \raggedright\Anton <%=q event.title %>
-<% if event.sub_title -%>
+      \raggedright\Anton <%=q show.title %>
+<% if show.sub_title -%>
 \par
-  \raggedleft\Large <%=q event.sub_title %>
+  \raggedleft\Large <%=q show.sub_title %>
 <% end -%>
-<% if event.description.present? -%>
+<% if show.description.present? -%>
 \par
-  \raggedright\normalsize <%= break_lines q(event.description) %>
+  \raggedright\normalsize <%= break_lines q(show.description) %>
 <% end -%>
   }
 }
-<% occurs = purchase.occurrence.occurs_at_in_venue_tz -%>
-\put(195,60){\rotatebox{270}{\parbox{60mm}{\centering\large <%=q occurs.strftime("%I:%M%P %a %b #{occurs.day.ordinalize}, %Y") %>}}}%
-<% if event.venue -%>
-  \put(95,1){\parbox{100mm}{\small\raggedleft <%=q event.venue.name %>, <%=q event.venue.address %>}}
+<% time = purchase.show_time.occurs_at_in_venue_tz -%>
+\put(195,60){\rotatebox{270}{\parbox{60mm}{\centering\large <%=q time.strftime("%I:%M%P %a %b #{time.day.ordinalize}, %Y") %>}}}%
+<% if show.venue -%>
+  \put(95,1){\parbox{100mm}{\small\raggedleft <%=q show.venue.name %>, <%=q show.venue.address %>}}
 <% end -%>
-<% if (image = event.image).present? -%>
+<% if (image = show.image).present? -%>
 \put(153, 30){
  \begin{minipage}[c][50mm]{40mm}
     \includegraphics[width=40mm]{<%= image.file[:original].download.path %>}
@@ -65,10 +65,10 @@
 \begin{document}
 \large The tickets from order <%= purchase.identifier %> are listed below.
 \\[2mm]
-If you lose your tickets please arrive at the event with identification matching the name used for the purchase.
+If you lose your tickets please arrive at the show with identification matching the name used for the purchase.
 \\[8mm]
 <% purchase.qty.times do | num | -%>
-  \filelabel{<%= num + 1 %>}{<%= purchase.identifier %>}{<%= event.title %>}
-    {<%= event.title %>}
+  \filelabel{<%= num + 1 %>}{<%= purchase.identifier %>}{<%= show.title %>}
+    {<%= show.title %>}
 <% end -%>
 \end{document}

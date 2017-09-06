@@ -2,48 +2,48 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { Snapshot } from 'hippo/testing/index';
 import chronokinesis from 'chronokinesis';
 import moment from 'moment-timezone';
-import EventModel from 'sm/models/event';
+import ShowModel from 'sm/models/show';
 
-import Listing from 'sm/embed/events/listing';
+import Listing from 'sm/embed/shows/listing';
 import { observable } from 'mobx';
 import DATA from './data.json';
 
 
-describe('Embedded Events Listing', () => {
-    let events;
+describe('Embedded Shows Listing', () => {
+    let shows;
     let listing;
 
     beforeEach(() => {
-        events = observable.array(DATA.map(ev => new EventModel(ev)));
+        shows = observable.array(DATA.map(ev => new ShowModel(ev)));
         chronokinesis.travel(new Date('2017-05-01T21:00:00.000Z'));
         moment.tz.setDefault('America/Los_Angeles');
-        listing = mount(<Listing events={events} />);
+        listing = mount(<Listing shows={shows} />);
         // grommit layer needs container
         document.body.appendChild(document.createElement('div'));
     });
     afterEach(() => {
         chronokinesis.reset();
     });
-    it('renders events and matches snapshot', () => {
+    it('renders shows and matches snapshot', () => {
         DATA.forEach(ev =>
-            expect(listing).toHaveRendered(`[data-event-identifier="${ev.identifier}"]`),
+            expect(listing).toHaveRendered(`[data-show-identifier="${ev.identifier}"]`),
         );
-        expect(Snapshot(<Listing events={events} />)).toMatchSnapshot();
+        expect(Snapshot(<Listing shows={shows} />)).toMatchSnapshot();
     });
 
-    it('displays info for events that have a page', () => {
-        expect(listing).toHaveRendered('[data-event-identifier="cwMx65DgEAfG"] InfoButton Button');
-        expect(listing).not.toHaveRendered('[data-event-identifier="sehR4uN224XV"] InfoButton Button');
+    it('displays info for shows that have a page', () => {
+        expect(listing).toHaveRendered('[data-show-identifier="cwMx65DgEAfG"] InfoButton Button');
+        expect(listing).not.toHaveRendered('[data-show-identifier="sehR4uN224XV"] InfoButton Button');
     });
 
-    it('displays purchase for events that are purchasable', () => {
-        expect(listing).toHaveRendered('[data-event-identifier="cwMx65DgEAfG"] PurchaseButton Button');
-        expect(listing).not.toHaveRendered('[data-event-identifier="sehR4uN224XV"] PurchaseButton Button');
+    it('displays purchase for shows that are purchasable', () => {
+        expect(listing).toHaveRendered('[data-show-identifier="cwMx65DgEAfG"] PurchaseButton Button');
+        expect(listing).not.toHaveRendered('[data-show-identifier="sehR4uN224XV"] PurchaseButton Button');
     });
 
     it('can display info', () => {
         expect(listing).not.toHaveRendered('Information');
-        listing.find('[data-event-identifier="cwMx65DgEAfG"] InfoButton Button').simulate('click');
+        listing.find('[data-show-identifier="cwMx65DgEAfG"] InfoButton Button').simulate('click');
         expect(listing).toHaveRendered('Information');
         const layer = document.querySelector('.grommetux-layer__container');
         expect(layer.textContent).toContain('test of stuff');
@@ -52,7 +52,7 @@ describe('Embedded Events Listing', () => {
     });
 
     it('can display purchase from info', () => {
-        listing.find('[data-event-identifier="cwMx65DgEAfG"] InfoButton Button').simulate('click');
+        listing.find('[data-show-identifier="cwMx65DgEAfG"] InfoButton Button').simulate('click');
         document.querySelector('.grommetux-layer__container footer button').click();
     });
 });

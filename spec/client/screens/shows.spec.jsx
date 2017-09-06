@@ -1,23 +1,23 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import EventModel from 'sm/models/event';
-import EventEditForm from 'sm/screens/events/edit-form';
-import EVENT from '../../fixtures/sm/event/1.json';
+import ShowModel from 'sm/models/show';
+import ShowEditForm from 'sm/screens/shows/edit-form';
+import SHOW from '../../fixtures/sm/show/1.json';
 
-describe('Screen Events', () => {
+describe('Screen Shows', () => {
     let props;
-    let event;
+    let show;
     beforeEach(() => {
-        event = new EventModel(EVENT);
+        show = new ShowModel(SHOW);
         props = {
-            event,
+            show,
             onComplete: jest.fn(),
         };
     });
 
     it('edits', () => {
-        const form = mount(<EventEditForm {...props} />);
+        const form = mount(<ShowEditForm {...props} />);
         form.find('TextInput input[name="title"]').simulate('change', { target: { value: 'NEW NAME' } });
         form.find('button.grommetux-button--primary').simulate('click');
-        expect(event.title).toEqual('NEW NAME');
+        expect(show.title).toEqual('NEW NAME');
     });
 });

@@ -1,5 +1,5 @@
 FactoryGirl.define do
-    factory :event, class: SM::Event do
+    factory :show, class: SM::Show do
         tenant {  Hippo::Tenant.current }
 
         title { Faker::RockBand.name }
@@ -12,13 +12,13 @@ FactoryGirl.define do
         association :venue, factory: :venue
 
         transient do
-            number_of_occurances { (rand(4) + 1) }
+            number_of_times { (rand(4) + 1) }
         end
 
-        after :create do |event, evaluator|
-            FactoryGirl.create_list :event_occurrence, evaluator.number_of_occurances,
-                                    event: event, tenant: event.tenant
-            event.reload
+        after :create do |show, evaluator|
+            FactoryGirl.create_list :show_time, evaluator.number_of_times,
+                                    show: show, tenant: show.tenant
+            show.reload
         end
     end
 end

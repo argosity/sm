@@ -2,7 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import Venues from 'sm/screens/venues';
 import { getScreenInstance } from 'hippo/testing/screens';
 
-const screenInstance = getScreenInstance('events');
+const screenInstance = getScreenInstance('venues');
 
 describe('Screen Venues', () => {
     it('renders', () => {

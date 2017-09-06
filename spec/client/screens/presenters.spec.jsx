@@ -2,7 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { getScreenInstance } from 'hippo/testing';
 import Presenters from 'sm/screens/presenters';
 
-const screenInstance = getScreenInstance('events');
+const screenInstance = getScreenInstance('presenters');
 
 describe('Screen Presenters', () => {
     it('renders', () => {
