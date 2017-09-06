@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: ced5cb1233c3b2dfe3f58839d089bb46f12e82de
+  revision: f1d9614f9f822df701793d59edd1db0eae9cf3d0
   branch: master
   specs:
     hippo-fw (0.9.6)
@@ -208,7 +208,7 @@ GEM
     minitest (5.10.3)
     mixlib-shellout (2.3.2)
     mono_logger (1.1.0)
-    multi_json (1.12.1)
+    multi_json (1.12.2)
     multipart-post (2.0.0)
     mustermann (1.0.1)
     nenv (0.3.0)
