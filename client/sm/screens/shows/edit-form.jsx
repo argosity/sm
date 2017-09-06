@@ -17,7 +17,6 @@ import Asset from 'hippo/components/asset';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import { observePubSub } from 'hippo/models/pub_sub';
 
-import PageEditor from './page-editor';
 import Venue from '../../models/venue';
 import Show from '../../models/show';
 import Presenter from '../../models/presenter';

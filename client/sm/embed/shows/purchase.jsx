@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
-import { map, get } from 'lodash';
+import { map } from 'lodash';
 import Box       from 'grommet/components/Box';
 import Heading   from 'grommet/components/Heading';
 import Button    from 'grommet/components/Button';
@@ -39,7 +39,7 @@ export default class Purchase extends React.PureComponent {
                 <span>{time.formattedOccursAt}</span>
                 <span>{time.formattedPrice}</span>
             </Box>
-        )
+        );
     }
 
     @computed get timeOptions() {

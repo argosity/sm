@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observable, action, computed } from 'mobx';
-import { map, get, extend, each, findKey } from 'lodash';
+import { get, extend, each, findKey } from 'lodash';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { Braintree } from 'react-braintree-fields';
 import { Col } from 'react-flexbox-grid';

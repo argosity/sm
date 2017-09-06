@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { autobind } from 'core-decorators';
 import { observer } from 'mobx-react';
-import { isEmpty } from 'lodash';
 import { observable, action, computed } from 'mobx';
 import {
     CellMeasurer, CellMeasurerCache,

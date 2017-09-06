@@ -1,9 +1,9 @@
 import { observe } from 'mobx';
+import moment from 'moment-timezone';
 import Asset from 'hippo/models/asset';
 import {
     BaseModel, identifiedBy, identifier, belongsTo, field, computed,
 } from './base';
-import moment from 'moment-timezone';
 
 @identifiedBy('sm/venue')
 export default class Venue extends BaseModel {
