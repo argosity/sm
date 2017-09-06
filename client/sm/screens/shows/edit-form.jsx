@@ -8,10 +8,10 @@ import { Row } from 'react-flexbox-grid';
 import { find } from 'lodash';
 import { observer }   from 'mobx-react';
 import Box from 'grommet/components/Box';
-import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
-import DocumentTextIcon from 'grommet/components/icons/base/DocumentText';
+import NextIcon from 'grommet/components/icons/base/Next';
 import SaveIcon from 'grommet/components/icons/base/Save';
+import Header   from 'grommet/components/Header';
 
 import Asset from 'hippo/components/asset';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
@@ -24,10 +24,11 @@ import Presenter from '../../models/presenter';
 import ShowTimes from './times';
 
 @observer
-export default class EditForm extends React.PureComponent {
+class EditForm extends React.PureComponent {
     static propTypes = {
         show:      PropTypes.instanceOf(Show).isRequired,
         onComplete: PropTypes.func.isRequired,
+        onEditPage: PropTypes.func.isRequired,
     }
 
     formState = new FormState()
@@ -37,7 +38,7 @@ export default class EditForm extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.formState.setFromModel(this.show);
+        this.formState.setFromModel(this.props.show);
         this.detachVenueObserver = observe(
             this.formState.get('venue_id'), 'value', this.onVenueChange,
         );
@@ -62,24 +63,20 @@ export default class EditForm extends React.PureComponent {
         return Presenter.sharedCollection.map(opt => ({ id: opt.id, label: opt.name }));
     }
 
-    @computed get show() {
-        return this.props.show;
-    }
-
     @action.bound
     onSave() {
         if (!this.isSavable) {
             this.formState.exposeErrors();
             return;
         }
-        this.formState.persistTo(this.show)
-            .then(() => this.show.save({ include: 'times' }))
+        this.formState.persistTo(this.props.show)
+            .then(() => this.props.show.save({ include: 'times' }))
             .then(this.onSaved);
     }
 
     @action.bound
     onSaved() {
-        if (this.show.isValid) {
+        if (this.props.show.isValid) {
             this.onCancel();
         }
     }
@@ -89,43 +86,37 @@ export default class EditForm extends React.PureComponent {
         this.props.onComplete();
     }
 
-    @action.bound
-    editPage() {
-        this.isEditingPage = true;
-    }
-
     @computed get isSavable() {
-        return this.formState.isValid && !this.show.syncInProgress;
-    }
-
-    @action.bound
-    onPageEditComplete() {
-        this.isEditingPage = false;
-    }
-
-    renderPage() {
-        if (!this.isEditingPage) { return null; }
-        return (
-            <PageEditor
-                onComplete={this.onPageEditComplete}
-                show={this.show}
-            />
-        );
+        return this.formState.isValid && !this.props.show.syncInProgress;
     }
 
     render() {
-        const { show, props: { style } } = this;
+        const { show } = this.props;
         observePubSub(show);
 
         return (
-            <Box
-                pad={{ vertical: 'medium' }}
-                className="show-edit-form"
-                style={{ ...style, height: 'auto' }}
-            >
-                <NetworkActivityOverlay model={show} />
-                {this.renderPage()}
-                <Form tag="div" state={this.formState}>
+            <div className="show-edit">
+                <Header
+                    fixed
+                    colorIndex="light-2"
+                    pad={{ horizontal: 'small', vertical: 'small', between: 'small' }}
+                >
+                    <Button
+                        label="Save"
+                        icon={<SaveIcon />}
+                        onClick={this.onSave}
+                        primary
+                    />
+                    <Button label="Cancel" onClick={this.onCancel} accent />
+                    <Box flex />
+                    <Button
+                        label="Edit Page" onClick={show.isNew ? null : this.props.onEditPage} accent
+                        icon={<NextIcon />} className="edit-page"
+                    />
+                </Header>
+                <Form className="show-edit-body" tag="div" state={this.formState}>
+                    <NetworkActivityOverlay model={show} />
+
                     <Row>
                         <Field name="title" xs={6} lg={3} validate={nonBlank} />
 
@@ -165,26 +156,12 @@ export default class EditForm extends React.PureComponent {
                         <ShowTimes show={show} sm={7} xs={12}/>
                     </Row>
                 </Form>
-                <Footer
-                    margin="small"
-                    justify="end"
-                    pad={{ horizontal: 'small', between: 'small' }}
-                >
-                    <Button
-                        label="Edit Page" onClick={show.isNew ? null : this.editPage} accent
-                        icon={<DocumentTextIcon />}
-                    />
-                    <Button label="Cancel" onClick={this.onCancel} accent />
-                    <Button
-                        label="Save"
-                        icon={<SaveIcon />}
-                        onClick={this.onSave}
-                        primary
-                    />
-
-                </Footer>
-
-            </Box>
+            </div>
         );
     }
+}
+
+export default function EditFormWrapper(props) {
+    if (!props.show) { return null; }
+    return <EditForm {...props} />;
 }

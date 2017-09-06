@@ -15,7 +15,7 @@ import './page-editor.scss';
 
 
 @observer
-export default class PageEditor extends React.PureComponent {
+class PageEditor extends React.PureComponent {
     static propTypes = {
         show:      PropTypes.instanceOf(Show).isRequired,
         onComplete: PropTypes.func.isRequired,
@@ -28,23 +28,28 @@ export default class PageEditor extends React.PureComponent {
     }
 
     render() {
-        const { props: { show } } = this;
+        const { props: { show, onComplete } } = this;
         return (
-            <Layer onClose={this.props.onComplete} closer className="shows-page">
+            <Layer onClose={onComplete} className="shows-edit-page">
                 <NetworkActivityOverlay model={show} />
                 <Box
-                    separator='horizontal'
                     full="horizontal"
                     size="full"
                     basis="xxlarge"
                 >
                     <TextEditor
-                        defaultContent={this.props.show.page}
-                        assets={this.props.show.page_images}
+                        defaultContent={show.page}
+                        assets={show.page_images}
                         onComplete={this.onDone}
                     />
                 </Box>
             </Layer>
         );
     }
+}
+
+
+export default function PageEditWrapper(props) {
+    if (!props.show) { return null; }
+    return <PageEditor {...props} />;
 }

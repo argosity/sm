@@ -1,9 +1,19 @@
 @import 'hippo/styles/global';
 
+
 .screen[data-screen-id="shows"] {
+
+    .react-swipeable-view-container > div {
+//        overflow: hidden !important;
+    }
+
+
+    padding: 0;
+
 
     .shows-list {
         flex: 1;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
@@ -41,7 +51,22 @@
         }
     }
 
-    .show-edit-form {
+    .show-edit {
+
+        button.edit-page {
+            flex-direction: row-reverse;
+            display: flex;
+        }
+
+        .show-edit-body {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 75px);
+            overflow-y: auto;
+            > * {
+                min-height: min-content; min-height: -moz-min-content; min-height: -webkit-min-content;
+            }
+        }
         .times {
             margin-top: 0.5rem;
             min-height: 250px;
@@ -67,4 +92,27 @@
             }
         }
     }
+
+}
+
+.shows-edit-page:not(.grommetux-layer--hidden) {
+
+    //height: 100vh;
+    @media screen and (min-width: 45em) {
+        .grommetux-layer__container {
+            padding: 0 1rem;
+            max-height: 100vh;
+            max-width: 100vw;
+        }
+    }
+
+    // .ory-toolbar-drawer {
+    //     > div {
+    //         left: inherit !important;
+    //     }
+    // }
+    // .ory-controls-trash {
+    //     margin-elft: 48%;
+    //     left:  inherit !important;
+    // }
 }

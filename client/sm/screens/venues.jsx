@@ -83,7 +83,7 @@ export default class Venues extends React.PureComponent {
         return (
             <Screen screen={screen}>
                 <Form state={this.formState} tag="div">
-                    <Header colorIndex="light-2" align="center" pad={{ between: 'small' }}>
+                    <Header colorIndex="light-2" align="center" pad={{ between: 'small' }} fixed>
                         <Button
                             primary
                             icon={<SaveIcon />}
