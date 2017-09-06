@@ -80,6 +80,7 @@ export default class Show extends BaseModel {
     }
 
     @computed get commonTime() {
+        if (this.times.length < 2) { return null; }
         const times = uniqBy(this.times, formatTime);
         return 1 === times.length ? formatTime(times[0]) : null;
     }

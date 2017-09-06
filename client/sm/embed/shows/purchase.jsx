@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
-import { map } from 'lodash';
+import { map, get } from 'lodash';
 import Box       from 'grommet/components/Box';
 import Heading   from 'grommet/components/Heading';
 import Button    from 'grommet/components/Button';
@@ -33,16 +33,19 @@ export default class Purchase extends React.PureComponent {
 
     formState = new FormState();
 
+    renderShowTime(time) {
+        return (
+            <Box key={time.identifier} direction='row' justify='between' responsive={false}>
+                <span>{time.formattedOccursAt}</span>
+                <span>{time.formattedPrice}</span>
+            </Box>
+        )
+    }
 
     @computed get timeOptions() {
-        return map(this.props.show.futureTimes, o => ({
-            time: o,
-            label: (
-                <Box key={o.identifier} direction='row' justify='between' responsive={false}>
-                    <span>{o.formattedOccursAt}</span>
-                    <span>{o.formattedPrice}</span>
-                </Box>
-            ),
+        return map(this.props.show.futureTimes, t => ({
+            time: t,
+            label: this.renderShowTime(t),
         }));
     }
 
@@ -60,6 +63,9 @@ export default class Purchase extends React.PureComponent {
     setFormRef(form) { this.form = form; }
 
     renderTimes() {
+        if (1 === this.props.show.times.length) {
+            return <h3>{this.props.show.times[0].formattedOccursAt}</h3>;
+        }
         return (
             <FormField label='Show'>
                 <Select
