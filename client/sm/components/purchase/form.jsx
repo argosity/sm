@@ -111,18 +111,6 @@ export default class PurchaseForm extends React.PureComponent {
         });
     }
 
-    @computed get timeOptions() {
-        return map(this.props.show.futureTimes, o => ({
-            time: o,
-            label: (
-                <Box direction='row' justify='between' responsive={false}>
-                    <span>{o.formattedOccurs}</span>
-                    <span>{o.formattedPrice}</span>
-                </Box>
-            ),
-        }));
-    }
-
     @action.bound
     onTimeChange({ value: { time } }) {
         this.props.purchase.time = time;
