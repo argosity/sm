@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 
 
-describe "Printing templates" do
+xdescribe "Printing templates" do
     let(:presenter) { FactoryGirl.create :presenter }
     let(:show) { FactoryGirl.create :show, presenter: presenter }
     let(:purchase) { FactoryGirl.create :purchase, show_time: show.times.first }
