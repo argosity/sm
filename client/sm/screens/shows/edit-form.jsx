@@ -10,9 +10,9 @@ import { observer }   from 'mobx-react';
 import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
 import NextIcon from 'grommet/components/icons/base/Next';
-import SaveIcon from 'grommet/components/icons/base/Save';
 import Header   from 'grommet/components/Header';
 
+import SaveButton from 'hippo/components/save-button';
 import Asset from 'hippo/components/asset';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import { observePubSub } from 'hippo/models/pub_sub';
@@ -100,12 +100,8 @@ class EditForm extends React.PureComponent {
                     colorIndex="light-2"
                     pad={{ horizontal: 'small', vertical: 'small', between: 'small' }}
                 >
-                    <Button
-                        label="Save"
-                        icon={<SaveIcon />}
-                        onClick={this.onSave}
-                        primary
-                    />
+                    <SaveButton onClick={this.onSave} model={this.props.show} />
+
                     <Button label="Cancel" onClick={this.onCancel} accent />
                     <Box flex />
                     <Button
@@ -119,34 +115,34 @@ class EditForm extends React.PureComponent {
                     <Row>
                         <Field name="title" xs={6} lg={3} validate={nonBlank} />
 
-                        <Field name="sub_title" sm={6} lg={3} />
+                        <Field name="sub_title" xs={6} lg={3} />
 
-                        <Field name="description" sm={12} lg={6} />
+                        <Field name="description" xs={12} lg={6} />
 
                         <Field
                             name="venue_id" label="Venue"
                             type="select" collection={this.venues} validate={nonBlank}
-                            sm={6} md={4} lg={3}
+                            xs={6} md={4} lg={3}
                         />
 
                         <Field
                             name="presenter_id" label="Presented By"
-                            type="select" collection={this.presenters} sm={6} md={4} lg={3}
+                            type="select" collection={this.presenters} xs={6} md={4} lg={3}
                         />
 
-                        <Field type="number" name="price" validate={numberValue} sm={6} md={4} lg={3} />
-                        <Field type="number" name="capacity" validate={numberValue} sm={6} md={4} lg={3} />
+                        <Field type="number" name="price" validate={numberValue} xs={6} md={4} lg={3} />
+                        <Field type="number" name="capacity" validate={numberValue} xs={6} md={4} lg={3} />
                         <Field
                             type="date" label="Visible After" name="visible_during.start"
-                            validate={dateValue} sm={6} md={4} lg={3} />
+                            validate={dateValue} xs={6} md={4} lg={3} />
                         <Field
                             type="date" label="Visible Until" name="visible_during.end"
-                            validate={dateValue} sm={6} md={4} lg={3} />
+                            validate={dateValue} xs={6} md={4} lg={3} />
 
-                        <Field type="checkbox" name="can_purchase" sm={6} md={4} lg={3} />
+                        <Field type="checkbox" name="can_purchase" xs={6} md={4} lg={3} />
 
                         <Field
-                            name="external_url" sm={6} md={4} lg={3}
+                            name="external_url" xs={6} md={4} lg={3}
                             validate={validURL({ allowBlank: true })} />
 
                     </Row>

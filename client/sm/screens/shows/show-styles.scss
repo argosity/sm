@@ -1,22 +1,16 @@
 @import 'hippo/styles/global';
 
-
 .screen[data-screen-id="shows"] {
-
-    .react-swipeable-view-container > div {
-//        overflow: hidden !important;
-    }
-
-
     padding: 0;
-
-
     .shows-list {
         flex: 1;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        .grommetux-header {
+
+        }
         .data-list {
             flex: 1;
             align-self: stretch;
@@ -63,6 +57,7 @@
             flex-direction: column;
             height: calc(100vh - 75px);
             overflow-y: auto;
+            padding: 0 0.5rem;
             > * {
                 min-height: min-content; min-height: -moz-min-content; min-height: -webkit-min-content;
             }
@@ -97,7 +92,6 @@
 
 .shows-edit-page:not(.grommetux-layer--hidden) {
 
-    //height: 100vh;
     @media screen and (min-width: 45em) {
         .grommetux-layer__container {
             padding: 0 1rem;
@@ -106,13 +100,4 @@
         }
     }
 
-    // .ory-toolbar-drawer {
-    //     > div {
-    //         left: inherit !important;
-    //     }
-    // }
-    // .ory-controls-trash {
-    //     margin-elft: 48%;
-    //     left:  inherit !important;
-    // }
 }

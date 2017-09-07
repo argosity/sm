@@ -12,7 +12,7 @@ import Screen   from 'hippo/components/screen';
 import DataList from 'hippo/components/data-list';
 
 import Button   from 'grommet/components/Button';
-import Header from 'grommet/components/Header';
+import Box from 'grommet/components/Box';
 import AddIcon  from 'grommet/components/icons/base/AddCircle';
 
 import ShowModel from '../models/show';
@@ -42,7 +42,7 @@ export default class Shows extends React.PureComponent {
             'description',
             'image_details',
             'venue_details',
-            'show_times',
+            'times',
             'visible_during',
         ],
     });
@@ -84,7 +84,7 @@ export default class Shows extends React.PureComponent {
     }
 
     @computed get listRenderKey() {
-        return `${this.query.results.updateKey}-${this.editing.index}`;
+        return `${this.query.results.fingerprint}-${this.editing.index}`;
     }
 
     @action.bound
@@ -133,15 +133,18 @@ export default class Shows extends React.PureComponent {
     }
 
     render() {
-    //    const displayIndex = this.editing.show ? 1 : 0;
-
         return (
             <Screen {...this.props}>
                 <SwipeableViews disabled index={this.displayIndex}>
                     <div className="shows-list">
-                        <Header justify="end">
-                            <Button icon={<AddIcon />} onClick={this.onAdd} plain />
-                        </Header>
+                        <Box
+                            colorIndex="light-2"
+                            full="horizontal"
+                            align="end"
+                            pad={{ horizontal: 'small', vertical: 'small', between: 'small' }}
+                        >
+                            <Button icon={<AddIcon />} onClick={this.onAdd} label="Add" />
+                        </Box>
                         <DataList
                             query={this.query}
                             rowRenderer={this.rowRenderer}

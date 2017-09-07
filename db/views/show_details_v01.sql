@@ -1,6 +1,6 @@
 select
   ev.id as show_id,
-  show_times.show_times,
+  show_times.times,
   json_build_object(
     'id', show_asset.id,
     'file_data', show_asset.file_data
@@ -24,7 +24,7 @@ from shows ev
               ,st.occurs_at at time zone 'UTC' as occurs_at
               ,st.price
               ,st.capacity
-      ) x)) AS show_times
+      ) x)) AS times
     from show_times st group by st.show_id
   ) show_times on show_times.show_id = ev.id
   left join assets as show_asset on show_asset.owner_type = 'SM::Show'

@@ -24,7 +24,7 @@ const ValueInput = observer(({ name, time }) => (
 const DateInput = observer(({ time }) => (
     <DateTime
         value={time.occurs_at}
-        format="M/D/YYYY h:mm a"
+        format="Y-m-d h:iK"
         onChange={({ target: { value } }) => { time.occurs_at = value; }}
     />
 ));
