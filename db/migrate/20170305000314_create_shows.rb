@@ -10,8 +10,10 @@ class CreateShows < ActiveRecord::Migration[5.0]
             t.text :sub_title,
                    :description
 
-            t.tsrange :visible_during
+            t.tsrange :visible_during, null: false, index: :gist
             t.boolean :can_purchase, null: false, default: 'f'
+
+            t.integer :online_sales_halt_mins_before, null: false
 
             t.decimal :price, precision: 15, scale: 2, null: false
             t.integer :capacity, null: false

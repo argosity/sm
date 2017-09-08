@@ -14,7 +14,7 @@ describe('Screen Shows', () => {
         };
     });
 
-    it('edits', () => {
+    xit('edits', () => {
         const form = mount(<ShowEditForm {...props} />);
         form.find('TextInput input[name="title"]').simulate('change', { target: { value: 'NEW NAME' } });
         form.find('button.grommetux-button--primary').simulate('click');

@@ -14,6 +14,7 @@ export default class Venue extends BaseModel {
     @field address = '';
     @field phone_number;
     @field capacity;
+    @field online_sales_halt_mins_before = 30;
     @field timezone = moment.tz.guess();
 
     @belongsTo({ model: Asset, inverseOf: 'owner' }) logo;

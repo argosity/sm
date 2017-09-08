@@ -10,6 +10,7 @@ select
     'name', venues.name,
     'address', venues.address,
     'phone_number', venues.phone_number,
+    'online_sales_halt_mins_before', venues.online_sales_halt_mins_before,
     'logo', venue_asset.file_data
   ) as venue_details
 from shows ev

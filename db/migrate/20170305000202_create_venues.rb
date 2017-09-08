@@ -8,7 +8,7 @@ class CreateVenues < ActiveRecord::Migration[5.0]
             t.text :name, null: false
             t.text :address, :phone_number
             t.integer :capacity, null: false
-
+            t.integer :online_sales_halt_mins_before, null: false, default: 30
             t.timestamps null: false
         end
     end

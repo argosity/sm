@@ -1,6 +1,6 @@
 import Asset from 'hippo/models/asset';
 import { observe } from 'mobx';
-import { pick, uniqBy, filter, isEmpty } from 'lodash';
+import { pick, uniqBy, filter, isEmpty, find } from 'lodash';
 import moment from 'moment';
 import DateRange from 'hippo/lib/date-range';
 import Config from 'hippo/config';
@@ -32,14 +32,15 @@ export default class Show extends BaseModel {
     @field presenter_id;
 
     @field price;
-
-    @field({ model: DateRange }) visible_during;
-
-    @field external_url;
-    @field({ type: 'object' }) page;
-
     @field capacity;
+    @field external_url;
     @field can_purchase = false;
+    @field({ type: 'object' }) page;
+    @field online_sales_halt_mins_before;
+    @field({ model: DateRange }) visible_during = new DateRange({
+        start: moment().startOf('day').toDate(),
+        end: moment().add(1, 'week').endOf('day').toDate(),
+    });
 
     @belongsTo({ model: 'sm/venue' }) venue;
     @belongsTo({ model: 'sm/presenter' }) presenter;
@@ -50,6 +51,9 @@ export default class Show extends BaseModel {
 
     constructor(attrs) {
         super(attrs);
+        if (!this.times.length) {
+            this.times.push({});
+        }
         observe(this, 'venue', ({ newValue, oldValue }) => {
             if (newValue &&
                 ((!oldValue && !this.capacity) ||
@@ -85,7 +89,11 @@ export default class Show extends BaseModel {
         return 1 === times.length ? formatTime(times[0]) : null;
     }
 
-    @computed get canPurchase() {
-        return this.can_purchase;
+    @computed get onlinePurchasableTimes() {
+        return filter(this.times, { canPurchaseOnline: true });
+    }
+
+    @computed get canPurchaseOnline() {
+        return Boolean(this.can_purchase && find(this.times, { canPurchaseOnline: true }));
     }
 }

@@ -43,4 +43,12 @@ export default class ShowTime extends BaseModel {
         }
         this.show.times.remove(this);
     }
+
+    @computed get canPurchaseOnline() {
+        return Boolean(this.show.can_purchase &&
+                       moment()
+                           .add(this.show.online_sales_halt_mins_before, 'mimutes')
+                           .isBefore(this.occurs_at),
+        );
+    }
 }

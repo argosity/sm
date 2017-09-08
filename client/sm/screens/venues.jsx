@@ -118,6 +118,10 @@ export default class Venues extends React.PureComponent {
                                     type="number" name="capacity" lg={6} xs={12}
                                     validate={numberValue} />
                                 <Field
+                                    label="Minutes before show to halt sales"
+                                    type="number" name="online_sales_halt_mins_before" lg={6} xs={12}
+                                    validate={numberValue} />
+                                <Field
                                     name="timezone" type="timezone"
                                     label="Time Zone" lg={6} xs={12}
                                 />

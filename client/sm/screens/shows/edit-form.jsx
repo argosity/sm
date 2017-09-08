@@ -49,6 +49,7 @@ class EditForm extends React.PureComponent {
         const venue = find(Venue.sharedCollection, { id: newValue });
         if (venue) {
             this.formState.get('capacity').value = venue.capacity;
+            this.formState.get('online_sales_halt_mins_before').value = venue.online_sales_halt_mins_before;
         }
     }
 
@@ -125,13 +126,20 @@ class EditForm extends React.PureComponent {
                             xs={6} md={4} lg={3}
                         />
 
+                        <Field type="number" name="capacity" validate={numberValue} xs={6} md={4} lg={3} />
+                        <Field
+                            validate={numberValue}
+                            label="Minutes before show to halt sales"
+                            type="number" name="online_sales_halt_mins_before"
+                            xs={6} md={4} lg={3} />
+
                         <Field
                             name="presenter_id" label="Presented By"
                             type="select" collection={this.presenters} xs={6} md={4} lg={3}
                         />
 
                         <Field type="number" name="price" validate={numberValue} xs={6} md={4} lg={3} />
-                        <Field type="number" name="capacity" validate={numberValue} xs={6} md={4} lg={3} />
+
                         <Field
                             type="date" label="Visible After" name="visible_during.start"
                             validate={dateValue} xs={6} md={4} lg={3} />
