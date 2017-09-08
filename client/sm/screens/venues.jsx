@@ -6,12 +6,13 @@ import { action, computed, observable } from 'mobx';
 import { Row, Col } from 'react-flexbox-grid';
 import Header   from 'grommet/components/Header';
 import Button   from 'grommet/components/Button';
-import SaveIcon from 'grommet/components/icons/base/Save';
+
 import RecordFinder from 'hippo/components/record-finder';
 import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
 import {
     Form, Field, FormState, nonBlank, numberValue,
 } from 'hippo/components/form';
+import SaveButton from 'hippo/components/save-button';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
 import Screen from 'hippo/components/screen';
@@ -84,10 +85,8 @@ export default class Venues extends React.PureComponent {
             <Screen screen={screen}>
                 <Form state={this.formState} tag="div">
                     <Header colorIndex="light-2" align="center" pad={{ between: 'small' }} fixed>
-                        <Button
-                            primary
-                            icon={<SaveIcon />}
-                            label='Save'
+                        <SaveButton
+                            model={this.venue}
                             onClick={this.isSavable ? this.onSave : null}
                         />
                         <Button

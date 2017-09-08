@@ -7,10 +7,10 @@ import { Row } from 'react-flexbox-grid';
 import Screen from 'hippo/components/screen';
 import Query from 'hippo/models/query';
 import RecordFinder from 'hippo/components/record-finder';
-
+import SaveButton from 'hippo/components/save-button';
 import Header   from 'grommet/components/Header';
 import Button   from 'grommet/components/Button';
-import SaveIcon from 'grommet/components/icons/base/Save';
+
 import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
@@ -79,10 +79,8 @@ export default class Presenters extends React.PureComponent {
             <Form state={this.formState}>
                 <Screen screen={screen}>
                     <Header colorIndex="light-2" align="center" pad={{ between: 'small' }}>
-                        <Button
-                            primary
-                            icon={<SaveIcon />}
-                            label='Save'
+                        <SaveButton
+                            model={this.presenter}
                             onClick={this.isSavable ? this.onSave : null}
                         />
                         <Button

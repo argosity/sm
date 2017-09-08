@@ -6,7 +6,6 @@ import VenueModel from '../../models/venue';
 
 
 function NameOrLogo({ venue }) {
-    console.log(venue)
     return venue.logo ? <Image image={venue.logo} size="thumbnail" /> : (
         <span className="name">{venue.name}</span>
     );
