@@ -60,52 +60,79 @@
         .presenter {
             padding-right: 0.5rem;
         }
-        .info {
-            margin: 0 10px;
-            flex: 1;
-            flex-direction: column;
-            min-width: 0;
-            justify-content: flex-start;
-            .title {
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
 
-                h2, h3, p {
-                    min-width: 0;
-                    word-wrap: break-word;
-                    margin: 0;
-                }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            .venue {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
                 img {
                     max-height: 50px;
                     margin-right: 1rem;
                 }
-                h2 {
-                    font-size: 30px;
-                }
             }
-        }
+            .main {
+                flex: 1;
+                display: flex;
+                .info {
+                    margin: 0 10px;
+                    flex: 1;
+                    flex-direction: column;
+                    min-width: 0;
+                    justify-content: flex-start;
+                    h2, h3, p {
+                        min-width: 0;
+                        word-wrap: break-word;
+                        margin-bottom: 0;
+                    }
+                    .title {
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
 
-        .actions {
-            display: flex;
-            align-items: flex-start;
-            flex-direction: column;
-            align-items: stretch;
-            margin: 0 10px;
-            .grommetux-button {
-                margin-top: 10px;
+
+                        img {
+                            max-height: 50px;
+                            margin-right: 1rem;
+                        }
+                        h2 {
+                            font-size: 30px;
+                        }
+                    }
+                }
+
+                .actions {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    align-items: stretch;
+                    margin: 0 10px;
+                    .grommetux-button {
+                        margin-top: 10px;
+                    }
+                }
             }
         }
         @media only screen and (max-width: 720px) {
             flex-wrap: wrap;
-            .image, .info, .actions {
+            .logo, .info, .actions {
                 min-width: 100%;
             }
-            .actions {
-                flex-direction: row;
-                justify-content: flex-end;
-                .grommetux-button + .grommetux-button {
-                    margin-left: 0.5rem;
+            .content {
+                flex-direction: column-reverse;
+                .main {
+                    flex-direction: column;
+                    .actions {
+                        flex-direction: row;
+                        justify-content: space-around;
+                        flex-wrap: wrap;
+                        .grommetux-button + .grommetux-button {
+                            margin-left: 0.5rem;
+                        }
+                    }
                 }
             }
         }

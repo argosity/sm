@@ -4,10 +4,11 @@ import { observer } from 'mobx-react';
 import { action }   from 'mobx';
 
 import Image          from './image';
-import ShowModel     from '../../models/show';
+import ShowModel      from '../../models/show';
 import InfoButton     from './info-button';
 import PurchaseButton from './purchase-button';
 import Presenter      from './presenter';
+import Venue          from './venue';
 
 @observer
 export default class Show extends React.PureComponent {
@@ -39,26 +40,31 @@ export default class Show extends React.PureComponent {
                 className="show"
                 data-show-identifier={show.identifier}
             >
-                <Image image={show.image} />
-                <div className="info">
-                    <div className="title">
-                        <Presenter presenter={show.presenter} />
-                        <h2>{show.title}</h2>
+                <Image image={show.image} className="logo"/>
+                <div className="content">
+                    <div className="main">
+                        <div className="info">
+                            <div className="title">
+                                <Presenter presenter={show.presenter} />
+                                <h2>{show.title}</h2>
+                            </div>
+                            <h3 className="sub-title">{show.sub_title}</h3>
+                            <p className="description">{show.description}</p>
+                            <div className="show-times">
+                                {this.renderPurchaseTime()}
+                                <ul className="dates">
+                                    {show.times.map(occ =>
+                                        <li key={occ.identifier} className="date">{occ.formattedOccursAt}</li>,
+                                    )}
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="actions">
+                            <InfoButton onClick={this.onInfo} show={show} />
+                            <PurchaseButton onClick={this.onPurchase} show={show} />
+                        </div>
                     </div>
-                    <h3 className="sub-title">{show.sub_title}</h3>
-                    <p className="description">{show.description}</p>
-                    <div className="show-times">
-                        {this.renderPurchaseTime()}
-                        <ul className="dates">
-                            {show.times.map(occ =>
-                                <li key={occ.identifier} className="date">{occ.formattedOccursAt}</li>,
-                            )}
-                        </ul>
-                    </div>
-                </div>
-                <div className="actions">
-                    <InfoButton onClick={this.onInfo} show={show} />
-                    <PurchaseButton onClick={this.onPurchase} show={show} />
+                    <Venue venue={show.venue} />
                 </div>
             </div>
         );

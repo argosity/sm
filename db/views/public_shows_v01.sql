@@ -32,7 +32,7 @@ select
     'name', venues.name,
     'address', venues.address,
     'phone_number', venues.phone_number,
-    'logo', venue_asset.file_data
+    'logo', json_build_object('file_data', venue_asset.file_data)
   ) as venue
 
 from embeds em
