@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action, observable, computed } from 'mobx';
+import { action, observable } from 'mobx';
 
 import Box       from 'grommet/components/Box';
 import Heading   from 'grommet/components/Heading';

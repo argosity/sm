@@ -79,7 +79,7 @@ export default class Shows extends React.PureComponent {
         this.query.results.insertRow();
         this.editIndex = 0;
         this.sizeCache.clear(0, 0);
-        const show = this.query.results.modelForRow(0)
+        const show = this.query.results.modelForRow(0);
         this.editing = { index: 0, show };
         this.listRef.recomputeRowHeights(0);
     }

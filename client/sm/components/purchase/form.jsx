@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames'
+import cn from 'classnames';
 import { observable, action, computed } from 'mobx';
 import { get, extend, each, findKey, map } from 'lodash';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
