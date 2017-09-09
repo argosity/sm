@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
-import { map } from 'lodash';
+
 import Box       from 'grommet/components/Box';
 import Heading   from 'grommet/components/Heading';
 import Button    from 'grommet/components/Button';
 import FormField from 'grommet/components/FormField';
-import Select    from 'grommet/components/Select';
 
 import { FormState } from 'hippo/components/form';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
@@ -32,27 +31,6 @@ export default class Purchase extends React.PureComponent {
     @observable isTokenizing = false;
 
     formState = new FormState();
-
-    renderShowTime(time) {
-        return (
-            <Box key={time.identifier} direction='row' justify='between' responsive={false}>
-                <span>{time.formattedOccursAt}</span>
-                <span>{time.formattedPrice}</span>
-            </Box>
-        );
-    }
-
-    @computed get timeOptions() {
-        return map(this.props.show.futureTimes, t => ({
-            time: t,
-            label: this.renderShowTime(t),
-        }));
-    }
-
-    @action.bound
-    onTimeChange({ value: { time } }) {
-        this.props.purchase.time = time;
-    }
 
     @action.bound
     onComplete() {
@@ -117,7 +95,7 @@ export default class Purchase extends React.PureComponent {
                         purchase={purchase}
                         onComplete={this.onComplete}
                         ref={this.setFormRef}
-                        heading={this.renderTimes()}
+
                         controls={
                             <Button label="Cancel" onClick={onCancel} accent />
                         }

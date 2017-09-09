@@ -7,7 +7,7 @@
             "sub_title": "with Giant Domino",
             "description": "Innovative motivating circuit",
             "page": null,
-            "occurrences": [
+            "times": [
                 {"identifier":"zxzEqrf9Qs6c","occurs_at":"2017-08-24T20:56:32.902598","price":null,"capacity":null},
                 {"identifier":"mdfzjpTxzL7n","occurs_at":"2017-08-25T11:59:42.514024","price":null,"capacity":null},
                 {"identifier":"FdPVDQsJDvZm","occurs_at":"2017-08-26T16:59:28.36932","price":null,"capacity":null}
@@ -67,7 +67,7 @@
             "sub_title": "with Dark Venom",
             "description": "Automated needs-based open system",
             "page": null,
-            "occurrences": [
+            "times": [
                 {"identifier":"FdPVDQsJDvZm","occurs_at":"2017-08-26T16:59:28.36932","price":null,"capacity":null},
                 {"identifier":"b5RLpG2EJagp","occurs_at":"2017-09-02T11:10:30.347731","price":null,"capacity":null}
             ],
@@ -127,7 +127,7 @@
             "sub_title": "with Molten Man II",
             "description": "Right-sized bottom-line customer loyalty",
             "page": {"id": "d42786e6-6469-4b34-b1bb-fa7320ced384", "cells": [{"id": "76858322-c2e7-41fa-8aa9-717256a1f8e6", "rows": [{"id": "42a87a25-6ed4-4b8f-b05d-1d03b0af7e2f", "cells": [{"id": "967bf2c2-86e2-495f-9c11-c88b121f1fcd", "size": 12, "inline": null, "content": {"state": {"src": "http://test.hippo.dev:9292/api/assets/7as6/kpqc/9fth/fedde63c93a62eec0e5fd9d7fb13e18e.jpg", "link": "http://test.hippo.dev:9292/api/assets/lbsr/t1s9/0e4d/f925a2aee80ac2bbf3a4a8dc44a71fea.jpg", "assetId": 34}, "plugin": {"name": "ory/editor/core/content/image", "version": "0.0.1"}}}]}, {"id": "507d5eb3-73cf-414d-8ef9-a0e39670b2ca", "cells": [{"id": "55e30ceb-e60c-43f6-bd73-c04118093487", "size": 12, "inline": null, "content": {"state": {"serialized": {"nodes": [{"kind": "block", "type": "HEADINGS/HEADING-ONE", "nodes": [{"kind": "text", "text": "test of stuff"}]}]}}, "plugin": {"name": "ory/editor/core/content/slate", "version": "0.0.1"}}}]}], "size": 6, "inline": null}, {"id": "4866d786-408b-402b-8993-9fa24edf2488", "size": 6, "inline": null, "content": {"state": {"src": "http://test.hippo.dev:9292/api/assets/23i0/bz13/moh5/bd2efc3b9cfea2bf3be6b549e9e9f66f.png"}, "plugin": {"name": "ory/editor/core/content/image", "version": "0.0.1"}}}]},
-            "occurrences": [
+            "times": [
                 {"identifier":"FLPVDQsJDvZm","occurs_at":"2017-08-26T16:59:28.36932","price":null,"capacity":null},
                 {"identifier":"b8RLpG2EJagp","occurs_at":"2017-09-02T11:10:30.347731","price":null,"capacity":null}
             ],

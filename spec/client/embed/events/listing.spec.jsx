@@ -14,9 +14,9 @@ describe('Embedded Shows Listing', () => {
     let listing;
 
     beforeEach(() => {
-        shows = observable.array(DATA.map(ev => new ShowModel(ev)));
         chronokinesis.travel(new Date('2017-05-01T21:00:00.000Z'));
         moment.tz.setDefault('America/Los_Angeles');
+        shows = observable.array(DATA.map(ev => new ShowModel(ev)));
         listing = mount(<Listing shows={shows} />);
         // grommit layer needs container
         document.body.appendChild(document.createElement('div'));

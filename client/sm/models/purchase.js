@@ -5,6 +5,7 @@ import {
     BaseModel, identifiedBy, field, identifier, session, hasMany, belongsTo,
 } from './base';
 import Payment from './payment';
+import Show from './show';
 import ShowTime from './show-time';
 
 @identifiedBy('sm/purchase')
@@ -24,12 +25,10 @@ export default class Purchase extends BaseModel {
 
     @hasMany({ model: Payment }) payments;
     @belongsTo({ model: ShowTime }) time;
+    @belongsTo({ model: Show }) show;
 
     constructor(attrs = {}) {
         super(attrs);
-        if (attrs.show && attrs.show.times.length) {
-            this.time = attrs.show.times[0];
-        }
     }
 
     @computed get activityMessage() {
