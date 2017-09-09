@@ -80,6 +80,7 @@ export default class Presenters extends React.PureComponent {
                 <Screen screen={screen}>
                     <Header colorIndex="light-2" align="center" pad={{ between: 'small' }}>
                         <SaveButton
+                            tabIndex={4}
                             model={this.presenter}
                             onClick={this.isSavable ? this.onSave : null}
                         />
@@ -95,16 +96,17 @@ export default class Presenters extends React.PureComponent {
                     <Row>
                         <RecordFinder
                             xs={4}
+                            tabIndex={1}
                             recordsTitle='Presenter'
                             onRecordFound={this.onRecordFound}
                             query={this.query} name="code"
                             validate={nonBlank}
                             autoFocus
                         />
-                        <Field xs={8} name="name" validate={nonBlank} />
+                        <Field xs={8} name="name" validate={nonBlank} tabIndex={2} />
                     </Row>
                     <Row>
-                        <Asset xs={12} sm={6} model={this.presenter} name="logo" />
+                        <Asset xs={12} sm={6} model={this.presenter} name="logo" tabIndex={3} />
                     </Row>
                 </Screen>
             </Form>
