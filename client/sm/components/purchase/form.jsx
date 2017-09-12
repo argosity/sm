@@ -195,6 +195,16 @@ export default class PurchaseForm extends React.PureComponent {
         );
     }
 
+    renderSelectionPrompt() {
+        if (this.props.purchase.time) { return null; }
+        return (
+            <div className="selection-prompt">
+                <Arrow />
+                <h3>Select show time</h3>
+            </div>
+        );
+    }
+
     render() {
         const { formState, props: { purchase } } = this;
         if (!purchase.token) { return null; }
@@ -257,10 +267,7 @@ export default class PurchaseForm extends React.PureComponent {
                         </Box>
                     </Col>
                     <Col xs={12} className={this.orderFieldsClass}>
-                        <div className="selection-prompt">
-                            <Arrow />
-                            <h3>Select show time</h3>
-                        </div>
+                        {this.renderSelectionPrompt()}
                         <Row className="fields">
                             <Field {...fieldProps} name="name" validate={nonBlank} />
                             <Field {...fieldProps} name="email" validate={validEmail} />
