@@ -16,6 +16,7 @@
     .main-fields {
         position: relative;
         .fields {
+            transition: opacity 0.4s;
             opacity: 1;
         }
         .selection-prompt {
@@ -26,6 +27,7 @@
             top: -10px;
             z-index: 2;
             opacity: 0;
+            transition: opacity 0.4s;
             .pointer-arrow {
                 width: 120px;
                 margin: 0 1rem 0 100px;
