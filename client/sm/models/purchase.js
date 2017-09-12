@@ -30,6 +30,9 @@ export default class Purchase extends BaseModel {
 
     constructor(attrs = {}) {
         super(attrs);
+        if (attrs.show && 1 === attrs.show.times.length) {
+            this.time = attrs.show.times[0];
+        }
     }
 
     @computed get activityMessage() {
