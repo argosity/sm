@@ -2,11 +2,9 @@ import Sync from 'hippo/models/sync';
 import { sprintf } from 'sprintf-js';
 import { action, computed } from 'mobx';
 import {
-    BaseModel, identifiedBy, field, identifier, session, hasMany, belongsTo,
+    BaseModel, identifiedBy, field, identifier, session, hasMany,
 } from './base';
 import Payment from './payment';
-import Show from './show';
-import ShowTime from './show-time';
 
 @identifiedBy('sm/purchase')
 export default class Purchase extends BaseModel {
@@ -25,8 +23,8 @@ export default class Purchase extends BaseModel {
     @field tickets_url;
 
     @hasMany({ model: Payment }) payments;
-    @belongsTo({ model: ShowTime }) time;
-    @belongsTo({ model: Show }) show;
+    @session({ type: 'object' }) time;
+    @session({ type: 'object' }) show;
 
     constructor(attrs = {}) {
         super(attrs);
