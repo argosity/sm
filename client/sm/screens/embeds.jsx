@@ -13,6 +13,7 @@ import './embeds/embed-styles.scss';
 
 @observer
 export default class Embeds extends React.PureComponent {
+
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
@@ -68,4 +69,5 @@ export default class Embeds extends React.PureComponent {
             </Screen>
         );
     }
+
 }

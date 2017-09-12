@@ -42,6 +42,7 @@ function Attendee({ style, onClick, row }) {
 
 @observer
 export default class Attendees extends React.PureComponent {
+
     static propTypes = {
         time: PropTypes.instanceOf(ShowTime).isRequired,
     }
@@ -78,4 +79,5 @@ export default class Attendees extends React.PureComponent {
             </Box>
         );
     }
+
 }

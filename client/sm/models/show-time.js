@@ -9,6 +9,7 @@ import {
 
 @identifiedBy('sm/show-time')
 export default class ShowTime extends BaseModel {
+
     @identifier id;
 
     @session identifier;
@@ -51,4 +52,5 @@ export default class ShowTime extends BaseModel {
                            .isBefore(this.occurs_at),
         );
     }
+
 }

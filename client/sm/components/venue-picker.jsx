@@ -8,6 +8,7 @@ import Venue from '../models/venue';
 
 @observer
 export default class VenuePicker extends React.PureComponent {
+
     @observable collection = Venue.sharedCollection
 
     @action.bound
@@ -25,4 +26,5 @@ export default class VenuePicker extends React.PureComponent {
                 onChange={this.onSelect} />
         );
     }
+
 }

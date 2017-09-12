@@ -23,6 +23,7 @@ import './shows/show-styles.scss';
 
 @observer
 export default class Shows extends React.PureComponent {
+
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
@@ -172,4 +173,5 @@ export default class Shows extends React.PureComponent {
             </Screen>
         );
     }
+
 }

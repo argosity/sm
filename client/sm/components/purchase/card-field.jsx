@@ -8,6 +8,7 @@ import classnames from 'classnames';
 
 @observer
 export default class PurchaseField extends React.PureComponent {
+
     @action.bound
     onFocus() {
         this.wrapper._onFocus(); // eslint-disable-line no-underscore-dangle
@@ -63,4 +64,5 @@ export default class PurchaseField extends React.PureComponent {
             </div>
         );
     }
+
 }

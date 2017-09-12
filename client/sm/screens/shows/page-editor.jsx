@@ -16,6 +16,7 @@ import './page-editor.scss';
 
 @observer
 class PageEditor extends React.PureComponent {
+
     static propTypes = {
         show:      PropTypes.instanceOf(Show).isRequired,
         onComplete: PropTypes.func.isRequired,
@@ -46,6 +47,7 @@ class PageEditor extends React.PureComponent {
             </Layer>
         );
     }
+
 }
 
 

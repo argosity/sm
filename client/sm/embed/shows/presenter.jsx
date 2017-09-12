@@ -6,6 +6,7 @@ import PresenterModel from '../../models/presenter';
 
 @observer
 export default class Presenter extends React.PureComponent {
+
     static propTypes = {
         presenter: PropTypes.instanceOf(PresenterModel),
     }
@@ -19,4 +20,5 @@ export default class Presenter extends React.PureComponent {
             <h3 className="presenter">{presenter.name} presents:</h3>
         );
     }
+
 }

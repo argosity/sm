@@ -6,6 +6,7 @@ import {
 
 @identifiedBy('sm/presenter')
 export default class Presenter extends BaseModel {
+
     @identifier id;
 
     @field code = '';
@@ -30,4 +31,5 @@ export default class Presenter extends BaseModel {
         );
         return this.$cachedCollection;
     }
+
 }

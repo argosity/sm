@@ -6,6 +6,7 @@ import Redemption from '../../models/redemption';
 import ShowTime from '../../models/show-time';
 
 export default class AttendeeUX {
+
     static FIELDS = {
         ID:          0,
         PURCHASE_ID: 1,
@@ -110,4 +111,5 @@ export default class AttendeeUX {
             ),
         });
     }
+
 }

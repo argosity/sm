@@ -9,6 +9,7 @@ import PurchaseForm from './form';
 
 @observer
 export default class PurchaseLayer extends React.PureComponent {
+
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
         onComplete: PropTypes.func.isRequired,
@@ -40,4 +41,5 @@ export default class PurchaseLayer extends React.PureComponent {
             </Layer>
         );
     }
+
 }

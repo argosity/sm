@@ -10,6 +10,7 @@ import ShowTime from './show-time';
 
 @identifiedBy('sm/purchase')
 export default class Purchase extends BaseModel {
+
     @identifier({ type: 'string' }) identifier;
 
     @session token;
@@ -51,4 +52,5 @@ export default class Purchase extends BaseModel {
         if (!this.time) { return '0.00'; }
         return sprintf('%0.2f', this.time.pricedShow.times(qty));
     }
+
 }

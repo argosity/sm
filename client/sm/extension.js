@@ -11,6 +11,7 @@ import AboutShowMaker from './components/about-show-maker';
 
 @identifiedBy('extensions/sm')
 export default class SMExtension extends BaseExtension {
+
     // must match the server-side identier in config/screens.rb
     // and lib/sm/extension.rb
     @identifier id = 'sm';
@@ -49,4 +50,5 @@ export default class SMExtension extends BaseExtension {
     rootView() {
         return AboutShowMaker;
     }
+
 }

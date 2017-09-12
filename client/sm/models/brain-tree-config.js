@@ -7,6 +7,7 @@ import {
 
 @identifiedBy('sm/brain-tree-config')
 export default class BrainTreeConfig extends BaseModel {
+
     @identifier unused;
 
     @field merchant_id;
@@ -16,4 +17,5 @@ export default class BrainTreeConfig extends BaseModel {
     @computed get syncUrl() {
         return `${Config.api_path}/sm/payments-config`;
     }
+
 }

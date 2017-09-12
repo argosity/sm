@@ -14,6 +14,7 @@ const formatTime = occurs => moment(occurs.occurs_at).format('h:mma');
 
 @identifiedBy('sm/show')
 export default class Show extends BaseModel {
+
     static fetchEmbedded(embedId) {
         return this.Collection
             .create()
@@ -96,4 +97,5 @@ export default class Show extends BaseModel {
     @computed get canPurchaseOnline() {
         return Boolean(this.can_purchase && find(this.times, { canPurchaseOnline: true }));
     }
+
 }

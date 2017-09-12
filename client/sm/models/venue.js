@@ -7,6 +7,7 @@ import {
 
 @identifiedBy('sm/venue')
 export default class Venue extends BaseModel {
+
     @identifier id;
 
     @field code = '';
@@ -36,4 +37,5 @@ export default class Venue extends BaseModel {
         );
         return this.$cachedCollection;
     }
+
 }

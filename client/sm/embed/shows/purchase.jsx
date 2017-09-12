@@ -21,6 +21,7 @@ import Image from './image';
 
 @observer
 export default class Purchase extends React.PureComponent {
+
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
         onPurchaseComplete: PropTypes.func.isRequired,
@@ -105,4 +106,5 @@ export default class Purchase extends React.PureComponent {
             </Layer>
         );
     }
+
 }

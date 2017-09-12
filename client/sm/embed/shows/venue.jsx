@@ -13,6 +13,7 @@ function NameOrLogo({ venue }) {
 
 @observer
 export default class Venue extends React.PureComponent {
+
     static propTypes = {
         venue: PropTypes.instanceOf(VenueModel),
     }
@@ -28,4 +29,5 @@ export default class Venue extends React.PureComponent {
             </div>
         );
     }
+
 }

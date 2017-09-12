@@ -20,6 +20,7 @@ const DateCell = ({ cellData }) => moment(cellData).format('YYYY-MM-DD hh:mma');
 
 @observer
 export default class BoxOffice extends React.PureComponent {
+
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
@@ -98,4 +99,5 @@ export default class BoxOffice extends React.PureComponent {
             </Screen>
         );
     }
+
 }

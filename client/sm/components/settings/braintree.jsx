@@ -12,6 +12,7 @@ const KEY = 'braintree';
 
 @observer
 export default class BraintreeConfig extends React.PureComponent {
+
     static propTypes = {
         registerForSave: PropTypes.func.isRequired,
     }
@@ -52,4 +53,5 @@ export default class BraintreeConfig extends React.PureComponent {
             </Form>
         );
     }
+
 }

@@ -12,6 +12,7 @@ import Venue          from './venue';
 
 @observer
 export default class Show extends React.PureComponent {
+
     static propTypes = {
         show: PropTypes.instanceOf(ShowModel).isRequired,
         displayShow:  PropTypes.func.isRequired,
@@ -69,4 +70,5 @@ export default class Show extends React.PureComponent {
             </div>
         );
     }
+
 }

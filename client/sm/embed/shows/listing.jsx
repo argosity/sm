@@ -15,6 +15,7 @@ import './listing.scss';
 
 @observer
 export default class Listing extends React.PureComponent {
+
     static propTypes = {
         shows: MobxPropTypes.observableArrayOf(
             PropTypes.instanceOf(ShowModel),
@@ -86,4 +87,5 @@ export default class Listing extends React.PureComponent {
             </div>
         );
     }
+
 }

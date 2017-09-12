@@ -14,6 +14,7 @@ import Layer from '../layer-wrapper';
 
 @observer
 export default class Information extends React.PureComponent {
+
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
         onPurchase: PropTypes.func.isRequired,
@@ -60,4 +61,5 @@ export default class Information extends React.PureComponent {
             </Layer>
         );
     }
+
 }

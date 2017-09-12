@@ -4,6 +4,7 @@ import {
 
 @identifiedBy('sm/redemption')
 export default class Redemption extends BaseModel {
+
     @identifier id;
 
     @field qty = 0;
@@ -25,4 +26,5 @@ export default class Redemption extends BaseModel {
     get maxQty() {
         return this.sale.remainingQty;
     }
+
 }

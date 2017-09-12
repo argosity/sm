@@ -26,6 +26,7 @@ import Arrow from './pointer-arrow';
 
 @observer
 export default class PurchaseForm extends React.PureComponent {
+
     static propTypes = {
         purchase: MobxPropTypes.observableObject.isRequired,
         onComplete: PropTypes.func.isRequired,
@@ -296,4 +297,5 @@ export default class PurchaseForm extends React.PureComponent {
             </Braintree>
         );
     }
+
 }

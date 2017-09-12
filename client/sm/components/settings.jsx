@@ -8,6 +8,7 @@ import Braintree from './settings/braintree';
 
 @observer
 export default class SMSystemSettings extends React.PureComponent {
+
     childrenRefs = new Map();
 
     onSave() {
@@ -35,4 +36,5 @@ export default class SMSystemSettings extends React.PureComponent {
             </div>
         );
     }
+
 }

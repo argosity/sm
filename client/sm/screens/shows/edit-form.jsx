@@ -24,6 +24,7 @@ import ShowTimes from './times';
 
 @observer
 class EditForm extends React.PureComponent {
+
     static propTypes = {
         show:      PropTypes.instanceOf(Show).isRequired,
         onComplete: PropTypes.func.isRequired,
@@ -162,6 +163,7 @@ class EditForm extends React.PureComponent {
             </div>
         );
     }
+
 }
 
 export default function EditFormWrapper(props) {

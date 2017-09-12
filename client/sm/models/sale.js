@@ -5,6 +5,7 @@ import {
 
 @identifiedBy('sm/sale')
 export default class Sale extends BaseModel {
+
     @identifier id;
 
     @session purchase_id;
@@ -21,4 +22,5 @@ export default class Sale extends BaseModel {
     @computed get remainingQty() {
         return this.qty - sumBy(this.redemptions, 'qty');
     }
+
 }
