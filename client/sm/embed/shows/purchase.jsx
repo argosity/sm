@@ -10,7 +10,6 @@ import FormField from 'grommet/components/FormField';
 
 import { FormState } from 'hippo/components/form';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
-import WarningNotification from 'hippo/components/warning-notification';
 
 import PurchaseModel from '../../models/purchase';
 import ShowModel from '../../models/show';
@@ -83,7 +82,7 @@ export default class Purchase extends React.PureComponent {
                         visible={this.isTokenizing}
                         model={purchase}
                     />
-                    <WarningNotification message={purchase.errorMessage} />
+
                     <div className="top-info">
                         <Image image={show.image} size="thumbnail" />
                         <div className="description">
