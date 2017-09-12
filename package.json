@@ -17,6 +17,7 @@
     "jest": "^20.0.4",
     "mobx-decorated-models": "^0.6.5",
     "moment-timezone": "^0.5.13",
+    "object-hash": "^1.1.8",
     "picnic": "^6.4.0",
     "react": "^15.6.1",
     "react-braintree-fields": "^0.6.1",
