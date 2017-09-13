@@ -42,6 +42,7 @@ class EditForm extends React.PureComponent {
         this.detachVenueObserver = observe(
             this.formState.get('venue_id'), 'value', this.onVenueChange,
         );
+        this.nameField.wrappedInstance.focus();
     }
 
     @action.bound
@@ -91,6 +92,10 @@ class EditForm extends React.PureComponent {
         return this.formState.isValid && !this.props.show.syncInProgress;
     }
 
+    @action.bound setFieldRef(r) {
+        this.nameField = r;
+    }
+
     render() {
         const { show } = this.props;
         observePubSub(show);
@@ -115,7 +120,10 @@ class EditForm extends React.PureComponent {
                     <NetworkActivityOverlay model={show} />
 
                     <Row>
-                        <Field name="title" xs={6} lg={3} validate={nonBlank} />
+                        <Field
+                            ref={this.setFieldRef}
+                            name="title" xs={6} lg={3} validate={nonBlank}
+                        />
 
                         <Field name="sub_title" xs={6} lg={3} />
 
