@@ -1,5 +1,4 @@
 import Asset from 'hippo/models/asset';
-import { observe } from 'mobx';
 import { pick, uniqBy, filter, isEmpty, find } from 'lodash';
 import moment from 'moment';
 import DateRange from 'hippo/lib/date-range';
@@ -55,13 +54,6 @@ export default class Show extends BaseModel {
         if (!this.times.length) {
             this.times.push({});
         }
-        observe(this, 'venue', ({ newValue, oldValue }) => {
-            if (newValue &&
-                ((!oldValue && !this.capacity) ||
-                 (oldValue && this.capacity === oldValue.capacity))) {
-                this.capacity = newValue.capacity;
-            }
-        });
     }
 
     set(attrs = {}) {

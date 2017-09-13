@@ -33,16 +33,30 @@ class EditForm extends React.PureComponent {
 
     formState = new FormState()
 
-    componentWillUnmount() {
-        this.detachVenueObserver();
-    }
-
     componentDidMount() {
         this.formState.setFromModel(this.props.show);
-        this.detachVenueObserver = observe(
-            this.formState.get('venue_id'), 'value', this.onVenueChange,
-        );
+        // i think we don't need to detach these since the form state will no longer be referenced
+        // after this component is unmounted
+        observe(this.formState.get('venue_id'), 'value', this.onVenueChange);
+        observe(this.formState.get('price'), 'value', this.onPriceChange);
+        observe(this.formState.get('capacity'), 'value', this.onCapacityChange);
         this.nameField.wrappedInstance.focus();
+    }
+
+    @action.bound onPriceChange({ oldValue, newValue }) {
+        this.props.show.times.forEach((t) => {
+            if (!t.price || t.price === oldValue) {
+                t.price = newValue;
+            }
+        });
+    }
+
+    @action.bound onCapacityChange({ oldValue, newValue }) {
+        this.props.show.times.forEach((t) => {
+            if (!t.capacity || t.capacity === oldValue) {
+                t.capacity = newValue;
+            }
+        });
     }
 
     @action.bound
