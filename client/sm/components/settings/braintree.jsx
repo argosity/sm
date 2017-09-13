@@ -45,10 +45,10 @@ export default class BraintreeConfig extends React.PureComponent {
             <Form tag="div" className="braintree-edit-form" state={this.formState}>
                 <Heading tag="h3">Braintree payment settings</Heading>
                 <Row>
-                    <Field md={3} sm={6} type="checkbox" name="sandbox_mode" label="Sandbox Mode?" />
-                    <Field md={3} sm={6} name="public_key" validate={nonBlank} />
-                    <Field md={3} sm={6} name="private_key" validate={nonBlank} />
-                    <Field md={3} sm={6} name="merchant_id" validate={nonBlank} />
+                    <Field sm={3} xs={6} type="checkbox" name="sandbox_mode" label="Sandbox Mode?" />
+                    <Field sm={3} xs={6} name="public_key" validate={nonBlank} />
+                    <Field sm={3} xs={6} name="private_key" validate={nonBlank} />
+                    <Field sm={3} xs={6} name="merchant_id" validate={nonBlank} />
                 </Row>
             </Form>
         );
