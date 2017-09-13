@@ -18,7 +18,11 @@ export default class ShowTime extends BaseModel {
 
     @field price;
     @field capacity;
-    @field({ type: 'date' }) occurs_at = moment().add(1, 'week').toDate();
+    @field({ type: 'date' }) occurs_at = moment()
+        .startOf('day')
+        .add(8, 'hour')
+        .add(1, 'week')
+        .toDate();
 
     @computed get formattedOccursAt() {
         const format = this.show.commonTime ? 'MMM Do YYYY' : 'h:mma MMM Do YYYY';
