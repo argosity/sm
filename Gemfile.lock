@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 94e3b3a6023141c3e77fa97a1fef37f5169ff0a0
+  revision: 7a43946154f1aab51923f7d8ff46095ee8c70d99
   branch: master
   specs:
     hippo-fw (0.9.7)
@@ -143,7 +143,7 @@ GEM
     formatador (0.2.5)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
-    google-protobuf (3.4.0.2)
+    google-protobuf (3.4.0.2-universal-darwin)
     googleauth (0.5.3)
       faraday (~> 0.12)
       jwt (~> 1.4)
@@ -152,7 +152,7 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
-    grpc (1.6.0)
+    grpc (1.6.0-universal-darwin)
       google-protobuf (~> 3.1)
       googleauth (~> 0.5.1)
     guard (2.14.1)

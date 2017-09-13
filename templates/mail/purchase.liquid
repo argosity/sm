@@ -6,16 +6,15 @@
           <p style="font-size: 120%;">
             Hello {{ purchase.name }},
           </p>
-          <img src="{{ event_photo }}">
           <p>
-            Thanks purchasing tickets to {{ event.title }}.
+            Thanks purchasing tickets to {{ show.title }}.
           </p>
           <p>
             Your receipt ID is {{ purchase.identifier }}.
             Please mention that number in correspondence with us so we can help you faster.
           </p>
           <p>
-            <a href="{{ purchase.pdf_download_url }}">Download Tickets</a>
+            <a href="{{ purchase.tickets_url }}">Download Tickets</a>
           </p>
           <p style="margin-top: 20px;">
             {{ company_name }}
@@ -33,9 +32,9 @@
           </h3>
           <br>
           {% endif %}
-          <h1>{{event.title}}</h1>
-          {% if event.image %}
-          <img src="{{ event.image.url }}" width="{{ event.image.width }}" height="{{ event.image.height }}">
+          <h1>{{show.title}}</h1>
+          {% if show.image %}
+          <img src="{{ show.image.url }}" width="{{ show.image.width }}" height="{{ show.image.height }}">
           {% endif %}
         </td>
       </tr>

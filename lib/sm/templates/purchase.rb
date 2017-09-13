@@ -24,7 +24,10 @@ module SM
             def variables
                 vars = {
                     'company_name' => purchase.tenant.name,
-                    'purchase' => purchase.as_json(only: %w{identifier name email qty}),
+                    'purchase' => purchase.as_json(
+                        methods: %w{ tickets_url },
+                        only: %w{identifier name email qty tickets_url}
+                    ),
                     'show' => purchase.show
                                    .as_json(only: %w{title sub_title description occurs_at})
                                    .merge('image' => image_json(purchase.show.image))
