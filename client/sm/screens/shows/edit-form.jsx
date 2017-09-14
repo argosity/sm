@@ -117,7 +117,6 @@ class EditForm extends React.PureComponent {
         return (
             <div className="show-edit">
                 <Header
-                    fixed
                     colorIndex="light-2"
                     pad={{ horizontal: 'small', vertical: 'small', between: 'small' }}
                 >

@@ -2,7 +2,7 @@
 
 #hippo-root .screen.box-office {
 
-    .attendees {
+    .guest-list {
         flex: 1;
         .ReactVirtualized__List {
             border: 1px solid $border-color;
@@ -12,7 +12,7 @@
             .ReactVirtualized__Grid__innerScrollContainer {
                 cursor: inherit; // override grid default
 
-                .attendee {
+                .guest {
                     &:not(.full) {
                         cursor: pointer;
                     }
@@ -21,13 +21,13 @@
         }
 
 
-        .attendee {
+        .guest {
             padding: 10px 0;
             margin-bottom: 10px;
             border-bottom: 1px solid $border-color;
             overflow: hidden;
             h4 { margin: 0; }
-            .icon {
+            .controls {
                 align-self: center;
                 text-align: right;
             }
@@ -45,7 +45,7 @@
                 }
             }
 
-            .icon {
+            .controls {
                 flex-basis: 40px;
                 svg { max-width: 100%; }
             }
@@ -58,7 +58,7 @@
                 .grid {
                     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) ) ;
                 }
-                .icon {
+                .controls {
                     flex-basis: 24px;
                 }
             }

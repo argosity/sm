@@ -4,8 +4,9 @@ import PubSub from 'hippo/models/pub_sub';
 import Sale from '../../models/sale';
 import Redemption from '../../models/redemption';
 import ShowTime from '../../models/show-time';
+import { renameProperties } from 'hippo/lib/util';
 
-export default class AttendeeUX {
+export default class GuestUX {
 
     static FIELDS = {
         ID:          0,
@@ -25,6 +26,7 @@ export default class AttendeeUX {
 
     @observable rowHeight;
     @observable redemption;
+    @observable emailSale;
 
     query = new Query({
         src: ShowTime,
@@ -93,6 +95,18 @@ export default class AttendeeUX {
     }
 
     @action.bound
+    cancelPending() {
+        this.emailSale = null;
+        this.redemption = null;
+    }
+
+    saleForRow(index) {
+        const obj = this.query.results.rowAsObject(index);
+        renameProperties(obj, { purchase_id: 'id' });
+        return new Sale(obj);
+    }
+
+    @action.bound
     onRedemption(data) {
         this.query.rows.forEach((r) => {
             if (r[this.fields.PURCHASE_ID] === data.purchase_id) {
@@ -103,12 +117,21 @@ export default class AttendeeUX {
     }
 
     @action.bound
-    onRecordSelect(rowIndex) {
+    onRedeem(rowIndex) {
         this.redemption = new Redemption({
             rowIndex,
-            sale: new Sale(
-                this.query.results.rowAsObject(rowIndex),
-            ),
+            sale: this.saleForRow(rowIndex),
+        });
+    }
+
+    @action.bound
+    onMail(rowIndex) {
+        this.emailSale = this.saleForRow(rowIndex);
+    }
+    @action.bound
+    onMailSend() {
+        this.emailSale.emailReceipt().then(() => {
+            this.emailSale = null;
         });
     }
 

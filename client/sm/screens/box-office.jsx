@@ -11,7 +11,7 @@ import Box from 'grommet/components/Box';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 import SearchIcon from 'grommet/components/icons/base/Search';
 import ShowTime from '../models/show-time';
-import Attendees from './box-office/attendees';
+import GuestList from './box-office/guest-list';
 import Purchase from '../models/purchase';
 import PurchaseLayer from '../components/purchase/layer';
 import './box-office/box-office.scss';
@@ -51,6 +51,10 @@ export default class BoxOffice extends React.PureComponent {
     @action.bound onPurchaseCancel() { this.purchase = null; }
     @action.bound onSearchClick() { this.isShowingSearch = true; }
     @action.bound onSearchClose() { this.isShowingSearch = false; }
+
+    componentDidMount() {
+        this.query.fetchSingle({ id: 1 }).then((o) => this.onRecordFound(o));
+    }
 
     render() {
         const { time, query, isShowingSearch } = this;
@@ -95,7 +99,7 @@ export default class BoxOffice extends React.PureComponent {
                         />)}
                 </Box>
 
-                <Attendees time={time} />
+                <GuestList time={time} />
             </Screen>
         );
     }

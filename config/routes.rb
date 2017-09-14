@@ -3,6 +3,7 @@ Hippo::API.routes.for_extension 'sm' do
     resources SM::ShowTime
     resources SM::Purchase, controller: SM::Handlers::Purchase, cors: '*', public: true
     resources SM::Show, path: 'embed/shows', controller: SM::Handlers::Shows, cors: '*', public: true
+    resources SM::Purchase, path: 'sale', controller: SM::Handlers::Sale
     resources SM::Show
     resources SM::Venue
     resources SM::Presenter

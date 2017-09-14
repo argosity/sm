@@ -3,13 +3,11 @@ module SM
         belongs_to_tenant
         has_random_identifier
 
-        belongs_to :show
         belongs_to :show_time
+        has_one :show, through: :show_time
         has_many :payments, autosave: true
         has_many :redemptions, inverse_of: :purchase
-        before_validation :set_defaults
 
-        validates :show, presence: true
         validates :show_time, presence: true
         validates :qty, :name, presence: true
         validates :payments, associated: true, presence: true, length: { is: 1 }
@@ -45,10 +43,5 @@ module SM
             self.qty - redemptions.sum(:qty)
         end
 
-        protected
-
-        def set_defaults
-            self.show ||= show_time.show if show_time
-        end
     end
 end

@@ -23,4 +23,8 @@ export default class Sale extends BaseModel {
         return this.qty - sumBy(this.redemptions, 'qty');
     }
 
+    emailReceipt() {
+        return this.save({ json: { send_receipt: this.email } });
+    }
+
 }
