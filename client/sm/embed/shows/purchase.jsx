@@ -34,7 +34,7 @@ export default class Purchase extends React.PureComponent {
 
     @action.bound
     onComplete() {
-        this.props.onPurchaseComplete(this.props.purchase);
+        this.props.onPurchaseComplete(this.props.sale);
     }
 
     @action.bound
