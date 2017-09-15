@@ -11,9 +11,9 @@ import FormField from 'grommet/components/FormField';
 import { FormState } from 'hippo/components/form';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 
-import PurchaseModel from '../../models/purchase';
+import Sale from '../../models/sale';
 import ShowModel from '../../models/show';
-import PurchaseForm from '../../components/purchase/form';
+import SaleForm from '../../components/sale/form';
 
 import Layer from '../layer-wrapper';
 import Image from './image';
@@ -24,7 +24,7 @@ export default class Purchase extends React.PureComponent {
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
         onPurchaseComplete: PropTypes.func.isRequired,
-        purchase: PropTypes.instanceOf(PurchaseModel).isRequired,
+        sale: PropTypes.instanceOf(Sale).isRequired,
         show: PropTypes.instanceOf(ShowModel).isRequired,
     }
 
@@ -49,8 +49,8 @@ export default class Purchase extends React.PureComponent {
                 <Select
                     className="times"
                     value={
-                        this.props.purchase.time ?
-                            this.props.purchase.time.formattedOccursAt : ''
+                        this.props.sale.time ?
+                            this.props.sale.time.formattedOccursAt : ''
                     }
                     onChange={this.onTimeChange}
                     options={this.timeOptions}
@@ -60,7 +60,7 @@ export default class Purchase extends React.PureComponent {
     }
 
     render() {
-        const { props: { purchase, show, onCancel } } = this;
+        const { props: { sale, show, onCancel } } = this;
 
         return (
             <Layer
@@ -78,9 +78,9 @@ export default class Purchase extends React.PureComponent {
                     flex
                 >
                     <NetworkActivityOverlay
-                        message={purchase.activityMessage}
+                        message={sale.activityMessage}
                         visible={this.isTokenizing}
-                        model={purchase}
+                        model={sale}
                     />
 
                     <div className="top-info">
@@ -91,8 +91,8 @@ export default class Purchase extends React.PureComponent {
                             <p className="description">{show.description}</p>
                         </div>
                     </div>
-                    <PurchaseForm
-                        purchase={purchase}
+                    <SaleForm
+                        sale={sale}
                         onComplete={this.onComplete}
                         ref={this.setFormRef}
 
@@ -100,7 +100,7 @@ export default class Purchase extends React.PureComponent {
                             <Button label="Cancel" onClick={onCancel} accent />
                         }
                     >
-                    </PurchaseForm>
+                    </SaleForm>
                 </Box>
             </Layer>
         );

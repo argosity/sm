@@ -1,5 +1,5 @@
 FactoryGirl.define do
-    factory :purchase, class: SM::Purchase do
+    factory :sale, class: SM::Sale do
         tenant {  Hippo::Tenant.current }
 
         association :show_time, factory: :show_time

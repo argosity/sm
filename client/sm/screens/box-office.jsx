@@ -12,8 +12,8 @@ import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 import SearchIcon from 'grommet/components/icons/base/Search';
 import ShowTime from '../models/show-time';
 import GuestList from './box-office/guest-list';
-import Purchase from '../models/purchase';
-import PurchaseLayer from '../components/purchase/layer';
+import Sale from '../models/sale';
+import SaleLayer from '../components/sale/layer';
 import './box-office/box-office.scss';
 
 const DateCell = ({ cellData }) => moment(cellData).format('YYYY-MM-DD hh:mma');
@@ -27,7 +27,7 @@ export default class BoxOffice extends React.PureComponent {
 
     @observable time = new ShowTime();
     @observable isShowingSearch = false;
-    @observable purchase;
+    @observable sale;
 
     query = new Query({
         src: ShowTime,
@@ -40,20 +40,20 @@ export default class BoxOffice extends React.PureComponent {
     })
 
     @action.bound
-    onRecordFound(occur) {
-        this.time = occur;
+    onRecordFound(time) {
+        this.time = time;
         this.isShowingSearch = false;
     }
     @action.bound onSaleClick() {
-        this.purchase = new Purchase({ time: this.time });
+        this.sale = new Sale({ time: this.time });
     }
-    @action.bound onPurchaseComplete() { this.purchase = null; }
-    @action.bound onPurchaseCancel() { this.purchase = null; }
+    @action.bound onSaleComplete() { this.sale = null; }
+    @action.bound onSaleCancel() { this.sale = null; }
     @action.bound onSearchClick() { this.isShowingSearch = true; }
     @action.bound onSearchClose() { this.isShowingSearch = false; }
 
     componentDidMount() {
-        this.query.fetchSingle({ id: 1 }).then((o) => this.onRecordFound(o));
+        this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
     }
 
     render() {
@@ -69,10 +69,10 @@ export default class BoxOffice extends React.PureComponent {
                     onClose={this.onSearchClose}
                 />
 
-                <PurchaseLayer
-                    purchase={this.purchase}
-                    onCancel={this.onPurchaseCancel}
-                    onComplete={this.onPurchaseComplete}
+                <SaleLayer
+                    sale={this.sale}
+                    onCancel={this.onSaleCancel}
+                    onComplete={this.onSaleComplete}
                 />
 
                 <Box direction="row" wrap justify="between" align="baseline">

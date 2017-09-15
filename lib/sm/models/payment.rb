@@ -5,7 +5,7 @@ module SM
     class Payment < Model
         belongs_to_tenant
 
-        belongs_to :purchase
+        belongs_to :sale
 
         attr_accessor :nonce
 

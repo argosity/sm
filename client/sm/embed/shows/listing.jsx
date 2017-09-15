@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
 import ShowModel from '../../models/show';
-import PurchaseModel from '../../models/purchase';
+import Sale from '../../models/sale';
 import NoShowsFoundMessage from './none-found-message';
 import Information from './information';
 import Purchase from './purchase';
-import Receipt from './purchase-receipt';
+import Receipt from './receipt';
 import Show from './show';
 
 import './listing.scss';
@@ -31,7 +31,7 @@ export default class Listing extends React.PureComponent {
 
     @action.bound
     onPurchase(show) {
-        this.displaying = { show, view: 'purchase', purchase: new PurchaseModel({ show }) };
+        this.displaying = { show, view: 'purchase', sale: new Sale({ show }) };
     }
 
     @action.bound
@@ -40,8 +40,8 @@ export default class Listing extends React.PureComponent {
     }
 
     @action.bound
-    onPurchaseComplete(purchase) {
-        this.displaying = { view: 'receipt', purchase };
+    onPurchaseComplete(sale) {
+        this.displaying = { view: 'receipt', sale };
     }
 
     @computed get Layer() {

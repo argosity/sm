@@ -5,10 +5,10 @@ import { observer } from 'mobx-react';
 import Box from 'grommet/components/Box';
 import Layer from 'grommet/components/Layer';
 
-import PurchaseForm from './form';
+import SaleForm from './form';
 
 @observer
-export default class PurchaseLayer extends React.PureComponent {
+export default class SaleLayer extends React.PureComponent {
 
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
@@ -16,25 +16,25 @@ export default class PurchaseLayer extends React.PureComponent {
     }
 
     render() {
-        const { purchase, onCancel, onComplete } = this.props;
-        if (!purchase) { return null; }
+        const { sale, onCancel, onComplete } = this.props;
+        if (!sale) { return null; }
 
         return (
             <Layer
                 closer
                 onClose={onCancel}
-                className="purchase"
+                className="sale"
             >
                 <Box
                     flex
                     size={{ height: { min: 'medium' } }}
                     full="horizontal"
                     separator='horizontal'
-                    className="purchase-pane"
+                    className="sale-pane"
                     pad={{ vertical: 'medium' }}
                 >
-                    <PurchaseForm
-                        purchase={purchase}
+                    <SaleForm
+                        sale={sale}
                         onComplete={onComplete}
                     />
                 </Box>

@@ -3,14 +3,12 @@ import Query from 'hippo/models/query';
 import PubSub from 'hippo/models/pub_sub';
 import Sale from '../../models/sale';
 import Redemption from '../../models/redemption';
-import ShowTime from '../../models/show-time';
-import { renameProperties } from 'hippo/lib/util';
 
 export default class GuestUX {
 
     static FIELDS = {
         ID:          0,
-        PURCHASE_ID: 1,
+        TIME_ID:     1,
         IDENTIFIER:  2,
         NAME:        3,
         PHONE:       4,
@@ -24,17 +22,18 @@ export default class GuestUX {
         return this.constructor.FIELDS;
     }
 
+    @observable time;
     @observable rowHeight;
     @observable redemption;
     @observable emailSale;
 
     query = new Query({
-        src: ShowTime,
-        syncOptions: { with: ['sales'], order: { occurs_at: 'desc' } },
+        src: Sale,
+        syncOptions: { with: ['with_details'], order: { created_at: 'desc' } },
         fields: [
             { id: 'id', queryable: false, dataType: 'number' },
-            { id: 'purchase_id', queryable: false, dataType: 'number' },
-            { id: 'purchase_identifier', label: 'Order #' },
+            { id: 'show_time_id', queryable: false, dataType: 'number' },
+            { id: 'identifier', label: 'Order #' },
             'name', 'phone', 'email', 'qty', 'created_at', 'redemptions',
         ],
     })
@@ -66,32 +65,33 @@ export default class GuestUX {
     }
 
     pubSubUnsubscribe() {
-        if (this.time.isNew) { return; }
+        if (!this.time) { return; }
         PubSub.channel.unsubscribe(
-            `/show/redemption/${this.props.time.id}`,
+            `/show/redemption/${this.time.id}`,
             this.onRedemption,
         );
     }
 
-    update(props) {
-        if (!props.time.isNew && props.time !== this.time) {
-            this.query.autoFetch = true;
-            this.query.clauses.replace([
-                {
-                    field: this.query.fields[this.fields.ID],
-                    visible: false,
-                    value: props.time.id,
-                    operator: this.query.fields[this.fields.ID].preferredOperator,
-                },
-                { field: this.query.fields[this.fields.NAME], value: '' },
-            ]);
-            this.pubSubUnsubscribe();
-            PubSub.channel.subscribe(`/show/redemption/${props.time.id}`, this.onRedemption);
-        } else {
-            this.query.autoFetch = false;
-            this.query.reset();
-        }
-        this.time = props.time;
+    update({ time }) {
+        if (time.isNew || time === this.time) { return; }
+
+        this.query.autoFetch = true;
+        this.query.clauses.replace([
+            {
+                field: this.query.fields[this.fields.TIME_ID],
+                visible: false,
+                value: time.id,
+                operator: this.query.fields[this.fields.ID].preferredOperator,
+            },
+            { field: this.query.fields[this.fields.NAME], value: '' },
+        ]);
+        this.pubSubUnsubscribe();
+        PubSub.channel.subscribe(`/show/redemption/${time.id}`, this.onRedemption);
+        this.time = time;
+
+        //   this.query.autoFetch = false;
+        //   this.query.reset();
+    // }
     }
 
     @action.bound
@@ -100,16 +100,10 @@ export default class GuestUX {
         this.redemption = null;
     }
 
-    saleForRow(index) {
-        const obj = this.query.results.rowAsObject(index);
-        renameProperties(obj, { purchase_id: 'id' });
-        return new Sale(obj);
-    }
-
     @action.bound
     onRedemption(data) {
         this.query.rows.forEach((r) => {
-            if (r[this.fields.PURCHASE_ID] === data.purchase_id) {
+            if (r[this.fields.TIME_ID] === data.sale_id) {
                 r[this.fields.REDEMPTIONS].push(data);
                 this.query.results.rowUpdateCount += 1;
             }
@@ -120,13 +114,13 @@ export default class GuestUX {
     onRedeem(rowIndex) {
         this.redemption = new Redemption({
             rowIndex,
-            sale: this.saleForRow(rowIndex),
+            sale: this.query.results.modelForRow(rowIndex),
         });
     }
 
     @action.bound
     onMail(rowIndex) {
-        this.emailSale = this.saleForRow(rowIndex);
+        this.emailSale = this.query.resuls.modelForRow(rowIndex);
     }
     @action.bound
     onMailSend() {

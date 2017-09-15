@@ -41,7 +41,7 @@ export default class GuestList extends React.PureComponent {
     }
 
     render() {
-        if (this.ux.time.isNew) { return null; }
+        if (!this.ux.time) { return null; }
 
         return (
             <Box

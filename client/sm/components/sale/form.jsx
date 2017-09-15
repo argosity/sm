@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { observable, action, computed } from 'mobx';
 import { get, extend, each, findKey, map } from 'lodash';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { Braintree } from 'react-braintree-fields';
 import { Row, Col } from 'react-flexbox-grid';
 import Box from 'grommet/components/Box';
@@ -13,22 +13,23 @@ import Button from 'grommet/components/Button';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 import FormField from 'grommet/components/FormField';
 import Select    from 'grommet/components/Select';
-
 import {
     FormState, Form, Field, nonBlank, numberValue, validEmail, validPhone,
 } from 'hippo/components/form';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import WarningNotification from 'hippo/components/warning-notification';
 
-import './purchase-form-styles.scss';
+import './sale-form-styles.scss';
 import CardField from './card-field';
 import Arrow from './pointer-arrow';
+import Sale from '../../models/sale';
+import Payment from '../../models/payment';
 
 @observer
-export default class PurchaseForm extends React.PureComponent {
+export default class SaleForm extends React.PureComponent {
 
     static propTypes = {
-        purchase: MobxPropTypes.observableObject.isRequired,
+        sale: PropTypes.instanceOf(Sale).isRequired,
         onComplete: PropTypes.func.isRequired,
         controls: PropTypes.node,
         heading: PropTypes.oneOfType([
@@ -41,6 +42,7 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
     @observable formState = new FormState()
+    @observable payment = new Payment();
 
     @observable btFields = {
         postalCode: false,
@@ -50,13 +52,13 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
     componentWillMount() {
-        this.props.purchase.fetchToken().then(() => {
-            this.formState.setFromModel(this.props.purchase);
+        this.payment.fetchToken().then(() => {
+            this.formState.setFromModel(this.props.sale);
         });
     }
 
     @computed get totalAmount() {
-        return this.props.purchase.priceForQty(
+        return this.props.sale.priceForQty(
             get(this.formState.get('qty'), 'value', 1) || 1,
         );
     }
@@ -68,7 +70,7 @@ export default class PurchaseForm extends React.PureComponent {
 
     @action.bound
     onBTError(err) {
-        this.props.purchase.errors = {
+        this.props.sale.errors = {
             card: err.message,
         };
     }
@@ -94,24 +96,25 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
     @computed get heading() {
-        return this.props.heading || <h3>{get(this.props.purchase, 'time.show.title')}</h3>;
+        return this.props.heading || <h3>{get(this.props.sale, 'time.show.title')}</h3>;
     }
 
     @action
     saveState() {
-        const { purchase } = this.props;
+        const { sale } = this.props;
         return new Promise((resolve) => {
             this.getToken().then(({ nonce, details: { cardType: card_type, lastTwo: digits } }) => {
-                this.formState.persistTo(purchase);
-                extend(purchase, {
-                    time_identifier: purchase.time.identifier,
-                    payments: [{
-                        nonce, card_type, digits, amount: this.totalAmount,
-                    }],
+                this.formState.persistTo(sale);
+                extend(this.payment, {
+                    nonce, card_type, digits, amount: this.totalAmount,
                 });
-                resolve(purchase);
+                extend(sale, {
+                    time_identifier: sale.time.identifier,
+                    payments: [this.payment],
+                });
+                resolve(sale);
             }).catch((err) => {
-                purchase.errors = { credit_card: err.message }; // eslint-disable-line
+                sale.errors = { credit_card: err.message }; // eslint-disable-line
                 resolve();
             });
         });
@@ -130,22 +133,34 @@ export default class PurchaseForm extends React.PureComponent {
             this.exposeErrors();
             return;
         }
-        const { purchase } = this.props;
-        purchase.errors = null;
+        const { sale } = this.props;
+        sale.errors = null;
         this.isTokenizing = true;
         this.saveState().then(() => {
             this.isTokenizing = false;
-            if (purchase.isValid) {
-                purchase.save().then(() => {
-                    if (purchase.isValid) {
+            if (sale.isValid) {
+                sale.save().then(() => {
+                    if (sale.isValid) {
                         this.props.onComplete();
                     }
                 });
             }
         }).catch((err) => {
-            purchase.errors = { invalid: err.message }; // eslint-disable-line
+            sale.errors = { invalid: err.message }; // eslint-disable-line
             this.isTokenizing = false;
         });
+    }
+
+    @computed get isBusy() {
+        return Boolean(
+            this.isTokenizing || get(this.payment, 'syncInProgress.isFetch'),
+        );
+    }
+
+    @computed get busyMessage() {
+        return this.props.sale.errorMessage || (
+            this.isTokenizing ? 'Purchasing…' : 'Loading…'
+        );
     }
 
     @computed get timeOptions() {
@@ -162,21 +177,21 @@ export default class PurchaseForm extends React.PureComponent {
 
     @action.bound
     onTimeChange({ value: { time } }) {
-        this.props.purchase.time = time;
+        this.props.sale.time = time;
     }
 
     @computed get show() {
-        return get(this.props.purchase, 'time.show', this.props.purchase.show);
+        return get(this.props.sale, 'time.show', this.props.sale.show);
     }
 
     @computed get orderFieldsClass() {
         return cn('main-fields', {
-            obscured: (1 !== this.show.times.length && !this.props.purchase.time),
+            obscured: (1 !== this.show.times.length && !this.props.sale.time),
         });
     }
 
     renderTimes() {
-        const { show, props: { purchase } } = this;
+        const { show, props: { sale } } = this;
 
         if (1 === show.times.length) {
             return <h3>{show.times[0].formattedOccursAt}</h3>;
@@ -186,7 +201,7 @@ export default class PurchaseForm extends React.PureComponent {
                 <Select
                     className="times"
                     value={
-                        purchase.time ? purchase.time.formattedOccursAt : ''
+                        sale.time ? sale.time.formattedOccursAt : ''
                     }
                     onChange={this.onTimeChange}
                     options={this.timeOptions}
@@ -196,7 +211,7 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
     renderSelectionPrompt() {
-        if (this.props.purchase.time) { return null; }
+        if (this.props.sale.time) { return null; }
         return (
             <div className="selection-prompt">
                 <Arrow />
@@ -206,14 +221,13 @@ export default class PurchaseForm extends React.PureComponent {
     }
 
     render() {
-        const { formState, props: { purchase } } = this;
-        if (!purchase.token) { return null; }
+        const { formState, props: { sale } } = this;
 
         const fieldProps = { sm: 6, xs: 12 };
 
         return (
             <Braintree
-                authorization={purchase.token}
+                authorization={this.payment.token}
                 onError={this.onBTError}
                 onValidityChange={this.onBTValidityChange}
                 getTokenRef={this.setBraintreeToken}
@@ -228,18 +242,18 @@ export default class PurchaseForm extends React.PureComponent {
                 }}
             >
                 <NetworkActivityOverlay
-                    message={purchase.errorMessage || 'Purchasing…'}
-                    visible={this.isTokenizing}
-                    model={purchase}
+                    message={this.busyMessage}
+                    visible={this.isBusy}
+                    model={sale}
                 />
 
                 <Form
                     tag="div"
-                    className="purchase-form row"
+                    className="sale-form row"
                     state={formState}
                 >
                     <Col xs={12}>
-                        <WarningNotification message={purchase.errorMessage} />
+                        <WarningNotification message={sale.errorMessage} />
                         <Box className="heading" flex>{this.heading}</Box>
                         <Box
                             pad={{ between: 'small' }}

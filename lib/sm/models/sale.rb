@@ -1,16 +1,20 @@
 module SM
-    class Purchase < Model
+    class Sale < Model
         belongs_to_tenant
         has_random_identifier
 
         belongs_to :show_time
         has_one :show, through: :show_time
         has_many :payments, autosave: true
-        has_many :redemptions, inverse_of: :purchase
+        has_many :redemptions, inverse_of: :sale
 
         validates :show_time, presence: true
         validates :qty, :name, presence: true
         validates :payments, associated: true, presence: true, length: { is: 1 }
+
+        scope :with_details, lambda { |should_use = true|
+            compose_query_using_detail_view(view: 'sale_details', join_to: 'sale_id') if should_use
+        }, export: true
 
         def pathname
             root_path.join('mail', filename)

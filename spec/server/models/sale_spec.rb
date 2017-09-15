@@ -1,11 +1,11 @@
 require_relative '../spec_helper'
 
-describe SM::Purchase do
+describe SM::Sale do
     let (:show) { FactoryGirl.create :show, number_of_times: 1 }
 
     it "can be instantiated" do
         expect(show.times.length).not_to equal(0)
-        purchase = SM::Purchase.new(
+        sale = SM::Sale.new(
             qty: 1, name: 'Test', show: show, show_time: show.times.first,
             payments: [
                 SM::Payment.new(
@@ -13,6 +13,6 @@ describe SM::Purchase do
                 )
             ]
         )
-        expect(purchase.save).to be(true)
+        expect(sale.save).to be(true)
     end
 end

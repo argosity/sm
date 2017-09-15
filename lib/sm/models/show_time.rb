@@ -26,7 +26,7 @@ module SM
         def on_redemption(redemption)
             Hippo::API::PubSub.publish(
                 "/show/redemption/#{self.id}", {
-                    purchase_id: redemption.purchase_id,
+                    sale_id: redemption.sale_id,
                     created_at: redemption.created_at,
                     qty: redemption.qty,
                 }

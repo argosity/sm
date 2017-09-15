@@ -9,25 +9,25 @@ import Box          from 'grommet/components/Box';
 import Button       from 'grommet/components/Button';
 import Paragraph    from 'grommet/components/Paragraph';
 
-import PurchaseModel from '../../models/purchase';
+import Sale from '../../models/sale';
 import Layer from '../layer-wrapper';
 
 
 @observer
-export default class PurchaseReceipt extends React.PureComponent {
+export default class Receipt extends React.PureComponent {
 
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
-        onPurchase: PropTypes.func.isRequired,
-        purchase: PropTypes.instanceOf(PurchaseModel),
+        onSale: PropTypes.func.isRequired,
+        sale: PropTypes.instanceOf(Sale),
     }
 
     @computed get ticketName() {
-        return pluralize('ticket', this.props.purchase.qty);
+        return pluralize('ticket', this.props.sale.qty);
     }
 
     render() {
-        const { purchase, purchase: { time: { show } } } = this.props;
+        const { sale, sale: { time: { show } } } = this.props;
 
         return (
             <Layer
@@ -41,13 +41,13 @@ export default class PurchaseReceipt extends React.PureComponent {
                 >
                     <h2>Thank you for purchasing tickets to {show.title}!</h2>
                     <Paragraph>
-                        The transaction id for this order is {purchase.identifier}.  If you
+                        The transaction id for this order is {sale.identifier}.  If you
                         need to contact us regarding the order, please mention this id so we
                         can find your records.
                     </Paragraph>
                     <Anchor
                         target="_blank"
-                        href={purchase.tickets_url}
+                        href={sale.tickets_url}
                         icon={<TicketIcon />}
                         primary={true}
                         align="center"
@@ -55,7 +55,7 @@ export default class PurchaseReceipt extends React.PureComponent {
                     />
                     <Paragraph size="large">
                         We’ve also emailed you a receipt with
-                        the {this.ticketName} to {purchase.email}.
+                        the {this.ticketName} to {sale.email}.
                     </Paragraph>
                     <h3>
                         See you at the show!

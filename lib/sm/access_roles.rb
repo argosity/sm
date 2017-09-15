@@ -12,6 +12,7 @@ module Hippo::Access
             grant SM::Venue
             grant SM::Presenter
             grant SM::ShowTime
+            grant SM::Payment
         end
 
     end

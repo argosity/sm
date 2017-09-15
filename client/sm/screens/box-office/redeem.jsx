@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, observable } from 'mobx';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import PropTypes   from 'prop-types';
 import Layer       from 'grommet/components/Layer';

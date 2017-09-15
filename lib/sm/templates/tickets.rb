@@ -4,12 +4,12 @@ module SM::Templates
         identifier 'tickets'
 
         def record
-            @record ||= SM::Purchase.find_by(identifier: id)
+            @record ||= SM::Sale.find_by(identifier: id)
         end
 
         def variables
             super.merge({
-                purchase: record
+                sale: record
             })
         end
 

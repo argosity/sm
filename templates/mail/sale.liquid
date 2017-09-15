@@ -4,17 +4,17 @@
       <tr>
         <td>
           <p style="font-size: 120%;">
-            Hello {{ purchase.name }},
+            Hello {{ sale.name }},
           </p>
           <p>
             Thanks purchasing tickets to {{ show.title }}.
           </p>
           <p>
-            Your receipt ID is {{ purchase.identifier }}.
+            Your receipt ID is {{ sale.identifier }}.
             Please mention that number in correspondence with us so we can help you faster.
           </p>
           <p>
-            <a href="{{ purchase.tickets_url }}">Download Tickets</a>
+            <a href="{{ sale.tickets_url }}">Download Tickets</a>
           </p>
           <p style="margin-top: 20px;">
             {{ company_name }}

@@ -1,7 +1,7 @@
 FactoryGirl.define do
     factory :show_time, class: SM::ShowTime do
-        association :tenant, strategy: :build
-        association :show, strategy: :build
+        tenant {  Hippo::Tenant.current }
+        association :show
         occurs_at { rand(show.visible_during) }
     end
 end
