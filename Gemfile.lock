@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 7a43946154f1aab51923f7d8ff46095ee8c70d99
+  revision: f63f19f4eb2f266434d721c866e226fb93b4a097
   branch: master
   specs:
     hippo-fw (0.9.7)
@@ -143,7 +143,7 @@ GEM
     formatador (0.2.5)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
-    google-protobuf (3.4.0.2)
+    google-protobuf (3.4.1)
     googleauth (0.5.3)
       faraday (~> 0.12)
       jwt (~> 1.4)
