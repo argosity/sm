@@ -6,7 +6,7 @@ describe SM::Handlers::Shows, api: true, vcr: VCR_OPTS do
     let (:embed) { FactoryGirl.create :embed }
 
     it "retrieves own shows" do
-        get "/api/sm/embed/show\s/#{embed.identifier}.json"
+        get "/api/sm/embed/show-times/#{embed.identifier}.json"
         expect(last_response).to be_ok
     end
 
