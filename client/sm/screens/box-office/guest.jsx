@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { action } from 'mobx';
-import { observer } from 'mobx-react';
 import { sumBy } from 'lodash';
 import cn from 'classnames';
 import moment from 'moment';

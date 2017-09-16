@@ -29,7 +29,9 @@ export default class Redemption extends BaseModel {
         return this.sale.remainingQty;
     }
 
-    set syncData(s) { }
+    set syncData(s) {
+        this.update(s);
+    }
 
     get syncData() {
         return pick(this, 'qty', 'sale_id');

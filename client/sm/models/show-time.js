@@ -3,7 +3,7 @@ import Big from 'big.js';
 import { sprintf } from 'sprintf-js';
 import { action } from 'mobx';
 import { get } from 'lodash';
-import Config from 'hippo/config'
+import Config from 'hippo/config';
 import {
     BaseModel, identifiedBy, field, identifier, belongsTo, computed, session,
 } from './base';
