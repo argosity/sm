@@ -12,6 +12,10 @@ module SM
             compose_query_using_detail_view(view: 'show_sales', join_to: 'show_time_id')
         }, export: true
 
+        scope :purchasable, lambda{ |can_purchase = true|
+            joins(:show).where(shows: { can_purchase: can_purchase })
+        }, export: true
+
         def price
             ours = super
             ours.blank? ? show.price : ours

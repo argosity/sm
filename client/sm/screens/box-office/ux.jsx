@@ -47,7 +47,6 @@ export default class GuestUX {
         }
     }
 
-
     @action.bound
     onCheckInComplete() {
         this.redemption = null;
@@ -88,10 +87,6 @@ export default class GuestUX {
         this.pubSubUnsubscribe();
         PubSub.channel.subscribe(`/show/redemption/${time.id}`, this.onRedemption);
         this.time = time;
-
-        //   this.query.autoFetch = false;
-        //   this.query.reset();
-    // }
     }
 
     @action.bound
