@@ -26,16 +26,14 @@
     }
     .date {
         list-style: none;
-        display: inline;
-        margin-left: 0.5rem;
-        &:before {
-            content: ":";
-            color: $border-color;
+        display: inline-block;
+        &:after {
+            content: ",";
             margin-right: 0.5rem;
         }
-        &:first-child {
-            margin-left: 0;
-            &:before {
+        &:last-child {
+            margin-right: 0;
+            &:after {
                 content: "";
             }
         }
