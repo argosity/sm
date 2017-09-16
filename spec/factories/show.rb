@@ -8,6 +8,7 @@ FactoryGirl.define do
         visible_during { (Time.now - (rand * 10).to_i.days)...(Time.now + (rand * 10).to_i.days) }
         price { (rand*100).round(2) }
         capacity { (rand*100).to_i }
+
         online_sales_halt_mins_before  { (rand*90).to_i + 30 }
         can_purchase { true }
         association :venue, factory: :venue

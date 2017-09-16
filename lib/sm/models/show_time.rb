@@ -4,13 +4,9 @@ module SM
 
         belongs_to_tenant
         belongs_to :show, export: true
-        has_many :redemptions, inverse_of: :time, listen: { create: :on_redemption }
-
+        has_many :redemptions, inverse_of: :show_time, listen: { create: :on_redemption }
+        has_many :sales
         validates :occurs_at, presence: true
-
-        scope :sales, lambda { |*|
-            compose_query_using_detail_view(view: 'show_sales', join_to: 'show_time_id')
-        }, export: true
 
         scope :purchasable, lambda{ |can_purchase = true|
             joins(:show).where(shows: { can_purchase: can_purchase })

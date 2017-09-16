@@ -10,8 +10,9 @@ import DoneIcon from 'grommet/components/icons/base/Compliance';
 import MailIcon from 'grommet/components/icons/base/Mail';
 import UX from './ux';
 
-@observer
-export default class Guest extends React.PureComponent {
+// note this does not use pure componenent
+// it needs to udpate when the row has redemptions added
+export default class Guest extends React.Component {
 
     static propTypes = {
         rowIndex: PropTypes.number.isRequired,
@@ -28,7 +29,7 @@ export default class Guest extends React.PureComponent {
         const { style, row } = this.props;
         const redeemed = sumBy(row[UX.FIELDS.REDEMPTIONS], 'qty');
         const full = (0 === (row[UX.FIELDS.QTY] - redeemed));
-        const doneIcon = full ? <DoneIcon size="medium" /> : null;
+        const doneIcon = full ? <DoneIcon size="xsmall" /> : null;
         return (
             <div
                 className={cn('guest', { full })}
@@ -38,7 +39,7 @@ export default class Guest extends React.PureComponent {
                     className="grid"
                     onClick={full ? null : this.onRedeem}
                 >
-                    <div className="name">{row[UX.FIELDS.NAME]}{doneIcon}</div>
+                    <div className="name">{doneIcon}{row[UX.FIELDS.NAME]}</div>
                     <div className="ident">{row[UX.FIELDS.IDENTIFIER]}</div>
                     <div className="rs">
                         Purchased: <b>{row[UX.FIELDS.QTY]}</b>; Redeemed: <b>{redeemed}</b>

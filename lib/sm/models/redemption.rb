@@ -5,9 +5,9 @@ module SM
 
         belongs_to :sale
         belongs_to :show
-        belongs_to :time, class_name: 'SM::ShowTime'
+        belongs_to :show_time, class_name: 'SM::ShowTime'
 
-        validates :show, :sale, :time, presence: true
+        validates :show, :sale, :show_time, presence: true
         validate :ensure_qty_is_correct
         before_validation :set_defaults
 
@@ -20,8 +20,10 @@ module SM
         end
 
         def set_defaults
-            self.time ||= sale.time if sale
-            self.show ||= time.show if time
+            if sale
+                self.show ||= sale.show
+                self.show_time ||= sale.show_time
+            end
         end
     end
 

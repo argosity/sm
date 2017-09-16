@@ -98,7 +98,7 @@ export default class GuestUX {
     @action.bound
     onRedemption(data) {
         this.query.rows.forEach((r) => {
-            if (r[this.fields.TIME_ID] === data.sale_id) {
+            if (r[this.fields.ID] === data.sale_id) {
                 r[this.fields.REDEMPTIONS].push(data);
                 this.query.results.rowUpdateCount += 1;
             }

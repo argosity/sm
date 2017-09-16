@@ -10,6 +10,7 @@ import Button from 'grommet/components/Button';
 import Box from 'grommet/components/Box';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 import SearchIcon from 'grommet/components/icons/base/Search';
+import DocumentDownload from 'grommet/components/icons/base/DocumentDownload';
 import ShowTime from '../models/show-time';
 import GuestList from './box-office/guest-list';
 import Sale from '../models/sale';
@@ -56,6 +57,16 @@ export default class BoxOffice extends React.PureComponent {
     //     this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
     // }
 
+    renderDetails() {
+        if (this.time.isNew) { return null; }
+        return (
+            <div>
+                <span>{moment(this.time.occurs_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}</span>
+                <Button plain icon={<DocumentDownload />} href={this.time.xlsURL} />
+            </div>
+        );
+    }
+
     render() {
         const { time, query, isShowingSearch } = this;
 
@@ -86,7 +97,7 @@ export default class BoxOffice extends React.PureComponent {
                         />
                     </h3>
                     <div>
-                        {time.isNew ? '' : moment(time.occurs_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                        {this.renderDetails()}
                     </div>
                 </Box>
 

@@ -13,6 +13,7 @@ module Hippo::Access
             grant SM::Presenter
             grant SM::ShowTime
             grant SM::Payment
+            grant SM::Redemption
         end
 
     end

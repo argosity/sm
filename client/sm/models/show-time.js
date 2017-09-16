@@ -3,6 +3,7 @@ import Big from 'big.js';
 import { sprintf } from 'sprintf-js';
 import { action } from 'mobx';
 import { get } from 'lodash';
+import Config from 'hippo/config'
 import {
     BaseModel, identifiedBy, field, identifier, belongsTo, computed, session,
 } from './base';
@@ -39,6 +40,10 @@ export default class ShowTime extends BaseModel {
 
     @computed get pricedShow() {
         return Big(this.price || get(this.show, 'price', 0));
+    }
+
+    @computed get xlsURL() {
+        return `${Config.api_path}/sm/show-time/${this.id}/sales-report.xlsx`;
     }
 
     @action.bound

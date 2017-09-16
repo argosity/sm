@@ -1,3 +1,4 @@
+import { pick } from 'lodash';
 import {
     BaseModel, identifiedBy, identifier, field, session, belongsTo,
 } from './base';
@@ -9,6 +10,7 @@ export default class Redemption extends BaseModel {
 
     @field qty = 0;
     @field sale_id;
+
     @field({ type: 'date' }) created_at;
     @session sale;
     @session rowIndex;
@@ -18,13 +20,19 @@ export default class Redemption extends BaseModel {
     constructor(attrs) {
         super(attrs);
         if (this.sale) {
-            this.sale_id = this.sale.sale_id;
+            this.sale_id = this.sale.id;
             this.qty = this.maxQty;
         }
     }
 
     get maxQty() {
         return this.sale.remainingQty;
+    }
+
+    set syncData(s) { }
+
+    get syncData() {
+        return pick(this, 'qty', 'sale_id');
     }
 
 }

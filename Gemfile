@@ -10,6 +10,8 @@ gem "hippo-fw", git: "https://github.com/argosity/hippo", branch: 'master'
 # gem 'shrine-memory'
 # gem "hippo", '0.8.3'
 
+gem 'axlsx', '~> 2.1.0.pre'
+
 group :test, :development do
     gem 'byebug'
     gem 'capistrano', '~> 3.8'

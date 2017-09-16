@@ -12,7 +12,7 @@ import ShowTime from '../models/show-time';
 export default class Sale extends BaseModel {
 
     @identifier({ type: 'string' }) identifier;
-
+    @field id;
     @session token;
 
     @field name;
