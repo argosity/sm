@@ -6,13 +6,14 @@ describe SM::Templates::Sale do
     let (:sale) { FactoryGirl.create :sale, show_time: show.times[0] }
 
     it "saves a transaction" do
-
         show.build_image({ file: Pathname.new(__FILE__).dirname.join('../../fixtures/logo.png').open })
         presenter.build_logo({ file: Pathname.new(__FILE__).dirname.join('../../fixtures/presenter.png').open })
         presenter.save!
         show.save!
         email = SM::Templates::Sale.create(sale)
-        File.write '/tmp/spendily-email.html', email.body.raw_source
+        expect(email.to).to eq [sale.email]
+        expect(email.body.raw_source).to include show.title
+        expect(email.body.raw_source).to include sale.name
     end
 
 end
