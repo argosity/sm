@@ -33,7 +33,7 @@ module SM
         end
 
         def total
-            payments.sum(&:amount)
+            show_time.price * qty
         end
 
         def tickets_url
