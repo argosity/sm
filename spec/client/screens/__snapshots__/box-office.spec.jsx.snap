@@ -53,9 +53,7 @@ exports[`Screen Gate renders and matches snapshot 1`] = `
         </span>
       </button>
     </h3>
-    <div>
-      
-    </div>
+    <div />
   </div>
   <div
     className="grommetux-box grommetux-box--direction-row grommetux-box--justify-end grommetux-box--responsive grommetux-box--pad-none"

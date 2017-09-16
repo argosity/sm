@@ -25,6 +25,15 @@ export default class ShowTime extends BaseModel {
         .add(1, 'week')
         .toDate();
 
+    constructor(attrs) {
+        super(attrs);
+        if (this.show) {
+            this.price = (this.price || this.show.price);
+            this.capacity = (this.capacity || this.show.capacity);
+        }
+    }
+
+
     @computed get formattedOccursAt() {
         const format = this.show.commonTime ? 'MMM Do YYYY' : 'h:mma MMM Do YYYY';
         return moment(this.occurs_at).format(format);
@@ -48,9 +57,7 @@ export default class ShowTime extends BaseModel {
 
     @action.bound
     onDelete() {
-        if (!this.show.isNew) {
-            this.destroy();
-        }
+        if (!this.isNew) { this.destroy(); }
         this.show.times.remove(this);
     }
 
