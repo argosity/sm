@@ -23,15 +23,23 @@ module SM
 
             def variables
                 show = sale.show
+                tenant = sale.tenant
                 vars = {
-                    'company_name' => sale.tenant.name,
+                    'seller' => {
+                        name: tenant.name,
+                        logo: image_json(Hippo::SystemSettings.config.logo)
+                    },
                     'sale' => sale.as_json(
-                        methods: %w{ tickets_url },
+                        methods: %w{tickets_url total},
                         only: %w{identifier name email qty tickets_url}
                     ),
-                    'show' => show
-                                  .as_json(only: %w{title sub_title description occurs_at})
-                                  .merge('image' => image_json(show.image))
+                    'venue' => show.venue.as_json(only: %w{name address}),
+                    'show' => show.as_json(only: %w{title sub_title description})
+                                  .merge('image' => image_json(show.image)),
+                    'show_time' => {
+                        'price' => sale.show_time.price,
+                        'occurs_at' => sale.show_time.occurs_at_in_venue_tz
+                    }
                 }
                 if show.presenter
                     vars['presenter'] = show.presenter

@@ -1,43 +1,110 @@
 <html>
-  <body>
-    <table>
-      <tr>
-        <td>
-          <p style="font-size: 120%;">
-            Hello {{ sale.name }},
-          </p>
-          <p>
-            Thanks purchasing tickets to {{ show.title }}.
-          </p>
-          <p>
-            Your receipt ID is {{ sale.identifier }}.
-            Please mention that number in correspondence with us so we can help you faster.
-          </p>
-          <p>
-            <a href="{{ sale.tickets_url }}">Download Tickets</a>
-          </p>
-          <p style="margin-top: 20px;">
-            {{ company_name }}
-          </p>
-        </td>
-        <td>
-          {% if presenter %}
-          <h3>
+  <body style="font-family: arial; font-size: 16px; color: #373533;">
+    <br>
+    <br>
+  {% if seller.logo %}
+    <img src="{{ seller.logo.url }}" alt="{{ seller.name }} logo" width="{{ seller.logo.width }}" height="{{ seller.logo.height }}">
+  {% else %}
+    <h1>{{ seller.name }}</h1>
+  {% endif %}
+
+    <center>
+      <table style="max-width: 850px" border="0" bordercolor="#FFCC00" cellpadding="10" cellspacing="0">
+        <tr>
+          <td><h2>Thank You!</h2></td>
+          <td align="right">Order Identifier: {{ sale.identifier }}</td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <h4>Hello {{ sale.name }},</h4>
+            <h5>You're on the list!</h5>
+            <p style="margin-top: 20px;">
+              Your order has been placed and we've reserved you {{ sale.qty }} seats for {{ show.title }}.
+            </p>
+            <p style="margin-top: 20px;">
+              Show time is {{ show_time.occurs_at | date: "%H:%M%P on %a %b %d, %y" }} at:
+            </p>
+            <p>
+              <address>
+                {{ venue.name }}
+                <br>
+                {{ venue.address }}
+              </address>
+              <br>
+              <a href="https://www.google.com/maps/place/{{ venue.name | url_encode }},+{{ venue.address | url_encode}}">View on Google Maps</a>
+            </p>
+            <p>
+
+            </p>
+            <p style="margin-top: 40px; text-align: center">
+              <a href="{{ sale.tickets_url }}">Download Tickets</a>
+            </p>
+          </td>
+          <td valign="top">
+            {% if presenter %}
+
             {% if presenter.logo %}
             <img src="{{ presenter.logo.url }}" width="{{ presenter.logo.width }}" height="{{ presenter.logo.height }}">
+            <br>
+            <h3>Presents:</h3>
+            <br>
             {% else %}
-            {{ presenter.name }}
-            {% endif %}
-            Presents:
-          </h3>
-          <br>
-          {% endif %}
-          <h1>{{show.title}}</h1>
-          {% if show.image %}
-          <img src="{{ show.image.url }}" width="{{ show.image.width }}" height="{{ show.image.height }}">
-          {% endif %}
-        </td>
-      </tr>
-    </table>
+            <h3>{{ presenter.name }} Presents</h3
+                                               {% endif %}
+
+                                               <br>
+                                               {% endif %}
+                                               <h3>{{show.title}}</h3>
+                                               {% if show.image %}
+                                               <img src="{{ show.image.url }}" width="{{ show.image.width }}" height="{{ show.image.height }}">
+                                               {% endif %}
+          </td>
+        </tr>
+      </table>
+
+      <br>
+      <br>
+      <hr>
+      <br>
+      <br>
+
+
+      <table border="0" bordercolor="#FFCC00" width="700" cellpadding="10" cellspacing="0">
+        <thead>
+          <tr>
+            <th align="left" colspan="2"><strong>ITEM</strong></th>
+            <th align="right"><strong>Price</strong></th>
+            <th align="center"><strong>QTY</strong></th>
+            <th align="right"><strong>TOTAL</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td width="120" valign="top">
+              {% if show.image %}
+              <img src="{{ show.image.url }}" width="120">
+              {% endif %}
+            </td>
+
+            <td valign="top">
+                {{ show.title }}
+                <br>
+                {{ show_time.occurs_at | date: "%H:%M%P on %a %b %d, %y" }}
+            </td>
+
+            <td valign="top" align="right">
+              {{ show_time.price }}
+            </td>
+
+            <td valign="top" align="center">
+              {{ sale.qty }}
+            </td>
+
+            <td valign="top" align="right">
+              {{ sale.total }}
+            </td>
+        </tbody>
+      </table>
+    </center>
   </body>
 </html>

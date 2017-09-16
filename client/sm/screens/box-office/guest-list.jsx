@@ -47,8 +47,8 @@ export default class GuestList extends React.PureComponent {
             <Box
                 className={'guest-list'}
                 align='stretch' direction='column'
-                pad={{ between: 'medium' }}
-                margin={{ vertical: 'medium' }}
+                pad={{ between: 'small' }}
+
                 flex
             >
                 <Redeem

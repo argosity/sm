@@ -81,9 +81,7 @@ module SM
             end
 
             def email_receipt(sale)
-#                Hippo::Tenant.system.perform do
                 SM::Templates::Sale.create(sale).deliver
-#                end
             end
 
         end
