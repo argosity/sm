@@ -7,7 +7,7 @@ module SM
 
         belongs_to :venue
         belongs_to :presenter
-
+        belongs_to :message
         has_one :image, as: :owner, class_name: 'Hippo::Asset', dependent: :destroy, export: true
 
         has_many :page_images, -> { where owner_type: "PageImage" },

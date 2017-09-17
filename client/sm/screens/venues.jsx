@@ -18,6 +18,7 @@ import Asset from 'hippo/components/asset';
 import Screen from 'hippo/components/screen';
 import Query from 'hippo/models/query';
 import Venue from '../models/venue';
+import Message from '../models/message';
 
 @observer
 export default class Venues extends React.PureComponent {
@@ -83,53 +84,56 @@ export default class Venues extends React.PureComponent {
         const { screen } = this.props;
 
         return (
-            <Screen screen={screen}>
-                <Form state={this.formState} tag="div">
-                    <Header colorIndex="light-2" align="center" pad={{ between: 'small' }} fixed>
-                        <SaveButton
-                            model={this.venue}
-                            onClick={this.isSavable ? this.onSave : null}
-                        />
-                        <Button
-                            plain
-                            icon={<ScheduleNewIcon />}
-                            label='Add New Venue'
-                            onClick={this.onReset}
-                        />
+            <Form state={this.formState} tag="div" screen={screen}>
+                <Header colorIndex="light-2" align="center" pad={{ between: 'small' }} fixed>
+                    <SaveButton
+                        model={this.venue}
+                        onClick={this.isSavable ? this.onSave : null}
+                    />
+                    <Button
+                        plain
+                        icon={<ScheduleNewIcon />}
+                        label='Add New Venue'
+                        onClick={this.onReset}
+                    />
 
-                    </Header>
-                    <Warning message={this.errorMessage} />
+                </Header>
+                <Warning message={this.errorMessage} />
 
-                    <Row>
-                        <RecordFinder
-                            name="code" recordsTitle='Venue' onRecordFound={this.onRecordFound}
-                            query={this.query} xs={4} validate={nonBlank}
-                        />
-                        <Field xs={8} name="name" validate={nonBlank} />
-                    </Row>
-                    <Row>
-                        <Field xs={12} name="address" />
-                    </Row>
-                    <Row>
-                        <Asset xs={12} sm={6} model={this.venue} name="logo" />
-                        <Col lg={9} xs={6}>
-                            <Row>
-                                <Field
-                                    type="number" name="capacity" lg={6} xs={12}
-                                    validate={numberValue} />
-                                <Field
-                                    label="Minutes before show to halt sales"
-                                    type="number" name="online_sales_halt_mins_before" lg={6} xs={12}
-                                    validate={numberValue} />
-                                <Field
-                                    name="timezone" type="timezone"
-                                    label="Time Zone" lg={6} xs={12}
-                                />
-                            </Row>
-                        </Col>
-                    </Row>
-                </Form>
-            </Screen>
+                <Row>
+                    <RecordFinder
+                        name="code" recordsTitle='Venue' onRecordFound={this.onRecordFound}
+                        query={this.query} xs={4} validate={nonBlank}
+                    />
+                    <Field xs={8} name="name" validate={nonBlank} />
+                </Row>
+                <Row>
+                    <Field xs={12} sm={8} name="address" />
+                    <Field
+                        name="message_id" label="Order Confirmation"
+                        type="select" collection={Message.all.asOptions}
+                        xs={12} sm={4}
+                    />
+                </Row>
+                <Row>
+                    <Asset xs={12} sm={6} model={this.venue} name="logo" />
+                    <Col lg={9} xs={6}>
+                        <Row>
+                            <Field
+                                type="number" name="capacity" lg={6} xs={12}
+                                validate={numberValue} />
+                            <Field
+                                label="Minutes before show to halt sales"
+                                type="number" name="online_sales_halt_mins_before" lg={6} xs={12}
+                                validate={numberValue} />
+                            <Field
+                                name="timezone" type="timezone"
+                                label="Time Zone" lg={6} xs={12}
+                            />
+                        </Row>
+                    </Col>
+                </Row>
+            </Form>
         );
     }
 

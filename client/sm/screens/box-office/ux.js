@@ -115,7 +115,7 @@ export default class GuestUX {
 
     @action.bound
     onMail(rowIndex) {
-        this.emailSale = this.query.resuls.modelForRow(rowIndex);
+        this.emailSale = this.query.results.modelForRow(rowIndex);
     }
     @action.bound
     onMailSend() {

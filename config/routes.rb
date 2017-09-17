@@ -9,10 +9,11 @@ Hippo::API.routes.for_extension 'sm' do
     resources SM::Presenter
     resources SM::Embed
     resources SM::Redemption
+    resources SM::Message, path: 'message/defaults', controller: SM::Handlers::MessageDefaults
+    resources SM::Message
+
     get 'show-time/:id/sales-report.xlsx' do
-        resp = SM::Handlers::Shows.xls_sale_report(params[:id])
-        headers.merge!(resp.headers)
-        resp.xlsx
+        SM::Handlers::Shows.xls_sale_report(params[:id], headers)
 
     end
 end

@@ -6,12 +6,10 @@ module SM
         class Sale < Hippo::API::ControllerBase
 
             def update
-                sale = SM::Sale.find(params[:id])
+                sale = SM::Sale.find_by(identifier: params[:id])
                 if data['send_receipt']
                     sale.email = data['send_receipt']
-                    Hippo::Tenant.system.perform do
-                        SM::Templates::Sale.create(sale).deliver
-                    end
+                    SM::Templates::Sale.create(sale).deliver
                 end
                 std_api_reply(:update, {}, success: true)
             end

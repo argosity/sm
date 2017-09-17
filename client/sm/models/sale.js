@@ -23,6 +23,8 @@ export default class Sale extends BaseModel {
     @field time_identifier;
 
     @field tickets_url;
+    @field message_id;
+
     @session show_id;
     @session show_time_id;
     @session show_identifier;

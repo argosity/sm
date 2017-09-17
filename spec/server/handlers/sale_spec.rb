@@ -46,8 +46,9 @@ describe SM::Handlers::Sale, api: true, vcr: VCR_OPTS do
         end
     end
 
-    it 'sends email' do
+    it 'sends using a custom email' do
         with_payment_proccessor do
+            FactoryGirl.create :message, show: show, order_confirmation_subject: 'Yo, You Ordered '
             expect {
                 post '/api/sm/sale.json', request_data.to_json
             }.to change { SM::Sale.count }.by(1)

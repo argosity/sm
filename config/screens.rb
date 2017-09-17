@@ -23,6 +23,10 @@ Hippo::Screen.for_extension 'sm' do | screens |
         screen.icon        = "building-o"
         screen.group_id    = ""
     end
+    screens.define "messages" do | screen |
+        screen.title       = "Messages"
+        screen.icon        = "pencil-square-o"
+    end
     screens.define "embeds" do | screen |
         screen.title       = "Embedding"
         screen.description = ""

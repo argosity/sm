@@ -3,6 +3,14 @@ module SM
     module Templates
         class Sale < Mail
 
+            def self.default_subject
+                "Your tickets for {{show.title}}"
+            end
+
+            def self.default_body
+                SM::ROOT_PATH.join('templates', 'mail', 'sale.liquid').read
+            end
+
             attr_reader :sale
 
             def initialize(sale)
@@ -14,11 +22,25 @@ module SM
             end
 
             def subject
-                "Your tickets for #{sale.show.title}"
+                if custom_message
+                    ::Liquid::Template
+                        .parse( custom_message.order_confirmation_subject )
+                        .render(variables)
+                else
+                    Sale.default_subject
+                end
             end
 
             def to
                 sale.email
+            end
+
+            def custom_message
+                sale.show.message
+            end
+
+            def source
+                custom_message ? custom_message.order_confirmation_body : super
             end
 
             def variables

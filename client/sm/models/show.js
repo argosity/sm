@@ -29,6 +29,7 @@ export default class Show extends BaseModel {
     @field description = '';
 
     @field venue_id;
+    @field message_id;
     @field presenter_id;
 
     @field price;

@@ -14,7 +14,7 @@ module SM
             end
 
 
-            def self.xls_sale_report(show_id)
+            def self.xls_sale_report(show_id, headers)
                 st = SM::ShowTime.find(show_id)
                 pkg = Axlsx::Package.new do |p|
                     p.workbook.add_worksheet(:name => "Basic Worksheet") do |sheet|
@@ -38,14 +38,11 @@ module SM
                     end
                     p.use_shared_strings = true
                 end
-                OpenStruct.new(
-                    headers: {
-                        'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                        'Content-Disposition' => "attachment; filename=#{st.show.title.parameterize}-#{st.occurs_at.strftime('%Y-%m-%d')}.xlsx"
-
-                    },
-                    xlsx: pkg.to_stream
+                headers.merge!(
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'Content-Disposition' => "attachment; filename=#{st.show.title.parameterize}-#{st.occurs_at.strftime('%Y-%m-%d')}.xlsx"
                 )
+                pkg.to_stream
             end
         end
     end

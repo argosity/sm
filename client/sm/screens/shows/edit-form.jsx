@@ -16,7 +16,7 @@ import SaveButton from 'hippo/components/save-button';
 import Asset from 'hippo/components/asset';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import { observePubSub } from 'hippo/models/pub_sub';
-
+import Message from '../../models/message';
 import Venue from '../../models/venue';
 import Show from '../../models/show';
 import Presenter from '../../models/presenter';
@@ -62,7 +62,7 @@ class EditForm extends React.PureComponent {
     @action.bound
     onVenueChange({ newValue }) {
         if (!newValue) { return; }
-        const venue = find(Venue.sharedCollection, { id: newValue });
+        const venue = find(Venue.all, { id: newValue });
         if (venue) {
             this.formState.get('capacity').value = venue.capacity;
             this.formState.get('online_sales_halt_mins_before').value = venue.online_sales_halt_mins_before;
@@ -71,12 +71,8 @@ class EditForm extends React.PureComponent {
 
     @observable isEditingPage = false;
 
-    @computed get venues() {
-        return Venue.sharedCollection.map(opt => ({ id: opt.id, label: opt.name }));
-    }
-
     @computed get presenters() {
-        return Presenter.sharedCollection.map(opt => ({ id: opt.id, label: opt.name }));
+        return Presenter.all.map(opt => ({ id: opt.id, label: opt.name }));
     }
 
     @action.bound
@@ -144,7 +140,7 @@ class EditForm extends React.PureComponent {
 
                         <Field
                             name="venue_id" label="Venue"
-                            type="select" collection={this.venues} validate={nonBlank}
+                            type="select" collection={Venue.all.asOptions} validate={nonBlank}
                             xs={6} md={4} lg={3}
                         />
 
@@ -160,8 +156,6 @@ class EditForm extends React.PureComponent {
                             type="select" collection={this.presenters} xs={6} md={4} lg={3}
                         />
 
-                        <Field type="number" name="price" validate={numberValue} xs={6} md={4} lg={3} />
-
                         <Field
                             type="date" label="Visible After" name="visible_during.start"
                             validate={dateValue} xs={6} md={4} lg={3} />
@@ -169,11 +163,19 @@ class EditForm extends React.PureComponent {
                             type="date" label="Visible Until" name="visible_during.end"
                             validate={dateValue} xs={6} md={4} lg={3} />
 
-                        <Field type="checkbox" name="can_purchase" xs={6} md={4} lg={3} />
+                        <Field type="checkbox" name="can_purchase" label="Purchasable?" xs={6} md={4} lg={3} />
+                        <Field type="number" name="price" validate={numberValue} xs={6} md={4} lg={3} />
+
 
                         <Field
                             name="external_url" xs={6} md={4} lg={3}
                             validate={validURL({ allowBlank: true })} />
+
+                        <Field
+                            name="message_id" label="Order Confirmation"
+                            type="select" collection={Message.all.asOptions}
+                            xs={6} md={4} lg={3}
+                        />
 
                     </Row>
                     <Row>

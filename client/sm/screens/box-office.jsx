@@ -32,7 +32,7 @@ export default class BoxOffice extends React.PureComponent {
 
     query = new Query({
         src: ShowTime,
-        syncOptions: { include: 'show', with: ['purchasable'], order: { occurs_at: 'desc' } },
+        syncOptions: { include: 'show', with: { purchasable: true }, order: { occurs_at: 'desc' } },
         fields: [
             { id: 'id', visible: false, queryable: false },
             { id: 'shows.title', label: 'Title', flexGrow: 1 },

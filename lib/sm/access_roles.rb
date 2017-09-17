@@ -14,6 +14,7 @@ module Hippo::Access
             grant SM::ShowTime
             grant SM::Payment
             grant SM::Redemption
+            grant SM::Message
         end
 
     end

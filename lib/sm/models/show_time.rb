@@ -9,7 +9,8 @@ module SM
         validates :occurs_at, presence: true
 
         scope :purchasable, lambda{ |can_purchase = true|
-            joins(:show).where(shows: { can_purchase: can_purchase })
+            Hippo.logger_debug can_purchase
+            joins(:show).where(shows: { can_purchase: (can_purchase == true || can_purchase == 'true') })
         }, export: true
 
         def price
