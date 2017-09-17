@@ -1,11 +1,10 @@
-import { observe } from 'mobx';
 import Asset from 'hippo/models/asset';
 import {
-    BaseModel, identifiedBy, identifier, belongsTo, field, computed,
+    CachedModel, identifiedBy, identifier, belongsTo, field,
 } from './base';
 
 @identifiedBy('sm/presenter')
-export default class Presenter extends BaseModel {
+export default class Presenter extends CachedModel {
 
     @identifier id;
 
@@ -13,23 +12,5 @@ export default class Presenter extends BaseModel {
     @field name = '';
 
     @belongsTo({ model: Asset, inverseOf: 'owner' }) logo;
-
-    constructor(attrs) {
-        super(attrs);
-        observe(this, 'syncInProgress', ({ newValue, oldValue }) => {
-            if (!oldValue && newValue && newValue.isCreate) {
-                if (this.constructor.$cachedCollection) {
-                    this.constructor.$cachedCollection.push(this);
-                }
-            }
-        });
-    }
-
-    @computed static get sharedCollection() {
-        this.$cachedCollection = (
-            this.$cachedCollection || this.Collection.create([], { fetch: true })
-        );
-        return this.$cachedCollection;
-    }
 
 }
