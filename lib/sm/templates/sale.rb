@@ -24,10 +24,10 @@ module SM
             def subject
                 if custom_message
                     ::Liquid::Template
-                        .parse( custom_message.order_confirmation_subject )
+                        .parse(custom_message.order_confirmation_subject)
                         .render(variables)
                 else
-                    Sale.default_subject
+                    "Your tickets for #{sale.show.title}"
                 end
             end
 

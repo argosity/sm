@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row } from 'react-flexbox-grid';
 import Header   from 'grommet/components/Header';
 import Button   from 'grommet/components/Button';
 
@@ -15,7 +14,6 @@ import {
 import SaveButton from 'hippo/components/save-button';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
-import Screen from 'hippo/components/screen';
 import Query from 'hippo/models/query';
 import Message from '../models/message';
 

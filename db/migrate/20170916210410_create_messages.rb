@@ -9,5 +9,6 @@ class CreateMessages < ActiveRecord::Migration[5.0]
         end
         add_reference :venues, :message, foreign_key: true
         add_reference :shows, :message, foreign_key: true
+        add_column :shows, :ticket_instructions, :text
     end
 end

@@ -65,6 +65,7 @@ class EditForm extends React.PureComponent {
         const venue = find(Venue.all, { id: newValue });
         if (venue) {
             this.formState.get('capacity').value = venue.capacity;
+            this.formState.get('message_id').value = venue.message_id;
             this.formState.get('online_sales_halt_mins_before').value = venue.online_sales_halt_mins_before;
         }
     }
@@ -139,49 +140,63 @@ class EditForm extends React.PureComponent {
                         <Field name="description" xs={12} lg={6} />
 
                         <Field
-                            name="venue_id" label="Venue"
-                            type="select" collection={Venue.all.asOptions} validate={nonBlank}
-                            xs={6} md={4} lg={3}
-                        />
-
-                        <Field type="number" name="capacity" validate={numberValue} xs={6} md={4} lg={3} />
-                        <Field
-                            validate={numberValue}
-                            label="Minutes before show to halt sales"
-                            type="number" name="online_sales_halt_mins_before"
-                            xs={6} md={4} lg={3} />
-
-                        <Field
                             name="presenter_id" label="Presented By"
-                            type="select" collection={this.presenters} xs={6} md={4} lg={3}
-                        />
+                            type="select" collection={this.presenters} xs={6} md={4} lg={3} />
 
                         <Field
                             type="date" label="Visible After" name="visible_during.start"
                             validate={dateValue} xs={6} md={4} lg={3} />
+
                         <Field
                             type="date" label="Visible Until" name="visible_during.end"
                             validate={dateValue} xs={6} md={4} lg={3} />
 
                         <Field type="checkbox" name="can_purchase" label="Purchasable?" xs={6} md={4} lg={3} />
-                        <Field type="number" name="price" validate={numberValue} xs={6} md={4} lg={3} />
 
+                        <Field type="number" name="price" validate={numberValue} xs={6} md={4} lg={3} />
 
                         <Field
                             name="external_url" xs={6} md={4} lg={3}
                             validate={validURL({ allowBlank: true })} />
 
                         <Field
-                            name="message_id" label="Order Confirmation"
-                            type="select" collection={Message.all.asOptions}
-                            xs={6} md={4} lg={3}
-                        />
+                            name="venue_id" label="Venue"
+                            type="select" collection={Venue.all.asOptions} validate={nonBlank}
+                            xs={6} md={4} lg={3} />
 
                     </Row>
+
                     <Row>
                         <Asset model={show} name="image" sm={5} xs={12} />
                         <ShowTimes show={show} sm={7} xs={12}/>
                     </Row>
+                    <Row>
+
+                        <Field
+                            type="number" name="capacity" validate={numberValue}
+                            xs={4} />
+
+                        <Field
+                            validate={numberValue}
+                            label="Halt minutes"
+                            type="number" name="online_sales_halt_mins_before"
+                            xs={4} />
+
+                        <Field
+                            name="message_id" label="Order Messages"
+                            type="select" collection={Message.all.asOptions}
+                            xs={4} />
+
+                    </Row>
+                    <Row>
+                        <Field
+                            label="Instructions on tickets"
+                            style={{ height: '100%', minHeight: '300px' }}
+                            type="textarea" name="ticket_instructions"
+                            xs={12}
+                        />
+                    </Row>
+
                 </Form>
             </div>
         );
