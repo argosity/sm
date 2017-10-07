@@ -84,7 +84,7 @@ module SM
             end
 
             def system_settings_values
-                Hippo.config.secrets['payments']['square']
+                Hippo.config.secrets.dig('payments', 'square') || {}
             end
 
             def client_config_values
