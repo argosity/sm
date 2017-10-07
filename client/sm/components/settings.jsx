@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, computed } from 'mobx';
+import { action, observable } from 'mobx';
 import { autobind } from 'core-decorators';
 import { invoke, extend } from 'lodash';
 import Select from 'grommet/components/Select';
@@ -22,14 +22,12 @@ export default class SMSystemSettings extends React.PureComponent {
     childrenRefs = new Map();
 
     onSave() {
-        this.props.settings.paymentsVendor = this.paymentVendor;
+        this.props.settings.paymentsVendor = this.paymentsVendor;
         this.childrenRefs.forEach(panel => invoke(panel, 'onSave'));
-        Extensions.get('sm').data.payments.vendor = this.paymentVendor;
+        Extensions.get('sm').data.payments.vendor = this.paymentsVendor;
     }
 
-    @computed get paymentVendor() {
-        return this.props.settings.paymentsVendor;
-    }
+    @observable paymentsVendor;
 
     @autobind
     onChildMount(id, child) {
@@ -37,16 +35,17 @@ export default class SMSystemSettings extends React.PureComponent {
     }
 
     componentDidMount() {
+        this.paymentsVendor = this.props.settings.paymentsVendor;
         this.props.registerForSave(this);
     }
 
-    @action.bound setPaymentVendor({ option }) {
-        this.props.settings.paymentsVendor = option;
+    @action.bound setPaymentsVendor({ option }) {
+        this.paymentsVendor = option;
     }
 
-    renderPaymentVendor() {
-        if (!this.paymentVendor) { return null; }
-        const Tag = PaymentVendors[this.paymentVendor];
+    renderPaymentsVendor() {
+        if (!this.paymentsVendor) { return null; }
+        const Tag = PaymentVendors[this.paymentsVendor];
         const childProps = extend({}, this.props, {
             registerForSave: this.onChildMount,
         });
@@ -67,11 +66,11 @@ export default class SMSystemSettings extends React.PureComponent {
                     <Select
                         placeHolder=''
                         options={['Braintree', 'Square']}
-                        value={this.paymentVendor}
-                        onChange={this.setPaymentVendor}
+                        value={this.paymentsVendor}
+                        onChange={this.setPaymentsVendor}
                     />
                 </Box>
-                {this.renderPaymentVendor()}
+                {this.renderPaymentsVendor()}
 
             </div>
         );
