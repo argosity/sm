@@ -49,7 +49,7 @@ export default class BoxOffice extends React.PureComponent {
         this.sale = new Sale({ time: this.time });
     }
     @action.bound onSaleComplete() {
-        this.guestList.ux.addSale(sale);
+        this.guestList.ux.addSale(this.sale);
         this.sale = null;
     }
     @action.bound onSaleCancel() { this.sale = null; }

@@ -91,7 +91,8 @@ export default class Show extends React.PureComponent {
                     </Col>
                     <Col sm={6} className="occurs">
                         <b>Occurs:</b>
-                        <ul>{map(occurances, o => <li key={o.id}>{dt(o.occurs_at)}</li>)}</ul>
+                        <ul>{map(occurances, o =>
+                            <li key={o.id || 'new'}>{dt(o.occurs_at)}</li>)}</ul>
                     </Col>
 
                 </Row>

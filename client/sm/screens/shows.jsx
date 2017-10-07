@@ -77,10 +77,11 @@ export default class Shows extends React.PureComponent {
 
     @action.bound
     onAdd() {
-        const last = this.query.results.rows.length;
-        this.query.results.insertRow(last);
-        const show = this.query.results.modelForRow(last);
-        this.onEditRow(last, show);
+        const { model, index } = this.query.results.insertRow({
+            index: -1, observeSave: true,
+        });
+        model.times.push({});
+        this.onEditRow(index, model);
     }
 
     @computed get listRenderKey() {

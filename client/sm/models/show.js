@@ -53,9 +53,6 @@ export default class Show extends BaseModel {
 
     constructor(attrs) {
         super(attrs);
-        if (!this.times.length) {
-            this.times.push({});
-        }
     }
 
     set(attrs = {}) {
