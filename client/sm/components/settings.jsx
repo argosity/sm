@@ -1,22 +1,19 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable, action, computed } from 'mobx';
+import { action, computed } from 'mobx';
 import { autobind } from 'core-decorators';
 import { invoke, extend } from 'lodash';
-
 import Select from 'grommet/components/Select';
-import { Row, Col } from 'react-flexbox-grid'
 import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
+import Extensions from 'hippo/extensions';
 import Braintree from './settings/braintree';
 import Square from './settings/square';
-import Extension from '../extension';
-import Extensions from 'hippo/extensions';
 
 const PaymentVendors = {
     Braintree,
     Square,
-}
+};
 
 
 @observer

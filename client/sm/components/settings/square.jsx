@@ -3,18 +3,20 @@ import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { get } from 'lodash';
-import { Row } from 'react-flexbox-grid';
 
-import Heading from 'grommet/components/Heading';
-import SquareConfigModel from '../../models/square-config';
 import Anchor from 'grommet/components/Anchor';
 import PopoutWindow from 'hippo/components/popout-window';
 import Extensions from 'hippo/extensions';
+import SquareConfigModel from '../../models/square-config';
 
 const KEY = 'square';
 
 @observer
 export default class SquareConfig extends React.PureComponent {
+
+    static propTypes = {
+        registerForSave: PropTypes.func.isRequired,
+    }
 
     config = new SquareConfigModel()
 
@@ -53,7 +55,7 @@ export default class SquareConfig extends React.PureComponent {
         return (
             <PopoutWindow
                 title="Link Square Account"
-                ref={(r) => {this.popOpen = r}}
+                ref={(r) => { this.popOpen = r; }}
                 url={url}
                 onClose={this.onLinkWindowClose}
                 options={{
@@ -84,6 +86,7 @@ export default class SquareConfig extends React.PureComponent {
                 {this.config.isAuthorized ? this.renderLinked() : this.renderNewLink()}
                 {this.renderLinkWindow()}
             </div>
-        )
+        );
     }
+
 }

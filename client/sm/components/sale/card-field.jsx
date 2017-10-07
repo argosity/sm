@@ -11,7 +11,6 @@ export default class PurchaseField extends React.PureComponent {
 
     @action.bound
     onFocus() {
-        //this.wrapper._onFocus(); // eslint-disable-line no-underscore-dangle
         this.errorMessage = '';
     }
 
@@ -25,7 +24,6 @@ export default class PurchaseField extends React.PureComponent {
     @observable errorMessage = '';
 
     @action.bound onValidityChange({ isValid }) {
-        console.log(this.props.type, "VALID", isValid)
         this.isValid = isValid;
         this.errorMessage = isValid ? '' : this.props.errorMessage;
     }

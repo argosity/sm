@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { autobind } from 'core-decorators';
 import { observable, action, computed } from 'mobx';
-import { get, extend, each, findKey, map } from 'lodash';
+import { get, extend, each, map } from 'lodash';
 import { observer } from 'mobx-react';
 import PaymentFields from 'payment-fields';
 import { Row, Col } from 'react-flexbox-grid';
@@ -98,7 +98,8 @@ export default class SaleForm extends React.PureComponent {
                 this.formState.persistTo(sale);
 
                 extend(this.payment, {
-                    nonce: token, amount: this.totalAmount,
+                    nonce: token,
+                    amount: this.totalAmount,
                     card_type: cardData.card_brand,
                     digits: cardData.last_4,
                 });
@@ -220,7 +221,6 @@ export default class SaleForm extends React.PureComponent {
 
     render() {
         const { formState, props: { sale } } = this;
-        console.log(SM.paymentsVendor, this.payment.token);
         const fieldProps = { sm: 6, xs: 12 };
 
         return (

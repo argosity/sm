@@ -83,12 +83,6 @@ module SM
                 { token: reply.token, locations: locations_api.list_locations.locations }
             end
 
-            # def location_id
-            #     hpc = Hippo::SystemSettings.config.settings['square']
-
-            #     hpc ? hpc['location_id'] : nil
-            # end
-
             def system_settings_values
                 Hippo.config.secrets['payments']['square']
             end

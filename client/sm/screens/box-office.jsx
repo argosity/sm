@@ -110,11 +110,11 @@ export default class BoxOffice extends React.PureComponent {
 
                 <Box direction="row" justify="end">
                     {time.isNew ? null : (
-                         <Button
-                             icon={<CreditCardIcon />}
-                             label={'Sale'}
-                             onClick={this.onSaleClick}
-                         />)}
+                        <Button
+                            icon={<CreditCardIcon />}
+                            label={'Sale'}
+                            onClick={this.onSaleClick}
+                        />)}
                 </Box>
 
                 <GuestList ref={this.setGuestList} time={time} />

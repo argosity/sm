@@ -51,10 +51,6 @@ export default class Show extends BaseModel {
     @hasMany({ model: ShowTime, inverseOf: 'show' }) times;
     @hasMany({ model: Asset, inverseOf: 'owner' }) page_images;
 
-    constructor(attrs) {
-        super(attrs);
-    }
-
     set(attrs = {}) {
         renameProperties(attrs, {
             image_details: 'image',
