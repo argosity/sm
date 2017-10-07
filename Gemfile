@@ -8,10 +8,12 @@ gem "hippo-fw", git: "https://github.com/argosity/hippo", branch: 'master'
 # gem "activerecord-multi-tenant", git: 'https://github.com/citusdata/activerecord-multi-tenant.git', branch: 'release-0.5.1'
 # gem "activerecord-multi-tenant", git: "https://github.com/nathanstitt/activerecord-multi-tenant", branch: 'fix/rails-version' # query_rewriter'
 # gem 'shrine-memory'
-# gem "hippo", '0.8.3'
+# gem "hippo-fw", '0.9.7'
 
 gem 'axlsx', '~> 2.1.0.pre'
-
+gem 'oauth2', '~> 1.4.0'
+gem 'square_connect', '~> 2.3.1'
+gem 'dotenv', '~> 2.2.1'
 group :test, :development do
     gem 'byebug'
     gem 'capistrano', '~> 3.8'

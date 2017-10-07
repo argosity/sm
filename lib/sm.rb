@@ -14,9 +14,9 @@ end
 ## A workaround for .constantize converting 'sm/foo' into 'Sm::Foo'
 Kernel::Sm = SM
 
-require_relative "sm/braintree_config"
 require_relative "sm/tenant_extensions"
 require_relative "sm/model"
+require_relative "sm/payments"
 require_relative "sm/access_roles"
 require_rel "sm/handlers/*.rb"
 require_relative "sm/templates/mail"

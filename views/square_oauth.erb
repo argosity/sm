@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>Square Authorized</title>
+      <link href="https://cdn.jsdelivr.net/npm/picnic@6.4.0/picnic.min.css" rel="stylesheet" type="text/css">
+      <style>
+        body { padding: 40px; }
+      </style>
+      <script>
+        function selectLocation(l) {
+          this.window.square = { location_id: l, authorization: '<%= token %>' };
+          this.window.close();
+        }
+      </script>
+    </head>
+    <body>
+      <% if false || locations.one? %>
+      <script>selectLocation('<%= locations.first.id %>')</script>
+      <% else %>
+      <h3>Select Location</h3>
+        <% locations.each do |l| %>
+        <a onClick="selectLocation('<%= l.id %>');" href="#" class="pseudo button stack">
+          <%= l.name %>
+        </a>
+        <% end %>
+      <% end %>
+    </body>
+</html>

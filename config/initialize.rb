@@ -10,16 +10,6 @@ Hippo.configure do | config |
     config.product_name = 'Show Maker'
 end
 
-require 'braintree'
-
-bt = Hippo.config.secrets.braintree
-Braintree::Configuration.environment = :sandbox
-Braintree::Configuration.merchant_id = bt.merchant_id
-Braintree::Configuration.public_key  = bt.pub_key
-Braintree::Configuration.private_key = bt.priv_key
-
-
-
 token = Hippo.config.secrets.dig('rollbar', 'server')
 if token
     require 'rollbar/middleware/sinatra'

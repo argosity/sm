@@ -30,6 +30,11 @@ class Hippo::API::Root
     get '/terms' do
         erb :terms
     end
+
+    get '/sq/auth' do
+        auth = SM::Payments::Square.authorize(params, request)
+        erb :square_oauth, locals: auth, layout: false
+    end
 end
 
 Hippo::API::Routing.root_view_route = lambda do

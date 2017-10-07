@@ -1,6 +1,7 @@
 .byebug_history
 *.gem
 *.rbc
+.env
 .DS_Store
 .bundle
 .config

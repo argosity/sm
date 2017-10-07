@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/dshtky2jcjpr96z3/transactions
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <transaction>
+          <amount>2001.00</amount>
+          <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
+          <options>
+            <submit-for-settlement type="boolean">true</submit-for-settlement>
+          </options>
+          <customer>
+            <first-name>nathan</first-name>
+            <last-name>nathan</last-name>
+            <phone>6522</phone>
+            <email>test@test.com</email>
+          </customer>
+          <type>sale</type>
+        </transaction>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.78.0
+      X-Apiversion:
+      - '4'
+      Authorization:
+      - Basic aG03bjZ2Yzg0amJyOTYydzo0MTNjYjNjOGFmMjliM2MzYmEzNDBjZmI3MTVmNDUzMg==
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Date:
+      - Sat, 07 Oct 2017 04:19:31 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 4y6kf87m57f2bcq7
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 62d07ee7-787a-419e-a405-bc570eeb0bcc
+      X-Runtime:
+      - '0.347074'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Sat, 07 Oct 2017 04:19:31 GMT
+recorded_with: VCR 3.0.3

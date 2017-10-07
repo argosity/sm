@@ -1,10 +1,11 @@
 // This is the client-side version of SM::Extension
 
 import Rollbar from 'rollbar';
+
 import {
     BaseExtension, identifiedBy, identifier,
 } from 'hippo/extensions/base';
-
+import Extensions from 'hippo/extensions';
 import Tenant from 'hippo/models/tenant';
 import SystemSettings from './components/settings';
 import AboutShowMaker from './components/about-show-maker';
@@ -49,6 +50,10 @@ export default class SMExtension extends BaseExtension {
 
     rootView() {
         return AboutShowMaker;
+    }
+
+    static get paymentsVendor() {
+        return Extensions.get('sm').data.payments.vendor;
     }
 
 }

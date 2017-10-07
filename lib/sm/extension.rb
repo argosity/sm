@@ -15,7 +15,15 @@ module SM
         # the setBootstrapData method in client/sm/Extension.coffee
         # when the app boots
         def client_bootstrap_data
-            { rollbar:  Hippo.config.secrets.dig('rollbar', 'client') }
+            {
+                rollbar:  Hippo.config.secrets.dig('rollbar', 'client'),
+                payments: {
+                    vendor: Hippo::SystemSettings.config.settings['paymentsVendor'],
+                    square: {
+                        url: SM::Payments::Square.authorization_url
+                    }
+                }
+            }
         end
 
     end

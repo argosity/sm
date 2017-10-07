@@ -47,6 +47,10 @@ export default class GuestUX {
         }
     }
 
+    addSale(sale) {
+        this.query.results.insertRow({ model: sale });
+    }
+
     @action.bound
     onCheckInComplete() {
         this.redemption = null;

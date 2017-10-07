@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://connect.squareup.com/v2/locations/CBASEDPaLCabJaF09RCTuXK7uZYgAQ/transactions
+    body:
+      encoding: UTF-8
+      string: '{"card_nonce":"fake-card-nonce-ok","reference_id":"zhYqxQztMUWp","amount_money":{"amount":403,"currency":"USD"},"idempotency_key":"zhYqxQztMUWp","buyer_email_address":"test@test.com"}'
+    headers:
+      User-Agent:
+      - Square-Connect-Ruby/2.3.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer sandbox-sq0atb-Zefd9e__fbXtLIJYiJaiOA
+      Expect:
+      - ''
+  response:
+    status:
+      code: 402
+      message: Payment Required
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin, Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      Date:
+      - Sat, 07 Oct 2017 04:19:29 GMT
+      Keep-Alive:
+      - timeout=60
+      Strict-Transport-Security:
+      - max-age=631152000
+      Content-Length:
+      - '97'
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"category":"PAYMENT_METHOD_ERROR","code":"CARD_DECLINED","detail":"Card
+        declined."}]}'
+    http_version: 
+  recorded_at: Sat, 07 Oct 2017 04:19:30 GMT
+recorded_with: VCR 3.0.3

@@ -1,5 +1,5 @@
 require 'hippo/api/controller_base'
-require 'braintree'
+# require 'braintree'
 
 module SM
     module Handlers
@@ -22,12 +22,17 @@ module SM
                 sale = SM::Sale.new(
                     data.slice('name', 'phone', 'email', 'qty')
                 )
-                sale.show_time = SM::ShowTime.preload(:show).find_by(identifier: data['time_identifier'])
+                sale.show_time = SM::ShowTime
+                                     .preload(:show)
+                                     .find_by(
+                                         identifier: data['time_identifier']
+                                     )
 
                 SM::Sale.transaction do
-                    data['payments'].each do |payment_data|
-                        sale.payments.build(payment_data)
-                    end
+                    payment = data['payments'].first
+                    sale.payments.build(
+                        payment.merge(amount: sale.show_time.price)
+                    )
                     if sale.valid?
                         sale.payments.each{ |payment| process_charge(sale, payment) }
                         sale.save
@@ -58,22 +63,12 @@ module SM
             private
 
             def process_charge(sale, payment)
-                bt = BraintreeConfig.sale(
-                    amount: payment.amount,
-                    payment_method_nonce: payment.nonce,
-                    options: { submit_for_settlement: true },
-                    customer: {
-                        first_name: sale.first_name,
-                        last_name: sale.last_name,
-                        phone: sale.phone,
-                        email: sale.email
-                    }
-                )
-                Hippo.logger.warn "Processed CC transaction #{bt.transaction.id} for nonce #{payment['nonce']}, result: #{bt.success? ? 'success' : bt.message}"
-                if bt.success?
-                    payment.processor_transaction = bt.transaction.id
+                trn = SM::Payments.vendor.sale(payment)
+                Hippo.logger.warn "Processed CC transaction #{trn.transaction} for nonce #{payment['nonce']}, result: #{trn.message}"
+                if trn.ok?
+                    payment.processor_transaction = trn.transaction
                 else
-                    sale.errors.add(:payment, bt.message)
+                    sale.errors.add(:payment, trn.message)
                     raise ActiveRecord::Rollback
                 end
             end

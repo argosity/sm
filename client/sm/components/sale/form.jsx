@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import { autobind } from 'core-decorators';
 import { observable, action, computed } from 'mobx';
 import { get, extend, each, findKey, map } from 'lodash';
 import { observer } from 'mobx-react';
-import { Braintree } from 'react-braintree-fields';
+import PaymentFields from 'payment-fields';
 import { Row, Col } from 'react-flexbox-grid';
 import Box from 'grommet/components/Box';
 import Value from 'grommet/components/Value';
@@ -24,6 +25,7 @@ import CardField from './card-field';
 import Arrow from './pointer-arrow';
 import Sale from '../../models/sale';
 import Payment from '../../models/payment';
+import SM from '../../extension';
 
 @observer
 export default class SaleForm extends React.PureComponent {
@@ -44,9 +46,9 @@ export default class SaleForm extends React.PureComponent {
     @observable formState = new FormState()
     @observable payment = new Payment();
 
-    @observable btFields = {
+    @observable fields = {
         postalCode: false,
-        number: false,
+        cardNumber: false,
         expirationDate: false,
         cvv: false,
     }
@@ -64,25 +66,14 @@ export default class SaleForm extends React.PureComponent {
     }
 
     @action.bound
-    setBraintreeToken(token) {
-        this.getToken = token;
-    }
-
-    @action.bound
-    onBTError(err) {
+    onError(err) {
         this.props.sale.errors = {
             card: err.message,
         };
     }
 
-    @action.bound
-    onBTValidityChange(ev) {
-        this.cardIsValid = !findKey(ev.fields, ({ isValid }) => !isValid);
-    }
-
-    @action.bound
-    onValidityChange(isValid) {
-        this.isFormValid = isValid;
+    @action.bound onValidityChange({ isValid }) {
+        this.cardIsValid = isValid;
     }
 
     @computed get isValid() {
@@ -92,7 +83,7 @@ export default class SaleForm extends React.PureComponent {
     @action
     exposeErrors() {
         this.formState.exposeErrors();
-        each(this.btFields, f => f.exposeError());
+        each(this.fields, f => f.exposeError());
     }
 
     @computed get heading() {
@@ -103,10 +94,13 @@ export default class SaleForm extends React.PureComponent {
     saveState() {
         const { sale } = this.props;
         return new Promise((resolve) => {
-            this.getToken().then(({ nonce, details: { cardType: card_type, lastTwo: digits } }) => {
+            this.getToken().then(({ token, cardData }) => {
                 this.formState.persistTo(sale);
+
                 extend(this.payment, {
-                    nonce, card_type, digits, amount: this.totalAmount,
+                    nonce: token, amount: this.totalAmount,
+                    card_type: cardData.card_brand,
+                    digits: cardData.last_4,
                 });
                 extend(sale, {
                     time_identifier: sale.time.identifier,
@@ -121,9 +115,9 @@ export default class SaleForm extends React.PureComponent {
     }
 
     @action.bound
-    setBtFieldRef(ref) {
+    setFieldRef(ref) {
         if (ref) {
-            this.btFields[ref.props.type] = ref;
+            this.fields[ref.props.type] = ref;
         }
     }
 
@@ -220,23 +214,28 @@ export default class SaleForm extends React.PureComponent {
         );
     }
 
+    @autobind onFormReady(ev) {
+        this.getToken = ev.tokenize;
+    }
+
     render() {
         const { formState, props: { sale } } = this;
-
+        console.log(SM.paymentsVendor, this.payment.token);
         const fieldProps = { sm: 6, xs: 12 };
 
         return (
-            <Braintree
+            <PaymentFields
+                onError={this.onError}
+                onReady={this.onFormReady}
+                vendor={SM.paymentsVendor}
+                onValidityChange={this.onValidityChange}
                 authorization={this.payment.token}
-                onError={this.onBTError}
-                onValidityChange={this.onBTValidityChange}
-                getTokenRef={this.setBraintreeToken}
                 styles={{
-                    input: {
+                    base: {
                         color: '#3a3a3a',
                         'font-size': '16px',
                     },
-                    ':focus': {
+                    focus: {
                         color: 'black',
                     },
                 }}
@@ -287,17 +286,24 @@ export default class SaleForm extends React.PureComponent {
                             <Field {...fieldProps} name="email" validate={validEmail} />
                             <Field {...fieldProps} name="phone" xs={6} validate={validPhone} />
                             <CardField
-                                {...fieldProps} xs={6} type="postalCode" ref={this.setBtFieldRef}
-                                label="Zip Code" errorMessage="is not valid" />
+                                {...fieldProps} xs={6} type="postalCode"
+                                ref={this.setFieldRef}
+                                label="Zip Code" errorMessage="is not valid"
+                            />
                             <CardField
-                                {...fieldProps} ref={this.setBtFieldRef}
-                                type="number" label="Card Number" errorMessage="Invalid Card" />
+                                {...fieldProps} ref={this.setFieldRef}
+                                type="cardNumber" label="Card Number"
+                                errorMessage="Invalid Card"
+                            />
                             <CardField
-                                {...fieldProps} sm={3} xs={6} ref={this.setBtFieldRef}
-                                type="expirationDate" placeholder="MM / YY" label="Expiration" errorMessage="Invalid Date" />
+                                {...fieldProps} sm={3} xs={6} ref={this.setFieldRef}
+                                type="expirationDate" placeholder="MM / YY"
+                                label="Expiration" errorMessage="Invalid Date"
+                            />
                             <CardField
-                                {...fieldProps} sm={3} xs={6} ref={this.setBtFieldRef}
-                                type="cvv" label="Card CVV" errorMessage="Invalid value" />
+                                {...fieldProps} sm={3} xs={6} ref={this.setFieldRef}
+                                type="cvv" label="Card CVV" errorMessage="Invalid value"
+                            />
                             <Col xs={12}>
                                 <Footer
                                     margin={{ vertical: 'medium' }}
@@ -315,7 +321,7 @@ export default class SaleForm extends React.PureComponent {
                         </Row>
                     </Col>
                 </Form>
-            </Braintree>
+            </PaymentFields>
         );
     }
 

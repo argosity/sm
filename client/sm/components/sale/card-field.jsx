@@ -1,6 +1,6 @@
 import React from 'react';
 import FieldWrapper from 'grommet/components/FormField';
-import { HostedField } from 'react-braintree-fields';
+import PaymentFields from 'payment-fields';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { getColumnProps } from 'react-flexbox-grid';
@@ -11,27 +11,23 @@ export default class PurchaseField extends React.PureComponent {
 
     @action.bound
     onFocus() {
-        this.wrapper._onFocus(); // eslint-disable-line no-underscore-dangle
-        this.errorMessage = this.isPotentiallyValid ? '' : this.props.errorMessage;
+        //this.wrapper._onFocus(); // eslint-disable-line no-underscore-dangle
+        this.errorMessage = '';
     }
 
     @action.bound
-    onBlur() {
-        this.wrapper._onBlur(); // eslint-disable-line no-underscore-dangle
-        if (!this.isValid) {
-            this.errorMessage = this.props.errorMessage;
-        }
+    onBlur({ isValid }) {
+        this.isValid = isValid;
+        this.errorMessage = isValid ? '' : this.props.errorMessage;
     }
 
     @observable isValid = false;
     @observable errorMessage = '';
-    @observable isPotentiallyValid = true;
 
-    @action.bound
-    onValidityChange({ isValid, isPotentiallyValid }) {
+    @action.bound onValidityChange({ isValid }) {
+        console.log(this.props.type, "VALID", isValid)
         this.isValid = isValid;
-        this.isPotentiallyValid = isPotentiallyValid;
-        this.errorMessage = isPotentiallyValid ? '' : this.props.errorMessage;
+        this.errorMessage = isValid ? '' : this.props.errorMessage;
     }
 
     exposeError() {
@@ -54,11 +50,10 @@ export default class PurchaseField extends React.PureComponent {
                     label={label}
                     ref={this.setRef}
                 >
-                    <HostedField
+                    <PaymentFields.Field
                         {...cardFieldProps}
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
-                        onValidityChange={this.onValidityChange}
                     />
                 </FieldWrapper>
             </div>

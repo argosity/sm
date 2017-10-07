@@ -48,10 +48,17 @@ export default class BoxOffice extends React.PureComponent {
     @action.bound onSaleClick() {
         this.sale = new Sale({ time: this.time });
     }
-    @action.bound onSaleComplete() { this.sale = null; }
+    @action.bound onSaleComplete() {
+        this.guestList.ux.addSale(sale);
+        this.sale = null;
+    }
     @action.bound onSaleCancel() { this.sale = null; }
     @action.bound onSearchClick() { this.isShowingSearch = true; }
     @action.bound onSearchClose() { this.isShowingSearch = false; }
+
+    @action.bound setGuestList(gl) {
+        this.guestList = gl;
+    }
 
     // componentDidMount() {
     //     this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
@@ -103,14 +110,14 @@ export default class BoxOffice extends React.PureComponent {
 
                 <Box direction="row" justify="end">
                     {time.isNew ? null : (
-                        <Button
-                            icon={<CreditCardIcon />}
-                            label={'Sale'}
-                            onClick={this.onSaleClick}
-                        />)}
+                         <Button
+                             icon={<CreditCardIcon />}
+                             label={'Sale'}
+                             onClick={this.onSaleClick}
+                         />)}
                 </Box>
 
-                <GuestList time={time} />
+                <GuestList ref={this.setGuestList} time={time} />
             </Screen>
         );
     }

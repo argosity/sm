@@ -18,7 +18,7 @@
             <h4>Hello {{ sale.name }},</h4>
             <h5>You're on the list!</h5>
             <p style="margin-top: 20px;">
-              Your order has been placed and we've reserved you {{ sale.qty }} seats for {{ show.title }}.
+              Your order has been placed and we've reserved you {{ sale.qty | pluralize: 'seat' }} for {{ show.title }}.
             </p>
             <p style="margin-top: 20px;">
               Show time is {{ show_time.occurs_at | date: "%H:%M%P on %a %b %d, %y" }} at:

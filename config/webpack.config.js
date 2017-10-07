@@ -25,7 +25,7 @@ const config = {
     entry: entries,
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
-        publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : 'http://test.hippo.dev:8889/assets/' %>',
+        publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : 'https://dev.argosity.com:8889/assets/' %>',
         filename: '[name]-[hash].js',
     },
     resolve: {
