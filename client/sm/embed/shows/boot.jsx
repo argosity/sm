@@ -1,6 +1,8 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';
 import Config from 'hippo/config';
+import 'hippo/config-data';
+import Tenant from 'hippo/models/tenant';
 import Shows from 'sm/models/show';
 import { AppContainer } from 'react-hot-loader';
 import { when } from 'mobx';
@@ -30,11 +32,12 @@ export default function boot({ host, data, root }) {
         () => {
             Config.bootSettings = data;
             Config.api_host = host;
-
             rootElement = root;
-            rootElement.classList.remove('loading');
-            Shows.fetchEmbedded(data.embedId).then((c) => {
-                showsListing = c;
+            Promise.all([
+                Shows.fetchEmbedded(data.embedId), Tenant.current.fetch(),
+            ]).then((promises) => {
+                rootElement.classList.remove('loading');
+                showsListing = promises[0];
                 render();
             });
         },
