@@ -14,13 +14,13 @@
       </script>
     </head>
     <body>
-      <% if false || locations.one? %>
-      <script>selectLocation('<%= locations.first.id %>')</script>
+      <% if locations.one? %>
+        <script>selectLocation('<%= locations.first['id'] %>')</script>
       <% else %>
-      <h3>Select Location</h3>
+        <h3>Select Location</h3>
         <% locations.each do |l| %>
-        <a onClick="selectLocation('<%= l.id %>');" href="#" class="pseudo button stack">
-          <%= l.name %>
+        <a onClick="selectLocation('<%= l['id'] %>');" href="#" class="pseudo button stack">
+          <%= l['name'] %>
         </a>
         <% end %>
       <% end %>

@@ -34,7 +34,6 @@ module SM
             def sale(payment)
                 sale = payment.sale
                 SquareConnect::TransactionsApi.new(config)
-#               amount = PRODUCT_COST[params[:product_id]]
                 request_body = {
                     card_nonce: payment.nonce,
                     reference_id: sale.identifier,
@@ -80,7 +79,11 @@ module SM
 
                 locations_api = SquareConnect::LocationsApi.new(api)
                 # TODO remember the expiration, we'll need to renew every 30 days
-                { token: reply.token, locations: locations_api.list_locations.locations }
+                locations = locations_api.list_locations.locations.map do |l|
+                    {id: l.id, name: l.name}
+                end
+                info = { token: reply.token, locations: locations }.to_param
+                "https://#{params['state']}.#{Hippo.config.website_domain}/sq/relay-auth?#{info}"
             end
 
             def system_settings_values

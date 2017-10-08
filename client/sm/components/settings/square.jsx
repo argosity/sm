@@ -7,6 +7,7 @@ import { get } from 'lodash';
 import Anchor from 'grommet/components/Anchor';
 import PopoutWindow from 'hippo/components/popout-window';
 import Extensions from 'hippo/extensions';
+import Tenant from 'hippo/models/tenant';
 import SquareConfigModel from '../../models/square-config';
 
 const KEY = 'square';
@@ -51,7 +52,7 @@ export default class SquareConfig extends React.PureComponent {
 
     renderLinkWindow() {
         if (!this.isLinking) { return null; }
-        const url = Extensions.get('sm').data.payments.square.url;
+        const url = `${Extensions.get('sm').data.payments.square.url}&state=${Tenant.current.slug}`;
         return (
             <PopoutWindow
                 title="Link Square Account"
@@ -62,9 +63,7 @@ export default class SquareConfig extends React.PureComponent {
                     height: 700,
                     width: 700,
                 }}
-            >
-                <div>hello</div>
-            </PopoutWindow>
+            ><span/></PopoutWindow>
         );
     }
 

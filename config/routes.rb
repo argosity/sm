@@ -32,8 +32,12 @@ class Hippo::API::Root
     end
 
     get '/sq/auth' do
-        auth = SM::Payments::Square.authorize(params, request)
-        erb :square_oauth, locals: auth, layout: false
+        url = SM::Payments::Square.authorize(params, request)
+        redirect url
+    end
+
+    get '/sq/relay-auth' do
+        erb :square_oauth, locals: params, layout: false
     end
 end
 
