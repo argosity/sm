@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { action, computed } from 'mobx';
 import { autobind } from 'core-decorators';
 import { invoke, extend } from 'lodash';
 import Select from 'grommet/components/Select';
@@ -27,20 +27,20 @@ export default class SMSystemSettings extends React.PureComponent {
         Extensions.get('sm').data.payments.vendor = this.paymentsVendor;
     }
 
-    @observable paymentsVendor;
-
-    @autobind
-    onChildMount(id, child) {
+    @autobind onChildMount(id, child) {
         this.childrenRefs.set(id, child);
     }
 
+    @computed get paymentsVendor() {
+        return this.props.settings.paymentsVendor;
+    }
+
     componentDidMount() {
-        this.paymentsVendor = this.props.settings.paymentsVendor;
         this.props.registerForSave(this);
     }
 
     @action.bound setPaymentsVendor({ option }) {
-        this.paymentsVendor = option;
+        this.props.settings.paymentsVendor = option;
     }
 
     renderPaymentsVendor() {
