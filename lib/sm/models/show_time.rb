@@ -1,5 +1,6 @@
 module SM
     class ShowTime < Model
+
         has_random_identifier
 
         belongs_to_tenant
@@ -22,6 +23,10 @@ module SM
             show.venue.time_in_zone(occurs_at)
         end
 
+        def date_identifier
+            occurs_at_in_venue_tz.strftime('%Y-%m-%d_%H:%M')
+        end
+
         private
 
         def on_redemption(redemption)
@@ -33,5 +38,6 @@ module SM
                 }
             )
         end
+
     end
 end

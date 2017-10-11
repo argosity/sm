@@ -8,20 +8,26 @@
       </style>
       <script>
         function selectLocation(l) {
-          this.window.square = { location_id: l, authorization: '<%= token %>' };
+          this.window.square = {
+             location_id: l.id, location_name: l.name, token: '<%= token %>'
+          };
           this.window.close();
         }
       </script>
     </head>
     <body>
-      <% if locations.one? %>
-        <script>selectLocation('<%= locations.first['id'] %>')</script>
+      <% if defined?(failed) && failed %>
+        <h1>Failed to authorize ShowMaker</h1>
       <% else %>
-        <h3>Select Location</h3>
-        <% locations.each do |l| %>
-        <a onClick="selectLocation('<%= l['id'] %>');" href="#" class="pseudo button stack">
-          <%= l['name'] %>
-        </a>
+        <% if locations.one? %>
+          <script>selectLocation(<%= locations.first.to_json %>)</script>
+        <% else %>
+          <h3>Select Location</h3>
+          <% locations.each do |l| %>
+            <a onClick="selectLocation(<%= l.to_json %>);" href="#" class="pseudo button stack">
+              <%= l['name'] %>
+            </a>
+          <% end %>
         <% end %>
       <% end %>
     </body>

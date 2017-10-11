@@ -11,6 +11,7 @@ Hippo::API.routes.for_extension 'sm' do
     resources SM::Redemption
     resources SM::Message, path: 'message/defaults', controller: SM::Handlers::MessageDefaults
     resources SM::Message
+    resources SM::SquareAuth, controller: SM::Handlers::Square
 
     get 'show-time/:id/sales-report.xlsx' do
         SM::Handlers::Shows.xls_sale_report(params[:id], headers)
@@ -31,9 +32,12 @@ class Hippo::API::Root
         erb :terms
     end
 
+    post '/sq/notice' do
+        'hi'
+    end
+
     get '/sq/auth' do
-        url = SM::Payments::Square.authorize(params, request)
-        redirect url
+        redirect SM::Payments::Square.authorize(params, request)
     end
 
     get '/sq/relay-auth' do

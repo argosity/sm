@@ -1,3 +1,4 @@
+require_relative 'square/request';
 require 'square_connect'
 require 'oauth2'
 require 'uri'
@@ -5,9 +6,11 @@ require 'uri'
 module SM
     module Payments
         module Square
+
             extend self
             CONFIG_KEY='square'
             SCOPES = 'MERCHANT_PROFILE_READ ITEMS_READ ITEMS_WRITE PAYMENTS_READ PAYMENTS_WRITE'
+            WEBHOOKS = 'PAYMENT_UPDATED', 'INVENTORY_UPDATED'
 
             def authorization_url
                 client.auth_code.authorize_url(
@@ -69,21 +72,32 @@ module SM
             end
 
             def authorize(params, request)
-                uri = URI.parse(request.url)
-                uri.path = '/oauth2callback'
-                uri.query = nil
-
-                reply = client.auth_code.get_token(params['code'])
-
-                api = SquareConnect::ApiClient.new(make_config(reply.token))
-
-                locations_api = SquareConnect::LocationsApi.new(api)
-                # TODO remember the expiration, we'll need to renew every 30 days
-                locations = locations_api.list_locations.locations.map do |l|
-                    {id: l.id, name: l.name}
+                tenant = Hippo::Tenant.find_by_slug!(params['state'])
+                # #{tenant.domain}
+                domain = tenant.domain
+                failure_url = "https://dev.argosity.com:9292/sq/relay-auth?token=failed&failed=true"
+                return failure_url unless params['code']
+                begin
+                    auth = SM::SquareAuth.obtain(tenant, params['code'])
+                    if auth
+                        api = SquareConnect::ApiClient.new(
+                            make_config(auth.token)
+                        )
+                        locations_api = SquareConnect::LocationsApi.new(api)
+                        locations = locations_api.list_locations.locations.map do |l|
+                            {id: l.id, name: l.name}
+                        end
+                        info = {
+                            token: auth.token, locations: locations
+                        }.to_param
+                        "https://dev.argosity.com:9292/sq/relay-auth?#{info}"
+                    else
+                        failure_url
+                    end
+                rescue => e
+                    Hippo.logger.warn "Failed to authorize square merchant: #{e}"
+                    failure_url
                 end
-                info = { token: reply.token, locations: locations }.to_param
-                "https://#{params['state']}.#{Hippo.config.website_domain}/sq/relay-auth?#{info}"
             end
 
             def system_settings_values

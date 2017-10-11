@@ -5,7 +5,7 @@ module SM
     module Handlers
         class Payment < Hippo::API::ControllerBase
 
-            def show
+            def create
                 begin
                     std_api_reply(
                         :get,

@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { get } from 'lodash';
-
+import Box from 'grommet/components/Box';
 import Anchor from 'grommet/components/Anchor';
 import PopoutWindow from 'hippo/components/popout-window';
 import Extensions from 'hippo/extensions';
 import Tenant from 'hippo/models/tenant';
-import SquareConfigModel from '../../models/square-config';
-
-const KEY = 'square';
+import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
+import SquareAuth from '../../models/square-auth';
 
 @observer
 export default class SquareConfig extends React.PureComponent {
@@ -19,26 +17,16 @@ export default class SquareConfig extends React.PureComponent {
         registerForSave: PropTypes.func.isRequired,
     }
 
-    config = new SquareConfigModel()
+    @observable auth = new SquareAuth()
 
     @observable isLinking = false;
 
-    componentWillMount() {
-        this.props.registerForSave('sqc', this);
-        this.setFields(this.props);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setFields(nextProps);
-    }
-
-    setFields(props) {
-        const config = get(props, `settings.${KEY}`, {});
-        this.config.set(config);
+    componentDidMount() {
+        this.auth.fetch();
     }
 
     onSave() {
-        this.props.settings[KEY] = this.config.serialize();
+        this.auth.save();
     }
 
     @action.bound openLink() {
@@ -46,8 +34,9 @@ export default class SquareConfig extends React.PureComponent {
     }
 
     @action.bound onLinkWindowClose() {
-        this.config.update(this.popOpen.popup.square);
         this.isLinking = false;
+        this.auth.update(this.popOpen.popup.square);
+        this.auth.save();
     }
 
     renderLinkWindow() {
@@ -70,7 +59,8 @@ export default class SquareConfig extends React.PureComponent {
     renderLinked() {
         return (
             <div>
-                Linked to Square. <Anchor onClick={this.openLink}>Re-link</Anchor>
+                Linked to Square location “{this.auth.location_name}”.
+                <Anchor onClick={this.openLink}>Re-link</Anchor>
             </div>
         );
     }
@@ -81,10 +71,11 @@ export default class SquareConfig extends React.PureComponent {
 
     render() {
         return (
-            <div>
-                {this.config.isAuthorized ? this.renderLinked() : this.renderNewLink()}
+            <Box margin={{ vertical: 'medium' }}>
+                <NetworkActivityOverlay model={this.auth} />
+                {this.auth.isAuthorized ? this.renderLinked() : this.renderNewLink()}
                 {this.renderLinkWindow()}
-            </div>
+            </Box>
         );
     }
 
