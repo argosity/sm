@@ -4,11 +4,14 @@ module SM
 
         extend self
 
+        def vendor_id
+            (Hippo::SystemSettings.config.settings['paymentsVendor'] || 'unknown').downcase.to_sym
+        end
+
         def vendor
-            vendor = Hippo::SystemSettings.config.settings['paymentsVendor']
-            if vendor == 'Square'
+            if vendor_id == :square
                 return SM::Payments::Square
-            elsif vendor == 'Braintree'
+            elsif vendor_id == :braintree
                 return SM::Payments::Braintree
             end
         end
