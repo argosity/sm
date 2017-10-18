@@ -73,9 +73,7 @@ module SM
 
             def authorize(params, request)
                 tenant = Hippo::Tenant.find_by_slug!(params['state'])
-                # #{tenant.domain}
-                domain = tenant.domain
-                failure_url = "https://dev.argosity.com:9292/sq/relay-auth?token=failed&failed=true"
+                failure_url = "https://#{tenant.domain}/sq/relay-auth?token=failed&failed=true"
                 return failure_url unless params['code']
                 begin
                     auth = SM::SquareAuth.obtain(tenant, params['code'])
@@ -90,7 +88,7 @@ module SM
                         info = {
                             token: auth.token, locations: locations
                         }.to_param
-                        "https://dev.argosity.com:9292/sq/relay-auth?#{info}"
+                        "https://#{tenant.domain}/sq/relay-auth?#{info}"
                     else
                         failure_url
                     end
