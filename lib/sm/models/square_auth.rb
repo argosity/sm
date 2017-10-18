@@ -11,31 +11,9 @@ module SM
         validates :token, :merchant_id, :expires_at, presence: true
         after_create :request_webhooks
 
-        def self.obtain(tenant, code)
-            settings = SM::Payments::Square.system_settings_values
-            req = SM::Payments::Square::Request.new(
-                url: 'oauth2/token',
-                body: {
-                    client_id: settings.application_id,
-                    client_secret: settings.secret,
-                    code: code,
-                    redirect_uri: settings.redirect_uri,
-                },
-                secret: false
-            )
-            if req.ok?
-                sqa = SquareAuth.find_or_initialize_by(tenant: tenant)
-                sqa.update_attributes!(
-                    token: req.reply.access_token,
-                    expires_at: req.reply.expires_at,
-                    merchant_id: req.reply.merchant_id
-                )
-                return sqa
-            else
-                nil
-            end
+        def in_use?
+            !new_record? && SM::Payments.vendor_id == :square
         end
-
 
         def request_webhooks
             SM::Payments::Square::Request.new(
@@ -125,6 +103,34 @@ module SM
             end
         end
 
+
+        ## Class methods
+
+        def self.obtain(tenant, code)
+            settings = SM::Payments::Square.system_settings_values
+            req = SM::Payments::Square::Request.new(
+                url: 'oauth2/token',
+                body: {
+                    client_id: settings.application_id,
+                    client_secret: settings.secret,
+                    code: code,
+                    redirect_uri: settings.redirect_uri,
+                },
+                secret: false
+            )
+            if req.ok?
+                sqa = SquareAuth.find_or_initialize_by(tenant: tenant)
+                sqa.update_attributes!(
+                    token: req.reply.access_token,
+                    expires_at: req.reply.expires_at,
+                    merchant_id: req.reply.merchant_id
+                )
+                return sqa
+            else
+                nil
+            end
+        end
+
         def self.refresh
             SquareAuth
                 .where("expires_at + interval '2 days' > now()")
@@ -137,5 +143,5 @@ end
 
 SM::Show.observe(:save) do |show|
     auth = SM::SquareAuth.where(tenant: show.tenant).first
-    auth.upsert_item_for_show(show) if auth
+    auth.upsert_item_for_show(show) if auth && auth.in_use?
 end
