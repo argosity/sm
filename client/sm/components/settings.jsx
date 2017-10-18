@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, computed } from 'mobx';
+import { action } from 'mobx';
 import { autobind } from 'core-decorators';
 import { invoke, extend } from 'lodash';
 import Select from 'grommet/components/Select';
@@ -31,7 +31,7 @@ export default class SMSystemSettings extends React.PureComponent {
         this.childrenRefs.set(id, child);
     }
 
-    @computed get paymentsVendor() {
+    get paymentsVendor() {
         return this.props.settings.paymentsVendor;
     }
 
@@ -41,6 +41,7 @@ export default class SMSystemSettings extends React.PureComponent {
 
     @action.bound setPaymentsVendor({ option }) {
         this.props.settings.paymentsVendor = option;
+        this.forceUpdate();
     }
 
     renderPaymentsVendor() {
