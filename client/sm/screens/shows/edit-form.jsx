@@ -35,8 +35,8 @@ class EditForm extends React.PureComponent {
 
     componentDidMount() {
         this.formState.setFromModel(this.props.show);
-        // i think we don't need to detach these since the form state will no longer be referenced
-        // after this component is unmounted
+        // I think we don't need to detach these since the form state
+        // will no longer be referenced after this component is unmounted
         observe(this.formState.get('venue_id'), 'value', this.onVenueChange);
         observe(this.formState.get('price'), 'value', this.onPriceChange);
         observe(this.formState.get('capacity'), 'value', this.onCapacityChange);

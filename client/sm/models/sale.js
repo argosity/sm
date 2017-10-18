@@ -1,5 +1,5 @@
 import { sprintf } from 'sprintf-js';
-import { sumBy } from 'lodash';
+import { sumBy, first } from 'lodash';
 import { computed } from 'mobx';
 import {
     BaseModel, identifiedBy, field, identifier, session, hasMany, belongsTo,
@@ -39,7 +39,7 @@ export default class Sale extends BaseModel {
     constructor(attrs = {}) {
         super(attrs);
         if (attrs.show && 1 === attrs.show.times.length) {
-            this.time = attrs.show.times[0];
+            this.time = first(attrs.show.times);
         }
     }
 

@@ -1,5 +1,4 @@
 require 'hippo/api/controller_base'
-require 'braintree'
 
 module SM
     module Handlers
