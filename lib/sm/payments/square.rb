@@ -103,7 +103,7 @@ module SM
             end
 
             def client_config_values
-                Hippo::SystemSettings.config.settings['square']
+                Hippo::SystemSettings.config.settings['square'] || {}
             end
 
             def config
