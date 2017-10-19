@@ -1,6 +1,7 @@
 import { sprintf } from 'sprintf-js';
 import { sumBy, first } from 'lodash';
 import { computed } from 'mobx';
+import Sync from 'hippo/models/sync';
 import {
     BaseModel, identifiedBy, field, identifier, session, hasMany, belongsTo,
 } from './base';
@@ -66,5 +67,10 @@ export default class Sale extends BaseModel {
         if (!this.time) { return '0.00'; }
         return sprintf('%0.2f', this.time.pricedShow.times(qty));
     }
+
+    save() {
+        return Sync.forModel(this, { url: `${this.syncUrl}/submit` });
+    }
+
 
 }

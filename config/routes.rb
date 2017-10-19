@@ -1,7 +1,8 @@
 Hippo::API.routes.for_extension 'sm' do
     # Embed routes must come before the Embed resource, otherwise it handles the requests
     resources SM::ShowTime
-    resources SM::Sale, controller: SM::Handlers::Sale, cors: '*', public: true
+    resources SM::Sale, path: 'sale/submit', controller: SM::Handlers::Checkout, cors: '*', public: true
+    resources SM::Sale, controller: SM::Handlers::Sale
     resources SM::Payment, path: 'payment', controller: SM::Handlers::Payment, cors: '*', public: true
     resources SM::Show, path: 'embed/shows', controller: SM::Handlers::Shows, cors: '*', public: true
     resources SM::Show
