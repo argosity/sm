@@ -14,14 +14,21 @@ module SM
         # is returned from this method, it will be passed to
         # the setBootstrapData method in client/sm/Extension.coffee
         # when the app boots
-        def client_bootstrap_data
+        def static_bootstrap_data
             {
                 rollbar:  Hippo.config.secrets.dig('rollbar', 'client'),
                 payments: {
-                    vendor: Hippo::SystemSettings.config.settings['paymentsVendor'],
                     square: {
                         url: SM::Payments::Square.authorization_url
                     }
+                }
+            }
+        end
+
+        def tenant_bootstrap_data(tenant)
+            {
+                payments: {
+                    vendor: tenant.system_settings.settings['paymentsVendor'],
                 }
             }
         end

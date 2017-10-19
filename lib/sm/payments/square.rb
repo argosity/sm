@@ -103,11 +103,11 @@ module SM
             end
 
             def client_config_values
-                Hippo::SystemSettings.config.settings['square'] || {}
+                SM::SquareAuth.where(tenant: Hippo::Tenant.current).first
             end
 
             def config
-                make_config(client_config_values['authorization'])
+                make_config(client_config_values['token'])
             end
 
             def make_config(access_token)
