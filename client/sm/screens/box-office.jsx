@@ -36,7 +36,9 @@ export default class BoxOffice extends React.PureComponent {
         fields: [
             { id: 'id', visible: false, queryable: false },
             { id: 'shows.title', label: 'Title', flexGrow: 1 },
-            { id: 'occurs_at', cellRenderer: DateCell, flexGrow: 0, width: 160, textAlign: 'right' },
+            {
+                id: 'occurs_at', cellRenderer: DateCell, flexGrow: 0, width: 160, textAlign: 'right',
+            },
         ],
     })
 

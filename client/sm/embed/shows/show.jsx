@@ -55,8 +55,7 @@ export default class Show extends React.PureComponent {
                                 {this.renderPurchaseTime()}
                                 <ul className="dates">
                                     {show.times.map(t =>
-                                        <li key={t.identifier} className="date">{t.formattedOccursAt}</li>,
-                                    )}
+                                        <li key={t.identifier} className="date">{t.formattedOccursAt}</li>)}
                                 </ul>
                             </div>
                         </div>

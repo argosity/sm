@@ -37,7 +37,7 @@ export default function boot({ host, data, root }) {
                 Shows.fetchEmbedded(data.embedId), Tenant.current.fetch(),
             ]).then((promises) => {
                 rootElement.classList.remove('loading');
-                showsListing = promises[0];
+                [showsListing] = promises;
                 render();
             });
         },

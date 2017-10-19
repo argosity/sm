@@ -26,8 +26,7 @@ describe('Embedded Shows Listing', () => {
     });
     it('renders shows and matches snapshot', () => {
         DATA.forEach(ev =>
-            expect(listing).toHaveRendered(`[data-show-identifier="${ev.identifier}"]`),
-        );
+            expect(listing).toHaveRendered(`[data-show-identifier="${ev.identifier}"]`));
         expect(Snapshot(<Listing shows={shows} />)).toMatchSnapshot();
     });
 
