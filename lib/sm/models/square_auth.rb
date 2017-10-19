@@ -141,12 +141,12 @@ module SM
 
 end
 
-SM::Show.observe(:save) do |show|
-    auth = SM::SquareAuth.where(tenant: show.tenant).first
-    begin
-        auth.upsert_item_for_show(show) if auth && auth.in_use?
-    rescue SquareConnect::ApiError => e
-        Hippo.logger.warn e
-        Rollbar.error(e)
-    end
-end
+# SM::Show.observe(:save) do |show|
+#     auth = SM::SquareAuth.where(tenant: show.tenant).first
+#     begin
+#         auth.upsert_item_for_show(show) if auth && auth.in_use?
+#     rescue SquareConnect::ApiError => e
+#         Hippo.logger.warn e
+#         Rollbar.error(e)
+#     end
+# end
