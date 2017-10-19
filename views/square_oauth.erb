@@ -7,7 +7,9 @@
         body { padding: 40px; }
       </style>
       <script>
-        function selectLocation(l) {
+        var locations = <%= locations.to_json %>;
+        function selectLocation(i) {
+          var l = locations[i];
           this.window.square = {
              location_id: l.id, location_name: l.name, token: '<%= token %>'
           };
@@ -20,11 +22,11 @@
         <h1>Failed to authorize ShowMaker</h1>
       <% else %>
         <% if locations.one? %>
-          <script>selectLocation(<%= locations.first.to_json %>)</script>
+          <script>selectLocation(0);</script>
         <% else %>
           <h3>Select Location</h3>
-          <% locations.each do |l| %>
-            <a onClick="selectLocation(<%= l.to_json %>);" href="#" class="pseudo button stack">
+          <% locations.each_with_index do |l, i| %>
+            <a onClick="selectLocation(<%= i %>);" href="#" class="pseudo button stack">
               <%= l['name'] %>
             </a>
           <% end %>
