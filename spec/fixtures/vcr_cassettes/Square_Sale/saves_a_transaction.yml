@@ -5,7 +5,7 @@ http_interactions:
     uri: https://connect.squareup.com/v2/locations/CBASEDPaLCabJaF09RCTuXK7uZYgAQ/transactions
     body:
       encoding: UTF-8
-      string: '{"card_nonce":"fake-card-nonce-ok","reference_id":"UNJv2njAk7Zq","amount_money":{"amount":7869,"currency":"USD"},"idempotency_key":"UNJv2njAk7Zq","buyer_email_address":"test@test.com"}'
+      string: '{"card_nonce":"fake-card-nonce-ok","reference_id":"TYZDzEGFReKt","amount_money":{"amount":8478,"currency":"USD"},"billing_address":{"first_name":"nathan","last_name":"nathan"},"idempotency_key":"TYZDzEGFReKt","buyer_email_address":"test@test.com"}'
     headers:
       User-Agent:
       - Square-Connect-Ruby/2.3.1
@@ -37,7 +37,7 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Date:
-      - Sat, 07 Oct 2017 04:19:29 GMT
+      - Thu, 19 Oct 2017 19:39:13 GMT
       Keep-Alive:
       - timeout=60
       Strict-Transport-Security:
@@ -46,8 +46,8 @@ http_interactions:
       - '591'
     body:
       encoding: UTF-8
-      string: '{"transaction":{"id":"05d4768e-c7d4-571b-7617-4192f5439e22","location_id":"CBASEDPaLCabJaF09RCTuXK7uZYgAQ","created_at":"2017-10-07T04:19:29Z","tenders":[{"id":"0b876ce0-577a-565c-6217-47729be7adbe","location_id":"CBASEDPaLCabJaF09RCTuXK7uZYgAQ","transaction_id":"05d4768e-c7d4-571b-7617-4192f5439e22","created_at":"2017-10-07T04:19:29Z","note":"Online
-        Transaction","amount_money":{"amount":7869,"currency":"USD"},"type":"CARD","card_details":{"status":"CAPTURED","card":{"card_brand":"VISA","last_4":"5858"},"entry_method":"KEYED"}}],"reference_id":"UNJv2njAk7Zq","product":"EXTERNAL_API"}}'
+      string: '{"transaction":{"id":"9c45764c-f048-5e07-44ed-97ca766a13dc","location_id":"CBASEDPaLCabJaF09RCTuXK7uZYgAQ","created_at":"2017-10-19T19:39:13Z","tenders":[{"id":"cbb9290a-5d34-5565-4f7f-156fa4614fe0","location_id":"CBASEDPaLCabJaF09RCTuXK7uZYgAQ","transaction_id":"9c45764c-f048-5e07-44ed-97ca766a13dc","created_at":"2017-10-19T19:39:13Z","note":"Online
+        Transaction","amount_money":{"amount":8478,"currency":"USD"},"type":"CARD","card_details":{"status":"CAPTURED","card":{"card_brand":"VISA","last_4":"5858"},"entry_method":"KEYED"}}],"reference_id":"TYZDzEGFReKt","product":"EXTERNAL_API"}}'
     http_version: 
-  recorded_at: Sat, 07 Oct 2017 04:19:29 GMT
+  recorded_at: Thu, 19 Oct 2017 19:39:13 GMT
 recorded_with: VCR 3.0.3

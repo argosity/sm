@@ -44,8 +44,12 @@ module SM
                         :amount => (payment.amount * 100).to_i,
                         :currency => 'USD'
                     },
+                    billing_address: {
+                        first_name: sale.first_name,
+                        last_name: sale.last_name
+                    },
                     :idempotency_key => sale.identifier,
-                    buyer_email_address: sale.email,
+                    buyer_email_address: sale.email
                 }
 
                 begin

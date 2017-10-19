@@ -34,7 +34,8 @@ require_relative '../spec_helper'
         it "saves a transaction" do
             with_payment_proccessor(paymentVendor) do
                 expect {
-                    post '/api/sm/sale.json', request_data.to_json
+                    r = post '/api/sm/sale/submit.json', request_data.to_json
+                    puts r.body
                 }.to change { SM::Sale.count }.by(1)
                 expect(last_response).to be_ok
             end
@@ -44,7 +45,7 @@ require_relative '../spec_helper'
             payment_processor_make_sale_invalid(show, paymentVendor)
             with_payment_proccessor(paymentVendor) do
                 expect {
-                    post '/api/sm/sale.json', request_data.to_json
+                    post '/api/sm/sale/submit.json', request_data.to_json
                 }.to change { SM::Sale.count }.by(0)
                 expect(last_response.status).to eq(406)
                 expect(last_response_json['success']).to eq(false)
@@ -55,7 +56,7 @@ require_relative '../spec_helper'
         it 'sends email' do
             with_payment_proccessor(paymentVendor) do
                 expect {
-                    post '/api/sm/sale.json', request_data.to_json
+                    post '/api/sm/sale/submit.json', request_data.to_json
                 }.to change { SM::Sale.count }.by(1)
                 expect(last_response).to be_ok
                 sale = SM::Sale.find_by_identifier(response_data['identifier'])

@@ -12,7 +12,7 @@ PAYMENT_CONFIGS = {
     'Square' => {
         'config' => {
             'location_id' => 'CBASEDPaLCabJaF09RCTuXK7uZYgAQ',
-            'authorization' => 'sandbox-sq0atb-Zefd9e__fbXtLIJYiJaiOA'
+            'token' => 'sandbox-sq0atb-Zefd9e__fbXtLIJYiJaiOA'
         },
         'settings' => {
             'application_id' => 'sandbox-sq0idp-i06hC8ZeXrqOujH_QfYt5Q'
