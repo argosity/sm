@@ -3,11 +3,11 @@ import { observer } from 'mobx-react';
 import { pick } from 'lodash';
 import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row } from 'react-flexbox-grid';
 import Header   from 'grommet/components/Header';
 import Box      from 'grommet/components/Box';
 import Button   from 'grommet/components/Button';
-
+import Help from 'hippo/components/help';
 import RecordFinder from 'hippo/components/record-finder';
 import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
 import {
@@ -63,7 +63,7 @@ export default class Messages extends React.PureComponent {
 
     @action.bound
     setDefaultMessages() {
-        this.formState.set(
+        this.formState.update(
             pick(
                 this.defaultMessage,
                 'order_confirmation_subject',
@@ -125,7 +125,14 @@ export default class Messages extends React.PureComponent {
                         xs={9} name="order_confirmation_subject"
                     />
 
-                    <Box flex justify="center" align="center" alignContent="center">
+                    <Box
+                        flex direction="row" justify="around"
+                        align="center" alignContent="center"
+                    >
+                        <Help
+                            position="top-end"
+                            message="If left blank, email fields will use the defaults.  Click “Set Defaults” to copy the current default to the fields so it can be customized"
+                        />
                         <Button onClick={this.setDefaultMessages} label="Set Defaults" />
                     </Box>
 
