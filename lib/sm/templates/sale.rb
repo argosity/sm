@@ -22,7 +22,7 @@ module SM
             end
 
             def subject
-                if custom_message
+                if custom_message && custom_message.order_confirmation_subject.present?
                     ::Liquid::Template
                         .parse(custom_message.order_confirmation_subject)
                         .render(variables)
@@ -40,7 +40,7 @@ module SM
             end
 
             def source
-                custom_message ? custom_message.order_confirmation_body : super
+                custom_message && custom_message.order_confirmation_body.present? ? custom_message.order_confirmation_body : super
             end
 
             def variables
