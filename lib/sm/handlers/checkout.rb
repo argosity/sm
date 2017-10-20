@@ -17,7 +17,7 @@ module SM
                 SM::Sale.transaction do
                     payment = data['payments'].first
                     sale.payments.build(
-                        payment.merge(amount: sale.show_time.price)
+                        payment.merge(amount: sale.total)
                     )
                     if sale.valid?
                         sale.payments.each{ |payment| process_charge(sale, payment) }
