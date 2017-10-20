@@ -21,14 +21,16 @@
               Your order has been placed and we've reserved you {{ sale.qty | pluralize: 'seat' }} for {{ show.title }}.
             </p>
             <p style="margin-top: 20px;">
-              Show time is {{ show_time.occurs_at | date: "%h:%M%P on %a %b %d, %y" }} at:
+              Show time is {{ show_time.occurs_at | date: "%l:%M%P on %a %b %d, %y" }} at:
             </p>
             <p>
-              <address>
-                {{ venue.name }}
-                <br>
-                {{ venue.address }}
-              </address>
+              <blockquote>
+                <address>
+                  {{ venue.name }}
+                  <br>
+                  {{ venue.address }}
+                </address>
+              </blockquote>
               <br>
               <a href="https://www.google.com/maps/place/{{ venue.name | url_encode }},+{{ venue.address | url_encode}}">View on Google Maps</a>
             </p>
