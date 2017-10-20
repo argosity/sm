@@ -36,24 +36,22 @@ module SM
 
             def sale(payment)
                 sale = payment.sale
-                SquareConnect::TransactionsApi.new(config)
+
                 request_body = {
+                    idempotency_key: sale.identifier,
                     card_nonce: payment.nonce,
                     reference_id: sale.identifier,
                     amount_money: {
                         :amount => (payment.amount * 100).to_i,
                         :currency => 'USD'
                     },
-                    billing_address: {
-                        first_name: sale.first_name,
-                        last_name: sale.last_name
-                    },
-                    :idempotency_key => sale.identifier,
-                    buyer_email_address: sale.email
+                    customer_id: sale.attendee.square_customer_id,
+                    buyer_email_address: sale.attendee.email
                 }
 
                 begin
                     api = SquareConnect::TransactionsApi.new(api_client)
+
                     result = api.charge(
                         client_config_values['location_id'],
                         request_body

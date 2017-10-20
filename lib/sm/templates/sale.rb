@@ -32,7 +32,7 @@ module SM
             end
 
             def to
-                sale.email
+                sale.attendee.email
             end
 
             def custom_message
@@ -53,7 +53,11 @@ module SM
                     },
                     'sale' => sale.as_json(
                         methods: %w{tickets_url total},
-                        only: %w{identifier name email qty tickets_url}
+                        only: %w{identifier qty tickets_url}
+                    ).merge(
+                        sale.attendee.as_json(
+                            only: %w{name email phone}
+                        )
                     ),
                     'venue' => show.venue.as_json(only: %w{name address}),
                     'show' => show.as_json(only: %w{title sub_title description})

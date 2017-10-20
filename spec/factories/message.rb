@@ -1,5 +1,5 @@
 FactoryGirl.define do
-    factory :message, class: Sm::Message do
+    factory :message, class: SM::Message do
         tenant { Hippo::Tenant.current }
         code { Hippo::Strings.random(10) }
         name { Faker::Name.name }

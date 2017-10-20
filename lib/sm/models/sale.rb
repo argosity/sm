@@ -4,13 +4,15 @@ module SM
         has_random_identifier
 
         belongs_to :show_time
+        belongs_to :attendee
         has_one :show, through: :show_time
         has_many :payments, autosave: true
         has_many :redemptions, inverse_of: :sale
 
-        validates :show_time, presence: true
-        validates :qty, :name, presence: true
-        validates :payments, associated: true, presence: true, length: { is: 1 }
+        validates :qty,        presence: true
+        validates :show_time,  presence: true
+        validates :attendee,   presence: true
+        validates :payments,   presence: true, associated: true, length: { is: 1 }
 
         scope :with_details, lambda { |should_use = true|
             compose_query_using_detail_view(view: 'sale_details', join_to: 'sale_id') if should_use
@@ -18,14 +20,6 @@ module SM
 
         def pathname
             root_path.join('mail', filename)
-        end
-
-        def first_name
-            name.split(' ', 2).first
-        end
-
-        def last_name
-            name.split(' ', 2).last
         end
 
         def pdf_download_url

@@ -13,7 +13,7 @@ require_relative '../spec_helper'
         let (:request_data) {
             {
                 name: "nathan",
-                phone: "6522",
+                phone: "123-456-789",
                 email: "test@test.com",
                 qty: "1",
                 time_identifier: show.times.first.identifier,
@@ -34,10 +34,11 @@ require_relative '../spec_helper'
         it "saves a transaction" do
             with_payment_proccessor(paymentVendor) do
                 expect {
-                    r = post '/api/sm/sale/submit.json', request_data.to_json
-                    puts r.body
+                    post '/api/sm/sale/submit.json', request_data.to_json
                 }.to change { SM::Sale.count }.by(1)
                 expect(last_response).to be_ok
+                sale = SM::Sale.last
+                expect(sale.attendee).to_not be_nil
             end
         end
 
@@ -60,9 +61,9 @@ require_relative '../spec_helper'
                 }.to change { SM::Sale.count }.by(1)
                 expect(last_response).to be_ok
                 sale = SM::Sale.find_by_identifier(response_data['identifier'])
-                expect(sale.email).to eq 'test@test.com'
+                expect(sale.attendee.email).to eq 'test@test.com'
                 email = Mail::TestMailer.deliveries.last
-                expect(email.to).to eq([sale.email])
+                expect(email.to).to eq([sale.attendee.email])
                 expect(email.subject).to include("tickets for #{show.title}")
             end
         end

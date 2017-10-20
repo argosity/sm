@@ -1,6 +1,6 @@
 require 'liquid'
 
-module Sm
+module SM
 
     class Message < Model
         belongs_to_tenant

@@ -42,10 +42,10 @@ module SM
                     payment_method_nonce: payment.nonce,
                     options: { submit_for_settlement: true },
                     customer: {
-                        first_name: sale.first_name,
-                        last_name: sale.last_name,
-                        phone: sale.phone,
-                        email: sale.email
+                        first_name: sale.attendee.first_name,
+                        last_name: sale.attendee.last_name,
+                        phone: sale.attendee.phone,
+                        email: sale.attendee.email
                     }
                 )
                 ChargeResult.new(

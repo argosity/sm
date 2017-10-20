@@ -1,9 +1,9 @@
 require_relative '../spec_helper'
 
-describe Sm::Message do
+describe SM::Message do
 
     it "validates the liquid source before save" do
-        m = Sm::Message.new(
+        m = SM::Message.new(
             order_confirmation_subject: 'foa {{',
             order_confirmation_body: 'foa {% bang_i_dunno %}'
         )

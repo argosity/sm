@@ -6,21 +6,20 @@ module SM
 
             def create
                 sale = SM::Sale.new(
-                    data.slice('name', 'phone', 'email', 'qty')
+                    data.slice('qty')
                 )
-                sale.show_time = SM::ShowTime
-                                     .preload(:show)
-                                     .find_by(
-                                         identifier: data['time_identifier']
-                                     )
-
+                sale.attendee = Attendee.for_sale_data(data)
+                sale.show_time = SM::ShowTime.preload(:show).find_by(
+                    identifier: data['time_identifier']
+                )
                 SM::Sale.transaction do
-                    payment = data['payments'].first
                     sale.payments.build(
-                        payment.merge(amount: sale.total)
+                        data['payments'].first.merge(amount: sale.total)
                     )
                     if sale.valid?
-                        sale.payments.each{ |payment| process_charge(sale, payment) }
+                        sale.payments.each do |payment|
+                            process_charge(sale, payment)
+                        end
                         sale.save
                     end
                 end

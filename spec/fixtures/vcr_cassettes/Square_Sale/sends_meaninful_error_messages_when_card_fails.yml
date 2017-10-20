@@ -2,10 +2,59 @@
 http_interactions:
 - request:
     method: post
+    uri: https://connect.squareup.com/v2/customers
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"test@test.com","given_name":"nathan","phone_number":"123-456-789"}'
+    headers:
+      User-Agent:
+      - Square-Connect-Ruby/2.3.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer sandbox-sq0atb-Zefd9e__fbXtLIJYiJaiOA
+      Expect:
+      - ''
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin, Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      Date:
+      - Fri, 20 Oct 2017 17:05:46 GMT
+      Keep-Alive:
+      - timeout=60
+      Strict-Transport-Security:
+      - max-age=631152000
+      Content-Length:
+      - '258'
+    body:
+      encoding: UTF-8
+      string: '{"customer":{"id":"CBASEBplALsJNPjPEMvDrfoBRcEgAQ","created_at":"2017-10-20T17:05:46.843Z","updated_at":"2017-10-20T17:05:46.843Z","given_name":"nathan","email_address":"test@test.com","phone_number":"123-456-789","preferences":{"email_unsubscribed":false}}}'
+    http_version: 
+  recorded_at: Fri, 20 Oct 2017 17:05:46 GMT
+- request:
+    method: post
     uri: https://connect.squareup.com/v2/locations/CBASEDPaLCabJaF09RCTuXK7uZYgAQ/transactions
     body:
       encoding: UTF-8
-      string: '{"card_nonce":"fake-card-nonce-ok","reference_id":"tNauPgg7k7Hs","amount_money":{"amount":403,"currency":"USD"},"billing_address":{"first_name":"nathan","last_name":"nathan"},"idempotency_key":"tNauPgg7k7Hs","buyer_email_address":"test@test.com"}'
+      string: '{"idempotency_key":"xs42y6sp4d7G","card_nonce":"fake-card-nonce-ok","reference_id":"xs42y6sp4d7G","amount_money":{"amount":403,"currency":"USD"},"customer_id":"CBASEBplALsJNPjPEMvDrfoBRcEgAQ","buyer_email_address":"test@test.com"}'
     headers:
       User-Agent:
       - Square-Connect-Ruby/2.3.1
@@ -37,7 +86,7 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Date:
-      - Thu, 19 Oct 2017 19:39:13 GMT
+      - Fri, 20 Oct 2017 17:05:47 GMT
       Keep-Alive:
       - timeout=60
       Strict-Transport-Security:
@@ -49,5 +98,5 @@ http_interactions:
       string: '{"errors":[{"category":"PAYMENT_METHOD_ERROR","code":"CARD_DECLINED","detail":"Card
         declined."}]}'
     http_version: 
-  recorded_at: Thu, 19 Oct 2017 19:39:13 GMT
+  recorded_at: Fri, 20 Oct 2017 17:05:47 GMT
 recorded_with: VCR 3.0.3

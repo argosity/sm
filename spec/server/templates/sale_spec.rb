@@ -13,10 +13,10 @@ describe SM::Templates::Sale do
         show.save!
 
         email = SM::Templates::Sale.create(sale)
-        expect(email.to).to eq [sale.email]
+        expect(email.to).to eq [sale.attendee.email]
         expect(email.subject).to include show.title
         expect(email.body.raw_source).to include show.title
-        expect(email.body.raw_source).to include sale.name
+        expect(email.body.raw_source).to include sale.attendee.name
     end
 
 end

@@ -6,6 +6,7 @@ module SM
     class Model < Hippo::Model
         self.abstract_class = true
     end
+    autoload :Attendee, "sm/models/attendee"
 end
 
 require_relative "models/presenter"
