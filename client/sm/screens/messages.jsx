@@ -1,9 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import { pick } from 'lodash';
 import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
-import { Row } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import Header   from 'grommet/components/Header';
+import Box      from 'grommet/components/Box';
 import Button   from 'grommet/components/Button';
 
 import RecordFinder from 'hippo/components/record-finder';
@@ -23,7 +25,7 @@ export default class Messages extends React.PureComponent {
     @observable defaultMessage = new Message();
     @observable message;
     @observable errorMessage = '';
-    formState = new FormState()
+    formState = new FormState();
 
     query = new Query({
         src: Message,
@@ -56,7 +58,18 @@ export default class Messages extends React.PureComponent {
     @action.bound
     onReset() {
         this.message = new Message();
-        this.formState.setFromModel(this.defaultMessage);
+        this.formState.setFromModel(this.message);
+    }
+
+    @action.bound
+    setDefaultMessages() {
+        this.formState.set(
+            pick(
+                this.defaultMessage,
+                'order_confirmation_subject',
+                'order_confirmation_body',
+            ),
+        );
     }
 
     @observable dt = moment();
@@ -109,8 +122,13 @@ export default class Messages extends React.PureComponent {
                 <Row>
                     <Field
                         label="Order confirmation email subject"
-                        xs={12} name="order_confirmation_subject"
+                        xs={9} name="order_confirmation_subject"
                     />
+
+                    <Box flex justify="center" align="center" alignContent="center">
+                        <Button onClick={this.setDefaultMessages} label="Set Defaults" />
+                    </Box>
+
                 </Row>
                 <Row style={{ flex: 1 }}>
                     <Field
