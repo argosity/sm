@@ -20,7 +20,8 @@ import Message from '../models/message';
 @observer
 export default class Messages extends React.PureComponent {
 
-    @observable message = new Message();
+    @observable defaultMessage = new Message();
+    @observable message;
     @observable errorMessage = '';
     formState = new FormState()
 
@@ -35,8 +36,8 @@ export default class Messages extends React.PureComponent {
     })
 
     componentWillMount() {
-        this.message.fetchDefaults();
-        this.formState.setFromModel(this.message);
+        this.defaultMessage.fetchDefaults();
+        this.onReset();
     }
 
     @action.bound
@@ -55,7 +56,7 @@ export default class Messages extends React.PureComponent {
     @action.bound
     onReset() {
         this.message = new Message();
-        this.formState.reset();
+        this.formState.setFromModel(this.defaultMessage);
     }
 
     @observable dt = moment();
