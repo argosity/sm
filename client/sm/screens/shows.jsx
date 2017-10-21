@@ -33,7 +33,7 @@ export default class Shows extends React.PureComponent {
     query = new Query({
         src: ShowModel,
         autoFetch: true,
-        sort: { occurs_at: 'ASC' },
+        sort: { created_at: 'desc' },
         syncOptions: { with: 'with_details' },
         fields: [
             { id: 'id', visible: false },
@@ -45,6 +45,7 @@ export default class Shows extends React.PureComponent {
             'venue_details',
             'times',
             'visible_during',
+            'created_at',
         ],
     });
 
