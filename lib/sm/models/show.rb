@@ -25,6 +25,10 @@ module SM
             compose_query_using_detail_view(view: 'show_details', join_to: 'show_id') if should_use
         }, export: true
 
+        scope :visible, lambda {|val|
+            where('visible_during @> now()::timestamp') if val == 'true'
+        }, export: true
+
         protected
 
         def set_defaults

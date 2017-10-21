@@ -3,14 +3,14 @@ import { action, observable, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { get, map } from 'lodash';
 import Config from 'hippo/config';
-
 import cn from 'classnames';
 import { Row, Col, getColumnProps } from 'react-flexbox-grid';
 import moment from 'moment';
-import DateRange from 'hippo/lib/date-range';
-import Button   from 'grommet/components/Button';
+import Button    from 'grommet/components/Button';
 import EditIcon  from 'grommet/components/icons/base/Edit';
-import Spinning from 'grommet/components/icons/Spinning';
+import Spinning  from 'grommet/components/icons/Spinning';
+import ViewIcon  from 'grommet/components/icons/base/View';
+import DateRange from 'hippo/lib/date-range';
 
 function dt(date) {
     return moment(date).format('h:mma MMM Do YYYY');
@@ -53,6 +53,13 @@ export default class Show extends React.PureComponent {
         return this.isEditing ? <Spinning /> : <EditIcon />;
     }
 
+    visibleIcon(visible) {
+        if (!visible.isCurrent) { return null; }
+        return (
+            <ViewIcon size="small" type="status" colorIndex="brand" />
+        );
+    }
+
     render() {
         const { row, style, measure } = this.props;
         const [
@@ -86,7 +93,10 @@ export default class Show extends React.PureComponent {
                 </Row>
                 <Row className="dates">
                     <Col sm={6}>
-                        <b>Visible:</b>
+                        <b className="visible">
+                            Visible:
+                            {this.visibleIcon(visible)}
+                        </b>
                         <div>{dt(visible.start)} ~ {dt(visible.end)}</div>
                     </Col>
                     <Col sm={6} className="occurs">

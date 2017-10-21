@@ -7,13 +7,16 @@ import {
     CellMeasurer, CellMeasurerCache,
 } from 'react-virtualized';
 import SwipeableViews from 'react-swipeable-views';
-import Query    from 'hippo/models/query';
-import Screen   from 'hippo/components/screen';
-import DataList from 'hippo/components/data-list';
 
+import CheckBox from 'grommet/components/CheckBox';
 import Button   from 'grommet/components/Button';
 import Box from 'grommet/components/Box';
 import AddIcon  from 'grommet/components/icons/base/AddCircle';
+
+import Query    from 'hippo/models/query';
+import Screen   from 'hippo/components/screen';
+import DataList from 'hippo/components/data-list';
+import QueryBuilder from 'hippo/components/query-builder';
 
 import ShowModel from '../models/show';
 import Show from './shows/show';
@@ -34,18 +37,23 @@ export default class Shows extends React.PureComponent {
         src: ShowModel,
         autoFetch: true,
         sort: { created_at: 'desc' },
-        syncOptions: { with: 'with_details' },
+        syncOptions: {
+            with: {
+                with_details: true,
+                visible: true,
+            },
+        },
         fields: [
-            { id: 'id', visible: false },
-            'identifier',
+            { id: 'id', visible: false, queryable: false },
+            { id: 'identifier', queryable: false },
             'title',
             'sub_title',
             'description',
-            'image_details',
-            'venue_details',
-            'times',
+            { id: 'image_details', queryable: false },
+            { id: 'venue_details', queryable: false },
+            { id: 'times', queryable: false },
             'visible_during',
-            'created_at',
+            { id: 'created_at', queryable: false },
         ],
     });
 
@@ -104,6 +112,9 @@ export default class Shows extends React.PureComponent {
 
     @observable displayIndex = 0;
 
+    @action.bound changeVisible(ev) {
+        this.query.syncOptions.with.visible = ev.target.checked;
+    }
 
     @autobind
     rowRenderer(props) {
@@ -139,14 +150,30 @@ export default class Shows extends React.PureComponent {
             <Screen {...this.props}>
                 <SwipeableViews disabled index={this.displayIndex}>
                     <div className="shows-list">
+
                         <Box
+                            className="controls"
                             colorIndex="light-2"
                             full="horizontal"
-                            align="end"
-                            pad={{ horizontal: 'small', vertical: 'small', between: 'small' }}
+                            direction="row"
+                            align="center"
+                            pad={{
+                                horizontal: 'small',
+                                vertical: 'small',
+                                between: 'small',
+                            }}
                         >
+
+                            <QueryBuilder autoFetch={true} query={this.query} />
+                            <CheckBox
+                                checked={this.query.syncOptions.with.visible}
+                                label="Only Visible"
+                                onChange={this.changeVisible}
+                            />
                             <Button icon={<AddIcon />} onClick={this.onAdd} label="Add" />
+
                         </Box>
+
                         <DataList
                             query={this.query}
                             rowRenderer={this.rowRenderer}
