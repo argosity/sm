@@ -11,12 +11,14 @@ export default class PurchaseField extends React.PureComponent {
 
     @action.bound
     onFocus() {
+        this.wrapper._onFocus();
         this.errorMessage = '';
     }
 
     @action.bound
     onBlur({ isValid }) {
         this.isValid = isValid;
+        this.wrapper._onBlur();
         this.errorMessage = isValid ? '' : this.props.errorMessage;
     }
 
