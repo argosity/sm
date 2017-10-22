@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 524cacd8fb19f57362f7db6d40688382567c4a8b
+  revision: de0c6953291453f5ff025fc4d759c63784e76be0
   branch: master
   specs:
-    hippo-fw (0.9.7)
+    hippo-fw (0.9.8)
       activejob (~> 5.1.0)
       activerecord (~> 5.1.0)
       activerecord-multi-tenant (~> 0.7)
@@ -139,7 +139,7 @@ GEM
     ethon (0.10.1)
       ffi (>= 1.3.0)
     execjs (2.7.0)
-    factory_girl (4.8.2)
+    factory_girl (4.8.1)
       activesupport (>= 3.0.0)
     faker (1.8.4)
       i18n (~> 0.5)
