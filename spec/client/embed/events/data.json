@@ -56,6 +56,7 @@
                 "name": "Ashly Weber",
                 "address": "8688 Sven Trail North Jamarcus South Carolina",
                 "phone_number": "(824) 675-5758 x4236",
+                "timezone": "America/Los_Angeles",
                 "logo": null
             }
         },
@@ -114,6 +115,7 @@
             "venue": {
                 "name": "Zita Crist",
                 "address": "98310 O'Keefe Streets West Asia North Dakota",
+                "timezone": "America/Los_Angeles",
                 "phone_number": "1-195-059-9301 x492",
                 "logo": null
             }
@@ -174,6 +176,7 @@
             "venue": {
                 "name": "Caroline Quigley II",
                 "address": "21605 Bartoletti Fort Lake Anne New Mexico",
+                "timezone": "America/Los_Angeles",
                 "phone_number": "168.824.4820 x923",
                 "logo": null
             }

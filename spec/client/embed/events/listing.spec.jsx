@@ -24,7 +24,8 @@ describe('Embedded Shows Listing', () => {
     afterEach(() => {
         chronokinesis.reset();
     });
-    it('renders shows and matches snapshot', () => {
+
+    fit('renders shows and matches snapshot', () => {
         DATA.forEach(ev =>
             expect(listing).toHaveRendered(`[data-show-identifier="${ev.identifier}"]`));
         expect(Snapshot(<Listing shows={shows} />)).toMatchSnapshot();

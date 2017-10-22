@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import Big from 'big.js';
 import { sprintf } from 'sprintf-js';
 import { action } from 'mobx';
@@ -36,7 +36,8 @@ export default class ShowTime extends BaseModel {
 
     @computed get formattedOccursAt() {
         const format = this.show.commonTime ? 'MMM Do YYYY' : 'h:mma MMM Do YYYY';
-        return moment(this.occurs_at).format(format);
+        const tz = this.show.venue ? this.show.venue.timezone : moment.tz.guess();
+        return moment(this.occurs_at).tz(tz).format(format);
     }
 
     @computed get formattedPrice() {
