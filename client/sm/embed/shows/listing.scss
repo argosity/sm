@@ -135,6 +135,12 @@
             }
         }
     }
+    .credits {
+        font-size: 0.9rem;
+        text-align: right;
+        font-variant: petite-caps;
+        font-style: italic;
+    }
 }
 
 
@@ -143,6 +149,11 @@
     &.grommetux-layer {
         .grommetux-layer__container {
             overflow: hidden;
+            @include media-query(palm) {
+                position: absolute;
+                right: 0;
+                left: 0;
+            }
         }
     }
     .contents {
@@ -186,7 +197,11 @@
             margin-right: 0.5rem;
         }
     }
-
+    .form-field {
+        &.card {
+            .grommetux-form-field { overflow: hidden; }
+        }
+    }
     .top-info {
         display: flex;
 
@@ -195,7 +210,13 @@
             max-width: 240px;
             margin-right: 1rem;
         }
-
+    }
+    footer {
+        display: flex;
+        justify-content: flex-end;
+        @include media-query(palm) {
+            justify-content: space-around;
+        }
     }
 }
 .grommet.grommetux-drop {
