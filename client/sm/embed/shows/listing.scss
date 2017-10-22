@@ -44,7 +44,6 @@
 
     min-height: 200px;
 
-
     .show {
         border-bottom: 1px solid lightgray;
         margin-bottom: 10px;
@@ -149,6 +148,14 @@
     }
 }
 
+.grommet footer {
+    display: flex;
+    justify-content: flex-end;
+    @include media-query(palm) {
+        justify-content: space-around;
+    }
+    margin: 10px 0;
+}
 
 .show-information,
 .show-purchase {
@@ -162,12 +169,20 @@
             }
         }
     }
+
     .contents {
         overflow: hidden;
+        max-height: 100vh;
         .body {
             flex: 1;
             overflow: auto;
         }
+    }
+}
+
+.show-information {
+    .text-editor-content {
+        flex: 1;
     }
 }
 
@@ -215,13 +230,6 @@
             align-self: center;
             max-width: 240px;
             margin-right: 1rem;
-        }
-    }
-    footer {
-        display: flex;
-        justify-content: flex-end;
-        @include media-query(palm) {
-            justify-content: space-around;
         }
     }
 }

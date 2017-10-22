@@ -41,7 +41,6 @@ export default class Information extends React.PureComponent {
                     separator='horizontal'
                     full="horizontal"
                     size="full"
-                    basis="xxlarge"
                 >
                     <Heading>{show.title}</Heading>
                     <PageRenderer className="body" content={show.page} />
