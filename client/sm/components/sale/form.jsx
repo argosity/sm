@@ -45,6 +45,7 @@ export default class SaleForm extends React.PureComponent {
 
     @observable formState = new FormState()
     @observable payment = new Payment();
+    @observable cardIsvalid;
 
     @observable fields = {
         postalCode: false,
