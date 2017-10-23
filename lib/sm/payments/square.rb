@@ -9,7 +9,7 @@ module SM
 
             extend self
             CONFIG_KEY='square'
-            SCOPES = 'MERCHANT_PROFILE_READ ITEMS_READ ITEMS_WRITE PAYMENTS_READ PAYMENTS_WRITE'
+            SCOPES = 'MERCHANT_PROFILE_READ ITEMS_READ ITEMS_WRITE PAYMENTS_READ PAYMENTS_WRITE CUSTOMERS_WRITE'
             WEBHOOKS = 'PAYMENT_UPDATED', 'INVENTORY_UPDATED'
 
             def authorization_url
@@ -45,9 +45,10 @@ module SM
                         :amount => (payment.amount * 100).to_i,
                         :currency => 'USD'
                     },
-                    customer_id: sale.attendee.square_customer_id,
                     buyer_email_address: sale.attendee.email
                 }
+                customer_id = sale.attendee.square_customer_id
+                request_body[:customer_id] = customer_id unless sale.attendee.square_customer_id.blank?
 
                 begin
                     api = SquareConnect::TransactionsApi.new(api_client)
