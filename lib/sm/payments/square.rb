@@ -28,7 +28,7 @@ module SM
                     system_settings_values['application_id'],
                     system_settings_values['secret'], {
                         site: 'https://connect.squareup.com',
-                        redirect_uri: system_settings_values['redirect_url'],
+                        redirect_uri: system_settings_values['redirect_uri'],
                         authorize_url: "/oauth2/authorize",
                         token_url: "/oauth2/token",
                     })
