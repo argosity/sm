@@ -38,7 +38,7 @@
 
             </p>
             <p style="margin-top: 40px; text-align: center">
-              <a href="{{ sale.tickets_url }}">Download Tickets</a>
+              <h3><a href="{{ sale.tickets_url }}">Download Tickets</a></h3>
             </p>
           </td>
           <td valign="top">
@@ -94,7 +94,7 @@
             </td>
 
             <td valign="top" align="right">
-              {{ show_time.price }}
+              {{ show_time.price | precision: 2 }}
             </td>
 
             <td valign="top" align="center">
@@ -102,7 +102,7 @@
             </td>
 
             <td valign="top" align="right">
-              {{ sale.total }}
+              {{ sale.total | precision: 2 }}
             </td>
         </tbody>
       </table>
