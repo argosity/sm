@@ -159,14 +159,32 @@
 
 .show-information,
 .show-purchase {
-    &.grommetux-layer {
-        .grommetux-layer__container {
-            overflow: hidden;
-            @include media-query(palm) {
-                position: absolute;
-                right: 0;
+
+    @include media-query(palm) {
+        &.grommetux-layer {
+            position: fixed;
+            overflow: auto;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            .contents {
+                position: fixed;
                 left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+
             }
+        }
+        .grommetux-layer__container {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: auto;
+            display: block;
         }
     }
 

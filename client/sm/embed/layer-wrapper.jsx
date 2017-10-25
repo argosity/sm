@@ -6,11 +6,14 @@ export default class LayerWrapper extends React.PureComponent {
 
     componentDidMount() {
         this.originalOverflow = document.body.style.overflow;
+        this.originalPosition = document.body.style.position;
         document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
     }
 
     componentWillUnmount() {
         document.body.style.overflow = this.originalOverflow;
+        document.body.style.position = this.originalPosition;
     }
 
     render() {
