@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: e40fd5c32392d8152dbac453ceafc4506b1b41ca
+  revision: e2d85ae19cf836e45f38fc828f9860d96011e198
   branch: master
   specs:
     hippo-fw (0.9.8)
@@ -281,7 +281,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (12.1.0)
+    rake (12.2.1)
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
