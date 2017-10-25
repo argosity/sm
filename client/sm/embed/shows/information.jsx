@@ -2,15 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
-
-import Heading    from 'grommet/components/Heading';
-import Box        from 'grommet/components/Box';
+import Box from 'grommet/components/Box';
 import ShowModel from 'sm/models/show';
 import Footer from 'grommet/components/Footer';
 import PageRenderer from 'hippo/components/text-editor/renderer';
 import PurchaseButton from './purchase-button';
 import Layer from '../layer-wrapper';
-
 
 @observer
 export default class Information extends React.PureComponent {
