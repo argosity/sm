@@ -185,16 +185,21 @@
         flex: 1;
         max-width: 1000px;
         @include media-query(lap-and-up) {
-            min-width: 800px;
+            min-width: 45em;
         }
     }
 }
 
 .show-purchase {
     .image img { max-height: 100%; }
+
     .order-pane {
         overflow-x: hidden;
         overflow-y: auto;
+        @include media-query(lap-and-up) {
+            max-width: 800px;
+            width: 80vw;
+        }
     }
 
     .totals-line {

@@ -71,10 +71,7 @@ export default class Purchase extends React.PureComponent {
                 <Box
                     className="order-pane"
                     separator='horizontal'
-                    full="horizontal"
-                    size="full"
                     pad={{ vertical: 'medium' }}
-                    basis="xxlarge"
                     flex
                 >
                     <NetworkActivityOverlay
