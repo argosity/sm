@@ -183,6 +183,10 @@
 .show-information {
     .text-editor-content {
         flex: 1;
+        max-width: 1000px;
+        @include media-query(lap-and-up) {
+            min-width: 800px;
+        }
     }
 }
 
