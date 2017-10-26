@@ -164,6 +164,7 @@
         &.grommetux-layer {
             position: fixed;
             overflow: auto;
+            -webkit-overflow-scrolling: touch;
             left: 0;
             right: 0;
             top: 0;
@@ -184,6 +185,7 @@
             left: 0;
             right: 0;
             overflow: auto;
+             -webkit-overflow-scrolling: touch;
             display: block;
         }
     }
@@ -194,6 +196,7 @@
         .body {
             flex: 1;
             overflow: auto;
+             -webkit-overflow-scrolling: touch;
         }
     }
 }
@@ -214,6 +217,7 @@
     .order-pane {
         overflow-x: hidden;
         overflow-y: auto;
+         -webkit-overflow-scrolling: touch;
         @include media-query(lap-and-up) {
             max-width: 800px;
             width: 80vw;
