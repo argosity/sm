@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 
-import Box       from 'grommet/components/Box';
 import Heading   from 'grommet/components/Heading';
 import Button    from 'grommet/components/Button';
 import FormField from 'grommet/components/FormField';
@@ -68,11 +67,8 @@ export default class Purchase extends React.PureComponent {
                 onClose={onCancel}
                 closer
             >
-                <Box
+                <div
                     className="order-pane"
-                    separator='horizontal'
-                    pad={{ vertical: 'medium' }}
-                    flex
                 >
                     <NetworkActivityOverlay
                         message={sale.activityMessage}
@@ -98,7 +94,7 @@ export default class Purchase extends React.PureComponent {
                         }
                     >
                     </SaleForm>
-                </Box>
+                </div>
             </Layer>
         );
     }

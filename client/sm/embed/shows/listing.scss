@@ -217,6 +217,7 @@
     .order-pane {
         overflow-x: hidden;
         overflow-y: auto;
+        padding: 48px 0;
          -webkit-overflow-scrolling: touch;
         @include media-query(lap-and-up) {
             max-width: 800px;
