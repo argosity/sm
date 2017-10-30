@@ -1,49 +1,111 @@
-import { Navigation } from 'react-native-navigation';
-import User from 'hippo/user';
-import Config from 'hippo/config';
-import { autorun, when } from 'mobx';
-import { onBoot } from 'hippo/models/pub_sub';
-import registerScreens from './screens';
+import React from 'react';
+import { Text, WebView, View, StyleSheet, Dimensions } from 'react-native';
+import { observer } from 'mobx-react';
+import { observable, computed, action } from 'mobx';
+import Camera from 'react-native-camera';
+import Bridge from './bridge';
 
-registerScreens();
+import { onMessage, setRef } from './api';
+import Config from './config';
 
-function showLogin() {
-    Navigation.startSingleScreenApp({
-        screen: {
-            screen: 'showmaker.login',
-            title: 'Login',
-            navigatorStyle: {},
-            navigatorButtons: {},
-        },
-    });
-}
+@observer
+export default class ShowMakerWeb extends React.Component {
 
-function showApp() {
-    onBoot();
+    @observable command;
+    @observable isScanning = false;
 
-    Navigation.startSingleScreenApp({
-        screen: {
-            screen: 'showmaker.events',
-            title: 'Events',
-            navigatorStyle: {},
-            navigatorButtons: {
-                leftButtons: [
-                    {
-                        title: 'Logout', // for a textual button, provide the button title (label)
-                        id: 'logout',
-                    },
-                ],
-            },
-        },
-    });
-}
+    constructor(props) {
+        super(props);
+        setRef(this);
+    }
 
+    @computed get uri() {
+        return Config.tenant ?
+               `http://${Config.tenant}.argosity.com:9292/` :
+               'http://dev.argosity.com:9292/mobile';
+    }
 
-when(
-    () => Config.isIntialized,
-    () => {
-        autorun(
-            () => (User.isLoggedIn ? showApp() : showLogin()),
+    sendCommand(cmd, ...args) {
+        this.command = `window._transmitToShowMaker(${cmd}, ${JSON.stringify(args)})`;
+    }
+
+    @action.bound startScan() {
+        const options = {};
+        this.camera.capture({metadata: options})
+            .then((data) => console.log(data))
+            .catch(err => console.error(err));
+    }
+
+    @action.bound onBarcodeRead(ev) {
+        console.log(ev);
+
+        this.isScanning = false;
+    }
+
+    renderCamera() {
+        if (!this.isScanning) { return null; }
+
+        const { width } = Dimensions.get('window');
+        return (
+            <Camera
+                ref={(cam) => {
+                        this.camera = cam;
+                }}
+                onBarCodeRead={this.onBarcodeRead}
+                style={{
+                    position: 'absolute',
+                    top: 100,
+                    height: 200,
+                    right: 20,
+                    width: width - 40,
+                }}
+                aspect={Camera.constants.Aspect.fill}
+            />
         );
+    }
+
+    render() {
+        if (!Config.initialized) { return null; }
+
+        return (
+            <View style={styles.container}>
+                <WebView
+                    style={styles.webview}
+                    injectJavaScript={this.command}
+                    injectedJavaScript={`(${Bridge.toString()})()`}
+                    onMessage={onMessage}
+                    source={{ uri: this.uri }}
+                />
+                {this.renderCamera()}
+            </View>
+        );
+    }
+
+}
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'row',
     },
-);
+    webview: {
+        flex: 1,
+        justifyContent: 'flex-start',
+    },
+    preview: {
+        position: 'absolute',
+        bottom: 10,
+        right: 10,
+        width: 50,
+        height: 50,
+    },
+    capture: {
+        flex: 0,
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        color: '#000',
+        padding: 10,
+        margin: 40,
+    }
+});

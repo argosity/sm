@@ -33,6 +33,9 @@ class Hippo::API::Root
         erb :terms
     end
 
+    get '/mobile', &SM::Handlers::Mobile.handler
+    post '/mobile', &SM::Handlers::Mobile.handler
+
     post '/sq/notice' do
         'hi'
     end

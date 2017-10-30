@@ -117,17 +117,14 @@ export default class BoxOffice extends React.PureComponent {
                     onCancel={this.onSaleCancel}
                     onComplete={this.onSaleComplete}
                 />
-
                 <Box direction="row" wrap justify="between" align="baseline">
-                    <h3>
-                        <Button
-                            plain
-                            className="grommetux-control-icon-search"
-                            icon={<SearchIcon />}
-                            label={time.isNew ? 'Click to find Show' : time.show.title}
-                            onClick={this.onSearchClick}
-                        />
-                    </h3>
+                    <Button
+                        plain
+                        className="grommetux-control-icon-search"
+                        icon={<SearchIcon />}
+                        label={time.isNew ? 'Click to find Show' : time.show.title}
+                        onClick={this.onSearchClick}
+                    />
                     <div>
                         {this.renderDetails()}
                     </div>

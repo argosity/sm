@@ -1,12 +1,12 @@
 // This is the client-side version of SM::Extension
 
 import Rollbar from 'rollbar';
-
 import {
     BaseExtension, identifiedBy, identifier,
 } from 'hippo/extensions/base';
 import Extensions from 'hippo/extensions';
 import Tenant from 'hippo/models/tenant';
+import MobileApp from './lib/mobile-app-support';
 import SystemSettings from './components/settings';
 import AboutShowMaker from './components/about-show-maker';
 
@@ -26,7 +26,9 @@ export default class SMExtension extends BaseExtension {
     onInitialized() { }
 
     // All extenensions have been given their data and Hippo has completed startup
-    onAvailable() { }
+    onAvailable() {
+        MobileApp.onReady(Tenant.current.slug);
+    }
 
     // Data that is provided by SM::Extension#client_bootstrap_data
     // in lib/sm/extension.rb is passed to this method

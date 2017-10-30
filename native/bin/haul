@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# export REACT_EDITOR=/usr/local/Cellar/emacs-mac/emacs-25.2-z-mac-6.3/bin/emacsclient
-
-node_modules/.bin/haul start --platform ios
