@@ -77,8 +77,8 @@ export default class SaleForm extends React.PureComponent {
         this.cardIsValid = isValid;
     }
 
-    @computed get isValid() {
-        return Boolean(this.cardIsValid && this.formState.isValid);
+    get isValid() {
+        return this.formState.isValid;
     }
 
     @action
@@ -109,8 +109,9 @@ export default class SaleForm extends React.PureComponent {
                     payments: [this.payment],
                 });
                 resolve(sale);
-            }).catch((err) => {
-                sale.errors = { credit_card: err.message }; // eslint-disable-line
+            }).catch(({ errors }) => {
+                const err = errors[0] || {};
+                sale.errors = { processing_error: err.message || '' }; // eslint-disable-line
                 resolve();
             });
         });

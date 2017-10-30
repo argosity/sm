@@ -14,9 +14,16 @@ const entries = {
         'sm/embed/shows.js',
     ],
 };
+<%
+def dev_public_path
+  protocol = Hippo::Webpack.using_ssl? ? 'https:' : 'http'
+  host = ENV['HOST'] || 'dev.argosity.com'
+  "#{protocol}://#{host}:8889/assets"
+end
+%>
 
 <% unless Hippo.env.production? -%>
-    for (var key in entries) {
+for (var key in entries) {
         entries[key].unshift('react-hot-loader/patch');
     }
 <% end -%>
@@ -25,7 +32,7 @@ const config = {
     entry: entries,
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
-        publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : 'https://dev.argosity.com:8889/assets/' %>',
+        publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : dev_public_path %>',
         filename: '[name]-[hash].js',
     },
     resolve: {
