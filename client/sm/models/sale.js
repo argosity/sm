@@ -1,7 +1,8 @@
 import { sprintf } from 'sprintf-js';
-import { sumBy, first } from 'lodash';
+import { sumBy, first, extend } from 'lodash';
 import { computed } from 'mobx';
 import Sync from 'hippo/models/sync';
+import Config from 'hippo/config';
 import {
     BaseModel, identifiedBy, field, identifier, session, hasMany, belongsTo,
 } from './base';
@@ -37,6 +38,10 @@ export default class Sale extends BaseModel {
     @belongsTo({ model: ShowTime }) time;
     @belongsTo({ model: Show }) show;
 
+    static ticketUrlForIdentifier(id) {
+        return `${Config.api_path}${Config.print_path_prefix}/tickets/${id}.pdf`;
+    }
+
     constructor(attrs = {}) {
         super(attrs);
         if (attrs.show && 1 === attrs.show.times.length) {
@@ -68,9 +73,9 @@ export default class Sale extends BaseModel {
         return sprintf('%0.2f', this.time.pricedShow.times(qty));
     }
 
-    save() {
-        return Sync.forModel(this, { url: `${this.syncUrl}/submit` });
+    save(options = {}) {
+        const url = this.isNew ? `${this.syncUrl}/submit` : this.syncUrl;
+        return Sync.forModel(this, extend({}, options, { url }));
     }
-
 
 }

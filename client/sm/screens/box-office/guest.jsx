@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { action } from 'mobx';
+import { action, computed } from 'mobx';
 import { sumBy } from 'lodash';
 import cn from 'classnames';
 import moment from 'moment';
 import Button from 'grommet/components/Button';
 import DoneIcon from 'grommet/components/icons/base/Compliance';
 import MailIcon from 'grommet/components/icons/base/Mail';
+import TicketIcon   from 'grommet/components/icons/base/Ticket';
+import Sale from '../../models/sale';
 import UX from './ux';
 
 // note this does not use pure componenent
@@ -22,6 +24,10 @@ export default class Guest extends React.Component {
     }
     @action.bound onMail() {
         this.props.ux.onMail(this.props.rowIndex);
+    }
+
+    @computed get printURL() {
+        return Sale.ticketUrlForIdentifier(this.props.row[UX.FIELDS.IDENTIFIER]);
     }
 
     render() {
@@ -51,6 +57,7 @@ export default class Guest extends React.Component {
                 </div>
                 <div className="controls">
                     <Button onClick={this.onMail} plain icon={<MailIcon />} />
+                    <Button href={this.printURL} target="_blank" plain icon={<TicketIcon />} />
                 </div>
             </div>
         );
