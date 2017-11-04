@@ -16,9 +16,9 @@ const entries = {
 };
 <%
 def dev_public_path
-  protocol = Hippo::Webpack.using_ssl? ? 'https:' : 'http'
+  protocol = Hippo::Webpack.using_ssl? ? 'https' : 'http'
   host = ENV['HOST'] || 'dev.argosity.com'
-  "#{protocol}://#{host}:8889/assets"
+  "#{protocol}://#{host}:8889/assets/"
 end
 %>
 
@@ -32,7 +32,7 @@ const config = {
     entry: entries,
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
-        publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : dev_public_path %>',
+        publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : dev_public_path  %>',
         filename: '[name]-[hash].js',
     },
     resolve: {

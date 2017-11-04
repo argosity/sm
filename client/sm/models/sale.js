@@ -27,6 +27,7 @@ export default class Sale extends BaseModel {
     @field tickets_url;
     @field message_id;
 
+    @session noCharge;
     @session show_id;
     @session show_time_id;
     @session show_identifier;
@@ -74,7 +75,10 @@ export default class Sale extends BaseModel {
     }
 
     save(options = {}) {
-        const url = this.isNew ? `${this.syncUrl}/submit` : this.syncUrl;
+        let url = this.syncUrl;
+        if (this.isNew && this.noCharge !== true) {
+            url += '/submit';
+        }
         return Sync.forModel(this, extend({}, options, { url }));
     }
 

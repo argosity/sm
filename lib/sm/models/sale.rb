@@ -12,7 +12,6 @@ module SM
         validates :qty,        presence: true
         validates :show_time,  presence: true
         validates :attendee,   presence: true
-        validates :payments,   presence: true, associated: true, length: { is: 1 }
 
         scope :with_details, lambda { |should_use = true|
             compose_query_using_detail_view(view: 'sale_details', join_to: 'sale_id') if should_use

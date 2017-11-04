@@ -6,7 +6,7 @@ import { observable, action, computed } from 'mobx';
 import { get, extend, each, map } from 'lodash';
 import { observer } from 'mobx-react';
 import PaymentFields from 'payment-fields';
-import { Row, Col } from 'react-flexbox-grid';
+import { Col } from 'react-flexbox-grid';
 import Box from 'grommet/components/Box';
 import Value from 'grommet/components/Value';
 import Footer from 'grommet/components/Footer';
@@ -26,6 +26,10 @@ import Arrow from './pointer-arrow';
 import Sale from '../../models/sale';
 import Payment from '../../models/payment';
 import SM from '../../extension';
+
+
+const PaymentFieldsWrapperMock = ({ className, children }) =>
+    <div className={className}>{children}</div>;
 
 @observer
 export default class SaleForm extends React.PureComponent {
@@ -81,20 +85,32 @@ export default class SaleForm extends React.PureComponent {
         return this.formState.isValid;
     }
 
-    @action
-    exposeErrors() {
+    @action exposeErrors() {
         this.formState.exposeErrors();
         each(this.fields, f => f.exposeError());
     }
 
     @computed get heading() {
-        return this.props.heading || <h3>{get(this.props.sale, 'time.show.title')}</h3>;
+        if (this.props.heading) { return this.props.heading; }
+        const title = get(this.props.sale, 'time.show.title');
+        if (title) {
+            const pre = this.props.sale.noCharge ? 'Create' : 'Sell';
+            return <h4>{pre} tickets for {title}</h4>;
+        }
+        return null;
     }
 
-    @action
-    saveState() {
+    @action saveState() {
         const { sale } = this.props;
+        sale.time_identifier = sale.time.identifier;
+
         return new Promise((resolve) => {
+            if (sale.noCharge) {
+                this.formState.persistTo(sale);
+                resolve(sale);
+                return;
+            }
+
             this.getToken().then(({ token, cardData }) => {
                 this.formState.persistTo(sale);
 
@@ -104,10 +120,8 @@ export default class SaleForm extends React.PureComponent {
                     card_type: cardData.card_brand,
                     digits: cardData.last_4,
                 });
-                extend(sale, {
-                    time_identifier: sale.time.identifier,
-                    payments: [this.payment],
-                });
+                sale.payments = [this.payment];
+
                 resolve(sale);
             }).catch(({ errors }) => {
                 const err = errors[0] || {};
@@ -221,109 +235,128 @@ export default class SaleForm extends React.PureComponent {
         this.getToken = ev.tokenize;
     }
 
+    get fieldProps() {
+        return { sm: 6, xs: 12 };
+    }
+
+    renderCardFields() {
+        if (this.props.sale.noCharge) { return null; }
+        const { fieldProps } = this;
+
+        return [
+            <CardField
+                key="postalCode"
+                {...fieldProps} xs={6} type="postalCode"
+                ref={this.setFieldRef}
+                label="Zip Code" errorMessage="is not valid"
+            />,
+            <CardField
+                key="cardNumber"
+                {...fieldProps} ref={this.setFieldRef}
+                type="cardNumber" label="Card Number"
+                errorMessage="Invalid Card"
+            />,
+            <CardField
+                key="expirationDate"
+                {...fieldProps} sm={3} xs={6} ref={this.setFieldRef}
+                type="expirationDate" placeholder="MM / YY"
+                label="Expiration" errorMessage="Invalid Date"
+            />,
+            <CardField
+                key="cvv"
+                {...fieldProps} sm={3} xs={6} ref={this.setFieldRef}
+                type="cvv" label="Card CVV" errorMessage="Invalid value"
+            />,
+        ];
+    }
+
     render() {
-        const { formState, props: { sale } } = this;
-        const fieldProps = { sm: 6, xs: 12 };
+        const { fieldProps, formState, props: { sale } } = this;
+
+        const FieldsWrapper = this.props.sale.noCharge ? PaymentFieldsWrapperMock : PaymentFields;
 
         return (
-            <PaymentFields
-                onError={this.onError}
-                onReady={this.onFormReady}
-                vendor={SM.paymentsVendor}
-                onValidityChange={this.onValidityChange}
-                authorization={this.payment.token}
-                styles={{
-                    base: {
-                        color: '#3a3a3a',
-                        'font-size': '16px',
-                    },
-                    focus: {
-                        color: 'black',
-                    },
-                }}
+            <Form
+                tag="div"
+                className="sale-form row"
+                state={formState}
             >
                 <NetworkActivityOverlay
                     message={this.busyMessage}
                     visible={this.isBusy}
                     model={sale}
                 />
-
-                <Form
-                    tag="div"
-                    className="sale-form row"
-                    state={formState}
-                >
-                    <Col xs={12}>
-                        <WarningNotification message={sale.errorMessage} />
-                        <Box className="heading" flex>{this.heading}</Box>
-                        <Box
-                            pad={{ between: 'small' }}
-                            className="totals-line"
-                            wrap
-                            direction="row"
-                            align="center"
-                        >
-                            <Box className="title" flex>
-                                {this.renderTimes()}
-                            </Box>
-                            <Field
-                                className="qty"
-                                name="qty"
-                                type="number"
-                                min={1}
-                                validate={numberValue}
-                            />
-                            <Value
-                                className="total"
-                                size="medium"
-                                value={this.totalAmount} units='$'
-                                label="total"
-                            />
+                <Col xs={12}>
+                    <WarningNotification message={sale.errorMessage} />
+                    <Box className="heading" flex>{this.heading}</Box>
+                    <Box
+                        pad={{ between: 'small' }}
+                        className="totals-line"
+                        wrap
+                        direction="row"
+                        align="center"
+                    >
+                        <Box className="title" flex>
+                            {this.renderTimes()}
                         </Box>
-                    </Col>
-                    <Col xs={12} className={this.orderFieldsClass}>
-                        {this.renderSelectionPrompt()}
-                        <Row className="fields">
-                            <Field {...fieldProps} name="name" validate={nonBlank} />
-                            <Field {...fieldProps} name="email" validate={validEmail} />
-                            <Field {...fieldProps} name="phone" xs={6} validate={validPhone} />
-                            <CardField
-                                {...fieldProps} xs={6} type="postalCode"
-                                ref={this.setFieldRef}
-                                label="Zip Code" errorMessage="is not valid"
-                            />
-                            <CardField
-                                {...fieldProps} ref={this.setFieldRef}
-                                type="cardNumber" label="Card Number"
-                                errorMessage="Invalid Card"
-                            />
-                            <CardField
-                                {...fieldProps} sm={3} xs={6} ref={this.setFieldRef}
-                                type="expirationDate" placeholder="MM / YY"
-                                label="Expiration" errorMessage="Invalid Date"
-                            />
-                            <CardField
-                                {...fieldProps} sm={3} xs={6} ref={this.setFieldRef}
-                                type="cvv" label="Card CVV" errorMessage="Invalid value"
-                            />
-                            <Col xs={12}>
-                                <Footer
-                                    margin={{ vertical: 'medium' }}
-                                    pad={{ between: 'medium' }}
-                                    justify="end"
-                                >
-                                    {this.props.controls}
-                                    <Button
-                                        icon={<CreditCardIcon />}
-                                        label={'Purchase'}
-                                        onClick={this.onSaleClick}
-                                    />
-                                </Footer>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Form>
-            </PaymentFields>
+                        <Field
+                            className="qty"
+                            name="qty"
+                            type="number"
+                            min={1}
+                            validate={numberValue}
+                        />
+                        <Value
+                            className="total"
+                            size="medium"
+                            value={this.totalAmount} units='$'
+                            label="total"
+                        />
+                    </Box>
+                </Col>
+                <Col xs={12} className={this.orderFieldsClass}>
+                    {this.renderSelectionPrompt()}
+
+                    <FieldsWrapper
+                        className="row fields"
+                        onError={this.onError}
+                        onReady={this.onFormReady}
+                        vendor={SM.paymentsVendor}
+                        onValidityChange={this.onValidityChange}
+                        authorization={this.payment.token}
+                        styles={{
+                            base: {
+                                color: '#3a3a3a',
+                                'font-size': '16px',
+                            },
+                            focus: {
+                                color: 'black',
+                            },
+                        }}
+                    >
+                        <Field {...fieldProps} name="name" validate={nonBlank} />
+                        <Field {...fieldProps} name="email" validate={validEmail} />
+                        <Field {...fieldProps} name="phone" xs={6} validate={validPhone} />
+
+                        {this.renderCardFields()}
+
+                        <Col xs={12}>
+                            <Footer
+                                margin={{ vertical: 'medium' }}
+                                pad={{ between: 'medium' }}
+                                justify="end"
+                            >
+                                {this.props.controls}
+                                <Button
+                                    icon={<CreditCardIcon />}
+                                    label={'Purchase'}
+                                    onClick={this.onSaleClick}
+                                />
+                            </Footer>
+                        </Col>
+                    </FieldsWrapper>
+                </Col>
+            </Form>
         );
     }
 

@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import moment from 'moment';
-import Screen from 'hippo/components/screen';
-import Query from 'hippo/models/query';
-import QueryLayer from 'hippo/components/record-finder/query-layer';
-import Button from 'grommet/components/Button';
-import Box from 'grommet/components/Box';
-import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
-import SearchIcon from 'grommet/components/icons/base/Search';
+import Button           from 'grommet/components/Button';
+import Box              from 'grommet/components/Box';
+import TicketIcon       from 'grommet/components/icons/base/Ticket';
+import CreditCardIcon   from 'grommet/components/icons/base/CreditCard';
+import SearchIcon       from 'grommet/components/icons/base/Search';
 import DocumentDownload from 'grommet/components/icons/base/DocumentDownload';
+import Screen     from 'hippo/components/screen';
+import Query      from 'hippo/models/query';
+import QueryLayer from 'hippo/components/record-finder/query-layer';
 import ShowTime from '../models/show-time';
 import GuestList from './box-office/guest-list';
 import Sale from '../models/sale';
@@ -42,6 +43,10 @@ export default class BoxOffice extends React.PureComponent {
         ],
     })
 
+    componentDidMount() {
+        this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
+    }
+
     @action.bound
     onRecordFound(time) {
         this.time = time;
@@ -54,6 +59,10 @@ export default class BoxOffice extends React.PureComponent {
         this.guestList.ux.addSale(this.sale);
         this.sale = null;
     }
+    @action.bound onCompTickets() {
+        this.sale = new Sale({ time: this.time, noCharge: true });
+    }
+
     @action.bound onSaleCancel() { this.sale = null; }
     @action.bound onSearchClick() { this.isShowingSearch = true; }
     @action.bound onSearchClose() { this.isShowingSearch = false; }
@@ -62,17 +71,31 @@ export default class BoxOffice extends React.PureComponent {
         this.guestList = gl;
     }
 
-    // componentDidMount() {
-    //     this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
-    // }
-
     renderDetails() {
         if (this.time.isNew) { return null; }
         return (
             <div>
                 <span>{moment(this.time.occurs_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}</span>
                 <Button plain icon={<DocumentDownload />} href={this.time.xlsURL} />
+                <Button
+                    icon={<TicketIcon />}
+                    onClick={this.onCompTickets}
+                />
+                <Button
+                    icon={<CreditCardIcon />}
+                    onClick={this.onSaleClick}
+                />
+
             </div>
+        );
+    }
+
+    renderControls() {
+        if (this.time.isNew) { return null; }
+
+        return (
+            <Box direction="row" justify="end">
+            </Box>
         );
     }
 
@@ -109,16 +132,6 @@ export default class BoxOffice extends React.PureComponent {
                         {this.renderDetails()}
                     </div>
                 </Box>
-
-                <Box direction="row" justify="end">
-                    {time.isNew ? null : (
-                        <Button
-                            icon={<CreditCardIcon />}
-                            label={'Sale'}
-                            onClick={this.onSaleClick}
-                        />)}
-                </Box>
-
                 <GuestList ref={this.setGuestList} time={time} />
             </Screen>
         );
