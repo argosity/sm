@@ -5,6 +5,7 @@ import { action, observable } from 'mobx';
 import moment from 'moment';
 import Button           from 'grommet/components/Button';
 import Box              from 'grommet/components/Box';
+import CameraIcon       from 'grommet/components/icons/base/Camera';
 import TicketIcon       from 'grommet/components/icons/base/Ticket';
 import CreditCardIcon   from 'grommet/components/icons/base/CreditCard';
 import SearchIcon       from 'grommet/components/icons/base/Search';
@@ -16,6 +17,8 @@ import ShowTime from '../models/show-time';
 import GuestList from './box-office/guest-list';
 import Sale from '../models/sale';
 import SaleLayer from '../components/sale/layer';
+import MobileApp from '../lib/mobile-app-support';
+
 import './box-office/box-office.scss';
 
 const DateCell = ({ cellData }) => moment(cellData).format('YYYY-MM-DD hh:mma');
@@ -45,6 +48,11 @@ export default class BoxOffice extends React.PureComponent {
 
     componentDidMount() {
         this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
+        MobileApp.on('barcodeScan', this.onBarcodeScan);
+    }
+
+    componentWillUnmount() {
+        MobileApp.off('barcodeScan', this.onBarcodeScan);
     }
 
     @action.bound
@@ -71,21 +79,45 @@ export default class BoxOffice extends React.PureComponent {
         this.guestList = gl;
     }
 
+    @action.bound onBarcodeScan({ data: ticket }) {
+        this.guestList.ux.checkInTicket(ticket);
+    }
+
+    renderXlsBtn() {
+        if (MobileApp.isReal) { return null; }
+        return (
+            <Button plain icon={<DocumentDownload />} href={this.time.xlsURL} />
+        );
+    }
+
+    renderMobileScan() {
+        if (!MobileApp.isReal) { return null; }
+
+        return (
+            <Button
+                icon={<CameraIcon />}
+                onClick={MobileApp.startBarcodeScan}
+            />
+        );
+    }
+
     renderDetails() {
         if (this.time.isNew) { return null; }
         return (
-            <div>
-                <span>{moment(this.time.occurs_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}</span>
-                <Button plain icon={<DocumentDownload />} href={this.time.xlsURL} />
+            <div className="info-controls">
+                <span>{moment(this.time.occurs_at).format('h:mma ddd, MMM D')}</span>
+                {this.renderXlsBtn()}
+
                 <Button
                     icon={<TicketIcon />}
                     onClick={this.onCompTickets}
                 />
+
                 <Button
                     icon={<CreditCardIcon />}
                     onClick={this.onSaleClick}
                 />
-
+                {this.renderMobileScan()}
             </div>
         );
     }
@@ -104,6 +136,7 @@ export default class BoxOffice extends React.PureComponent {
 
         return (
             <Screen screen={this.props.screen}>
+
                 <QueryLayer
                     query={query}
                     title={'Find Show'}
@@ -117,6 +150,7 @@ export default class BoxOffice extends React.PureComponent {
                     onCancel={this.onSaleCancel}
                     onComplete={this.onSaleComplete}
                 />
+
                 <Box direction="row" wrap justify="between" align="baseline">
                     <Button
                         plain

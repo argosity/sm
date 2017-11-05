@@ -1,5 +1,7 @@
 import React from 'react';
-import { Text, WebView, View, StyleSheet, Dimensions } from 'react-native';
+import {
+    WebView, View, StyleSheet, Dimensions, Button,
+} from 'react-native';
 import { observer } from 'mobx-react';
 import { observable, computed, action } from 'mobx';
 import Camera from 'react-native-camera';
@@ -8,11 +10,13 @@ import Bridge from './bridge';
 import { onMessage, setRef } from './api';
 import Config from './config';
 
+let styles;
+
 @observer
 export default class ShowMakerWeb extends React.Component {
 
-    @observable command;
     @observable isScanning = false;
+    @observable webView;
 
     constructor(props) {
         super(props);
@@ -21,46 +25,57 @@ export default class ShowMakerWeb extends React.Component {
 
     @computed get uri() {
         return Config.tenant ?
-               `http://${Config.tenant}.argosity.com:9292/` :
-               'http://dev.argosity.com:9292/mobile';
+            `https://${Config.tenant}.showmaker.com/` :
+            'https://showmaker.com/mobile';
     }
 
-    sendCommand(cmd, ...args) {
-        this.command = `window._transmitToShowMaker(${cmd}, ${JSON.stringify(args)})`;
-    }
-
-    @action.bound startScan() {
-        const options = {};
-        this.camera.capture({metadata: options})
-            .then((data) => console.log(data))
-            .catch(err => console.error(err));
+    sendCommand(cmd, payload) {
+        const emit = `window.ShowMakerApp.emit('${cmd}', ${JSON.stringify(payload)})`;
+        this.webView.injectJavaScript(emit);
     }
 
     @action.bound onBarcodeRead(ev) {
-        console.log(ev);
+        this.isScanning = false;
+        this.sendCommand('barcodeScan', ev);
+    }
 
+    @action.bound setWebViewRef(wv) {
+        this.webView = wv;
+    }
+
+    @action.bound cancelCapture() {
         this.isScanning = false;
     }
 
     renderCamera() {
         if (!this.isScanning) { return null; }
-
         const { width } = Dimensions.get('window');
+
         return (
-            <Camera
-                ref={(cam) => {
-                        this.camera = cam;
-                }}
-                onBarCodeRead={this.onBarcodeRead}
-                style={{
-                    position: 'absolute',
-                    top: 100,
-                    height: 200,
-                    right: 20,
-                    width: width - 40,
-                }}
-                aspect={Camera.constants.Aspect.fill}
-            />
+            <View style={{
+                position: 'absolute',
+                top: 100,
+                height: width * 0.6,
+                right: 20,
+                left: 20,
+                backgroundColor: '#aaa',
+            }}
+            >
+                <Camera
+                    style={styles.camera}
+                    onBarCodeRead={this.onBarcodeRead}
+                    aspect={Camera.constants.Aspect.fill}
+                />
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                }}>
+                    <Button
+                        onPress={this.cancelCapture}
+                        title="Cancel"
+                    />
+                </View>
+            </View>
         );
     }
 
@@ -70,8 +85,9 @@ export default class ShowMakerWeb extends React.Component {
         return (
             <View style={styles.container}>
                 <WebView
+                    ref={this.setWebViewRef}
+                    bounces={false}
                     style={styles.webview}
-                    injectJavaScript={this.command}
                     injectedJavaScript={`(${Bridge.toString()})()`}
                     onMessage={onMessage}
                     source={{ uri: this.uri }}
@@ -84,7 +100,7 @@ export default class ShowMakerWeb extends React.Component {
 }
 
 
-const styles = StyleSheet.create({
+styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
@@ -93,19 +109,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
     },
-    preview: {
-        position: 'absolute',
-        bottom: 10,
-        right: 10,
-        width: 50,
-        height: 50,
+    camera: {
+        flex: 1,
     },
-    capture: {
-        flex: 0,
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        color: '#000',
-        padding: 10,
-        margin: 40,
-    }
 });

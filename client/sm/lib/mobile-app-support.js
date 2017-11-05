@@ -5,16 +5,20 @@ const App = {
             window.ShowMakerApp && window.ShowMakerApp.onReady(tenant);
         }, 1000);
     },
-    startBarcodeScan() { },
-    onBarcodeScan() { },
 };
 
 export default App;
 
-Object.keys(App).forEach((m) => {
+['playSound', 'startBarcodeScan', 'on', 'once'].forEach((m) => {
     App[m] = (...args) => {
-        if (window.ShowMakerApp && window.ShowMakerApp[m]) {
+        if (window.ShowMakerApp) {
             window.ShowMakerApp[m](...args);
         }
     };
+});
+
+Object.defineProperty(App, 'isReal', {
+    get() {
+        return !!window.ShowMakerApp;
+    },
 });

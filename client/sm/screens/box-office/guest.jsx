@@ -8,6 +8,7 @@ import Button from 'grommet/components/Button';
 import DoneIcon from 'grommet/components/icons/base/Compliance';
 import MailIcon from 'grommet/components/icons/base/Mail';
 import TicketIcon   from 'grommet/components/icons/base/Ticket';
+import MobileApp from '../../lib/mobile-app-support';
 import Sale from '../../models/sale';
 import UX from './ux';
 
@@ -17,6 +18,7 @@ export default class Guest extends React.Component {
 
     static propTypes = {
         rowIndex: PropTypes.number.isRequired,
+        ux: PropTypes.instanceOf(UX).isRequired,
     }
 
     @action.bound onRedeem() {
@@ -29,6 +31,17 @@ export default class Guest extends React.Component {
     @computed get printURL() {
         return Sale.ticketUrlForIdentifier(this.props.row[UX.FIELDS.IDENTIFIER]);
     }
+
+    renderPrintBtn() {
+        if (MobileApp.isReal) { return null; }
+        return (
+            <Button
+                href={this.printURL} target="_blank"
+                plain icon={<TicketIcon />}
+            />
+        );
+    }
+
 
     render() {
         const { style, row } = this.props;
@@ -57,7 +70,7 @@ export default class Guest extends React.Component {
                 </div>
                 <div className="controls">
                     <Button onClick={this.onMail} plain icon={<MailIcon />} />
-                    <Button href={this.printURL} target="_blank" plain icon={<TicketIcon />} />
+                    {this.renderPrintBtn()}
                 </div>
             </div>
         );

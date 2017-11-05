@@ -10,6 +10,7 @@ export default class Redemption extends BaseModel {
 
     @field qty = 0;
     @field sale_id;
+    @field ticket;
 
     @field({ type: 'date' }) created_at;
     @session sale;
@@ -25,8 +26,16 @@ export default class Redemption extends BaseModel {
         }
     }
 
+    static fromTicket(ticket) {
+        return new Redemption({ qty: 1, ticket });
+    }
+
+    get ticketIdentifier() {
+        return this.ticket ? this.ticket.split(':')[0] : '';
+    }
+
     get maxQty() {
-        return this.sale.remainingQty;
+        return this.sale ? this.sale.remainingQty : 1;
     }
 
     set syncData(s) {
@@ -34,7 +43,7 @@ export default class Redemption extends BaseModel {
     }
 
     get syncData() {
-        return pick(this, 'qty', 'sale_id');
+        return pick(this, 'qty', 'sale_id', 'ticket');
     }
 
 }

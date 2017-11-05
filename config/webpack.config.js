@@ -120,6 +120,7 @@ const config = {
         hot: true,
         inline: true,
         port: 8889,
+        host: 'dev.argosity.com',
         contentBase: './public',
         historyApiFallback: {
             index: '/assets/app.html'

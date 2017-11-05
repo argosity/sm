@@ -336,7 +336,7 @@ export default class SaleForm extends React.PureComponent {
                     >
                         <Field {...fieldProps} name="name" validate={nonBlank} />
                         <Field {...fieldProps} name="email" validate={validEmail} />
-                        <Field {...fieldProps} name="phone" xs={6} validate={validPhone} />
+                        <Field {...fieldProps} name="phone" validate={validPhone} />
 
                         {this.renderCardFields()}
 
@@ -349,7 +349,7 @@ export default class SaleForm extends React.PureComponent {
                                 {this.props.controls}
                                 <Button
                                     icon={<CreditCardIcon />}
-                                    label={'Purchase'}
+                                    label={this.props.sale.noCharge ? 'Save' : 'Purchase'}
                                     onClick={this.onSaleClick}
                                 />
                             </Footer>

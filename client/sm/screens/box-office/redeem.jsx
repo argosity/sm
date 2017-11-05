@@ -1,6 +1,8 @@
 import React from 'react';
+import { get } from 'lodash';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
+import WarningNotification from 'hippo/components/warning-notification';
 import PropTypes   from 'prop-types';
 import Layer       from 'grommet/components/Layer';
 import NumberInput from 'grommet/components/NumberInput';
@@ -62,8 +64,19 @@ export default class Redeem extends React.PureComponent {
         return this.props.redemption.syncInProgress ? this.renderSpinner() : this.renderControls();
     }
 
+    get redemption() {
+        return this.props.redemption;
+    }
+
+    get name() {
+        const { redemption } = this.props;
+        if (!redemption) { return null; }
+        return get(redemption, 'sale.name', redemption.ticket);
+    }
+
     render() {
-        if (!this.props.redemption) { return null; }
+        const { redemption } = this.props;
+        if (!redemption) { return null; }
 
         return (
             <Layer
@@ -72,9 +85,9 @@ export default class Redeem extends React.PureComponent {
                 onClose={this.props.onCancel}
                 pad={{ between: 'small' }} margin="medium"
             >
-
                 <h3>Redeem Ticket</h3>
-                <div className="name">{this.props.redemption.sale.name}</div>
+                <WarningNotification message={redemption.errorMessage} />
+                <div className="name">{this.name}</div>
                 {this.renderBody()}
             </Layer>
         );

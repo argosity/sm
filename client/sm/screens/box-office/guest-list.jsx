@@ -51,12 +51,19 @@ export default class GuestList extends React.PureComponent {
 
                 flex
             >
+
                 <Redeem
                     redemption={this.ux.redemption}
-                    onComplete={this.ux.onCheckInComplete} onCancel={this.ux.cancelPending} />
+                    onComplete={this.ux.onCheckInComplete}
+                    onCancel={this.ux.cancelPending}
+                />
+
                 <Email
                     sale={this.ux.emailSale}
-                    onComplete={this.ux.onMailSend} onCancel={this.ux.cancelPending} />
+                    onComplete={this.ux.onMailSend}
+                    onCancel={this.ux.cancelPending}
+                />
+
                 <QueryBuilder autoFetch={true} query={this.ux.query} />
                 <DataList
                     query={this.ux.query}

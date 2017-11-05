@@ -3,6 +3,7 @@ import Query from 'hippo/models/query';
 import PubSub from 'hippo/models/pub_sub';
 import Sale from '../../models/sale';
 import Redemption from '../../models/redemption';
+import MobileApp from '../../lib/mobile-app-support';
 
 export default class GuestUX {
 
@@ -49,11 +50,6 @@ export default class GuestUX {
 
     addSale(sale) {
         this.query.results.insertRow({ model: sale });
-    }
-
-    @action.bound
-    onCheckInComplete() {
-        this.redemption = null;
     }
 
     @action
@@ -118,9 +114,31 @@ export default class GuestUX {
     }
 
     @action.bound
+    onCheckInComplete() {
+        if (this.redemption.errorMessage) {
+            MobileApp.playSound('fail');
+        } else {
+            MobileApp.playSound('beep');
+            this.redemption = null;
+        }
+    }
+
+    @action checkInTicket(ticket) {
+        this.redemption = Redemption.fromTicket(ticket);
+        const saleRow = this.query.rows.find(
+            r => this.redemption.ticketIdentifier === r[this.fields.IDENTIFIER],
+        );
+        if (saleRow) {
+            this.redemption.sale = this.query.results.convertRowToObject(saleRow);
+        }
+        this.redemption.save().then(this.onCheckInComplete);
+    }
+
+    @action.bound
     onMail(rowIndex) {
         this.emailSale = this.query.results.modelForRow(rowIndex);
     }
+
     @action.bound
     onMailSend() {
         this.emailSale.emailReceipt().then(() => {
