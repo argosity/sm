@@ -23,12 +23,6 @@ export default class ShowMakerWeb extends React.Component {
         setRef(this);
     }
 
-    @computed get uri() {
-        return Config.tenant ?
-            `https://${Config.tenant}.showmaker.com/` :
-            'https://showmaker.com/mobile';
-    }
-
     sendCommand(cmd, payload) {
         const emit = `window.ShowMakerApp.emit('${cmd}', ${JSON.stringify(payload)})`;
         this.webView.injectJavaScript(emit);
@@ -90,7 +84,7 @@ export default class ShowMakerWeb extends React.Component {
                     style={styles.webview}
                     injectedJavaScript={`(${Bridge.toString()})()`}
                     onMessage={onMessage}
-                    source={{ uri: this.uri }}
+                    source={{ uri: Config.url }}
                 />
                 {this.renderCamera()}
             </View>
