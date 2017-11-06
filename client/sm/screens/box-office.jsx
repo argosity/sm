@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import { get } from 'lodash';
 import { action, observable } from 'mobx';
 import moment from 'moment';
 import Button           from 'grommet/components/Button';
@@ -47,7 +48,8 @@ export default class BoxOffice extends React.PureComponent {
     })
 
     componentDidMount() {
-        this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
+        // for debugging
+        // this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
         MobileApp.on('barcodeScan', this.onBarcodeScan);
     }
 
@@ -156,7 +158,7 @@ export default class BoxOffice extends React.PureComponent {
                         plain
                         className="grommetux-control-icon-search"
                         icon={<SearchIcon />}
-                        label={time.isNew ? 'Click to find Show' : time.show.title}
+                        label={get(time, 'show.title', 'Click to find Show')}
                         onClick={this.onSearchClick}
                     />
                     <div>

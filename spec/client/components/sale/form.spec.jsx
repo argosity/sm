@@ -1,6 +1,8 @@
 import Sale from 'sm/models/sale';
 import Show from 'sm/models/show';
 import Form from 'sm/components/sale/form';
+import chronokinesis from 'chronokinesis';
+import moment from 'moment-timezone';
 
 jest.mock('sm/extension', () => ({
     paymentsVendor: 'Square',
@@ -10,6 +12,8 @@ describe('Payment Form', () => {
     let props;
 
     beforeEach(() => {
+        chronokinesis.travel(new Date('2017-05-01T21:00:00.000Z'));
+        moment.tz.setDefault('America/Los_Angeles');
         props = {
             sale: new Sale({
                 noCharge: true,
