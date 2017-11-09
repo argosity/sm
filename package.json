@@ -6,6 +6,7 @@
   "dependencies": {
     "babel-loader": "^7.1.2",
     "babel-plugin-lodash": "^3.2.11",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.5.2",
     "chronokinesis": "^1.3.2",
     "compression-webpack-plugin": "^1.0.0",
@@ -23,12 +24,14 @@
     "picnic": "^6.4.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-flexa": "^0.8.1",
     "react-flexbox-grid": "1.1.3",
     "react-swipeable-views": "^0.12.8",
     "react-tag-autocomplete": "^5.4.1",
     "react-tap-event-plugin": "^2.0.1",
     "resolve-url-loader": "^2.0.3",
     "rollbar": "^2.2.6",
+    "styled-components": "^2.2.3",
     "url-loader": "^0.5.9",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.5.0"

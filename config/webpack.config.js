@@ -5,12 +5,15 @@ const path = require('path');
 
 const entries = {
     app: [
+        'babel-polyfill',
         '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
     ],
     homepage: [
+        'babel-polyfill',
         'sm/homepage/index.js',
     ],
     'embedded-shows': [
+        'babel-polyfill',
         'sm/embed/shows.js',
     ],
 };
