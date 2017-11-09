@@ -34,7 +34,7 @@ class Config {
 
 }
 
-const ConfigInstance = new Config;
+const ConfigInstance = new Config();
 
 ConfigInstance.initialize();
 
