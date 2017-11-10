@@ -205,6 +205,7 @@
     .text-editor-content {
         flex: 1;
         max-width: 1000px;
+        min-height: 80vh;
         @include media-query(lap-and-up) {
             min-width: 45em;
         }
