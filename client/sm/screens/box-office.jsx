@@ -49,7 +49,7 @@ export default class BoxOffice extends React.PureComponent {
 
     componentDidMount() {
         // for debugging
-        this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
+        // this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
         MobileApp.on('barcodeScan', this.onBarcodeScan);
     }
 

@@ -6,7 +6,7 @@ exports[`Screen Gate renders and matches snapshot 1`] = `
   data-screen-id="box-office"
 >
   <div
-    className="grommetux-box grommetux-box--direction-row grommetux-box--justify-between grommetux-box--align-baseline grommetux-box--responsive grommetux-box--pad-none grommetux-box--wrap"
+    className="grommetux-box grommetux-box--direction-row grommetux-box--justify-between grommetux-box--align-baseline grommetux-box--pad-none grommetux-box--wrap"
     id={undefined}
     onClick={undefined}
     role={undefined}
@@ -51,7 +51,6 @@ exports[`Screen Gate renders and matches snapshot 1`] = `
         Click to find Show
       </span>
     </button>
-    <div />
   </div>
 </div>
 `;
