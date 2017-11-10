@@ -27,8 +27,12 @@
             h4 { margin: 0; }
             .controls {
                 .grommetux-button__icon { padding: 0; }
-                align-self: center;
-                text-align: right;
+                min-width: 26px;
+                justify-content: space-around;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                svg { max-width: 100%; }
             }
             display: flex;
             .grid {
@@ -43,11 +47,6 @@
                     overflow: hidden;
                 }
             }
-
-            .controls {
-                flex-basis: 40px;
-                svg { max-width: 100%; }
-            }
             @include media-query(lap-and-up) {
                 .grid {
                     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr) ) ;
@@ -56,9 +55,6 @@
             @include media-query(palm) {
                 .grid {
                     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) ) ;
-                }
-                .controls {
-                    flex-basis: 24px;
                 }
             }
         }

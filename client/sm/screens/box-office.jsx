@@ -49,7 +49,7 @@ export default class BoxOffice extends React.PureComponent {
 
     componentDidMount() {
         // for debugging
-        // this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
+        this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
         MobileApp.on('barcodeScan', this.onBarcodeScan);
     }
 
@@ -106,21 +106,27 @@ export default class BoxOffice extends React.PureComponent {
     renderDetails() {
         if (this.time.isNew) { return null; }
         return (
-            <div className="info-controls">
+            <Box
+                style={{ flex: '1  0 auto', paddingLeft: '12px' }}
+                direction="row" align="center" responsive={false}
+            >
                 <span>{moment(this.time.occurs_at).format('h:mma ddd, MMM D')}</span>
-                {this.renderXlsBtn()}
-
-                <Button
-                    icon={<TicketIcon />}
-                    onClick={this.onCompTickets}
-                />
-
-                <Button
-                    icon={<CreditCardIcon />}
-                    onClick={this.onSaleClick}
-                />
-                {this.renderMobileScan()}
-            </div>
+                <Box
+                    style={{ flex: '1  0 auto' }}
+                    direction="row" responsive={false} flex justify="end"
+                >
+                    {this.renderXlsBtn()}
+                    <Button
+                        icon={<TicketIcon />}
+                        onClick={this.onCompTickets}
+                    />
+                    <Button
+                        icon={<CreditCardIcon />}
+                        onClick={this.onSaleClick}
+                    />
+                    {this.renderMobileScan()}
+                </Box>
+            </Box>
         );
     }
 
@@ -153,7 +159,9 @@ export default class BoxOffice extends React.PureComponent {
                     onComplete={this.onSaleComplete}
                 />
 
-                <Box direction="row" wrap justify="between" align="baseline">
+                <Box
+                    responsive={false} direction="row" wrap justify="between" align="baseline"
+                >
                     <Button
                         plain
                         className="grommetux-control-icon-search"
@@ -161,9 +169,7 @@ export default class BoxOffice extends React.PureComponent {
                         label={get(time, 'show.title', 'Click to find Show')}
                         onClick={this.onSearchClick}
                     />
-                    <div>
-                        {this.renderDetails()}
-                    </div>
+                    {this.renderDetails()}
                 </Box>
                 <GuestList ref={this.setGuestList} time={time} />
             </Screen>

@@ -37,7 +37,7 @@ export default class Email extends React.PureComponent {
                 />
                 <Footer
                     margin="medium"
-                    justify='between'
+                    justify="end"
                 >
                     <Button
                         icon={<SendIcon />}

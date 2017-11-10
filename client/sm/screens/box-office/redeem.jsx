@@ -44,7 +44,7 @@ export default class Redeem extends React.PureComponent {
                 />
                 <Footer
                     margin="medium"
-                    justify='between'
+                    justify="end"
                 >
                     <Button
                         icon={<SaveIcon />}
