@@ -103,9 +103,10 @@ export default class Venues extends React.PureComponent {
                 <Row>
                     <RecordFinder
                         name="code" recordsTitle='Venue' onRecordFound={this.onRecordFound}
-                        query={this.query} xs={4} validate={nonBlank}
+                        query={this.query} validate={nonBlank}
+                        sm={4} xs={5}
                     />
-                    <Field xs={8} name="name" validate={nonBlank} />
+                    <Field sm={8} xs={7} name="name" validate={nonBlank} />
                 </Row>
                 <Row>
                     <Field xs={12} sm={8} name="address" />
@@ -117,7 +118,7 @@ export default class Venues extends React.PureComponent {
                 </Row>
                 <Row>
                     <Asset xs={12} sm={6} model={this.venue} name="logo" />
-                    <Col lg={9} xs={6}>
+                    <Col sm={6} xs={12}>
                         <Row>
                             <Field
                                 type="number" name="capacity" lg={6} xs={12}

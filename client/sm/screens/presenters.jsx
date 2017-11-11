@@ -96,15 +96,15 @@ export default class Presenters extends React.PureComponent {
                     <Warning message={this.presenter.errorMessage} />
                     <Row>
                         <RecordFinder
-                            xs={4}
                             tabIndex={1}
                             recordsTitle='Presenter'
                             onRecordFound={this.onRecordFound}
                             query={this.query} name="code"
                             validate={nonBlank}
                             autoFocus
+                            sm={4} xs={5}
                         />
-                        <Field xs={8} name="name" validate={nonBlank} tabIndex={2} />
+                        <Field sm={8} xs={7} name="name" validate={nonBlank} tabIndex={2} />
                     </Row>
                     <Row>
                         <Asset xs={12} sm={6} model={this.presenter} name="logo" tabIndex={3} />
