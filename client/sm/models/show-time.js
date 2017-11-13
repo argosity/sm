@@ -19,11 +19,11 @@ export default class ShowTime extends BaseModel {
 
     @field price;
     @field capacity;
-    @field({ type: 'date' }) occurs_at = moment()
-        .startOf('day')
-        .add(8, 'hour')
-        .add(1, 'week')
-        .toDate();
+    @field occurs_at; // ({ type: 'date' }) occurs_at = moment()
+    // .startOf('day')
+    // .add(8, 'hour')
+    // .add(1, 'week')
+    // .toDate();
 
     constructor(attrs) {
         super(attrs);

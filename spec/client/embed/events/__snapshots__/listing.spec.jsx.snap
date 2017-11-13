@@ -47,17 +47,17 @@ exports[`Embedded Shows Listing renders shows and matches snapshot 1`] = `
               <li
                 className="date"
               >
-                3:56pm Aug 24th 2017
+                8:56pm Aug 24th 2017
               </li>
               <li
                 className="date"
               >
-                6:59am Aug 25th 2017
+                11:59am Aug 25th 2017
               </li>
               <li
                 className="date"
               >
-                11:59am Aug 26th 2017
+                4:59pm Aug 26th 2017
               </li>
             </ul>
           </div>
@@ -125,12 +125,12 @@ exports[`Embedded Shows Listing renders shows and matches snapshot 1`] = `
               <li
                 className="date"
               >
-                11:59am Aug 26th 2017
+                4:59pm Aug 26th 2017
               </li>
               <li
                 className="date"
               >
-                6:10am Sep 2nd 2017
+                11:10am Sep 2nd 2017
               </li>
             </ul>
           </div>
@@ -198,12 +198,12 @@ exports[`Embedded Shows Listing renders shows and matches snapshot 1`] = `
               <li
                 className="date"
               >
-                11:59am Aug 26th 2017
+                4:59pm Aug 26th 2017
               </li>
               <li
                 className="date"
               >
-                6:10am Sep 2nd 2017
+                11:10am Sep 2nd 2017
               </li>
             </ul>
           </div>
