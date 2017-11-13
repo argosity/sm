@@ -96,6 +96,7 @@ export default class Presenters extends React.PureComponent {
                     <Warning message={this.presenter.errorMessage} />
                     <Row>
                         <RecordFinder
+                            model={this.presenter}
                             tabIndex={1}
                             recordsTitle='Presenter'
                             onRecordFound={this.onRecordFound}

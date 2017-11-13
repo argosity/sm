@@ -106,10 +106,12 @@ export default class Messages extends React.PureComponent {
 
                 <Row>
                     <RecordFinder
+                        model={this.message}
                         name="code" recordsTitle='Message' onRecordFound={this.onRecordFound}
-                        query={this.query} xs={4} validate={nonBlank}
+                        query={this.query} validate={nonBlank}
+                        sm={4} xs={5}
                     />
-                    <Field xs={8} name="name" validate={nonBlank} />
+                    <Field sm={8} xs={7} name="name" validate={nonBlank} />
                 </Row>
                 <Row>
                     <Asset

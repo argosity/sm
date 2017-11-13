@@ -102,6 +102,7 @@ export default class Venues extends React.PureComponent {
 
                 <Row>
                     <RecordFinder
+                        model={this.venue}
                         name="code" recordsTitle='Venue' onRecordFound={this.onRecordFound}
                         query={this.query} validate={nonBlank}
                         sm={4} xs={5}
