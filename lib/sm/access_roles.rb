@@ -9,6 +9,7 @@ module Hippo::Access
         # anyone can edit
         class BasicUser
             grant SM::Show
+            grant SM::Sale
             grant SM::Venue
             grant SM::Presenter
             grant SM::ShowTime
