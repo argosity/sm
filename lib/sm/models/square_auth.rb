@@ -30,7 +30,7 @@ module SM
             square = st.config['square'] ||= {}
             id = square['id'] || "##{st.date_identifier}"
             version = square['version']
-            puts st.date_identifier
+
             return {
                 id: id,
                 type: "ITEM_VARIATION",
@@ -50,6 +50,7 @@ module SM
         end
 
         def upsert_item_for_show(show)
+            return unless show.can_purchase?
             ca = SquareConnect::CatalogApi.new(
                 SM::Payments::Square.api_client
             )
@@ -82,7 +83,6 @@ module SM
                 config['id'] = iv.id
                 config['version'] = iv.version
             end
-            show.save!
             return reply
         end
 
@@ -141,12 +141,12 @@ module SM
 
 end
 
-# SM::Show.observe(:save) do |show|
-#     auth = SM::SquareAuth.where(tenant: show.tenant).first
-#     begin
-#         auth.upsert_item_for_show(show) if auth && auth.in_use?
-#     rescue SquareConnect::ApiError => e
-#         Hippo.logger.warn e
-#         Rollbar.error(e)
-#     end
-# end
+SM::Show.observe(:save) do |show|
+    auth = SM::SquareAuth.where(tenant: show.tenant).first
+    begin
+        auth.upsert_item_for_show(show) if auth && auth.in_use?
+    rescue SquareConnect::ApiError => e
+        Hippo.logger.warn e
+        Rollbar.error(e)
+    end
+end

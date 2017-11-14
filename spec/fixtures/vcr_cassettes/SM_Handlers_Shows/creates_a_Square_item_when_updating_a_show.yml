@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://connect.squareup.com/v1/001/webhooks
+    body:
+      encoding: UTF-8
+      string: '["PAYMENT_UPDATED","INVENTORY_UPDATED"]'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer sq0atp-MqVxwTdEjFGJSvJhJiF8oQ
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      X-Frame-Options:
+      - DENY
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Download-Options:
+      - noopen
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-Id:
+      - 9isqoRqPRpy4vD+7ORHg
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Link
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Accept-Encoding
+      X-Response-Time:
+      - 112ms
+      Date:
+      - Tue, 14 Nov 2017 19:41:26 GMT
+      Keep-Alive:
+      - timeout=60
+      Strict-Transport-Security:
+      - max-age=631152000
+      Content-Length:
+      - '105'
+    body:
+      encoding: UTF-8
+      string: '{"type":"unauthorized","message":"Provided merchant_id and merchant_id
+        in authorization do not match up"}'
+    http_version: 
+  recorded_at: Tue, 14 Nov 2017 19:41:26 GMT
+recorded_with: VCR 3.0.3
