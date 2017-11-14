@@ -52,7 +52,7 @@ exports[`Payment Form matches snapshot 1`] = `
             "identifier": undefined,
             "isModel": true,
             "lastServerMessage": "",
-            "occurs_at": 2017-11-01T02:38:38.600Z,
+            "occurs_at": "2017-11-01T02:38:38.600Z",
             "price": 12.3,
             "show": [Circular],
             "show_association_name": "times",
@@ -79,7 +79,7 @@ exports[`Payment Form matches snapshot 1`] = `
         "identifier": undefined,
         "isModel": true,
         "lastServerMessage": "",
-        "occurs_at": 2017-11-01T02:38:38.600Z,
+        "occurs_at": "2017-11-01T02:38:38.600Z",
         "price": 12.3,
         "show": Show {
           "can_purchase": false,
