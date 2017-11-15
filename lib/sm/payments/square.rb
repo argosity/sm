@@ -34,6 +34,26 @@ module SM
                     })
             end
 
+            def create_order_for_sale(sale)
+                item_config = sale.show_time.config['square']
+                return false unless item_config && item_config['id']
+
+                begin
+                    api = SquareConnect::OrdersApi.new(api_client)
+                    result = api.create_order(
+                        client_config_values['location_id'], {
+                            idempotency_key: sale.identifier,
+                            line_items: [
+                                { quantity: sale.qty.to_s, catalog_object_id: item_config['id'] }
+                            ]
+                        }
+                    )
+                    result.order
+                rescue SquareConnect::ApiError => e
+                    Hippo.logger.warn "Failed to create order for sale: #{e.response_body}"
+                end
+            end
+
             def sale(payment)
                 sale = payment.sale
 
@@ -47,6 +67,9 @@ module SM
                     },
                     buyer_email_address: sale.attendee.email
                 }
+                order = create_order_for_sale(sale)
+                request_body[:order_id] = order.id if order
+
                 customer_id = sale.attendee.square_customer_id
                 request_body[:customer_id] = customer_id unless sale.attendee.square_customer_id.blank?
 
