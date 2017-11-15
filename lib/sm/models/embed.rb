@@ -19,11 +19,13 @@ module SM
     end
 end
 
+Hippo::Tenant.has_many :embeds, class_name: 'SM::Embed'
+
 Hippo::Tenant.observe(:update) do |tenant|
-    chg = tenant.saved_change_to_attribute('slug')
+    chg = tenant.attribute_change_to_be_saved('slug')
     SM::Embed.update_tenant_slugs(chg.first, chg.last) if chg
 end
 
 Hippo::Tenant.observe(:create) do |tenant|
-    SM::Embed.create(name: 'My Shows', tenant: tenant, tenants: [tenant.slug])
+    tenant.embeds.build(name: 'My Shows', tenant: tenant, tenants: [tenant.slug])
 end

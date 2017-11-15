@@ -16,13 +16,13 @@ module SM
         end
 
         def request_webhooks
+            token = Hippo.config.secrets.dig('payments', 'square', 'token')
             SM::Payments::Square::Request.new(
                 type: 'put',
                 url: "v1/#{location_id}/webhooks",
                 body: SM::Payments::Square::WEBHOOKS,
-                secret: "Bearer #{Hippo.config.secrets.payments.square.token}"
+                secret: "Bearer #{token}"
             )
-
         end
 
 

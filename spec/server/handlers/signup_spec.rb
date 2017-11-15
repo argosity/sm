@@ -54,7 +54,7 @@ describe "Tenant signup", api: true, vcr: VCR_OPTS do
             t = Hippo::Tenant.current
             t.slug = 'AbaCa'
             t.save!
-            expect(SM::Embed.last.tenants).to eq(['abaca'])
+            expect(t.embeds.last.tenants).to eq(['abaca'])
         end
     end
 end
