@@ -8,8 +8,8 @@ import Screen from 'hippo/components/screen';
 import Query from 'hippo/models/query';
 import RecordFinder from 'hippo/components/record-finder';
 import Button   from 'grommet/components/Button';
-import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
+import { ScheduleNew } from 'grommet-icons';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
 import {
@@ -85,7 +85,7 @@ export default class Presenters extends React.Component {
                         />
                         <Button
                             plain
-                            icon={<ScheduleNewIcon />}
+                            icon={<ScheduleNew />}
                             label='Add New Presenter'
                             onClick={this.onReset}
                         />

@@ -8,7 +8,7 @@ import Box      from 'grommet/components/Box';
 import Button   from 'grommet/components/Button';
 import Help from 'hippo/components/help';
 import RecordFinder from 'hippo/components/record-finder';
-import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
+import { ScheduleNew } from 'grommet-icons';
 import {
     Form, Field, FormState, nonBlank,
 } from 'hippo/components/form';
@@ -95,7 +95,7 @@ export default class Messages extends React.Component {
                     />
                     <Button
                         plain
-                        icon={<ScheduleNewIcon />}
+                        icon={<ScheduleNew />}
                         label='Add New Message'
                         onClick={this.onReset}
                     />

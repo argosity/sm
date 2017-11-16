@@ -7,7 +7,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import Button from 'grommet/components/Button';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import RecordFinder from 'hippo/components/record-finder';
-import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
+import { ScheduleNew } from 'grommet-icons';
 import {
     Form, Field, FormState, nonBlank, numberValue,
 } from 'hippo/components/form';
@@ -90,7 +90,7 @@ export default class Venues extends React.Component {
                     />
                     <Button
                         plain
-                        icon={<ScheduleNewIcon />}
+                        icon={<ScheduleNew />}
                         label='Add New Venue'
                         onClick={this.onReset}
                     />

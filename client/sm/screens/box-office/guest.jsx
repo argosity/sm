@@ -5,10 +5,7 @@ import { sumBy } from 'lodash';
 import cn from 'classnames';
 import moment from 'moment';
 import Button from 'grommet/components/Button';
-import DoneIcon from 'grommet/components/icons/base/Compliance';
-import MailIcon from 'grommet/components/icons/base/Mail';
-import TrashIcon from 'grommet/components/icons/base/Trash';
-import TicketIcon   from 'grommet/components/icons/base/Ticket';
+import { Done, Mail, Ticket, Trash, Ticket } from 'grommet-icons';
 import MobileApp from '../../lib/mobile-app-support';
 import Sale from '../../models/sale';
 import UX from './ux';
@@ -40,7 +37,7 @@ export default class Guest extends React.Component {
         return (
             <Button
                 href={this.printURL} target="_blank"
-                plain icon={<TicketIcon />}
+                plain icon={<Ticket />}
             />
         );
     }
@@ -74,7 +71,7 @@ export default class Guest extends React.Component {
                     }</div>
                 </div>
                 <div className="controls">
-                    <Button onClick={this.onMail} plain icon={<MailIcon />} />
+                    <Button onClick={this.onMail} plain icon={<Mail />} />
                     {this.renderPrintBtn()}
                     <Button onClick={this.onRefund} plain icon={<TrashIcon />} />
                 </div>

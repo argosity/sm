@@ -11,7 +11,7 @@ import SwipeableViews from 'react-swipeable-views';
 import CheckBox from 'grommet/components/CheckBox';
 import Button   from 'grommet/components/Button';
 import Box from 'grommet/components/Box';
-import AddIcon  from 'grommet/components/icons/base/AddCircle';
+import { Add }  from 'grommet-icons';
 
 import Query    from 'hippo/models/query';
 import Screen   from 'hippo/components/screen';
@@ -185,7 +185,7 @@ export default class Shows extends React.Component {
                                 label="Only Visible"
                                 onChange={this.changeVisible}
                             />
-                            <Button icon={<AddIcon />} onClick={this.onAdd} label="Add" />
+                            <Button icon={<Add />} onClick={this.onAdd} label="Add" />
 
                         </Box>
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes    from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-import TicketIcon   from 'grommet/components/icons/base/Ticket';
+import { Ticket }   from 'grommet-icon';
 import pluralize    from 'pluralize';
 import Anchor       from 'grommet/components/Anchor';
 import Box          from 'grommet/components/Box';
@@ -65,7 +65,7 @@ export default class Receipt extends React.Component {
                     <Anchor
                         target="_blank"
                         href={Sale.ticketUrlForIdentifier(identifier)}
-                        icon={<TicketIcon />}
+                        icon={<Ticket />}
                         primary={true}
                         align="center"
                         label={`Download and print ${this.ticketName}`}

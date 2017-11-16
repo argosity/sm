@@ -6,11 +6,7 @@ import { action, observable } from 'mobx';
 import moment from 'moment';
 import Button           from 'grommet/components/Button';
 import Box              from 'grommet/components/Box';
-import CameraIcon       from 'grommet/components/icons/base/Camera';
-import TicketIcon       from 'grommet/components/icons/base/Ticket';
-import CreditCardIcon   from 'grommet/components/icons/base/CreditCard';
-import SearchIcon       from 'grommet/components/icons/base/Search';
-import DocumentDownload from 'grommet/components/icons/base/DocumentDownload';
+import { Camera, Ticket, CreditCard, Search, DocumentDownload } from 'grommet-icons';
 import Screen     from 'hippo/components/screen';
 import Query      from 'hippo/models/query';
 import QueryLayer from 'hippo/components/record-finder/query-layer';
@@ -97,7 +93,7 @@ export default class BoxOffice extends React.Component {
 
         return (
             <Button
-                icon={<CameraIcon />}
+                icon={<Camera />}
                 onClick={MobileApp.startBarcodeScan}
             />
         );
@@ -119,11 +115,11 @@ export default class BoxOffice extends React.Component {
                 >
                     {this.renderXlsBtn()}
                     <Button
-                        icon={<TicketIcon />}
+                        icon={<Ticket />}
                         onClick={this.onCompTickets}
                     />
                     <Button
-                        icon={<CreditCardIcon />}
+                        icon={<CreditCard />}
                         onClick={this.onSaleClick}
                     />
                     {this.renderMobileScan()}
@@ -164,7 +160,7 @@ export default class BoxOffice extends React.Component {
                     <Button
                         plain
                         className="grommetux-control-icon-search"
-                        icon={<SearchIcon />}
+                        icon={<Search />}
                         label={get(time, 'show.title', 'Click to find Show')}
                         onClick={this.onSearchClick}
                     />

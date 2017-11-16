@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import { autobind } from 'core-decorators';
 import Heading from 'grommet/components/Heading';
 import Button from 'grommet/components/Button';
-import CloseIcon from 'grommet/components/icons/base/Close';
-import AddCircleIcon from 'grommet/components/icons/base/AddCircle';
+import { Close, AddCircle } from 'grommet-icons';
 import Box from 'grommet/components/Box';
 import { columnClasses } from 'hippo/lib/util';
 import { Table, AutoSizer, Column } from 'react-virtualized';
@@ -63,7 +62,7 @@ export default class ShowTimesEditor extends React.Component {
     @autobind
     renderControls({ rowData: occ }) {
         return (
-            <Button icon={<CloseIcon />} onClick={occ.onDelete}/>
+            <Button icon={<Close />} onClick={occ.onDelete}/>
         );
     }
 
@@ -78,7 +77,7 @@ export default class ShowTimesEditor extends React.Component {
                 <Heading tag='h4'>
                     Show Dates/Times
                 </Heading>
-                <Button icon={<AddCircleIcon />} onClick={this.onAddTime}/>
+                <Button icon={<AddCircle />} onClick={this.onAddTime}/>
             </Box>
         );
     }

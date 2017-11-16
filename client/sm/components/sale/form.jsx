@@ -11,7 +11,7 @@ import Box from 'grommet/components/Box';
 import Value from 'grommet/components/Value';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
-import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
+import { CreditCard } from 'grommet-icons';
 import FormField from 'grommet/components/FormField';
 import Select    from 'grommet/components/Select';
 import Spinning from 'grommet/components/icons/Spinning';
@@ -377,7 +377,7 @@ export default class SaleForm extends React.Component {
                                 <Button
                                     primary
                                     label={this.saveButtonLabel}
-                                    icon={isSaving ? <Spinning /> : <CreditCardIcon />}
+                                    icon={isSaving ? <Spinning /> : <CreditCard />}
                                     onClick={isSaving ? null : this.onSaleClick}
                                 />
                             </Footer>

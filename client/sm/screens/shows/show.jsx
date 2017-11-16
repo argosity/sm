@@ -7,9 +7,7 @@ import cn from 'classnames';
 import { Row, Col, getColumnProps } from 'react-flexbox-grid';
 import moment from 'moment';
 import Button    from 'grommet/components/Button';
-import EditIcon  from 'grommet/components/icons/base/Edit';
-import Spinning  from 'grommet/components/icons/Spinning';
-import ViewIcon  from 'grommet/components/icons/base/View';
+import { Edit, Spinning, View }  from 'grommet-icons';
 import DateRange from 'hippo/lib/date-range';
 
 function dt(date) {
@@ -50,13 +48,13 @@ export default class Show extends React.Component {
     }
 
     @computed get editIcon() {
-        return this.isEditing ? <Spinning /> : <EditIcon />;
+        return this.isEditing ? <Spinning /> : <Edit />;
     }
 
     visibleIcon(visible) {
         if (!visible.isCurrent) { return null; }
         return (
-            <ViewIcon size="small" type="status" colorIndex="brand" />
+            <View size="small" type="status" colorIndex="brand" />
         );
     }
 

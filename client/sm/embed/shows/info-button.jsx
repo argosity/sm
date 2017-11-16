@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { computed, action } from 'mobx';
 import Button from 'grommet/components/Button';
-import LinkIcon from 'grommet/components/icons/base/Link';
-import CircleInformationIcon from 'grommet/components/icons/base/CircleInformation';
+import { Link, CircleInformation } from 'grommet-icons';
 
 import ShowModel from '../../models/show';
 
@@ -17,9 +16,9 @@ export default class InfoButton extends React.Component {
     @computed get Icon() {
         const { hasPage, external_url } = this.props.show;
         if (external_url) {
-            return LinkIcon;
+            return Link;
         } else if (hasPage) {
-            return CircleInformationIcon;
+            return CircleInformation;
         }
         return null;
     }

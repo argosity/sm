@@ -1,10 +1,11 @@
-// Code included here will be ran to setup your specs.
-// it's a usefull spot to setup globals or custom matchers
+import { configure, shallow, mount } from 'enzyme';
 import matchers from 'hippo/testing/matchers';
-import { shallow, mount } from 'enzyme';
 import { fetch } from 'hippo/testing/mocks/fetch';
 import React from 'react';
 import 'hippo/testing';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 
 global.expect.extend(matchers);
 
