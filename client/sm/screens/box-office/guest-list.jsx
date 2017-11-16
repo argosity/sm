@@ -12,7 +12,7 @@ import Guest from './guest';
 import UX from './ux';
 
 @observer
-export default class GuestList extends React.PureComponent {
+export default class GuestList extends React.Component {
 
     static propTypes = {
         time: PropTypes.instanceOf(ShowTime).isRequired,

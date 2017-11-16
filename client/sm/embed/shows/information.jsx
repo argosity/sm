@@ -10,7 +10,7 @@ import PurchaseButton from './purchase-button';
 import Layer from '../layer-wrapper';
 
 @observer
-export default class Information extends React.PureComponent {
+export default class Information extends React.Component {
 
     static propTypes = {
         onCancel: PropTypes.func.isRequired,

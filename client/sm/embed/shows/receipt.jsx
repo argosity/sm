@@ -14,7 +14,7 @@ import Layer from '../layer-wrapper';
 
 
 @observer
-export default class Receipt extends React.PureComponent {
+export default class Receipt extends React.Component {
 
     static propTypes = {
         onCancel: PropTypes.func.isRequired,

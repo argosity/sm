@@ -23,7 +23,7 @@ import Presenter from '../../models/presenter';
 import ShowTimes from './times';
 
 @observer
-class EditForm extends React.PureComponent {
+class EditForm extends React.Component {
 
     static propTypes = {
         show:      PropTypes.instanceOf(Show).isRequired,

@@ -32,7 +32,7 @@ const PaymentFieldsWrapperMock = ({ className, children }) =>
     <div className={className}>{children}</div>;
 
 @observer
-export default class SaleForm extends React.PureComponent {
+export default class SaleForm extends React.Component {
 
     static propTypes = {
         sale: PropTypes.instanceOf(Sale).isRequired,

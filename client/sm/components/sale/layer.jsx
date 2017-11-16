@@ -8,7 +8,7 @@ import Layer from 'grommet/components/Layer';
 import SaleForm from './form';
 
 @observer
-export default class SaleLayer extends React.PureComponent {
+export default class SaleLayer extends React.Component {
 
     static propTypes = {
         onCancel: PropTypes.func.isRequired,

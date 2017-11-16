@@ -12,7 +12,7 @@ import EmbedModel from '../models/embed';
 import './embeds/embed-styles.scss';
 
 @observer
-export default class Embeds extends React.PureComponent {
+export default class Embeds extends React.Component {
 
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,

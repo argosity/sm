@@ -34,7 +34,7 @@ function Image(props) {
 }
 
 @observer
-export default class Show extends React.PureComponent {
+export default class Show extends React.Component {
 
     @observable isEditing = false;
 

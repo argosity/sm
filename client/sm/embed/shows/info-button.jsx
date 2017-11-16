@@ -7,7 +7,7 @@ import CircleInformationIcon from 'grommet/components/icons/base/CircleInformati
 
 import ShowModel from '../../models/show';
 
-export default class InfoButton extends React.PureComponent {
+export default class InfoButton extends React.Component {
 
     static propTypes = {
         show: PropTypes.instanceOf(ShowModel),

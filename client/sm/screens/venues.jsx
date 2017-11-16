@@ -21,7 +21,7 @@ import Venue from '../models/venue';
 import Message from '../models/message';
 
 @observer
-export default class Venues extends React.PureComponent {
+export default class Venues extends React.Component {
 
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,

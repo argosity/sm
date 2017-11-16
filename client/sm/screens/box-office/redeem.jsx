@@ -14,7 +14,7 @@ import Spinning    from 'grommet/components/icons/Spinning';
 import Redemption  from '../../models/redemption';
 
 @observer
-export default class Redeem extends React.PureComponent {
+export default class Redeem extends React.Component {
 
     static propTypes = {
         redemption: PropTypes.instanceOf(Redemption),

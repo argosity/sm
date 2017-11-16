@@ -12,7 +12,7 @@ import Spinning    from 'grommet/components/icons/Spinning';
 import Sale        from '../../models/sale';
 
 @observer
-export default class Email extends React.PureComponent {
+export default class Email extends React.Component {
 
     static propTypes = {
         sale: PropTypes.instanceOf(Sale),

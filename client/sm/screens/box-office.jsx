@@ -25,7 +25,7 @@ import './box-office/box-office.scss';
 const DateCell = ({ cellData }) => moment(cellData).format('YYYY-MM-DD hh:mma');
 
 @observer
-export default class BoxOffice extends React.PureComponent {
+export default class BoxOffice extends React.Component {
 
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,

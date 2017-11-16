@@ -11,7 +11,7 @@ import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import SquareAuth from '../../models/square-auth';
 
 @observer
-export default class SquareConfig extends React.PureComponent {
+export default class SquareConfig extends React.Component {
 
     static propTypes = {
         registerForSave: PropTypes.func.isRequired,

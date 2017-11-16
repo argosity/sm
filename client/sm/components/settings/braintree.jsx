@@ -11,7 +11,7 @@ import BraintreeConfigModel from '../../models/brain-tree-config';
 const KEY = 'braintree';
 
 @observer
-export default class BraintreeConfig extends React.PureComponent {
+export default class BraintreeConfig extends React.Component {
 
     static propTypes = {
         registerForSave: PropTypes.func.isRequired,

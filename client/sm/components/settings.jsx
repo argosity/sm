@@ -17,7 +17,7 @@ const PaymentVendors = {
 
 
 @observer
-export default class SMSystemSettings extends React.PureComponent {
+export default class SMSystemSettings extends React.Component {
 
     childrenRefs = new Map();
 

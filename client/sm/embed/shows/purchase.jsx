@@ -18,7 +18,7 @@ import Layer from '../layer-wrapper';
 import Image from './image';
 
 @observer
-export default class Purchase extends React.PureComponent {
+export default class Purchase extends React.Component {
 
     static propTypes = {
         onCancel: PropTypes.func.isRequired,

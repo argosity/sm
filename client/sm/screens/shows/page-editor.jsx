@@ -16,7 +16,7 @@ import './page-editor.scss';
 
 
 @observer
-class PageEditor extends React.PureComponent {
+class PageEditor extends React.Component {
 
     static propTypes = {
         show:      PropTypes.instanceOf(Show).isRequired,

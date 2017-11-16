@@ -11,7 +11,7 @@ import Presenter      from './presenter';
 import Venue          from './venue';
 
 @observer
-export default class Show extends React.PureComponent {
+export default class Show extends React.Component {
 
     static propTypes = {
         show: PropTypes.instanceOf(ShowModel).isRequired,

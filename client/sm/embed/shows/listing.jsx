@@ -14,7 +14,7 @@ import Show from './show';
 import './listing.scss';
 
 @observer
-export default class Listing extends React.PureComponent {
+export default class Listing extends React.Component {
 
     static propTypes = {
         shows: MobxPropTypes.observableArrayOf(

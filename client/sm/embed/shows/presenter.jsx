@@ -5,7 +5,7 @@ import Image from './image';
 import PresenterModel from '../../models/presenter';
 
 @observer
-export default class Presenter extends React.PureComponent {
+export default class Presenter extends React.Component {
 
     static propTypes = {
         presenter: PropTypes.instanceOf(PresenterModel),

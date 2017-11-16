@@ -25,7 +25,7 @@ import PageEditorWrapper from './shows/page-editor';
 import './shows/show-styles.scss';
 
 @observer
-export default class Shows extends React.PureComponent {
+export default class Shows extends React.Component {
 
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,

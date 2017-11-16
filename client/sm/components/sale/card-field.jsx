@@ -7,7 +7,7 @@ import { getColumnProps } from 'react-flexbox-grid';
 import classnames from 'classnames';
 
 @observer
-export default class PurchaseField extends React.PureComponent {
+export default class PurchaseField extends React.Component {
 
     @action.bound
     onFocus() {

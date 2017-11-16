@@ -30,7 +30,7 @@ const DateInput = observer(({ time }) => (
 ));
 
 @observer
-export default class ShowTimesEditor extends React.PureComponent {
+export default class ShowTimesEditor extends React.Component {
 
     static propTypes = {
         show: PropTypes.instanceOf(Show).isRequired,

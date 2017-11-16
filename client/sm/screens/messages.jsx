@@ -20,7 +20,7 @@ import Query from 'hippo/models/query';
 import Message from '../models/message';
 
 @observer
-export default class Messages extends React.PureComponent {
+export default class Messages extends React.Component {
 
     @observable defaultMessage = new Message();
     @observable message;
