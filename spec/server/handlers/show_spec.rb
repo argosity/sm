@@ -26,7 +26,10 @@ describe SM::Handlers::Shows, api: true, vcr: VCR_OPTS do
         expect(sqa).to receive(:upsert_item_for_show)
 
         with_payment_proccessor('Square') do
-            put "/api/sm/show/#{show.id}.json", {title: 'A test of a show'}.to_json, {'HTTP_AUTHORIZATION' => user.jwt_token}
+            put("/api/sm/show/#{show.id}.json",
+                {title: 'A test of a show'}.to_json,
+                {'CONTENT_TYPE' => 'application/json',
+                 'HTTP_AUTHORIZATION' => user.jwt_token})
             expect(show.reload.title).to eq('A test of a show')
         end
     end
