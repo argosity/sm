@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { map } from 'lodash';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
 import ShowModel from '../../models/show';
@@ -72,10 +72,11 @@ export default class Listing extends React.Component {
 
     render() {
         const { shows } = this.props;
+
         return (
             <div className="hippo shows-listing">
                 {this.actionsLayer}
-                {shows.map(show => (
+                {map(shows, show => (
                     <Show
                         key={show.identifier}
                         show={show}

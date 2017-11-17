@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import Config from 'hippo/config';
 import 'hippo/config-data';
 import Tenant from 'hippo/models/tenant';
-import Shows from 'sm/models/show';
 import { AppContainer } from 'react-hot-loader';
 import { when } from 'mobx';
 import Listing from './listing';
+import Shows from '../../models/show';
 
 let rootElement;
 let showsListing;
