@@ -9,7 +9,7 @@ module SM
 
             extend self
             CONFIG_KEY='square'
-            SCOPES = 'MERCHANT_PROFILE_READ ITEMS_READ ITEMS_WRITE PAYMENTS_READ PAYMENTS_WRITE CUSTOMERS_WRITE'
+            SCOPES = 'MERCHANT_PROFILE_READ ITEMS_READ ITEMS_WRITE PAYMENTS_READ PAYMENTS_WRITE CUSTOMERS_WRITE ORDERS_WRITE'
             WEBHOOKS = 'PAYMENT_UPDATED', 'INVENTORY_UPDATED'
 
             def authorization_url
@@ -48,9 +48,10 @@ module SM
                             ]
                         }
                     )
-                    result.order
+                    return result.order
                 rescue SquareConnect::ApiError => e
                     Hippo.logger.warn "Failed to create order for sale: #{e.response_body}"
+                    return false
                 end
             end
 
