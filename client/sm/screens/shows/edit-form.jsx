@@ -1,7 +1,7 @@
 import React from 'react';
 import { action, observable, computed, observe } from 'mobx';
 import {
-    Form, Field, FormState, nonBlank, numberValue, dateValue, validURL,
+    Form, Field, FormState, nonBlank, numberValue, validURL,
 } from 'hippo/components/form';
 import PropTypes from 'prop-types';
 import { Row } from 'react-flexbox-grid';
@@ -144,12 +144,10 @@ class EditForm extends React.Component {
                             type="select" collection={this.presenters} xs={6} md={4} lg={3} />
 
                         <Field
-                            type="date" label="Visible After" name="visible_during.start"
-                            validate={dateValue} xs={6} md={4} lg={3} />
-
-                        <Field
-                            type="date" label="Visible Until" name="visible_during.end"
-                            validate={dateValue} xs={6} md={4} lg={3} />
+                            options={{ enableTime: false, mode: 'range' }}
+                            format="M d Y"
+                            type="date" label="Visible" name="visible_during"
+                            xs={6} md={4} lg={3} />
 
                         <Field type="checkbox" name="can_purchase" label="Purchasable?" xs={6} md={4} lg={3} />
 
