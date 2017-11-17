@@ -12,6 +12,7 @@ module Hippo::Access
             grant SM::Sale
             grant SM::Venue
             grant SM::Presenter
+            grant SM::Embed
             grant SM::ShowTime
             grant SM::Payment
             grant SM::Redemption
