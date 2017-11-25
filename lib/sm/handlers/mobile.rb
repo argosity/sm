@@ -8,7 +8,7 @@ module SM::Handlers
                     tenant = Hippo::Tenant.where(slug: params[:identifier]).first
                     redirect "https://#{tenant.domain}" if tenant
                 end
-                erb :choose
+                erb :mobile
             end
         end
 
