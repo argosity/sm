@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: f93672c8e01a19a59ce17758f5ed4b963dea93c8
+  revision: e16f5381662c2ece6083bd945e44ec22e3952792
   branch: master
   specs:
     hippo-fw (0.9.8)
@@ -308,7 +308,7 @@ GEM
     rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
-    rspec-rails (3.7.1)
+    rspec-rails (3.7.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -365,7 +365,7 @@ GEM
     vcr (3.0.3)
     vegas (0.1.11)
       rack (>= 1.0.0)
-    webmock (3.1.0)
+    webmock (3.1.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff

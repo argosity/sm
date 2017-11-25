@@ -19,26 +19,26 @@ Yellow dcfa51
             letter-spacing: -1px;
         }
         100% {
-            letter-spacing: 15px;
+            letter-spacing: 2px;
         }
     }
 
     @keyframes sub-banner-left {
         0% {
-            right: 82%;
+            right: 90%;
         }
         100% {
-            right: 90%;
+            right: 95%;
         }
     }
 
 
     @keyframes sub-banner-right {
         0% {
-            left: 82%;
+            left: 90%;
         }
         100% {
-            left: 90%;
+            left: 95%;
         }
     }
 

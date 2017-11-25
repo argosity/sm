@@ -205,6 +205,7 @@
     .text-editor-content {
         flex: 1;
         max-width: 1000px;
+        padding: 48px 0;
         min-height: 80vh;
         @include media-query(lap-and-up) {
             min-width: 45em;
@@ -258,11 +259,19 @@
     }
     .top-info {
         display: flex;
-
         .image {
             align-self: center;
             max-width: 240px;
             margin-right: 1rem;
+        }
+        @include media-query(palm) {
+            flex-wrap: wrap;
+            .image {
+                flex: 1;
+                max-width: 100%;
+                margin-right: 0;
+            }
+            .grommetux-heading { margin-bottom: 0; }
         }
     }
 }

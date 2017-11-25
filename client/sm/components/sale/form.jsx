@@ -15,7 +15,7 @@ import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 import FormField from 'grommet/components/FormField';
 import Select    from 'grommet/components/Select';
 import {
-    FormState, Form, Field, nonBlank, numberValue, validEmail, validPhone,
+    FormState, Form, Field, nonBlank, numberValue, validEmail,
 } from 'hippo/components/form';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import WarningNotification from 'hippo/components/warning-notification';
@@ -248,7 +248,7 @@ export default class SaleForm extends React.Component {
                 key="postalCode"
                 {...fieldProps} xs={6} type="postalCode"
                 ref={this.setFieldRef}
-                label="Zip Code" errorMessage="is not valid"
+                label="Zip Code" errorMessage="is required"
             />,
             <CardField
                 key="cardNumber"
@@ -336,7 +336,7 @@ export default class SaleForm extends React.Component {
                     >
                         <Field {...fieldProps} name="name" validate={nonBlank} />
                         <Field {...fieldProps} name="email" validate={validEmail} />
-                        <Field {...fieldProps} name="phone" validate={validPhone} />
+                        <Field {...fieldProps} name="phone" xs={6} />
 
                         {this.renderCardFields()}
 

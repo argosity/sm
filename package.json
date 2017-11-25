@@ -24,6 +24,7 @@
     "payment-fields": "^0.3.0",
     "picnic": "^6.4.0",
     "react": "^15.6.1",
+    "react-async-component": "github:nathanstitt/react-async-component#retry-on-err",
     "react-dom": "^15.6.1",
     "react-flexa": "^0.8.1",
     "react-flexbox-grid": "1.1.3",
