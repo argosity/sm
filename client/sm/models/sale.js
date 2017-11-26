@@ -2,6 +2,7 @@ import { sprintf } from 'sprintf-js';
 import { sumBy, first, extend } from 'lodash';
 import { computed } from 'mobx';
 import Sync from 'hippo/models/sync';
+import Tenant from 'hippo/models/tenant';
 import Config from 'hippo/config';
 import {
     BaseModel, identifiedBy, field, identifier, session, hasMany, belongsTo,
@@ -40,7 +41,7 @@ export default class Sale extends BaseModel {
     @belongsTo({ model: Show }) show;
 
     static ticketUrlForIdentifier(id) {
-        return `${Config.api_path}${Config.print_path_prefix}/tickets/${id}.pdf`;
+        return `https://${Tenant.current.domain}${Config.api_path}${Config.print_path_prefix}/tickets/${id}.pdf`;
     }
 
     constructor(attrs = {}) {
