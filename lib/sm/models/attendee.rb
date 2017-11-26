@@ -17,6 +17,14 @@ module SM
             metadata['square_customer_id'] || create_square_customer
         end
 
+        def has_10_digit_phone?
+            phone.to_s.gsub(/\D/, '').length == 10
+        end
+
+        def formatted_phone
+            phone.to_s.gsub(/\D/, '').gsub(/^(\d{3})(\d+)(\d{4})$/, '\1-\2-\3')
+        end
+
         def create_square_customer
             ca = SquareConnect::CustomersApi.new(
                 SM::Payments::Square.api_client
@@ -24,7 +32,7 @@ module SM
             attrs = {}
             attrs['email_address'] = email if email.present?
             attrs['given_name'] = name if name.present?
-            attrs['phone_number'] = phone if phone.present?
+            attrs['phone_number'] = formatted_phone if has_10_digit_phone?
             begin
                 reply = ca.create_customer(attrs)
                 metadata['square_customer_id'] = reply.customer.id
