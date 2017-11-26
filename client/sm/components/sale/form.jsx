@@ -50,6 +50,7 @@ export default class SaleForm extends React.Component {
     @observable formState = new FormState()
     @observable payment = new Payment();
     @observable cardIsvalid;
+    @observable isTokenizing;
 
     @observable fields = {
         postalCode: false,
@@ -126,7 +127,7 @@ export default class SaleForm extends React.Component {
             }).catch(({ errors }) => {
                 const err = errors[0] || {};
                 sale.errors = { processing_error: err.message || '' }; // eslint-disable-line
-                resolve();
+                resolve(sale);
             });
         });
     }
@@ -148,13 +149,15 @@ export default class SaleForm extends React.Component {
         sale.errors = null;
         this.isTokenizing = true;
         this.saveState().then(() => {
-            this.isTokenizing = false;
             if (sale.isValid) {
                 sale.save().then(() => {
+                    this.isTokenizing = false;
                     if (sale.isValid) {
-                        this.props.onComplete();
+                        this.props.onComplete(sale);
                     }
                 });
+            } else {
+                this.isTokenizing = false;
             }
         }).catch((err) => {
             sale.errors = { invalid: err.message }; // eslint-disable-line
