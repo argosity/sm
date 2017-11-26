@@ -157,6 +157,7 @@
     margin: 10px 0;
 }
 
+.show-receipt,
 .show-information,
 .show-purchase {
 
@@ -201,15 +202,23 @@
     }
 }
 
+$show-layer-padding: 48px 0;
+
 .show-information {
     .text-editor-content {
         flex: 1;
         max-width: 1000px;
-        padding: 48px 0;
+        padding: $show-layer-padding;
         min-height: 80vh;
         @include media-query(lap-and-up) {
             min-width: 45em;
         }
+    }
+}
+
+.show-receipt {
+    .contents {
+        padding: $show-layer-padding;
     }
 }
 
@@ -219,7 +228,7 @@
     .order-pane {
         overflow-x: hidden;
         overflow-y: auto;
-        padding: 48px 0;
+        padding: $show-layer-padding;
          -webkit-overflow-scrolling: touch;
         @include media-query(lap-and-up) {
             max-width: 800px;
