@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { map } from 'lodash';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
+import createHistory from 'history/createHashHistory';
 import ShowModel from '../../models/show';
-import Sale from '../../models/sale';
 import NoShowsFoundMessage from './none-found-message';
 import Information from './information';
 import Purchase from './purchase';
 import Receipt from './receipt';
 import Show from './show';
-
 import './listing.scss';
 
 @observer
@@ -21,27 +20,46 @@ export default class Listing extends React.Component {
             PropTypes.instanceOf(ShowModel),
         ).isRequired,
     }
-
+    @observable history;
     @observable displaying = {}
+    @observable unlistenHistory;
+    @observable lastSale;
+
+
+    componentWillMount() {
+        this.history = createHistory();
+        this.onViewChange(this.history.location);
+        this.historyUnlisten = this.history.listen(this.onViewChange);
+    }
+
+    @action.bound onViewChange(location) {
+        const [_, view, identifier] = location.pathname.split('/');
+        this.displaying = { view, identifier };
+    }
+
+    componentWillUnmount() {
+        this.unlistenHistory();
+    }
 
     @action.bound
     onDisplayInfo(show) {
-        this.displaying = { show, view: 'info' };
+        this.history.push(`/info/${show.identifier}`);
     }
 
     @action.bound
     onPurchase(show) {
-        this.displaying = { show, view: 'purchase', sale: new Sale({ show }) };
+        this.history.push(`/purchase/${show.identifier}`);
     }
 
     @action.bound
     onHideDisplay() {
-        this.displaying = {};
+        this.history.push('/');
     }
 
     @action.bound
     onPurchaseComplete(sale) {
-        this.displaying = { view: 'receipt', sale };
+        this.history.push(`/receipt/${sale.identifier}`);
+        this.lastSale = sale;
     }
 
     @computed get Layer() {
@@ -63,6 +81,8 @@ export default class Listing extends React.Component {
         return (
             <Layer
                 {...this.displaying}
+                shows={this.props.shows}
+                lastSale={this.lastSale}
                 onPurchase={this.onPurchase}
                 onPurchaseComplete={this.onPurchaseComplete}
                 onCancel={this.onHideDisplay}
