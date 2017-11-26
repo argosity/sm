@@ -18,45 +18,65 @@ export default class Receipt extends React.Component {
 
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
-        onSale: PropTypes.func.isRequired,
-        sale: PropTypes.instanceOf(Sale),
+        identifier: PropTypes.string.isRequired,
+        lastSale: PropTypes.instanceOf(Sale),
     }
 
     @computed get ticketName() {
-        return pluralize('ticket', this.props.sale.qty);
+        return this.props.lastSale ? pluralize('ticket', this.props.lastSale.qty) : 'ticket';
+    }
+
+    @computed get show() {
+        return this.props.lastSale ? this.props.lastSale.show : null;
+    }
+
+    @computed get title() {
+        const { show } = this;
+        if (!show) { return null; }
+
+        return <h2>Thank you for purchasing tickets to {show.title}!</h2>;
+    }
+
+    @computed get emailMessage() {
+        const { sale } = this.props;
+        if (!sale) { return null; }
+
+        return (
+            <Paragraph size="large">
+                We’ve also emailed you a receipt with
+                the {this.ticketName} to {sale.email}.
+            </Paragraph>
+        );
     }
 
     render() {
-        const { sale, sale: { time: { show } } } = this.props;
+        const { identifier } = this.props;
 
         return (
             <Layer
                 closer
-                className="show-information"
+                className="show-receipt"
                 onClose={this.props.onCancel}
             >
                 <Box
                     className="contents"
                     separator='horizontal'
                 >
-                    <h2>Thank you for purchasing tickets to {show.title}!</h2>
+                    {this.title}
                     <Paragraph>
-                        The transaction id for this order is {sale.identifier}.  If you
+                        The transaction id for this order is {identifier}.  If you
                         need to contact us regarding the order, please mention this id so we
                         can find your records.
                     </Paragraph>
                     <Anchor
                         target="_blank"
-                        href={sale.tickets_url}
+                        href={Sale.ticketUrlForIdentifier(identifier)}
                         icon={<TicketIcon />}
                         primary={true}
                         align="center"
                         label={`Download and print ${this.ticketName}`}
                     />
-                    <Paragraph size="large">
-                        We’ve also emailed you a receipt with
-                        the {this.ticketName} to {sale.email}.
-                    </Paragraph>
+                    {this.emailMessage}
                     <h3>
                         See you at the show!
                     </h3>
