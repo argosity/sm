@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
-import { action } from 'mobx';
+import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { computed, action } from 'mobx';
 import Box from 'grommet/components/Box';
-import ShowModel from 'sm/models/show';
 import Footer from 'grommet/components/Footer';
 import PageRenderer from 'hippo/components/text-editor/renderer';
-import PurchaseButton from './purchase-button';
 import Layer from '../layer-wrapper';
+import PurchaseButton from './purchase-button';
 
 @observer
 export default class Information extends React.Component {
@@ -15,7 +14,8 @@ export default class Information extends React.Component {
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
         onPurchase: PropTypes.func.isRequired,
-        show: PropTypes.instanceOf(ShowModel),
+        identifier: PropTypes.string.isRequired,
+        shows: MobxPropTypes.observableArray,
     }
 
     @action.bound
@@ -23,8 +23,12 @@ export default class Information extends React.Component {
         this.props.onPurchase(this.props.show);
     }
 
+    @computed get show() {
+        return this.props.shows.find(s => s.identifier === this.props.identifier);
+    }
+
     render() {
-        const { show } = this.props;
+        const { show } = this;
         if (!show) { return null; }
 
         return (
