@@ -54,7 +54,7 @@ require_relative '../spec_helper'
                 }.to change { SM::Sale.count }.by(0)
                 expect(last_response.status).to eq(406)
                 expect(last_response_json['success']).to eq(false)
-                expect(last_response_json['errors']).to have_key 'payment'
+                expect(last_response_json['errors']).to have_key 'base'
             end
         end
 

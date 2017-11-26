@@ -53,7 +53,7 @@ module SM
                 if trn.ok?
                     payment.processor_transaction = trn.transaction
                 else
-                    sale.errors.add(:payment, trn.message)
+                    sale.errors.add(:base, trn.message)
                     raise ActiveRecord::Rollback
                 end
             end
