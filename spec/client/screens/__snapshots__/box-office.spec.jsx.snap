@@ -2,7 +2,7 @@
 
 exports[`Screen Gate renders and matches snapshot 1`] = `
 <div
-  className="screen box-office is-active"
+  className="hippo-screen box-office is-active"
   data-screen-id="box-office"
 >
   <div
