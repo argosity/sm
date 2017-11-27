@@ -34,6 +34,10 @@ Hippo::Screen.for_extension 'sm' do | screens |
         screen.group_id    = ""
     end
 
+    screens.extend 'preferences' do | screen |
+        screen.group_id = ''
+    end
+
     screens.extend 'user-management' do | screen |
         screen.group_id = ''
         screen.icon        = "users"
