@@ -18,6 +18,7 @@ bootstrap.onReady((host, data) => {
     root.innerHTML = (
         '<div class="banner">Loading Shows<div class="left"></div><div class="right"></div></div>'
     );
+    // eslint-disable-next-line no-undef
     System.import('./shows/boot.jsx').then(({ default: boot }) => {
         boot({ host, data, root });
     });
