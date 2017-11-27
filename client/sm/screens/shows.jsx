@@ -17,7 +17,6 @@ import Query    from 'hippo/models/query';
 import Screen   from 'hippo/components/screen';
 import DataList from 'hippo/components/data-list';
 import QueryBuilder from 'hippo/components/query-builder';
-
 import ShowModel from '../models/show';
 import Show from './shows/show';
 import EditFormWrapper from './shows/edit-form';
@@ -148,7 +147,10 @@ export default class Shows extends React.Component {
     render() {
         return (
             <Screen {...this.props}>
-                <SwipeableViews disabled index={this.displayIndex}>
+                <SwipeableViews
+                    className="shows-wrapper"
+                    disabled index={this.displayIndex}
+                >
                     <div className="shows-list">
 
                         <Box

@@ -1,16 +1,17 @@
 @import 'hippo/styles/global';
 
-.screen[data-screen-id="shows"] {
+.hippo-screen[data-screen-id="shows"] {
     padding: 0;
+
+    > .shows-wrapper { margin: 0; }
+
     .shows-list {
         flex: 1;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        .grommetux-header {
-
-        }
+        @include workspace-screen-padding($exclude: '.controls');
         .data-list {
             flex: 1;
             align-self: stretch;
