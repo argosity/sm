@@ -10,9 +10,7 @@ import { observer }   from 'mobx-react';
 import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
 import NextIcon from 'grommet/components/icons/base/Next';
-import Header   from 'grommet/components/Header';
-
-import SaveButton from 'hippo/components/save-button';
+import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import Asset from 'hippo/components/asset';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import { observePubSub } from 'hippo/models/pub_sub';
@@ -113,10 +111,7 @@ class EditForm extends React.Component {
 
         return (
             <div className="show-edit">
-                <Header
-                    colorIndex="light-2"
-                    pad={{ horizontal: 'small', vertical: 'small', between: 'small' }}
-                >
+                <Toolbar>
                     <SaveButton onClick={this.onSave} model={this.props.show} />
 
                     <Button label="Cancel" onClick={this.onCancel} accent />
@@ -125,7 +120,7 @@ class EditForm extends React.Component {
                         label="Edit Page" onClick={show.isNew ? null : this.props.onEditPage} accent
                         icon={<NextIcon />} className="edit-page"
                     />
-                </Header>
+                </Toolbar>
                 <Form className="show-edit-body" tag="div" state={this.formState}>
                     <NetworkActivityOverlay model={show} />
 

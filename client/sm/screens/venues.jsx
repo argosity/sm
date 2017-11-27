@@ -4,15 +4,13 @@ import { observer } from 'mobx-react';
 import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
 import { Row, Col } from 'react-flexbox-grid';
-import Header   from 'grommet/components/Header';
-import Button   from 'grommet/components/Button';
-
+import Button from 'grommet/components/Button';
+import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import RecordFinder from 'hippo/components/record-finder';
 import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
 import {
     Form, Field, FormState, nonBlank, numberValue,
 } from 'hippo/components/form';
-import SaveButton from 'hippo/components/save-button';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
 import Screen from 'hippo/components/screen';
@@ -85,7 +83,7 @@ export default class Venues extends React.Component {
 
         return (
             <Form state={this.formState} tag="div" screen={screen}>
-                <Header colorIndex="light-2" align="center" pad={{ between: 'small' }} fixed>
+                <Toolbar>
                     <SaveButton
                         model={this.venue}
                         onClick={this.isSavable ? this.onSave : null}
@@ -97,7 +95,7 @@ export default class Venues extends React.Component {
                         onClick={this.onReset}
                     />
 
-                </Header>
+                </Toolbar>
                 <Warning message={this.errorMessage} />
 
                 <Row>

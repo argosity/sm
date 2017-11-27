@@ -4,7 +4,6 @@ import { pick } from 'lodash';
 import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
 import { Row } from 'react-flexbox-grid';
-import Header   from 'grommet/components/Header';
 import Box      from 'grommet/components/Box';
 import Button   from 'grommet/components/Button';
 import Help from 'hippo/components/help';
@@ -13,7 +12,7 @@ import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
 import {
     Form, Field, FormState, nonBlank,
 } from 'hippo/components/form';
-import SaveButton from 'hippo/components/save-button';
+import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
 import Query from 'hippo/models/query';
@@ -89,7 +88,7 @@ export default class Messages extends React.Component {
     render() {
         return (
             <Form state={this.formState} tag="div" {...this.props}>
-                <Header colorIndex="light-2" align="center" pad={{ between: 'small' }} fixed>
+                <Toolbar>
                     <SaveButton
                         model={this.message}
                         onClick={this.isSavable ? this.onSave : null}
@@ -100,8 +99,7 @@ export default class Messages extends React.Component {
                         label='Add New Message'
                         onClick={this.onReset}
                     />
-
-                </Header>
+                </Toolbar>
                 <Warning message={this.errorMessage} />
 
                 <Row>

@@ -7,11 +7,9 @@ import { Row } from 'react-flexbox-grid';
 import Screen from 'hippo/components/screen';
 import Query from 'hippo/models/query';
 import RecordFinder from 'hippo/components/record-finder';
-import SaveButton from 'hippo/components/save-button';
-import Header   from 'grommet/components/Header';
 import Button   from 'grommet/components/Button';
-
 import ScheduleNewIcon from 'grommet/components/icons/base/ScheduleNew';
+import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
 import {
@@ -79,7 +77,7 @@ export default class Presenters extends React.Component {
         return (
             <Form state={this.formState}>
                 <Screen screen={screen}>
-                    <Header colorIndex="light-2" align="center" pad={{ between: 'small' }}>
+                    <Toolbar>
                         <SaveButton
                             tabIndex={4}
                             model={this.presenter}
@@ -91,8 +89,7 @@ export default class Presenters extends React.Component {
                             label='Add New Presenter'
                             onClick={this.onReset}
                         />
-
-                    </Header>
+                    </Toolbar>
                     <Warning message={this.presenter.errorMessage} />
                     <Row>
                         <RecordFinder
