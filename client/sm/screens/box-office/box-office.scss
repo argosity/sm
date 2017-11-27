@@ -1,6 +1,6 @@
 @import 'hippo/styles/global';
 
-#hippo-root .screen.box-office {
+.hippo-screen[data-screen-id="box-office"] {
 
     .guest-list {
         flex: 1;
