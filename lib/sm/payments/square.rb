@@ -55,6 +55,10 @@ module SM
                 end
             end
 
+            def transactions_api
+                SquareConnect::TransactionsApi.new(api_client)
+            end
+
             def sale(payment)
                 sale = payment.sale
 
@@ -75,19 +79,22 @@ module SM
                 request_body[:customer_id] = customer_id unless sale.attendee.square_customer_id.blank?
 
                 begin
-                    api = SquareConnect::TransactionsApi.new(api_client)
-
+                    api = transactions_api
                     result = api.charge(
                         client_config_values['location_id'],
                         request_body
                     )
                     success = result.errors.blank?
-                    message = success ? Payments::SUCCESS_MSG : result.errors.map(&:detail).join(', ')
+                    if success
+                        payment.processor_id = :square
+                        payment.processor_transaction = result.transaction.id
+                        payment.metadata['tender_id'] = result.tenders.first.id
+                    end
                     return ChargeResult.new(
-                        success: success,
-                        transaction: result.transaction.id,
-                        message: message
-                    )
+                               success: success,
+                               message: success ? Payments::SUCCESS_MSG :
+                                   result.errors.map(&:detail).join(', ')
+                           )
                 rescue SquareConnect::ApiError => e
                     error = JSON.parse(e.response_body)['errors'].first
                     return ChargeResult.new(
@@ -148,6 +155,45 @@ module SM
                 SquareConnect::ApiClient.new(config)
             end
 
+            def refund(payment, reason)
+                api = transactions_api
+                trn = api.create_refund(
+                    client_config_values['location_id'],
+                    payment.processor_transaction, {
+                        reason: reason,
+                        idempotency_key: payment.processor_transaction,
+                        tender_id: payment.metadata['tender_id'],
+                        amount_money:  {
+                            amount: (payment.amount * 100).to_i,
+                            currency: 'USD'
+                        }
+                    }
+                )
+                success = ['PENDING', 'APPROVED'].include?(trn.refund.status)
+                if success
+                    payment.update_attributes!(
+                        refund_id: trn.refund.id
+                    )
+                end
+                return success
+            end
+
+            def set_payment_tenders
+                SM::Payment.all.each do |pmt|
+                    pmt.processor_id = :square
+                    begin
+                        trn = transactions_api.retrieve_transaction(
+                            client_config_values['location_id'],
+                            pmt.processor_transaction
+                        )
+                        pmt.metadata['tender_id'] = trn.transaction.tenders.first.id
+                        p pmt
+                        pmt.save!
+                    rescue => e
+                        p e
+                    end
+                end
+            end
 
         end
     end

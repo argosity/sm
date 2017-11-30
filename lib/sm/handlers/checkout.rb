@@ -50,9 +50,7 @@ module SM
             def process_charge(sale, payment)
                 trn = SM::Payments.vendor.sale(payment)
                 Hippo.logger.warn "Processed CC transaction #{trn.transaction} for nonce #{payment['nonce']}, result: #{trn.message}"
-                if trn.ok?
-                    payment.processor_transaction = trn.transaction
-                else
+                unless trn.ok?
                     sale.errors.add(:base, trn.message)
                     raise ActiveRecord::Rollback
                 end
@@ -61,6 +59,7 @@ module SM
             def email_receipt(sale)
                 SM::Templates::Sale.create(sale).deliver
             end
+
         end
 
     end

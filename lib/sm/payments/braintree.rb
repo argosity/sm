@@ -48,13 +48,18 @@ module SM
                         email: sale.attendee.email
                     }
                 )
+                payment.processor_id = :braintree
+                payment.processor_transaction = trn.success? ?
+                                                    trn.transaction.id : ''
                 ChargeResult.new(
                     success: trn.success?,
-                    transaction: trn.success? ? trn.transaction.id : '',
                     message: trn.success? ? Payments::SUCCESS_MSG : trn.message
                 )
             end
 
+            def refund(sale)
+
+            end
         end
     end
 end

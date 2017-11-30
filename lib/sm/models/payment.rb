@@ -9,7 +9,19 @@ module SM
 
         attr_accessor :nonce
 
+        enum processor_id: [ :braintree, :square, :stripe ]
+
         validates :amount, :card_type, :digits, presence: true
+
+        def processor
+            SM::Payments.const_get(
+                processor_id.capitalize
+            )
+        end
+
+        def refund(reason:)
+            processor.refund(self, reason)
+        end
     end
 
 end

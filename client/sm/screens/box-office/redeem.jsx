@@ -35,7 +35,7 @@ export default class Redeem extends React.Component {
     renderControls() {
         const { redemption } = this.props;
         return (
-            <Box>
+            <Box pad="medium">
                 <NumberInput
                     min={1}
                     onChange={this.onQtyChange}
@@ -81,7 +81,7 @@ export default class Redeem extends React.Component {
         return (
             <Layer
                 closer
-                className="box-office-redemption"
+                className="box-office"
                 onClose={this.props.onCancel}
                 pad={{ between: 'small' }} margin="medium"
             >

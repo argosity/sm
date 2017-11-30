@@ -110,7 +110,9 @@ export default class BoxOffice extends React.Component {
                 style={{ flex: '1  0 auto', paddingLeft: '12px' }}
                 direction="row" align="center" responsive={false}
             >
-                <span>{moment(this.time.occurs_at).format('h:mma ddd, MMM D')}</span>
+                <span>
+                    {moment(this.time.occurs_at).format('h:mma ddd, MMM D')}
+                </span>
                 <Box
                     style={{ flex: '1  0 auto' }}
                     direction="row" responsive={false} flex justify="end"
@@ -132,7 +134,6 @@ export default class BoxOffice extends React.Component {
 
     renderControls() {
         if (this.time.isNew) { return null; }
-
         return (
             <Box direction="row" justify="end">
             </Box>
@@ -144,7 +145,6 @@ export default class BoxOffice extends React.Component {
 
         return (
             <Screen screen={this.props.screen}>
-
                 <QueryLayer
                     query={query}
                     title={'Find Show'}
@@ -152,15 +152,14 @@ export default class BoxOffice extends React.Component {
                     onRecordSelect={this.onRecordFound}
                     onClose={this.onSearchClose}
                 />
-
                 <SaleLayer
                     sale={this.sale}
                     onCancel={this.onSaleCancel}
                     onComplete={this.onSaleComplete}
                 />
-
                 <Box
-                    responsive={false} direction="row" wrap justify="between" align="baseline"
+                    responsive={false} direction="row" wrap
+                    justify="between" align="baseline"
                 >
                     <Button
                         plain

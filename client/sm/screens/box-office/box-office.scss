@@ -26,13 +26,26 @@
             overflow: hidden;
             h4 { margin: 0; }
             .controls {
-                .grommetux-button__icon { padding: 0; }
+                .grommetux-button__icon {
+                    padding: 0;
+                    display: flex;
+                    @include media-query(lap-and-up) {
+                        svg {
+                            width: 17px;
+                            height: 17px;
+                        }
+                    }
+                }
                 min-width: 26px;
                 justify-content: space-around;
                 display: flex;
                 flex-direction: column;
                 height: 100%;
                 svg { max-width: 100%; }
+            }
+            &.is_refunded {
+                text-decoration: line-through;
+                .controls { visibility: hidden; }
             }
             display: flex;
             .grid {
@@ -62,7 +75,7 @@
 }
 
 
-.grommetux-layer.box-office-redemption {
+.grommetux-layer.box-office {
 
     h3 {
         margin: 0;
@@ -80,4 +93,5 @@
         display: flex;
         justify-content: space-around;
     }
+
 }

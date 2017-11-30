@@ -19,15 +19,34 @@ module SM
                 if data['send_receipt']
                     sale.attendee.email = data['send_receipt']
                     SM::Templates::Sale.create(sale).deliver
+                    return std_api_reply(:update, {}, success: true)
                 end
-                std_api_reply(:update, {}, success: true)
+                if data['refund']
+                    return process_refund(sale)
+                end
+                return std_api_reply(:update, {}, success: true)
             end
 
             def show
                 perform_retrieval
             end
 
-        end
+            private
 
+            def process_refund(sale)
+                success = sale.payments.all? do |payment|
+                    payment.refund(reason: data['refund'])
+                end
+                Hippo.logger.info "Refund of sale #{sale.identifier} processed success: #{success}"
+                begin
+                    SM::Templates::Refund.create(sale).deliver
+                rescue => e
+                    Hippo.logger.warn "Failed to send refund email for sale #{sale.identifier}: #{e}"
+                    binding.pry
+                end
+                return std_api_reply(:update, {}, success: success)
+            end
+
+        end
     end
 end

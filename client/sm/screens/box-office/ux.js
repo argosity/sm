@@ -17,6 +17,7 @@ export default class GuestUX {
         QTY:         6,
         DATE:        7,
         REDEMPTIONS: 8,
+        IS_REFUNDED: 9,
     }
 
     get fields() {
@@ -27,6 +28,7 @@ export default class GuestUX {
     @observable rowHeight;
     @observable redemption;
     @observable emailSale;
+    @observable refundSale;
 
     query = new Query({
         src: Sale,
@@ -35,7 +37,8 @@ export default class GuestUX {
             { id: 'id', queryable: false, dataType: 'number' },
             { id: 'show_time_id', queryable: false, dataType: 'number' },
             { id: 'identifier', label: 'Order #' },
-            'name', 'phone', 'email', 'qty', 'created_at', 'redemptions',
+            'name', 'phone', 'email', 'qty', 'created_at',
+            'redemptions', 'is_refunded',
         ],
     })
 
@@ -93,6 +96,7 @@ export default class GuestUX {
     cancelPending() {
         this.emailSale = null;
         this.redemption = null;
+        this.refundSale = null;
     }
 
     @action.bound
@@ -123,6 +127,13 @@ export default class GuestUX {
         }
     }
 
+    @action.bound
+    onRefundConfirm(reason) {
+        this.refundSale.refund(reason).then(() => {
+            this.refundSale = null;
+        });
+    }
+
     @action checkInTicket(ticket) {
         this.redemption = Redemption.fromTicket(ticket);
         const saleRow = this.query.rows.find(
@@ -134,8 +145,11 @@ export default class GuestUX {
         this.redemption.save().then(this.onCheckInComplete);
     }
 
-    @action.bound
-    onMail(rowIndex) {
+    @action onRefund(rowIndex) {
+        this.refundSale = this.query.results.modelForRow(rowIndex);
+    }
+
+    @action onMail(rowIndex) {
         this.emailSale = this.query.results.modelForRow(rowIndex);
     }
 

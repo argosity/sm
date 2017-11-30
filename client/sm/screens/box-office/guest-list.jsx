@@ -8,6 +8,7 @@ import QueryBuilder from 'hippo/components/query-builder';
 import ShowTime from '../../models/show-time';
 import Redeem from './redeem';
 import Email from './email';
+import Refund from './refund';
 import Guest from './guest';
 import UX from './ux';
 
@@ -58,6 +59,11 @@ export default class GuestList extends React.Component {
                 <Email
                     sale={this.ux.emailSale}
                     onComplete={this.ux.onMailSend}
+                    onCancel={this.ux.cancelPending}
+                />
+                <Refund
+                    sale={this.ux.refundSale}
+                    onComplete={this.ux.onRefundConfirm}
                     onCancel={this.ux.cancelPending}
                 />
                 <QueryBuilder autoFetch={true} query={this.ux.query} />

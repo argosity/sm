@@ -3,10 +3,9 @@ module SM
 
         class ChargeResult
 
-            attr_reader :transaction, :message, :success
+            attr_reader :success, :message
 
-            def initialize(transaction:, success:, message:)
-                @transaction = transaction
+            def initialize(success:, message:)
                 @success = success
                 @message = message
             end

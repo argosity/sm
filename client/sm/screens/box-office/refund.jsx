@@ -1,18 +1,17 @@
 import React from 'react';
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import PropTypes   from 'prop-types';
-import Layer       from 'grommet/components/Layer';
 import TextInput   from 'grommet/components/TextInput';
+import Layer       from 'grommet/components/Layer';
 import Button      from 'grommet/components/Button';
-import SendIcon    from 'grommet/components/icons/base/Send';
-import Footer      from 'grommet/components/Footer';
+import MoneyIcon from 'grommet/components/icons/base/Money';
 import Box         from 'grommet/components/Box';
 import Spinning    from 'grommet/components/icons/Spinning';
 import Sale        from '../../models/sale';
 
 @observer
-export default class Email extends React.Component {
+export default class Refund extends React.Component {
 
     static propTypes = {
         sale: PropTypes.instanceOf(Sale),
@@ -20,31 +19,31 @@ export default class Email extends React.Component {
         onCancel: PropTypes.func.isRequired,
     }
 
-    @action.bound
-    onQtyChange(ev) {
-        this.props.sale.email = ev.target.value;
+    @observable reason;
+
+    @action.bound onChange(ev) {
+        this.reason = ev.target.value;
     }
 
+    @action.bound onComplete() {
+        this.props.onComplete(this.reason);
+    }
 
     renderControls() {
-        const { sale } = this.props;
         return (
-            <Box>
-                <TextInput
-                    min={1}
-                    onChange={this.onChange}
-                    defaultValue={sale.email}
+            <Box
+                direction="column"
+                pad={{ vertical: 'medium', between: 'small' }}
+            >
+                <label>
+                    Refund Reason:
+                </label>
+                <TextInput min={1} onDOMChange={this.onChange} />
+                <Button
+                    icon={<MoneyIcon />}
+                    label='Refund'
+                    onClick={this.onComplete}
                 />
-                <Footer
-                    margin="medium"
-                    justify="end"
-                >
-                    <Button
-                        icon={<SendIcon />}
-                        label='Send'
-                        onClick={this.props.onComplete}
-                    />
-                </Footer>
             </Box>
         );
     }
@@ -59,7 +58,6 @@ export default class Email extends React.Component {
 
     render() {
         if (!this.props.sale) { return null; }
-
         return (
             <Layer
                 closer
@@ -67,7 +65,7 @@ export default class Email extends React.Component {
                 onClose={this.props.onCancel}
                 pad={{ between: 'small' }} margin="medium"
             >
-                <h3>Email Receipt</h3>
+                <h3>Refund Tickets</h3>
                 <div className="name">{this.props.sale.name}</div>
                 {this.renderBody()}
             </Layer>

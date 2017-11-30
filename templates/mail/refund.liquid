@@ -1,0 +1,21 @@
+<html>
+  <body style="font-family: arial; font-size: 16px; color: #373533;">
+    <br>
+    <br>
+    {% if seller.logo %}
+    <img src="{{ seller.logo.url }}" alt="{{ seller.name }} logo" width="{{ seller.logo.width }}" height="{{ seller.logo.height }}">
+    {% else %}
+    <h1>{{ seller.name }}</h1>
+    {% endif %}
+    <h4>Hello {{ sale.name }},</h4>
+    <p>
+      The tickets for order identifier: {{ sale.identifier }} have been submitted for a full refund.
+    </p>
+    <p>
+      You should see the refund transaction appear on your billing statement within a few days.
+    </p>
+    <p>
+      Hope to see you at our next show!
+    </p>
+  </body>
+</html>

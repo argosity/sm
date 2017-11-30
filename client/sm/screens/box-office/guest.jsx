@@ -7,6 +7,7 @@ import moment from 'moment';
 import Button from 'grommet/components/Button';
 import DoneIcon from 'grommet/components/icons/base/Compliance';
 import MailIcon from 'grommet/components/icons/base/Mail';
+import TrashIcon from 'grommet/components/icons/base/Trash';
 import TicketIcon   from 'grommet/components/icons/base/Ticket';
 import MobileApp from '../../lib/mobile-app-support';
 import Sale from '../../models/sale';
@@ -27,7 +28,9 @@ export default class Guest extends React.Component {
     @action.bound onMail() {
         this.props.ux.onMail(this.props.rowIndex);
     }
-
+    @action.bound onRefund() {
+        this.props.ux.onRefund(this.props.rowIndex);
+    }
     @computed get printURL() {
         return Sale.ticketUrlForIdentifier(this.props.row[UX.FIELDS.IDENTIFIER]);
     }
@@ -46,11 +49,12 @@ export default class Guest extends React.Component {
     render() {
         const { style, row } = this.props;
         const redeemed = sumBy(row[UX.FIELDS.REDEMPTIONS], 'qty');
+        const is_refunded = row[UX.FIELDS.IS_REFUNDED];
         const full = (0 === (row[UX.FIELDS.QTY] - redeemed));
-        const doneIcon = full ? <DoneIcon size="xsmall" /> : null;
+        const doneIcon = full ? <DoneIcon size="small" /> : null;
         return (
             <div
-                className={cn('guest', { full })}
+                className={cn('guest', { full, is_refunded })}
                 style={style}
             >
                 <div
@@ -71,6 +75,7 @@ export default class Guest extends React.Component {
                 <div className="controls">
                     <Button onClick={this.onMail} plain icon={<MailIcon />} />
                     {this.renderPrintBtn()}
+                    <Button onClick={this.onRefund} plain icon={<TrashIcon />} />
                 </div>
             </div>
         );

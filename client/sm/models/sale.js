@@ -27,6 +27,7 @@ export default class Sale extends BaseModel {
 
     @field tickets_url;
     @field message_id;
+    @field refund_reason;
 
     @session noCharge;
     @session show_id;
@@ -57,6 +58,10 @@ export default class Sale extends BaseModel {
 
     emailReceipt() {
         return this.save({ json: { send_receipt: this.email } });
+    }
+
+    refund(reason) {
+        return this.save({ json: { refund: reason } });
     }
 
     @computed get activityMessage() {
