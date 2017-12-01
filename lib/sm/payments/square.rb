@@ -88,7 +88,7 @@ module SM
                     if success
                         payment.processor_id = :square
                         payment.processor_transaction = result.transaction.id
-                        payment.metadata['tender_id'] = result.tenders.first.id
+                        payment.metadata['tender_id'] = result.transaction.tenders.first.id
                     end
                     return ChargeResult.new(
                                success: success,
