@@ -8,7 +8,7 @@ module SM
         belongs_to :show_time, class_name: 'SM::ShowTime'
 
         validates :show, :sale, :show_time, presence: true
-        validate :ensure_qty_is_correct
+        validate :ensure_redeemable
         before_validation :set_defaults
 
         attr_accessor :ticket
@@ -17,13 +17,17 @@ module SM
 
         protected
 
-        def ensure_qty_is_correct
-            if sale && sale.unredeemed_qty < qty
+        def ensure_redeemable
+            return unless sale
+            if sale.unredeemed_qty < qty
                 if sale.unredeemed_qty > 0
                     errors.add(:qty, "must be less than #{sale.unredeemed_qty}")
                 else
                     errors.add(:sale, 'is completely checked in')
                 end
+            end
+            if sale.is_voided?
+                errors.add(:sale, 'has been voided')
             end
         end
 

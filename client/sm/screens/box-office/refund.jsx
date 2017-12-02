@@ -5,7 +5,8 @@ import PropTypes   from 'prop-types';
 import TextInput   from 'grommet/components/TextInput';
 import Layer       from 'grommet/components/Layer';
 import Button      from 'grommet/components/Button';
-import MoneyIcon from 'grommet/components/icons/base/Money';
+import CheckBox    from 'grommet/components/CheckBox';
+import MoneyIcon   from 'grommet/components/icons/base/Money';
 import Box         from 'grommet/components/Box';
 import Spinning    from 'grommet/components/icons/Spinning';
 import Sale        from '../../models/sale';
@@ -20,13 +21,18 @@ export default class Refund extends React.Component {
     }
 
     @observable reason;
+    @observable void_only;
 
-    @action.bound onChange(ev) {
+    @action.bound onTextChange(ev) {
         this.reason = ev.target.value;
     }
 
+    @action.bound onCheckChange(ev) {
+        this.void_only = ev.target.checked;
+    }
+
     @action.bound onComplete() {
-        this.props.onComplete(this.reason);
+        this.props.onComplete(this.reason, this.void_only);
     }
 
     renderControls() {
@@ -35,10 +41,11 @@ export default class Refund extends React.Component {
                 direction="column"
                 pad={{ vertical: 'medium', between: 'small' }}
             >
+                <CheckBox label='Void only' onChange={this.onCheckChange} />
                 <label>
                     Refund Reason:
                 </label>
-                <TextInput min={1} onDOMChange={this.onChange} />
+                <TextInput min={1} onDOMChange={this.onTextChange} />
                 <Button
                     icon={<MoneyIcon />}
                     label='Refund'

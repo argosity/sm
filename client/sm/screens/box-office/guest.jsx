@@ -49,12 +49,13 @@ export default class Guest extends React.Component {
     render() {
         const { style, row } = this.props;
         const redeemed = sumBy(row[UX.FIELDS.REDEMPTIONS], 'qty');
-        const is_refunded = row[UX.FIELDS.IS_REFUNDED];
+        const is_voided = row[UX.FIELDS.IS_VOIDED];
         const full = (0 === (row[UX.FIELDS.QTY] - redeemed));
         const doneIcon = full ? <DoneIcon size="small" /> : null;
+
         return (
             <div
-                className={cn('guest', { full, is_refunded })}
+                className={cn('guest', { full, is_voided })}
                 style={style}
             >
                 <div

@@ -173,6 +173,8 @@ module SM
                     payment.update_attributes!(
                         refund_id: trn.refund.id
                     )
+                else
+                    payment.errors.add(:refund, "failed: #{trn.refund.status}")
                 end
                 return success
             end

@@ -17,7 +17,7 @@ export default class GuestUX {
         QTY:         6,
         DATE:        7,
         REDEMPTIONS: 8,
-        IS_REFUNDED: 9,
+        IS_VOIDED:   9,
     }
 
     get fields() {
@@ -38,7 +38,7 @@ export default class GuestUX {
             { id: 'show_time_id', queryable: false, dataType: 'number' },
             { id: 'identifier', label: 'Order #' },
             'name', 'phone', 'email', 'qty', 'created_at',
-            'redemptions', 'is_refunded',
+            'redemptions', 'is_voided',
         ],
     })
 
@@ -128,8 +128,8 @@ export default class GuestUX {
     }
 
     @action.bound
-    onRefundConfirm(reason) {
-        this.refundSale.refund(reason).then(() => {
+    onRefundConfirm(reason, void_only) {
+        this.refundSale.refund(reason, void_only).then(() => {
             this.refundSale = null;
         });
     }

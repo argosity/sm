@@ -43,7 +43,7 @@
                 height: 100%;
                 svg { max-width: 100%; }
             }
-            &.is_refunded {
+            &.is_voided {
                 text-decoration: line-through;
                 .controls { visibility: hidden; }
             }

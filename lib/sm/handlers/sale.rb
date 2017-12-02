@@ -22,7 +22,13 @@ module SM
                     return std_api_reply(:update, {}, success: true)
                 end
                 if data['refund']
-                    return process_refund(sale)
+                    sale.is_voided = true
+                    unless data['void_only']
+                        unless process_refund(sale)
+                            return std_api_reply(:update, sale, success: false)
+                        end
+                    end
+                    return std_api_reply(:update, sale, success: sale.save)
                 end
                 return std_api_reply(:update, {}, success: true)
             end
@@ -38,13 +44,14 @@ module SM
                     payment.refund(reason: data['refund'])
                 end
                 Hippo.logger.info "Refund of sale #{sale.identifier} processed success: #{success}"
+                return false unless success
                 begin
                     SM::Templates::Refund.create(sale).deliver
                 rescue => e
                     Hippo.logger.warn "Failed to send refund email for sale #{sale.identifier}: #{e}"
-                    binding.pry
+                    return false
                 end
-                return std_api_reply(:update, {}, success: success)
+                true
             end
 
         end

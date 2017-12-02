@@ -12,6 +12,7 @@ exports[`Payment Form matches snapshot 1`] = `
       "id": undefined,
       "identifier": undefined,
       "isModel": true,
+      "is_voided": undefined,
       "lastServerMessage": "",
       "message_id": undefined,
       "name": undefined,
