@@ -20,6 +20,7 @@ exports[`Payment Form matches snapshot 1`] = `
       "phone": undefined,
       "qty": 1,
       "redemptions": Object {},
+      "refund_reason": undefined,
       "show": Show {
         "can_purchase": false,
         "capacity": undefined,
