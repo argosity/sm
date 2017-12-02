@@ -99,8 +99,7 @@ module SM
                     error = JSON.parse(e.response_body)['errors'].first
                     return ChargeResult.new(
                                success: false,
-                               message: error['detail'],
-                               transaction: error['code']
+                               message: error['detail']
                            )
                 end
             end
@@ -176,23 +175,6 @@ module SM
                     )
                 end
                 return success
-            end
-
-            def set_payment_tenders
-                SM::Payment.all.each do |pmt|
-                    pmt.processor_id = :square
-                    begin
-                        trn = transactions_api.retrieve_transaction(
-                            client_config_values['location_id'],
-                            pmt.processor_transaction
-                        )
-                        pmt.metadata['tender_id'] = trn.transaction.tenders.first.id
-                        p pmt
-                        pmt.save!
-                    rescue => e
-                        p e
-                    end
-                end
             end
 
         end
