@@ -1,5 +1,6 @@
-.sale-form {
+@import "hippo/styles/global";
 
+.sale-form {
     .totals-line {
         .qty, .total {
             min-width: 200px;
@@ -37,6 +38,13 @@
                 opacity: 1;
             }
         }
+
+        footer {
+            border-top: 1px solid $border-color;
+            margin-top: 40px;
+            padding-top: 40px;
+        }
     }
+
 
 }
