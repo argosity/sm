@@ -14,14 +14,15 @@ import Button from 'grommet/components/Button';
 import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
 import FormField from 'grommet/components/FormField';
 import Select    from 'grommet/components/Select';
+import Spinning from 'grommet/components/icons/Spinning';
 import {
     FormState, Form, Field, nonBlank, numberValue, validEmail,
 } from 'hippo/components/form';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import WarningNotification from 'hippo/components/warning-notification';
+import CardField from 'hippo/components/payments/field';
 
 import './sale-form-styles.scss';
-import CardField from './card-field';
 import Arrow from './pointer-arrow';
 import Sale from '../../models/sale';
 import Payment from '../../models/payment';
@@ -50,7 +51,7 @@ export default class SaleForm extends React.Component {
     @observable formState = new FormState()
     @observable payment = new Payment();
     @observable cardIsvalid;
-    @observable isTokenizing;
+    @observable isSaving;
 
     @observable fields = {
         postalCode: false,
@@ -147,33 +148,33 @@ export default class SaleForm extends React.Component {
         }
         const { sale } = this.props;
         sale.errors = null;
-        this.isTokenizing = true;
+        this.isSaving = true;
         this.saveState().then(() => {
             if (sale.isValid) {
                 sale.save().then(() => {
-                    this.isTokenizing = false;
+                    this.isSaving = false;
                     if (sale.isValid) {
                         this.props.onComplete(sale);
                     }
                 });
             } else {
-                this.isTokenizing = false;
+                this.isSaving = false;
             }
         }).catch((err) => {
             sale.errors = { invalid: err.message }; // eslint-disable-line
-            this.isTokenizing = false;
+            this.isSaving = false;
         });
     }
 
     @computed get isBusy() {
         return Boolean(
-            this.isTokenizing || get(this.payment, 'syncInProgress.isFetch'),
+            this.isSaving || get(this.payment, 'syncInProgress.isFetch'),
         );
     }
 
     @computed get busyMessage() {
         return this.props.sale.errorMessage || (
-            this.isTokenizing ? 'Purchasing…' : 'Loading…'
+            this.isSaving ? 'Purchasing…' : 'Loading…'
         );
     }
 
@@ -242,6 +243,13 @@ export default class SaleForm extends React.Component {
         return { sm: 6, xs: 12 };
     }
 
+    @computed get saveButtonLabel() {
+        if (this.isSaving) {
+            return this.props.sale.noCharge ? 'Saving…' : 'Purchasing…';
+        }
+        return this.props.sale.noCharge ? 'Save' : 'Purchase';
+    }
+
     renderCardFields() {
         if (this.props.sale.noCharge) { return null; }
         const { fieldProps } = this;
@@ -274,7 +282,9 @@ export default class SaleForm extends React.Component {
     }
 
     render() {
-        const { fieldProps, formState, props: { sale } } = this;
+        const {
+            fieldProps, formState, isSaving, props: { sale },
+        } = this;
 
         const FieldsWrapper = this.props.sale.noCharge ? PaymentFieldsWrapperMock : PaymentFields;
 
@@ -329,6 +339,7 @@ export default class SaleForm extends React.Component {
                         authorization={this.payment.token}
                         styles={{
                             base: {
+                                padding: '14px 0 14px 22px',
                                 color: '#3a3a3a',
                                 'font-size': '16px',
                             },
@@ -351,9 +362,9 @@ export default class SaleForm extends React.Component {
                             >
                                 {this.props.controls}
                                 <Button
-                                    icon={<CreditCardIcon />}
-                                    label={this.props.sale.noCharge ? 'Save' : 'Purchase'}
-                                    onClick={this.onSaleClick}
+                                    icon={isSaving ? <Spinning /> : <CreditCardIcon />}
+                                    label={this.saveButtonLabel}
+                                    onClick={isSaving ? null : this.onSaleClick}
                                 />
                             </Footer>
                         </Col>

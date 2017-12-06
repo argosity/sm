@@ -1,6 +1,6 @@
 module SM
     module Payments
-        SUCCESS_MSG = 'Charged successfully'
+        SUCCESS_MSG = 'Charged successfully'.freeze
 
         extend self
 
