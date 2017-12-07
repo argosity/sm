@@ -300,7 +300,6 @@ export default class SaleForm extends React.Component {
                     model={sale}
                 />
                 <Col xs={12}>
-                    <WarningNotification message={sale.errorMessage} />
                     <Box className="heading" flex>{this.heading}</Box>
                     <Box
                         pad={{ between: 'small' }}
@@ -353,6 +352,13 @@ export default class SaleForm extends React.Component {
                         <Field {...fieldProps} name="phone" xs={6} />
 
                         {this.renderCardFields()}
+
+                        <Col xs={12}>
+                            <WarningNotification
+                                flex margin="medium"
+                                message={sale.errorMessage}
+                            />
+                        </Col>
 
                         <Col xs={12}>
                             <Footer
