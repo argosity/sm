@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
     factory :payment, class: SM::Payment do
         card_type 'Visa'
         digits '22'

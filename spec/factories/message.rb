@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
     factory :message, class: SM::Message do
         tenant { Hippo::Tenant.current }
         code { Hippo::Strings.random(10) }

@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 
 describe SM::Show do
     it "can be instantiated" do
-        show = FactoryGirl.build :show
+        show = FactoryBot.build :show
 
         image = show.build_image
         image.file = Pathname.new(__FILE__).dirname.join('../../fixtures', 'stitt-spark-plug-logo.gif').open

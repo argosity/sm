@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
     factory :venue, class: SM::Venue do
         code { Hippo::Strings.random(10) }
         name { Faker::Name.name }

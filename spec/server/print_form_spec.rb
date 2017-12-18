@@ -2,10 +2,10 @@ require_relative './spec_helper'
 
 
 xdescribe "Printing templates" do
-    let(:presenter) { FactoryGirl.create :presenter }
-    let(:message) { FactoryGirl.create :message }
-    let(:show) { FactoryGirl.create :show, presenter: presenter, message: message }
-    let(:sale) { FactoryGirl.create :sale, show_time: show.times.first }
+    let(:presenter) { FactoryBot.create :presenter }
+    let(:message) { FactoryBot.create :message }
+    let(:show) { FactoryBot.create :show, presenter: presenter, message: message }
+    let(:sale) { FactoryBot.create :sale, show_time: show.times.first }
     let(:ticket) { Hippo::Templates::Latex.for_identifier('tickets') }
 
     def file(name)

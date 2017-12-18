@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 describe SM::Sale do
-    let (:show) { FactoryGirl.create :show, number_of_times: 1 }
+    let (:show) { FactoryBot.create :show, number_of_times: 1 }
 
     it "can be instantiated" do
         expect(show.times.length).not_to equal(0)

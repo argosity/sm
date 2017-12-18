@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
     factory :attendee, class: SM::Attendee do
         tenant { Hippo::Tenant.current }
         name { Faker::Name.name }

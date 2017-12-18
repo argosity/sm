@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
     factory :show_time, class: SM::ShowTime do
         tenant { Hippo::Tenant.current }
         association :show

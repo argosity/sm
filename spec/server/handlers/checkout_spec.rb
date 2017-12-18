@@ -8,8 +8,8 @@ require_relative '../spec_helper'
     # { record: :all }
     describe "#{paymentVendor} Sale", api: true, vcr: VCR_OPTS do
 
-        let (:venue) { FactoryGirl.create :venue }
-        let (:show) { FactoryGirl.create :show, venue: venue }
+        let (:venue) { FactoryBot.create :venue }
+        let (:show) { FactoryBot.create :show, venue: venue }
         let (:request_data) {
             {
                 name: "nathan",

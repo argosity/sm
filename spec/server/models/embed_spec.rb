@@ -3,11 +3,11 @@ require_relative '../spec_helper'
 describe SM::Embed do
 
     let(:shows) { 3.times.map{
-                        FactoryGirl.create :show,
+                        FactoryBot.create :show,
                         visible_during: (3.days.ago...3.days.from_now)
                     } }
     let(:embeds) {
-        3.times.map{ FactoryGirl.create(
+        3.times.map{ FactoryBot.create(
                          :embed,
                          tenants: (
                              (rand*3+1).to_i.times.map{ Faker::Color.color_name } +
@@ -27,7 +27,7 @@ describe SM::Embed do
     end
 
     it "a default is created along with tenant" do
-        tenant = FactoryGirl.create :tenant
+        tenant = FactoryBot.create :tenant
         expect(SM::Embed.where(tenant: tenant, name: 'My Shows').any?).to be(true)
     end
 

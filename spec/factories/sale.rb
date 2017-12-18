@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
     factory :sale, class: SM::Sale do
         tenant { Hippo::Tenant.current }
 

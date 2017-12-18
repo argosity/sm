@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
     factory :square_auth, class: SM::SquareAuth do
         tenant { Hippo::Tenant.current }
 

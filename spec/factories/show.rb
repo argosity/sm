@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
     factory :show, class: SM::Show do
         tenant {  Hippo::Tenant.current }
 
@@ -17,7 +17,7 @@ FactoryGirl.define do
         end
 
         after :create do |show, evaluator|
-            FactoryGirl.create_list :show_time, evaluator.number_of_times,
+            FactoryBot.create_list :show_time, evaluator.number_of_times,
                                     show: show, tenant: show.tenant
             show.reload
         end
