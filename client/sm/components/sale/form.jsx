@@ -263,6 +263,7 @@ export default class SaleForm extends React.Component {
             />,
             <CardField
                 key="cardNumber"
+                placeholder="•••• •••• •••• ••••"
                 {...fieldProps} ref={this.setFieldRef}
                 type="cardNumber" label="Card Number"
                 errorMessage="Invalid Card"
@@ -338,8 +339,8 @@ export default class SaleForm extends React.Component {
                         authorization={this.payment.token}
                         styles={{
                             base: {
-                                padding: '14px 0 14px 22px',
                                 color: '#3a3a3a',
+                                'line-height': '40px',
                                 'font-size': '16px',
                             },
                             focus: {
