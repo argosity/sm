@@ -8,6 +8,7 @@ Hippo.configure do | config |
     # lib/sh/extension.rb
     config.website_domain = 'showmaker.com'
     config.product_name = 'Show Maker'
+    config.support_email = 'support@showmaker.com'
 end
 
 token = Hippo.config.secrets.dig('rollbar', 'server')
