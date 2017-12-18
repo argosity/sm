@@ -19,8 +19,6 @@ PAYMENT_CONFIGS = {
         },
         'nonce' => 'fake-card-nonce-ok'
     }
-
-
 }
 
 module PaymentHelpers
@@ -33,7 +31,6 @@ module PaymentHelpers
         allow(vendorModule).to receive(:client_config_values) {
             PAYMENT_CONFIGS[vendor]['config'];
         }
-
         yield
     end
 
