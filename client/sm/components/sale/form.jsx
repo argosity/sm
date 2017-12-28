@@ -349,7 +349,7 @@ export default class SaleForm extends React.Component {
                         }}
                     >
                         <Field {...fieldProps} name="name" validate={nonBlank} />
-                        <Field {...fieldProps} name="email" validate={validEmail} />
+                        <Field {...fieldProps} type="email" name="email" validate={validEmail} />
                         <Field {...fieldProps} name="phone" xs={6} />
 
                         {this.renderCardFields()}
