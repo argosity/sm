@@ -150,3 +150,7 @@ SM::Show.observe(:save) do |show|
         Rollbar.error(e)
     end
 end
+
+Hippo::Cron.daily do
+    SM::SquareAuth.where('expires_at < ?', 3.days.from_now).each(&:renew)
+end
