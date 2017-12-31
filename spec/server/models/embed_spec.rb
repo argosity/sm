@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-describe SM::Embed do
+describe SM::Embed, api: true, vcr: VCR_OPTS do
 
     let(:shows) { 3.times.map{
                         FactoryBot.create :show,

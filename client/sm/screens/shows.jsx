@@ -39,7 +39,7 @@ export default class Shows extends React.Component {
         syncOptions: {
             with: {
                 with_details: true,
-                visible: true,
+                visible: false,
             },
         },
         fields: [
@@ -61,6 +61,19 @@ export default class Shows extends React.Component {
         minHeight: 40,
         defaultWidth: '100%',
     })
+
+    // for debugging
+    // componentDidMount() {
+    //     when(
+    //         () => this.query.rows.length,
+    //         () => {
+    //             this.query.results.modelForRow(0).fetch().then((s) => {
+    //                 this.onEditRow(1, s);
+    //                 this.displayIndex = 2;
+    //             });
+    //         },
+    //     );
+    // }
 
     @action.bound
     onEditComplete() {

@@ -44,7 +44,8 @@ module SM
                         client_config_values['location_id'], {
                             idempotency_key: sale.identifier,
                             line_items: [
-                                { quantity: sale.qty.to_s, catalog_object_id: item_config['id'] }
+                                { quantity: sale.qty.to_s,
+                                  catalog_object_id: item_config['id'] }
                             ]
                         }
                     )

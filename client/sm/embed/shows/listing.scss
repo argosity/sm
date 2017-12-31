@@ -225,17 +225,6 @@ $show-layer-padding: 48px 0;
 .show-purchase {
     .image img { max-height: 100%; }
 
-    .order-pane {
-        overflow-x: hidden;
-        overflow-y: auto;
-        padding: $show-layer-padding;
-         -webkit-overflow-scrolling: touch;
-        @include media-query(lap-and-up) {
-            max-width: 800px;
-            width: 80vw;
-        }
-    }
-
     .totals-line {
         margin-top: 0.5rem;
         h2 { margin: 0; }

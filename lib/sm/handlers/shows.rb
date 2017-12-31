@@ -10,7 +10,17 @@ module SM
         class Shows < Hippo::API::ControllerBase
 
             def show
-                std_api_reply(:retrieve, SM::Embed.json_for(params['id']))
+                if params['id']
+                    std_api_reply(:retrieve, SM::Embed.json_for(params['id']))
+                else
+                    show_id = params.dig('q', 'show_identifier')
+                    if show_id
+                        show = SM::Show.find_by_identifier!(show_id)
+                        std_api_reply(:retrieve, show.public_json)
+                    else
+                        std_api_reply(:retrieve, {}, success: false)
+                    end
+                end
             end
 
 

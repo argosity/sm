@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { action, observable } from 'mobx';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import Box from 'grommet/components/Box';
-import Layer from 'grommet/components/Layer';
 import Button from 'grommet/components/Button';
-import RevertIcon from 'grommet/components/icons/base/Revert';
-import SaveIcon from 'grommet/components/icons/base/Save';
-
+import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import TextEditor from 'hippo/components/text-editor';
+import PreviousIcon from 'grommet/components/icons/base/Previous';
 
 import Show from '../../models/show';
 import './page-editor.scss';
@@ -19,45 +17,49 @@ import './page-editor.scss';
 class PageEditor extends React.Component {
 
     static propTypes = {
-        show:      PropTypes.instanceOf(Show).isRequired,
+        show: PropTypes.instanceOf(Show).isRequired,
         onComplete: PropTypes.func.isRequired,
     }
 
-    @observable content;
-
-    @action.bound onChange(content) {
-        this.content = content;
+    @action.bound setEditorRef(e) {
+        this.editor = e;
+        this.editor.contents = this.props.show.page;
     }
 
     @action.bound onSave() {
-        this.props.show.set({ page: this.content });
-        this.props.show.save().then(this.props.onComplete);
+        this.props.show.page = this.editor.contents;
+        this.props.show.save();
+        this.props.onComplete();
+    }
+
+    @action.bound onCancel() {
+        this.props.onComplete();
     }
 
     render() {
-        const { props: { show, onComplete } } = this;
+        const { props: { show } } = this;
         return (
-            <Layer onClose={onComplete} className="shows-edit-page">
+            <div className="shows-edit-page">
+                <Toolbar justify="between">
+                    <Button
+                        icon={<PreviousIcon />}
+                        label="Cancel" onClick={this.onCancel} accent
+                    />
+                    <SaveButton onClick={this.onSave} model={this.props.show} />
+                </Toolbar>
                 <NetworkActivityOverlay model={show} />
                 <Box
-                    full="horizontal"
+                    flex
                     size="full"
                     basis="xxlarge"
+                    full="horizontal"
                 >
                     <TextEditor
-                        defaultContent={show.page}
+                        onReady={this.setEditorRef}
                         assets={show.page_images}
-                        onChange={this.onChange}
-                    >
-                        <Button
-                            style={{ order: -2 }}
-                            plain icon={<RevertIcon />} label="Cancel" onClick={onComplete}
-                        />
-                        <span style={{ order: -1, flex: 1 }} />
-                        <Button plain icon={<SaveIcon />} label="Save" onClick={this.onSave} />
-                    </TextEditor>
+                    />
                 </Box>
-            </Layer>
+            </div>
         );
     }
 

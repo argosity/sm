@@ -113,7 +113,6 @@ class EditForm extends React.Component {
             <div className="show-edit">
                 <Toolbar>
                     <SaveButton onClick={this.onSave} model={this.props.show} />
-
                     <Button label="Cancel" onClick={this.onCancel} accent />
                     <Box flex />
                     <Button

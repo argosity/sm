@@ -52,7 +52,11 @@ const config = {
                 use: [ 'style-loader',  'css-loader' ]
             },
             {
-                test: /\.(jpg|png|svg)$/,
+                test: /\.svg$/,
+                use: [ 'raw-loader' ]
+            },
+            {
+                test: /\.(jpg|png)$/,
                 loader: 'url-loader',
                 options: {
                     limit: 25000,

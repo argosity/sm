@@ -10,6 +10,7 @@ export default function PurchaseButton({ show, onClick, label = 'Purchase' }) {
             icon={<CreditCardIcon />}
             label={label}
             onClick={onClick}
+            primary
         />
     );
 }

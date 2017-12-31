@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { computed, action } from 'mobx';
-import Box from 'grommet/components/Box';
-import Footer from 'grommet/components/Footer';
+import { observer } from 'mobx-react';
+import { action } from 'mobx';
 import PageRenderer from 'hippo/components/text-editor/renderer';
-import Layer from '../layer-wrapper';
+import Header from 'grommet/components/Header';
+import Button from 'grommet/components/Button';
+
+import PreviousIcon from 'grommet/components/icons/base/Previous';
+import ShowModel from '../../models/show';
 import PurchaseButton from './purchase-button';
 
 @observer
@@ -14,8 +16,7 @@ export default class Information extends React.Component {
     static propTypes = {
         onCancel: PropTypes.func.isRequired,
         onPurchase: PropTypes.func.isRequired,
-        identifier: PropTypes.string.isRequired,
-        shows: MobxPropTypes.observableArray,
+        show: PropTypes.instanceOf(ShowModel).isRequired,
     }
 
     @action.bound
@@ -23,39 +24,26 @@ export default class Information extends React.Component {
         this.props.onPurchase(this.props.show);
     }
 
-    @computed get show() {
-        return this.props.shows.find(s => s.identifier === this.props.identifier);
-    }
-
     render() {
-        const { show } = this;
+        const { show } = this.props;
         if (!show) { return null; }
 
         return (
-            <Layer
-                closer
-                className="show-information"
-                onClose={this.props.onCancel}
-            >
-                <Box
-                    className="contents"
-                    separator='horizontal'
-                >
-                    <PageRenderer className="body" content={show.page} />
-                    <Footer
-                        margin="small"
-                        justify="end"
-                        pad={{ horizontal: 'small', between: 'small' }}
-                    >
-                        <PurchaseButton
-                            label="Purchase"
-                            primary
-                            show={show}
-                            onClick={this.onPurchase}
-                        />
-                    </Footer>
-                </Box>
-            </Layer>
+            <div className="show-information">
+                <Header justify="between">
+                    <Button
+                        icon={<PreviousIcon />}
+                        label="Listing"
+                        onClick={this.props.onCancel}
+                    />
+                    <PurchaseButton
+                        show={show}
+                        label="Purchase"
+                        onClick={this.onPurchase}
+                    />
+                </Header>
+                <PageRenderer className="body" content={show.page} />
+            </div>
         );
     }
 

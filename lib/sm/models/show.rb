@@ -15,7 +15,8 @@ module SM
                  foreign_type: :owner_type,
                  dependent: :destroy
 
-        has_many :times, class_name: 'SM::ShowTime', autosave: true,
+        has_many :times, -> { order('occurs_at') },
+                 class_name: 'SM::ShowTime', autosave: true,
                  dependent: :destroy, export: { writable: true }
 
         before_validation :set_defaults
@@ -29,6 +30,22 @@ module SM
         scope :visible, lambda {|val|
             where('visible_during @> now()::timestamp') if val == 'true'
         }, export: true
+
+        def public_json
+            json = as_json(only: %w{identifier title sub_title description external_url can_purchase page visible_during price capacity online_sales_halt_mins_before}).merge(
+                'times' => times.map { | st | st.as_json(only: %w{identifier occurs_at price capacity}) })
+            json['first_show_time'] = times.first.occurs_at if times.any?
+            json['image'] = image.file_data if image
+            if presenter.present?
+                json['presenter'] = { 'name' => presenter.name }
+                json['presenter']['logo'] = presenter.logo.file_data if presenter.logo?
+            end
+            if venue.present?
+                json['venue'] = venue.as_json(only: %w{ name address phone_number})
+                json['venue']['logo'] = venue.logo.file_data if venue.logo
+            end
+            json
+        end
 
         protected
 

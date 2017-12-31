@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/dshtky2jcjpr96z3/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <company>My Place Is Awesome</company>
+          <email>test@test.com</email>
+          <phone nil="true"/>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.80.1
+      X-Apiversion:
+      - '4'
+      Authorization:
+      - Basic aG03bjZ2Yzg0amJyOTYydzo0MTNjYjNjOGFmMjliM2MzYmEzNDBjZmI3MTVmNDUzMg==
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Sun, 31 Dec 2017 04:31:09 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 4y6kf87m57f2bcq7
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"6ee30df10b24537903e4c8134d2b755f"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.195537'
+      X-Request-Id:
+      - 02-1514694669.183-65.41.198.165-8964465
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAA1oSFoAA5SRP0/DMBDF934Ky7ubfxSayklhQWJAYigL29W+UpfEiewLbfj0OG0JSIWBxdJ7v3vnJ51cHuqKvaPzprEFT6YxZ2hVo419Lfjz6l7M+bKcSNV5amp05YQxaXQ5T2dxNovzXEZBDWaAaguWRNDab+mtT3dq17r8+iOT0U86TG+M8yQs1MisqQpOrkMeHVEFfxHV1C3Yvnzs2VMFCtmDZ3d79KGYjL7gMIg1mKok9HQ7PNPAZHQyB9xuG3u5fQOHC2+Pa2/olyYOgVALIEZ9iwXXQZKpkZdpnNyIJBVZsoqvFlmyiPOX0G4MHPNdq/+X/w6c/j+eQ2wMVtqPlbQhocBpf14KzkF/bgxaO/QeL1joNt72EwAA//8DAFvpJkAOAgAA
+    http_version: 
+  recorded_at: Sun, 31 Dec 2017 04:31:09 GMT
+recorded_with: VCR 3.0.3

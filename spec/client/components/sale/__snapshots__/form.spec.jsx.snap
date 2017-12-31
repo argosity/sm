@@ -4,6 +4,7 @@ exports[`Payment Form matches snapshot 1`] = `
 <SaleForm
   heading=""
   onComplete={[Function]}
+  online={false}
   sale={
     Sale {
       "created_at": undefined,
@@ -35,7 +36,7 @@ exports[`Payment Form matches snapshot 1`] = `
         "lastServerMessage": "",
         "message_id": undefined,
         "online_sales_halt_mins_before": undefined,
-        "page": Object {},
+        "page": "",
         "page_images": Array [],
         "presenter": undefined,
         "presenter_id": undefined,
@@ -96,7 +97,7 @@ exports[`Payment Form matches snapshot 1`] = `
           "lastServerMessage": "",
           "message_id": undefined,
           "online_sales_halt_mins_before": undefined,
-          "page": Object {},
+          "page": "",
           "page_images": Array [],
           "presenter": undefined,
           "presenter_id": undefined,

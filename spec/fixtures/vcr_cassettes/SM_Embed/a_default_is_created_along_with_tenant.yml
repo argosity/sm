@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/dshtky2jcjpr96z3/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <company>Hane Group</company>
+          <email>johnnie@cummerata.org</email>
+          <phone>878-088-9862 x3508</phone>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.80.1
+      X-Apiversion:
+      - '4'
+      Authorization:
+      - Basic aG03bjZ2Yzg0amJyOTYydzo0MTNjYjNjOGFmMjliM2MzYmEzNDBjZmI3MTVmNDUzMg==
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Sun, 31 Dec 2017 04:27:53 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 4y6kf87m57f2bcq7
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"875e28ca644501616e8a336ed359af7f"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.320907'
+      X-Request-Id:
+      - 02-1514694473.478-65.41.198.165-21456401
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAElnSFoAA5SRT1PCMBDF73yKTO6h/4AGJi2e1A+AF29rs9Bgm3SSVKmf3rQgOoMePL797dv3ZlZsT21D3tA6ZXRBk3lMCerKSKUPBX3a3TNOt+VMVL3zpkVbzggRSpY8XSTxMs4TEQU1DgOsatCeBS1d7V+H9FgdO7tefWQi+knH7b2yzjMNLRKtmoJ62yONJtTAX6QybQd6KB9BI3mwpu9E9DUbObagmvJoaq0V3lV9G1LBw9zYg4jOcFzraqOx5DlnMedszVcpOWXLmIvoTKZ+cLqJf8cXp/wvtSyCR8nAEz90WFAZpFct0jKNk5wlKcuSXbzYpPlmmT2HzlfD5O87+T//t+GcP/2G7RU20l0rSeVZBVa6y1GwFoZLY5DSonN4w0K366M/AQAA//8DAKbjC8YbAgAA
+    http_version: 
+  recorded_at: Sun, 31 Dec 2017 04:27:53 GMT
+recorded_with: VCR 3.0.3

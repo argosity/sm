@@ -10,8 +10,6 @@ import Button       from 'grommet/components/Button';
 import Paragraph    from 'grommet/components/Paragraph';
 
 import Sale from '../../models/sale';
-import Layer from '../layer-wrapper';
-
 
 @observer
 export default class Receipt extends React.Component {
@@ -53,11 +51,7 @@ export default class Receipt extends React.Component {
         const { identifier } = this.props;
 
         return (
-            <Layer
-                closer
-                className="show-receipt"
-                onClose={this.props.onCancel}
-            >
+            <div className="show-receipt">
                 <Box
                     className="contents"
                     separator='horizontal'
@@ -92,7 +86,7 @@ export default class Receipt extends React.Component {
                         onClick={this.props.onCancel}
                     />
                 </Box>
-            </Layer>
+            </div>
         );
     }
 

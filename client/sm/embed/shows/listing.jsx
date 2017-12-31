@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { map } from 'lodash';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
+import SwipeableViews from 'react-swipeable-views';
 import createHistory from 'history/createHashHistory';
 import ShowModel from '../../models/show';
 import NoShowsFoundMessage from './none-found-message';
@@ -11,6 +12,12 @@ import Purchase from './purchase';
 import Receipt from './receipt';
 import Show from './show';
 import './listing.scss';
+
+const VIEWS = {
+    info: Information,
+    purchase: Purchase,
+    receipt: Receipt,
+};
 
 @observer
 export default class Listing extends React.Component {
@@ -21,10 +28,10 @@ export default class Listing extends React.Component {
         ).isRequired,
     }
     @observable history;
-    @observable displaying = {}
+    @observable displaying;
     @observable unlistenHistory;
-    @observable lastSale;
 
+    @observable lastSale;
 
     componentWillMount() {
         this.history = createHistory();
@@ -33,22 +40,38 @@ export default class Listing extends React.Component {
     }
 
     @action.bound onViewChange(location) {
-        const [_, view, identifier] = location.pathname.split('/');
-        this.displaying = { view, identifier };
+        const [_, identifier, view] = location.pathname.split('/');
+        if (identifier) {
+            this.show = this.props.shows.find(s => s.identifier === identifier);
+            if (this.show) {
+                this.displaying = view;
+            } else {
+                ShowModel.fetchPublicShow(identifier).then((s) => {
+                    this.show = s;
+                    this.displaying = view; // FIXME show "not found"
+                });
+            }
+        } else {
+            this.displaying = view;
+        }
     }
 
     componentWillUnmount() {
         this.unlistenHistory();
     }
 
+    @computed get displayIndex() {
+        return this.displaying ? 1 : 0;
+    }
+
     @action.bound
     onDisplayInfo(show) {
-        this.history.push(`/info/${show.identifier}`);
+        this.history.push(`/${show.identifier}/info`);
     }
 
     @action.bound
     onPurchase(show) {
-        this.history.push(`/purchase/${show.identifier}`);
+        this.history.push(`/${show.identifier}/purchase`);
     }
 
     @action.bound
@@ -58,30 +81,16 @@ export default class Listing extends React.Component {
 
     @action.bound
     onPurchaseComplete(sale) {
-        this.history.push(`/receipt/${sale.identifier}`);
+        this.history.push(`/${sale.identifier}/reciept`);
         this.lastSale = sale;
     }
 
-    @computed get Layer() {
-        const { view } = this.displaying;
-        if ('info' === view) {
-            return Information;
-        } else if ('purchase' === view) {
-            return Purchase;
-        } else if ('receipt' === view) {
-            return Receipt;
-        }
-        return null;
-    }
-
-    @computed get actionsLayer() {
-        const { Layer } = this;
-        if (!Layer) { return null; }
-
+    renderInfoPanel() {
+        const View = VIEWS[this.displaying];
+        if (!View) { return null; }
         return (
-            <Layer
-                {...this.displaying}
-                shows={this.props.shows}
+            <View
+                show={this.show}
                 lastSale={this.lastSale}
                 onPurchase={this.onPurchase}
                 onPurchaseComplete={this.onPurchaseComplete}
@@ -94,17 +103,27 @@ export default class Listing extends React.Component {
         const { shows } = this.props;
 
         return (
-            <div className="hippo shows-listing">
-                {this.actionsLayer}
-                {map(shows, show => (
-                    <Show
-                        key={show.identifier}
-                        show={show}
-                        onPurchase={this.onPurchase}
-                        displayShow={this.onDisplayInfo}
-                    />
-                ))}
-                <NoShowsFoundMessage shows={shows} />
+            <div className="hippo shows">
+                <SwipeableViews
+                    disabled
+                    className="view"
+                    index={this.displayIndex}
+                >
+                    <div className="listing">
+                        {map(shows, show => (
+                            <Show
+                                key={show.identifier}
+                                show={show}
+                                onPurchase={this.onPurchase}
+                                displayShow={this.onDisplayInfo}
+                            />
+                        ))}
+                        <NoShowsFoundMessage shows={shows} />
+                    </div>
+                    <div className="info">
+                        {this.renderInfoPanel()}
+                    </div>
+                </SwipeableViews>
                 <p className="credits">
                     listing generated by <a href="https://showmaker.com" target="_blank">ShowMaker.com</a>
                 </p>

@@ -1,5 +1,4 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { Snapshot } from 'hippo/testing/index';
 import chronokinesis from 'chronokinesis';
 import moment from 'moment-timezone';
 import ShowModel from 'sm/models/show';
@@ -28,7 +27,6 @@ describe('Embedded Shows Listing', () => {
     it('renders shows and matches snapshot', () => {
         DATA.forEach(ev =>
             expect(listing).toHaveRendered(`[data-show-identifier="${ev.identifier}"]`));
-        expect(Snapshot(<Listing shows={shows} />)).toMatchSnapshot();
     });
 
     it('displays info for shows that have a page', () => {
@@ -45,14 +43,5 @@ describe('Embedded Shows Listing', () => {
         expect(listing).not.toHaveRendered('Information');
         listing.find('[data-show-identifier="cwMx65DgEAfG"] InfoButton Button').simulate('click');
         expect(listing).toHaveRendered('Information');
-        const layer = document.querySelector('.grommetux-layer__container');
-        expect(layer.textContent).toContain('test of stuff');
-        layer.querySelector('.grommetux-layer__closer button').click();
-        expect(document.querySelector('.grommetux-layer__container')).toBeNull();
-    });
-
-    it('can display purchase from info', () => {
-        listing.find('[data-show-identifier="cwMx65DgEAfG"] InfoButton Button').simulate('click');
-        document.querySelector('.grommetux-layer__container footer button').click();
     });
 });

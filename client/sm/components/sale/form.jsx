@@ -39,6 +39,7 @@ export default class SaleForm extends React.Component {
         sale: PropTypes.instanceOf(Sale).isRequired,
         onComplete: PropTypes.func.isRequired,
         controls: PropTypes.node,
+        online: PropTypes.bool,
         heading: PropTypes.oneOfType([
             PropTypes.string, PropTypes.node,
         ]),
@@ -46,6 +47,7 @@ export default class SaleForm extends React.Component {
 
     static defaultProps = {
         heading:  '',
+        online: false,
     }
 
     @observable formState = new FormState()
@@ -205,11 +207,15 @@ export default class SaleForm extends React.Component {
         });
     }
 
-    renderTimes() {
-        const { show, props: { sale } } = this;
+    @computed get showTimes() {
+        return this.props.online ? this.show.onlinePurchasableTimes : this.show.times;
+    }
 
-        if (1 === show.times.length) {
-            return <h3>{show.times[0].formattedOccursAt}</h3>;
+    renderTimes() {
+        const { showTimes, props: { sale } } = this;
+
+        if (1 === showTimes.length) {
+            return <h3>{showTimes[0].formattedOccursAt}</h3>;
         }
         return (
             <FormField label='Show'>
@@ -369,8 +375,9 @@ export default class SaleForm extends React.Component {
                             >
                                 {this.props.controls}
                                 <Button
-                                    icon={isSaving ? <Spinning /> : <CreditCardIcon />}
+                                    primary
                                     label={this.saveButtonLabel}
+                                    icon={isSaving ? <Spinning /> : <CreditCardIcon />}
                                     onClick={isSaving ? null : this.onSaleClick}
                                 />
                             </Footer>

@@ -14,30 +14,37 @@ const formatTime = occurs => moment(occurs.occurs_at).format('h:mma');
 @identifiedBy('sm/show')
 export default class Show extends BaseModel {
 
+    static get embedURL() {
+        return `${Config.api_path}/sm/embed/shows`;
+    }
     static fetchEmbedded(embedId) {
         return this.Collection
             .create()
-            .fetch({ url: `${Config.api_path}/sm/embed/shows/${embedId}` });
+            .fetch({ url: `${this.embedURL}/${embedId}` });
+    }
+
+    static fetchPublicShow(id) {
+        const show = new Show({ idenfier: id });
+        return show.fetch({
+            url: this.embedURL,
+            query: { show_identifier: id },
+        });
     }
 
     @identifier id;
-
     @field identifier = '';
-
     @field title = '';
     @field sub_title = '';
     @field description = '';
-
     @field venue_id;
     @field message_id;
     @field ticket_instructions;
     @field presenter_id;
-
     @field price;
     @field capacity;
     @field external_url;
     @field can_purchase = false;
-    @field({ type: 'object' }) page;
+    @field page = '';
     @field online_sales_halt_mins_before;
     @field({ model: DateRange }) visible_during = new DateRange({
         start: moment().startOf('day').toDate(),
