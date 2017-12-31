@@ -8,14 +8,8 @@
         "lodash"
     ],
     "presets": [
-        ["es2015", {"modules": false}],
+        "es2016",
         "react",
-        "stage-1",
-        ["env", {
-            "targets": {
-                "browsers": ["> 1%"]
-            },
-            "debug": false
-        }]
+        "stage-1"
     ]
 }

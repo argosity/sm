@@ -1,7 +1,7 @@
 const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require('webpack');
 const path = require('path');
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const entries = {
     app: [
@@ -19,16 +19,16 @@ const entries = {
 };
 <%
 def dev_public_path
-  protocol = Hippo::Webpack.using_ssl? ? 'https' : 'http'
-  host = ENV['HOST'] || 'dev.argosity.com'
-  "#{protocol}://#{host}:8889/assets/"
+protocol = Hippo::Webpack.using_ssl? ? 'https' : 'http'
+host = ENV['HOST'] || 'dev.argosity.com'
+"#{protocol}://#{host}:8889/assets/"
 end
 %>
 
 <% unless Hippo.env.production? -%>
 for (var key in entries) {
-        entries[key].unshift('react-hot-loader/patch');
-    }
+    entries[key].unshift('react-hot-loader/patch');
+}
 <% end -%>
 
 const config = {
@@ -36,7 +36,7 @@ const config = {
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
         publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : dev_public_path  %>',
-        filename: '[name]-[hash].js',
+            filename: '[name]-[hash].js',
     },
     resolve: {
         modules: [
@@ -65,7 +65,8 @@ const config = {
             {
                 loader: 'babel-loader',
                 test: /\.jsx?$/,
-                exclude: /node_modules/,
+                //                exclude: /node_modules/,
+                exclude: /node_modules\/(?!(\@ckeditor|OTHER)\/).*/,
                 options: {
                     plugins: [
                         'react-hot-loader/babel',
@@ -77,7 +78,7 @@ const config = {
                         'babel-plugin-transform-runtime',
                     ].map(require.resolve),
                     presets: [
-                        [require.resolve('babel-preset-es2015'), { modules: false }],
+                        require.resolve('babel-preset-es2016'),
                         require.resolve('babel-preset-react'),
                         require.resolve('babel-preset-stage-1'),
                     ],
@@ -106,7 +107,13 @@ const config = {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
         }),
 <% if Hippo.env.production? %>
-        new webpack.optimize.UglifyJsPlugin(), //minify everything
+        new UglifyJsPlugin({
+            extractComments: true,
+            parallel: 4,
+            uglifyOptions: {
+                ecma: 8,
+            }
+        }),
         new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
         new webpack.optimize.OccurrenceOrderPlugin(), // use smallest id for most used chuncks
         new CompressionPlugin({
