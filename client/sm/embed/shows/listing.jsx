@@ -19,6 +19,8 @@ const VIEWS = {
     receipt: Receipt,
 };
 
+const isShowIdentifier = (view, identifier) => identifier && view !== 'receipt';
+
 @observer
 export default class Listing extends React.Component {
 
@@ -30,7 +32,7 @@ export default class Listing extends React.Component {
     @observable history;
     @observable displaying;
     @observable unlistenHistory;
-
+    @observable identifier;
     @observable lastSale;
 
     componentWillMount() {
@@ -41,7 +43,8 @@ export default class Listing extends React.Component {
 
     @action.bound onViewChange(location) {
         const [_, identifier, view] = location.pathname.split('/');
-        if (identifier) {
+        this.identifier = identifier;
+        if (isShowIdentifier(view, identifier)) {
             this.show = this.props.shows.find(s => s.identifier === identifier);
             if (this.show) {
                 this.displaying = view;
@@ -81,16 +84,18 @@ export default class Listing extends React.Component {
 
     @action.bound
     onPurchaseComplete(sale) {
-        this.history.push(`/${sale.identifier}/reciept`);
+        this.history.push(`/${sale.identifier}/receipt`);
         this.lastSale = sale;
     }
 
     renderInfoPanel() {
         const View = VIEWS[this.displaying];
+
         if (!View) { return null; }
         return (
             <View
                 show={this.show}
+                identifier={this.identifier}
                 lastSale={this.lastSale}
                 onPurchase={this.onPurchase}
                 onPurchaseComplete={this.onPurchaseComplete}
