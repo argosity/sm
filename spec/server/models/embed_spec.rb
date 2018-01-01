@@ -27,8 +27,10 @@ describe SM::Embed, api: true, vcr: VCR_OPTS do
     end
 
     it "a default is created along with tenant" do
-        tenant = FactoryBot.create :tenant
-        expect(SM::Embed.where(tenant: tenant, name: 'My Shows').any?).to be(true)
+        with_bt_payment_proccessor do
+            tenant = FactoryBot.create :tenant
+            expect(SM::Embed.where(tenant: tenant, name: 'My Shows').any?).to be(true)
+        end
     end
 
     it "can query shows" do

@@ -3,6 +3,12 @@ require 'sm/models/embed'
 
 describe "Tenant signup", api: true, vcr: VCR_OPTS do
 
+    around(:each) { |ex|
+        RSpec::Mocks.with_temporary_scope do
+            with_bt_payment_proccessor { ex.run }
+        end
+    }
+
     it "displays an error message for tenant" do
         expect {
             post '/signup', { name: 'Bob', company: 'My CO', password: 'test' }
