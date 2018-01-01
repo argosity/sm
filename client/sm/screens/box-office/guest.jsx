@@ -5,7 +5,7 @@ import { sumBy } from 'lodash';
 import cn from 'classnames';
 import moment from 'moment';
 import Button from 'grommet/components/Button';
-import { Done, Mail, Ticket, Trash, Ticket } from 'grommet-icons';
+import { Mail, Ticket } from 'grommet-icons';
 import MobileApp from '../../lib/mobile-app-support';
 import Sale from '../../models/sale';
 import UX from './ux';

@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 2cd4203ef62a8948db381f7f9621e8128fae8d15
-  branch: master
+  revision: 418563d5a3b0208b80f08e75d0149a13348f23eb
+  branch: grommet-next
   specs:
     hippo-fw (0.9.9)
       activejob (~> 5.1.0)
@@ -173,7 +173,7 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
-    grpc (1.8.0)
+    grpc (1.8.0-universal-darwin)
       google-protobuf (~> 3.1)
       googleapis-common-protos-types (~> 1.0.0)
       googleauth (>= 0.5.1, < 0.7)
