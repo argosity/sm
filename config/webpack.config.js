@@ -101,15 +101,17 @@ const config = {
             },
         ],
     },
-    devtool: 'source-map',
+    devtool: '<%= Hippo.env.production? ? 'source-map' : 'eval-source-map' %>',
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+            'process.env.NODE_ENV': '"<%= Hippo.env.to_s %>"',
         }),
 <% if Hippo.env.production? %>
         new UglifyJsPlugin({
             extractComments: true,
             parallel: 4,
+            sourceMap: true,
+            cache: true,
             uglifyOptions: {
                 ecma: 8,
             }
