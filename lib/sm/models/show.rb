@@ -31,20 +31,12 @@ module SM
             where('visible_during @> now()::timestamp') if val == 'true'
         }, export: true
 
-        def public_json
-            json = as_json(only: %w{identifier title sub_title description external_url can_purchase page visible_during price capacity online_sales_halt_mins_before}).merge(
-                'times' => times.map { | st | st.as_json(only: %w{identifier occurs_at price capacity}) })
-            json['first_show_time'] = times.first.occurs_at if times.any?
-            json['image'] = image.file_data if image
-            if presenter.present?
-                json['presenter'] = { 'name' => presenter.name }
-                json['presenter']['logo'] = presenter.logo.file_data if presenter.logo?
-            end
-            if venue.present?
-                json['venue'] = venue.as_json(only: %w{ name address phone_number})
-                json['venue']['logo'] = venue.logo.file_data if venue.logo
-            end
-            json
+        def self.json_for(show_identifier)
+            res = connection.select_all(
+                "select * from public_shows where identifier = #{connection.quote(show_identifier)} limit 1"
+            )
+            raise ActiveRecord::RecordNotFound unless res.one?
+            Hash[res.first.map { |k, v| [k, res.column_types[k].deserialize(v)] }]
         end
 
         protected

@@ -15,10 +15,9 @@ module SM
                 else
                     show_id = params.dig('q', 'show_identifier')
                     if show_id
-                        show = SM::Show.find_by_identifier!(show_id)
-                        std_api_reply(:retrieve, show.public_json)
+                        std_api_reply(:retrieve, Show.json_for(show_id))
                     else
-                        std_api_reply(:retrieve, {}, success: false)
+                        raise ActiveRecord::RecordNotFound
                     end
                 end
             end
