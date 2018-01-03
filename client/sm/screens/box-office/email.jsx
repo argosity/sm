@@ -1,11 +1,11 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
+import { Send }    from 'grommet-icons';
 import PropTypes   from 'prop-types';
 import Layer       from 'grommet/components/Layer';
 import TextInput   from 'grommet/components/TextInput';
 import Button      from 'grommet/components/Button';
-import SendIcon    from 'grommet/components/icons/base/Send';
 import Footer      from 'grommet/components/Footer';
 import Box         from 'grommet/components/Box';
 import Spinning    from 'grommet/components/icons/Spinning';
@@ -40,7 +40,7 @@ export default class Email extends React.Component {
                     justify="end"
                 >
                     <Button
-                        icon={<SendIcon />}
+                        icon={<Send />}
                         label='Send'
                         onClick={this.props.onComplete}
                     />

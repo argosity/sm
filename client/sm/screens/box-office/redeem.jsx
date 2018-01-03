@@ -7,7 +7,7 @@ import PropTypes   from 'prop-types';
 import Layer       from 'grommet/components/Layer';
 import NumberInput from 'grommet/components/NumberInput';
 import Button      from 'grommet/components/Button';
-import SaveIcon    from 'grommet/components/icons/base/Save';
+import { Save }    from 'grommet-icons';
 import Footer      from 'grommet/components/Footer';
 import Box         from 'grommet/components/Box';
 import Spinning    from 'grommet/components/icons/Spinning';
@@ -47,7 +47,7 @@ export default class Redeem extends React.Component {
                     justify="end"
                 >
                     <Button
-                        icon={<SaveIcon />}
+                        icon={<Save />}
                         label='Save'
                         onClick={this.onSaveClick}
                     />

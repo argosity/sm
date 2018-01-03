@@ -6,7 +6,7 @@ import PageRenderer from 'hippo/components/text-editor/renderer';
 import Header from 'grommet/components/Header';
 import Button from 'grommet/components/Button';
 
-import PreviousIcon from 'grommet/components/icons/base/Previous';
+import { Previous } from 'grommet-icons';
 import ShowModel from '../../models/show';
 import PurchaseButton from './purchase-button';
 
@@ -32,7 +32,7 @@ export default class Information extends React.Component {
             <div className="show-information">
                 <Header justify="between">
                     <Button
-                        icon={<PreviousIcon />}
+                        icon={<Previous />}
                         label="Listing"
                         onClick={this.props.onCancel}
                     />
