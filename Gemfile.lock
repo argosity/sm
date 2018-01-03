@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 0e8e20ccaf7bafc730a5f21412c2f18e69098748
+  revision: 7760fe98287cf6ed4d89d634515b306780ff0c1b
   branch: grommet-next
   specs:
     hippo-fw (0.9.9)

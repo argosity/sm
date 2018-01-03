@@ -8,7 +8,7 @@ import TextInput   from 'grommet/components/TextInput';
 import Button      from 'grommet/components/Button';
 import Footer      from 'grommet/components/Footer';
 import Box         from 'grommet/components/Box';
-import Spinning    from 'grommet/components/icons/Spinning';
+import Spinning    from 'hippo/components/icon/spinning';
 import Sale        from '../../models/sale';
 
 @observer

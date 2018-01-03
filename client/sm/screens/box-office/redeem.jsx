@@ -5,12 +5,12 @@ import { observer } from 'mobx-react';
 import WarningNotification from 'hippo/components/warning-notification';
 import PropTypes   from 'prop-types';
 import Layer       from 'grommet/components/Layer';
-import NumberInput from 'grommet/components/NumberInput';
+import Input from 'grommet/components/Input';
 import Button      from 'grommet/components/Button';
 import { Save }    from 'grommet-icons';
 import Footer      from 'grommet/components/Footer';
 import Box         from 'grommet/components/Box';
-import Spinning    from 'grommet/components/icons/Spinning';
+import Spinning    from 'hippo/components/icon/spinning';
 import Redemption  from '../../models/redemption';
 
 @observer
@@ -36,7 +36,8 @@ export default class Redeem extends React.Component {
         const { redemption } = this.props;
         return (
             <Box pad="medium">
-                <NumberInput
+                <Input
+                    type="number"
                     min={1}
                     onChange={this.onQtyChange}
                     max={redemption.maxQty}

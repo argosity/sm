@@ -8,7 +8,7 @@ import Button      from 'grommet/components/Button';
 import CheckBox    from 'grommet/components/CheckBox';
 import { Money }   from 'grommet-icons';
 import Box         from 'grommet/components/Box';
-import Spinning    from 'grommet/components/icons/Spinning';
+import Spinning    from 'hippo/components/icon/spinning';
 import Sale        from '../../models/sale';
 
 @observer

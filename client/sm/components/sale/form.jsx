@@ -8,13 +8,13 @@ import { observer } from 'mobx-react';
 import PaymentFields from 'payment-fields';
 import { Col } from 'react-flexbox-grid';
 import Box from 'grommet/components/Box';
-import Value from 'grommet/components/Value';
+import Value from 'hippo/components/value';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 import { CreditCard } from 'grommet-icons';
 import FormField from 'grommet/components/FormField';
 import Select    from 'grommet/components/Select';
-import Spinning from 'grommet/components/icons/Spinning';
+import Spinning from 'hippo/components/icon/spinning';
 import {
     FormState, Form, Field, nonBlank, numberValue, validEmail,
 } from 'hippo/components/form';
