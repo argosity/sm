@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: bda9c57fac0dc3e749ed0b38e9e20fe18af8a53e
+  revision: 2cd4203ef62a8948db381f7f9621e8128fae8d15
   branch: master
   specs:
     hippo-fw (0.9.9)
@@ -198,7 +198,7 @@ GEM
       image_size (~> 1.5)
       in_threads (~> 1.3)
       progress (~> 3.0, >= 3.0.1)
-    image_optim_pack (0.5.0.20171208)
+    image_optim_pack (0.5.0.20180103)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
     image_processing (0.4.5)
@@ -318,7 +318,7 @@ GEM
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
       rspec-mocks (~> 3.7.0)
-    rspec-core (3.7.0)
+    rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -383,7 +383,7 @@ GEM
     vcr (3.0.3)
     vegas (0.1.11)
       rack (>= 1.0.0)
-    webmock (3.1.1)
+    webmock (3.2.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
