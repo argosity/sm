@@ -10,7 +10,9 @@ gem "hippo-fw", git: "https://github.com/argosity/hippo", branch: 'master'
 # gem 'shrine-memory'
 # gem "hippo-fw", '0.9.7'
 
-gem 'axlsx', '~> 2.1.0.pre'
+gem 'axlsx',
+    git: 'https://github.com/randym/axlsx.git',
+    ref: 'c8ac844572b25fda358cc01d2104720c4c42f450'
 gem 'oauth2', '~> 1.4.0'
 gem 'square_connect', '~> 2.3.1'
 gem 'dotenv', '~> 2.2.1'
