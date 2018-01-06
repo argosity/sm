@@ -5,10 +5,9 @@ import { observer } from 'mobx-react';
 import WarningNotification from 'hippo/components/warning-notification';
 import PropTypes   from 'prop-types';
 import Layer       from 'grommet/components/Layer';
-import Input from 'grommet/components/Input';
+import Input from 'grommet/components/TextInput';
 import Button      from 'grommet/components/Button';
 import { Save }    from 'grommet-icons';
-import Footer      from 'grommet/components/Footer';
 import Box         from 'grommet/components/Box';
 import Spinning    from 'hippo/components/icon/spinning';
 import Redemption  from '../../models/redemption';
@@ -43,7 +42,7 @@ export default class Redeem extends React.Component {
                     max={redemption.maxQty}
                     defaultValue={redemption.maxQty}
                 />
-                <Footer
+                <Box
                     margin="medium"
                     justify="end"
                 >
@@ -52,7 +51,7 @@ export default class Redeem extends React.Component {
                         label='Save'
                         onClick={this.onSaveClick}
                     />
-                </Footer>
+                </Box>
             </Box>
         );
     }

@@ -26,9 +26,9 @@ end
 %>
 
 <% unless Hippo.env.production? -%>
-for (var key in entries) {
-    entries[key].unshift('react-hot-loader/patch');
-}
+// for (var key in entries) {
+//     entries[key].unshift('react-hot-loader/patch');
+// }
 <% end -%>
 
 const config = {

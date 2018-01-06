@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes    from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-import { Ticket }   from 'grommet-icon';
+import { Ticket }   from 'grommet-icons';
 import pluralize    from 'pluralize';
 import Anchor       from 'grommet/components/Anchor';
 import Box          from 'grommet/components/Box';

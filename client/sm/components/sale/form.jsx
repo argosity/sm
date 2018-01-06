@@ -9,10 +9,9 @@ import PaymentFields from 'payment-fields';
 import { Col } from 'react-flexbox-grid';
 import Box from 'grommet/components/Box';
 import Value from 'hippo/components/value';
-import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 import { CreditCard } from 'grommet-icons';
-import FormField from 'grommet/components/FormField';
+import { FieldWrapper } from 'hippo/components/form';
 import Select    from 'grommet/components/Select';
 import Spinning from 'hippo/components/icon/spinning';
 import {
@@ -22,7 +21,7 @@ import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import WarningNotification from 'hippo/components/warning-notification';
 import CardField from 'hippo/components/payments/field';
 
-import './sale-form-styles.scss';
+//import './sale-form-styles.scss';
 import Arrow from './pointer-arrow';
 import Sale from '../../models/sale';
 import Payment from '../../models/payment';
@@ -218,7 +217,7 @@ export default class SaleForm extends React.Component {
             return <h3>{showTimes[0].formattedOccursAt}</h3>;
         }
         return (
-            <FormField label='Show'>
+            <FieldWrapper label='Show'>
                 <Select
                     className="times"
                     value={
@@ -227,7 +226,7 @@ export default class SaleForm extends React.Component {
                     onChange={this.onTimeChange}
                     options={this.timeOptions}
                 />
-            </FormField>
+            </FieldWrapper>
         );
     }
 
@@ -368,7 +367,7 @@ export default class SaleForm extends React.Component {
                         </Col>
 
                         <Col xs={12}>
-                            <Footer
+                            <Box
                                 margin={{ vertical: 'medium' }}
                                 pad={{ between: 'medium' }}
                                 justify="end"
@@ -380,7 +379,7 @@ export default class SaleForm extends React.Component {
                                     icon={isSaving ? <Spinning /> : <CreditCard />}
                                     onClick={isSaving ? null : this.onSaleClick}
                                 />
-                            </Footer>
+                            </Box>
                         </Col>
                     </FieldsWrapper>
                 </Col>

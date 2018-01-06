@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, observable } from 'mobx';
+import { Box, Button } from 'grommet';
+import { Grid } from 'grommet';
 
-import { Row } from 'react-flexbox-grid';
 import Screen from 'hippo/components/screen';
 import Query from 'hippo/models/query';
 import RecordFinder from 'hippo/components/record-finder';
-import Button   from 'grommet/components/Button';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import { ScheduleNew } from 'grommet-icons';
 import Warning from 'hippo/components/warning-notification';
@@ -75,41 +75,37 @@ export default class Presenters extends React.Component {
         const { screen } = this.props;
 
         return (
-            <Form state={this.formState}>
-                <Screen screen={screen}>
-                    <Toolbar>
-                        <SaveButton
-                            tabIndex={4}
-                            model={this.presenter}
-                            onClick={this.isSavable ? this.onSave : null}
-                        />
-                        <Button
-                            plain
-                            icon={<ScheduleNew />}
-                            label='Add New Presenter'
-                            onClick={this.onReset}
-                        />
-                    </Toolbar>
+            <Form screen={screen} state={this.formState}>
+                <Toolbar>
+                    <SaveButton
+                        tabIndex={4}
+                        model={this.presenter}
+                        onClick={this.isSavable ? this.onSave : null}
+                    />
+                    <Button
+                        plain
+                        icon={<ScheduleNew />}
+                        label='Add New Presenter'
+                        onClick={this.onReset}
+                    />
+                </Toolbar>
+                <Grid columns={['full']} justifyContent="start" alignContent="start">
                     <Warning message={this.presenter.errorMessage} />
-                    <Row>
-                        <RecordFinder
-                            model={this.presenter}
-                            tabIndex={1}
-                            recordsTitle='Presenter'
-                            onRecordFound={this.onRecordFound}
-                            query={this.query} name="code"
-                            validate={nonBlank}
-                            autoFocus
-                            sm={4} xs={5}
-                        />
-                        <Field sm={8} xs={7} name="name" validate={nonBlank} tabIndex={2} />
-                    </Row>
-                    <Row>
-                        <Asset xs={12} sm={6} model={this.presenter} name="logo" tabIndex={3} />
-                    </Row>
-                </Screen>
+
+                    <RecordFinder
+                        model={this.presenter}
+                        tabIndex={1}
+                        recordsTitle='Presenter'
+                        onRecordFound={this.onRecordFound}
+                        query={this.query} name="code"
+                        validate={nonBlank}
+                        autoFocus
+                        sm={4} xs={5}
+                    />
+                    <Field sm={8} xs={7} name="name" validate={nonBlank} tabIndex={2} />
+                    <Asset xs={12} sm={6} model={this.presenter} name="logo" tabIndex={3} />
+                </Grid>
             </Form>
         );
     }
-
 }

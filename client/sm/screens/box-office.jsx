@@ -16,7 +16,7 @@ import Sale from '../models/sale';
 import SaleLayer from '../components/sale/layer';
 import MobileApp from '../lib/mobile-app-support';
 
-import './box-office/box-office.scss';
+import StyledBoxOffice from './box-office/styled-box-office';
 
 const DateCell = ({ cellData }) => moment(cellData).format('YYYY-MM-DD hh:mma');
 

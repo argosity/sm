@@ -7,7 +7,8 @@ import cn from 'classnames';
 import { Row, Col, getColumnProps } from 'react-flexbox-grid';
 import moment from 'moment';
 import Button    from 'grommet/components/Button';
-import { Edit, Spinning, View }  from 'grommet-icons';
+import { Edit, View }  from 'grommet-icons';
+import Spinning from 'hippo/components/icon/spinning';
 import DateRange from 'hippo/lib/date-range';
 
 function dt(date) {
@@ -67,7 +68,6 @@ export default class Show extends React.Component {
 
         return (
             <div className="show" style={{ ...style }}>
-
                 <Row>
                     <Col sm={3}>
                         <Image size="medium" image={image} onLoad={measure} />

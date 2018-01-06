@@ -33,8 +33,8 @@ export default class SMExtension extends BaseExtension {
     // Data that is provided by SM::Extension#client_bootstrap_data
     // in lib/sm/extension.rb is passed to this method
     // the Base class will simply store the provided data as @data
-    setBootstrapData(data) {
-        if (data.rollbar) {
+    setBootstrapData(data, config) {
+        if (config.environment !== 'development' && data.rollbar) {
             this.rollbar = new Rollbar(data.rollbar);
             this.rollbar.configure({
                 captureUncaught: true,

@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 import PageRenderer from 'hippo/components/text-editor/renderer';
-import Header from 'grommet/components/Header';
 import Button from 'grommet/components/Button';
-
+import Box from 'grommet/components/Box';
 import { Previous } from 'grommet-icons';
 import ShowModel from '../../models/show';
 import PurchaseButton from './purchase-button';
@@ -30,7 +29,7 @@ export default class Information extends React.Component {
 
         return (
             <div className="show-information">
-                <Header justify="between">
+                <Box justify="between">
                     <Button
                         icon={<Previous />}
                         label="Listing"
@@ -41,7 +40,7 @@ export default class Information extends React.Component {
                         label="Purchase"
                         onClick={this.onPurchase}
                     />
-                </Header>
+                </Box>
                 <PageRenderer className="body" content={show.page} />
             </div>
         );

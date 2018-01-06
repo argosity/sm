@@ -6,7 +6,6 @@ import PropTypes   from 'prop-types';
 import Layer       from 'grommet/components/Layer';
 import TextInput   from 'grommet/components/TextInput';
 import Button      from 'grommet/components/Button';
-import Footer      from 'grommet/components/Footer';
 import Box         from 'grommet/components/Box';
 import Spinning    from 'hippo/components/icon/spinning';
 import Sale        from '../../models/sale';
@@ -35,7 +34,7 @@ export default class Email extends React.Component {
                     onChange={this.onChange}
                     defaultValue={sale.email}
                 />
-                <Footer
+                <Box
                     margin="medium"
                     justify="end"
                 >
@@ -44,7 +43,7 @@ export default class Email extends React.Component {
                         label='Send'
                         onClick={this.props.onComplete}
                     />
-                </Footer>
+                </Box>
             </Box>
         );
     }

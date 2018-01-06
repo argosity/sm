@@ -21,7 +21,7 @@ import ShowModel from '../models/show';
 import Show from './shows/show';
 import EditFormWrapper from './shows/edit-form';
 import PageEditorWrapper from './shows/page-editor';
-import './shows/show-styles.scss';
+//import './shows/show-styles.scss';
 
 @observer
 export default class Shows extends React.Component {
