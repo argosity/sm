@@ -45,7 +45,7 @@ export default class Refund extends React.Component {
                 <label>
                     Refund Reason:
                 </label>
-                <TextInput min={1} onDOMChange={this.onTextChange} />
+                <TextInput min={1} onInput={this.onTextChange} />
                 <Button
                     icon={<Money />}
                     label='Refund'

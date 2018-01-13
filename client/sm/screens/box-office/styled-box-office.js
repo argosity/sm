@@ -1,18 +1,17 @@
 import styled from 'styled-components';
-import utils from 'grommet/utils/styles';
-
-const borderStyle = (data, theme) => {
-
-    const value = `solid ${theme.global.borderSize.xsmall} ${color}`;
-}
+import color from 'grommet/utils/colors';
 
 const StyledBoxOffice = styled.div`
+flex: 1;
+display: flex;
+flex-direction: column;
+padding: ${props => props.theme.global.edgeSize.small};
+
 .guest-list {
     flex: 1;
     .ReactVirtualized__List {
-        border-style: solid;
-        border-size: ${props => props.theme.global.borderSize.xsmall};
-        border-color: ${props => utils.colorForName('border', props.theme)};
+        margin-top: ${props => props.theme.global.edgeSize.medium};
+        border-top: ${props => color.colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
     }
 
     .data-list.selectable {
@@ -29,9 +28,9 @@ const StyledBoxOffice = styled.div`
     .guest {
         padding: 10px 0;
         margin-bottom: 10px;
-        border-style: solid;
-        border-bottom-size: ${props => props.theme.global.borderSize.xsmall};
-        border-color: ${props => utils.colorForName('border', props.theme)};
+
+        border-bottom: ${props => color.colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
+
 
         overflow: hidden;
         h4 { margin: 0; }
@@ -84,6 +83,7 @@ const StyledBoxOffice = styled.div`
 }
 `;
 
+export default StyledBoxOffice;
 //
 // .grommetux-layer.box-office {
 //

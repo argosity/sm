@@ -1,0 +1,42 @@
+button.btn,
+a.btn {
+
+    font-family: 'Roboto', "Century Gothic", "Century", sans-serif;
+    border-radius: 2px;
+    border: 0;
+    transition: .2s ease-out;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    padding: 4px 8px;
+
+    &:focus {
+        outline: none !important;
+    }
+
+    &:hover {
+        color: #fff;
+        box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    &:active, &:focus, &.active {
+        outline: 0;
+        color: #fff;
+    }
+
+    &.btn-default {
+        background: var(--default-bg-color);
+
+        &:hover, &:focus {
+            background-color: var(--default-bg-color-hover);
+        }
+    }
+
+    &.btn-primary {
+        background: var(--primary-bg-color);
+        &:hover, &:focus {
+            background-color: var(--primary-bg-color-hover);
+        }
+    }
+
+}

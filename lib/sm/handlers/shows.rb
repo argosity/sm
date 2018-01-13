@@ -9,19 +9,30 @@ module SM
         # Care is taken to only expose a few attributes of SKU's marked as "public"
         class Shows < Hippo::API::ControllerBase
 
+            attr_reader :view
+
             def show
-                if params['id']
-                    std_api_reply(:retrieve, SM::Embed.json_for(params['id']))
+                @view = SM::Templates::View.new(params['view'])
+                pp params
+                case params['view']
+                when 'listing'
+                    listing
+                when 'info'
+                    view.variables['show'] = SM::Show.find_by_identifier(params['id'])
                 else
-                    show_id = params.dig('q', 'show_identifier')
-                    if show_id
-                        std_api_reply(:retrieve, Show.json_for(show_id))
-                    else
-                        raise ActiveRecord::RecordNotFound
-                    end
+                    listing
                 end
+                view.as_html
             end
 
+            def listing
+                shows = SM::Embed.current_shows(params['embed_id'])
+                if shows.none?
+                    view.basename = 'no-shows'
+                else
+                    view.variables['shows'] = shows
+                end
+            end
 
             def self.xls_sale_report(show_id, headers)
                 st = SM::ShowTime.find(show_id)

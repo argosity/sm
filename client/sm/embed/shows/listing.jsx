@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Grommet from 'grommet/components/Grommet';
+import { ThemeProvider } from 'styled-components';
 import { map } from 'lodash';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
 import SwipeableViews from 'react-swipeable-views';
 import createHistory from 'history/createHashHistory';
+
+import Tenant from 'hippo/models/tenant';
 import ShowModel from '../../models/show';
 import NoShowsFoundMessage from './none-found-message';
 import Information from './information';
 import Purchase from './purchase';
 import Receipt from './receipt';
 import Show from './show';
-import StyledListing from './styled-listing';
 
-//import './listing.scss';
+import StyledListing from './styled-listing';
 
 const VIEWS = {
     info: Information,
@@ -24,7 +27,7 @@ const VIEWS = {
 const isShowIdentifier = (view, identifier) => identifier && view !== 'receipt';
 
 @observer
-export default class Listing extends React.Component {
+class Listing extends React.Component {
 
     static propTypes = {
         shows: MobxPropTypes.observableArrayOf(
@@ -139,3 +142,34 @@ export default class Listing extends React.Component {
     }
 
 }
+
+// eslint-disable-next-line react/prefer-stateless-function
+class ThemedListing extends React.Component {
+
+    static contextTypes = {
+        theme: PropTypes.object,
+    }
+
+    render() {
+        return (
+            <ThemeProvider theme={this.context.theme}>
+                <Listing shows={this.props.shows} />
+            </ThemeProvider>
+        );
+    }
+
+}
+
+const ListingRoot = ({ shows }) => (
+    <Grommet>
+        <ThemedListing shows={shows} />
+    </Grommet>
+);
+
+ListingRoot.bootstrap = embedId => (
+    Promise.all([
+        ShowModel.fetchEmbedded(embedId), Tenant.current.fetch(),
+    ]).then(promises => promises[0])
+);
+
+export default ListingRoot;

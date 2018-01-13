@@ -6,7 +6,7 @@ Hippo.configure do | config |
     # You can specify a different initial vew by setting it here
     # It must be set if the "Workspace" extension is disabled in
     # lib/sh/extension.rb
-    config.website_domain = 'showmaker.com'
+    config.website_domain = ENV['HOST'] || 'showmaker.com'
     config.product_name = 'Show Maker'
     config.support_email = 'support@showmaker.com'
 end

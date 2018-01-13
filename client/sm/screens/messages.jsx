@@ -3,14 +3,12 @@ import { observer } from 'mobx-react';
 import { pick } from 'lodash';
 import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
-import { Row } from 'react-flexbox-grid';
-import Box      from 'grommet/components/Box';
-import Button   from 'grommet/components/Button';
+import { Box, Button } from 'grommet';
+import { ScheduleNew } from 'grommet-icons';
 import Help from 'hippo/components/help';
 import RecordFinder from 'hippo/components/record-finder';
-import { ScheduleNew } from 'grommet-icons';
 import {
-    Form, Field, FormState, nonBlank,
+    Form, Field, FormState, nonBlank, FieldsLayout,
 } from 'hippo/components/form';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import Warning from 'hippo/components/warning-notification';
@@ -91,60 +89,52 @@ export default class Messages extends React.Component {
                 <Toolbar>
                     <SaveButton
                         model={this.message}
-                        onClick={this.isSavable ? this.onSave : null}
-                    />
+                        onClick={this.isSavable ? this.onSave : null} />
+
                     <Button
-                        plain
                         icon={<ScheduleNew />}
                         label='Add New Message'
-                        onClick={this.onReset}
+                        onClick={this.onReset} />
+
+                    <Button onClick={this.setDefaultMessages} label="Set Defaults" />
+                    <Toolbar.expand />
+                    <Help
+                        position="top-end"
+                        message="If left blank, email fields will use the defaults.  Click “Set Defaults” to copy the current default to the fields so it can be customized"
                     />
                 </Toolbar>
                 <Warning message={this.errorMessage} />
 
-                <Row>
+                <FieldsLayout>
                     <RecordFinder
                         model={this.message}
                         name="code" recordsTitle='Message' onRecordFound={this.onRecordFound}
                         query={this.query} validate={nonBlank}
-                        sm={4} xs={5}
                     />
-                    <Field sm={8} xs={7} name="name" validate={nonBlank} />
-                </Row>
-                <Row>
+                    <Field name="name" validate={nonBlank} />
+
                     <Asset
-                        xs={12} sm={6} model={this.message} name="ticket_header"
+                        model={this.message} name="ticket_header"
                     />
                     <Asset
-                        xs={12} sm={6} model={this.message} name="ticket_footer"
+                        model={this.message} name="ticket_footer"
                     />
-                </Row>
-                <Row>
+
+                </FieldsLayout>
+                <Box margin="small">
                     <Field
                         label="Order confirmation email subject"
-                        xs={9} name="order_confirmation_subject"
+                        name="order_confirmation_subject"
                     />
-
-                    <Box
-                        flex direction="row" justify="around"
-                        align="center" alignContent="center"
-                    >
-                        <Help
-                            position="top-end"
-                            message="If left blank, email fields will use the defaults.  Click “Set Defaults” to copy the current default to the fields so it can be customized"
-                        />
-                        <Button onClick={this.setDefaultMessages} label="Set Defaults" />
-                    </Box>
-
-                </Row>
-                <Row style={{ flex: 1 }}>
+                </Box>
+                <Box margin="small">
                     <Field
+                        style={{ minHeight: 200 }}
+                        type="textarea"
+                        name="order_confirmation_body"
                         label="Source for order confirmation email"
-                        style={{ height: '100%', minHeight: '300px' }}
-                        type="textarea" name="order_confirmation_body"
-                        xs={12}
                     />
-                </Row>
+                </Box>
             </Form>
         );
     }

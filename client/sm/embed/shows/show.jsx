@@ -60,8 +60,8 @@ export default class Show extends React.Component {
                             </div>
                         </div>
                         <div className="actions">
-                            <InfoButton onClick={this.onInfo} show={show} />
                             <PurchaseButton onClick={this.onPurchase} show={show} />
+                            <InfoButton onClick={this.onInfo} show={show} />
                         </div>
                     </div>
                     <Venue venue={show.venue} />

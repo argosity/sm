@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
-import { Row, Col } from 'react-flexbox-grid';
-import Button from 'grommet/components/Button';
+import { Button } from 'grommet';
+import { ScheduleNew } from 'grommet-icons';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import RecordFinder from 'hippo/components/record-finder';
-import { ScheduleNew } from 'grommet-icons';
 import {
-    Form, Field, FormState, nonBlank, numberValue,
+    Form, Field, FormState, nonBlank, numberValue, FieldsLayout,
 } from 'hippo/components/form';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
@@ -89,7 +88,6 @@ export default class Venues extends React.Component {
                         onClick={this.isSavable ? this.onSave : null}
                     />
                     <Button
-                        plain
                         icon={<ScheduleNew />}
                         label='Add New Venue'
                         onClick={this.onReset}
@@ -97,42 +95,37 @@ export default class Venues extends React.Component {
 
                 </Toolbar>
                 <Warning message={this.errorMessage} />
-
-                <Row>
+                <FieldsLayout>
                     <RecordFinder
                         model={this.venue}
                         name="code" recordsTitle='Venue' onRecordFound={this.onRecordFound}
-                        query={this.query} validate={nonBlank}
-                        sm={4} xs={5}
-                    />
-                    <Field sm={8} xs={7} name="name" validate={nonBlank} />
-                </Row>
-                <Row>
-                    <Field xs={12} sm={8} name="address" />
+                        query={this.query} validate={nonBlank} />
+
+                    <Field width={3} name="name" validate={nonBlank} />
+
+                    <Field width={3} name="address" />
+
                     <Field
                         name="message_id" label="Order Confirmation"
-                        type="select" collection={Message.all.asOptions}
-                        xs={12} sm={4}
-                    />
-                </Row>
-                <Row>
-                    <Asset xs={12} sm={6} model={this.venue} name="logo" />
-                    <Col sm={6} xs={12}>
-                        <Row>
-                            <Field
-                                type="number" name="capacity" lg={6} xs={12}
-                                validate={numberValue} />
-                            <Field
-                                label="Minutes before show to halt sales"
-                                type="number" name="online_sales_halt_mins_before" lg={6} xs={12}
-                                validate={numberValue} />
-                            <Field
-                                name="timezone" type="timezone"
-                                label="Time Zone" lg={6} xs={12}
-                            />
-                        </Row>
-                    </Col>
-                </Row>
+                        type="select" collection={Message.all.asOptions} />
+
+                    <Asset model={this.venue} name="logo" />
+
+                    <Field
+                        type="number" name="capacity"
+                        validate={numberValue} />
+
+                    <Field
+                        label="Minutes before show to halt sales"
+                        type="number" name="online_sales_halt_mins_before"
+                        validate={numberValue} />
+
+                    <Field
+                        name="timezone" type="timezone"
+                        label="Time Zone" />
+
+                </FieldsLayout>
+
             </Form>
         );
     }

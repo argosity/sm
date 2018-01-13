@@ -4,16 +4,15 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const entries = {
-    app: [
-        'babel-polyfill-loader!',
-        '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
-    ],
-    homepage: [
-        'babel-polyfill-loader!',
-        'sm/homepage/index.js',
-    ],
+    // app: [
+    //     'babel-polyfill-loader!',
+    //     '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
+    // ],
+    // homepage: [
+    //     'babel-polyfill-loader!',
+    //     'sm/homepage/index.js',
+    // ],
     'embedded-shows': [
-        'babel-polyfill-loader!',
         'sm/embed/shows.js',
     ],
 };
@@ -36,7 +35,10 @@ const config = {
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
         publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : dev_public_path  %>',
-            filename: '[name]-[hash].js',
+        filename: '[name]-[hash].js',
+<% unless Hippo.env.production? -%>
+        crossOriginLoading:  "anonymous",
+<% end -%>
     },
     resolve: {
         modules: [

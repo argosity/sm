@@ -3,9 +3,8 @@ import { observer } from 'mobx-react';
 import { action } from 'mobx';
 import { autobind } from 'core-decorators';
 import { invoke, extend } from 'lodash';
-import Select from 'grommet/components/Select';
-import Box from 'grommet/components/Box';
-import Heading from 'grommet/components/Heading';
+import { Box, Select } from 'grommet';
+import { Heading } from 'hippo/components/form';
 import Extensions from 'hippo/extensions';
 import Braintree from './settings/braintree';
 import Square from './settings/square';
@@ -61,9 +60,7 @@ export default class SMSystemSettings extends React.Component {
                     align='center'
                     pad={{ between: 'large' }}
                 >
-                    <Heading tag="h3">
-                        Payment vendor:
-                    </Heading>
+                    <Heading>Payment vendor</Heading>
                     <Select
                         placeHolder=''
                         options={['Braintree', 'Square']}
@@ -72,7 +69,6 @@ export default class SMSystemSettings extends React.Component {
                     />
                 </Box>
                 {this.renderPaymentsVendor()}
-
             </div>
         );
     }

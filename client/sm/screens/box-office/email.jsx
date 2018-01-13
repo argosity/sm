@@ -1,12 +1,9 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import { Send }    from 'grommet-icons';
+import { Send, Close } from 'grommet-icons';
 import PropTypes   from 'prop-types';
-import Layer       from 'grommet/components/Layer';
-import TextInput   from 'grommet/components/TextInput';
-import Button      from 'grommet/components/Button';
-import Box         from 'grommet/components/Box';
+import { Heading, Layer, TextInput, Button, Box } from 'grommet';
 import Spinning    from 'hippo/components/icon/spinning';
 import Sale        from '../../models/sale';
 
@@ -57,18 +54,19 @@ export default class Email extends React.Component {
     }
 
     render() {
-        if (!this.props.sale) { return null; }
+        const { sale, onCancel } = this.props;
+        if (!sale) { return null; }
 
         return (
-            <Layer
-                closer
-                className="box-office"
-                onClose={this.props.onCancel}
-                pad={{ between: 'small' }} margin="medium"
-            >
-                <h3>Email Receipt</h3>
-                <div className="name">{this.props.sale.name}</div>
-                {this.renderBody()}
+            <Layer onEsc={onCancel} className="box-office">
+                <Box margin="medium">
+                    <Box flex="grow" align="center" justify="between" direction="row">
+                        <Heading level={4} margin="none">Redeem Ticket</Heading>
+                        <Button plain icon={<Close />} onClick={onCancel} />
+                    </Box>
+                    <div className="name">{sale.name}</div>
+                    {this.renderBody()}
+                </Box>
             </Layer>
         );
     }

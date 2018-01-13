@@ -7,21 +7,19 @@ import { get, extend, each, map } from 'lodash';
 import { observer } from 'mobx-react';
 import PaymentFields from 'payment-fields';
 import { Col } from 'react-flexbox-grid';
-import Box from 'grommet/components/Box';
-import Value from 'hippo/components/value';
-import Button from 'grommet/components/Button';
+import { Box, Button, Select } from 'grommet/components/Button';
 import { CreditCard } from 'grommet-icons';
-import { FieldWrapper } from 'hippo/components/form';
-import Select    from 'grommet/components/Select';
+import Value from 'hippo/components/value';
 import Spinning from 'hippo/components/icon/spinning';
 import {
-    FormState, Form, Field, nonBlank, numberValue, validEmail,
+    FormState, Form, Field, nonBlank, numberValue, validEmail, FieldWrapper,
 } from 'hippo/components/form';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import WarningNotification from 'hippo/components/warning-notification';
 import CardField from 'hippo/components/payments/field';
 
-//import './sale-form-styles.scss';
+import StyledForm from './styled-sale-form';
+
 import Arrow from './pointer-arrow';
 import Sale from '../../models/sale';
 import Payment from '../../models/payment';
@@ -212,7 +210,6 @@ export default class SaleForm extends React.Component {
 
     renderTimes() {
         const { showTimes, props: { sale } } = this;
-
         if (1 === showTimes.length) {
             return <h3>{showTimes[0].formattedOccursAt}</h3>;
         }
@@ -260,30 +257,34 @@ export default class SaleForm extends React.Component {
         const { fieldProps } = this;
 
         return [
-            <CardField
-                key="postalCode"
-                {...fieldProps} xs={6} type="postalCode"
-                ref={this.setFieldRef}
-                label="Zip Code" errorMessage="is required"
-            />,
-            <CardField
-                key="cardNumber"
-                placeholder="•••• •••• •••• ••••"
-                {...fieldProps} ref={this.setFieldRef}
-                type="cardNumber" label="Card Number"
-                errorMessage="Invalid Card"
-            />,
-            <CardField
-                key="expirationDate"
-                {...fieldProps} sm={3} xs={6} ref={this.setFieldRef}
-                type="expirationDate" placeholder="MM / YY"
-                label="Expiration" errorMessage="Invalid Date"
-            />,
-            <CardField
-                key="cvv"
-                {...fieldProps} sm={3} xs={6} ref={this.setFieldRef}
-                type="cvv" label="Card CVV" errorMessage="Invalid value"
-            />,
+            <Col key="postalCode" {...fieldProps} xs={6}>
+                <CardField
+                    type="postalCode"
+                    ref={this.setFieldRef}
+                    label="Zip Code" errorMessage="is required"
+                />
+            </Col>,
+            <Col key="cardNumber" {...fieldProps}>
+                <CardField
+                    placeholder="•••• •••• •••• ••••"
+                    ref={this.setFieldRef}
+                    type="cardNumber" label="Card Number"
+                    errorMessage="Invalid Card"
+                />
+            </Col>,
+            <Col key="expirationDate" {...fieldProps} sm={3} xs={6}>
+                <CardField
+                    ref={this.setFieldRef}
+                    type="expirationDate" placeholder="MM / YY"
+                    label="Expiration" errorMessage="Invalid Date"
+                />
+            </Col>,
+            <Col key="cvv" {...fieldProps} sm={3} xs={6}>
+                <CardField
+                    ref={this.setFieldRef}
+                    type="cvv" label="Card CVV" errorMessage="Invalid value"
+                />
+            </Col>,
         ];
     }
 
@@ -295,94 +296,98 @@ export default class SaleForm extends React.Component {
         const FieldsWrapper = this.props.sale.noCharge ? PaymentFieldsWrapperMock : PaymentFields;
 
         return (
-            <Form
-                tag="div"
-                className="sale-form row"
-                state={formState}
-            >
-                <NetworkActivityOverlay
-                    message={this.busyMessage}
-                    visible={this.isBusy}
-                    model={sale}
-                />
-                <Col xs={12}>
-                    <Box className="heading" flex>{this.heading}</Box>
-                    <Box
-                        pad={{ between: 'small' }}
-                        className="totals-line"
-                        wrap
-                        direction="row"
-                        align="center"
-                    >
-                        <Box className="title" flex>
-                            {this.renderTimes()}
-                        </Box>
-                        <Field
-                            className="qty"
-                            name="qty"
-                            type="number"
-                            min={1}
-                            validate={numberValue}
-                        />
-                        <Value
-                            className="total"
-                            size="medium"
-                            value={this.totalAmount} units='$'
-                            label="total"
-                        />
-                    </Box>
-                </Col>
-                <Col xs={12} className={this.orderFieldsClass}>
-                    {this.renderSelectionPrompt()}
-
-                    <FieldsWrapper
-                        className="row fields"
-                        onError={this.onError}
-                        onReady={this.onFormReady}
-                        vendor={SM.paymentsVendor}
-                        onValidityChange={this.onValidityChange}
-                        authorization={this.payment.token}
-                        styles={{
-                            base: {
-                                color: '#3a3a3a',
-                                'line-height': '40px',
-                                'font-size': '16px',
-                            },
-                            focus: {
-                                color: 'black',
-                            },
-                        }}
-                    >
-                        <Field {...fieldProps} name="name" validate={nonBlank} />
-                        <Field {...fieldProps} type="email" name="email" validate={validEmail} />
-                        <Field {...fieldProps} name="phone" xs={6} />
-
-                        {this.renderCardFields()}
-
-                        <Col xs={12}>
-                            <WarningNotification
-                                flex margin="medium"
-                                message={sale.errorMessage}
-                            />
-                        </Col>
-
-                        <Col xs={12}>
-                            <Box
-                                margin={{ vertical: 'medium' }}
-                                pad={{ between: 'medium' }}
-                                justify="end"
-                            >
-                                {this.props.controls}
-                                <Button
-                                    primary
-                                    label={this.saveButtonLabel}
-                                    icon={isSaving ? <Spinning /> : <CreditCard />}
-                                    onClick={isSaving ? null : this.onSaleClick}
-                                />
+            <Form state={formState}>
+                <StyledForm>
+                    <NetworkActivityOverlay
+                        message={this.busyMessage}
+                        visible={this.isBusy}
+                        model={sale}
+                    />
+                    <Col xs={12}>
+                        <Box className="heading" flex>{this.heading}</Box>
+                        <Box
+                            pad={{ between: 'small' }}
+                            className="totals-line"
+                            wrap
+                            direction="row"
+                            align="center"
+                        >
+                            <Box className="title" flex>
+                                {this.renderTimes()}
                             </Box>
-                        </Col>
-                    </FieldsWrapper>
-                </Col>
+                            <Field
+                                className="qty"
+                                name="qty"
+                                type="number"
+                                min={1}
+                                validate={numberValue}
+                            />
+                            <Value
+                                className="total"
+                                size="medium"
+                                value={this.totalAmount} units='$'
+                                label="total"
+                            />
+                        </Box>
+                    </Col>
+                    <Col xs={12} className={this.orderFieldsClass}>
+                        {this.renderSelectionPrompt()}
+
+                        <FieldsWrapper
+                            className="row fields"
+                            onError={this.onError}
+                            onReady={this.onFormReady}
+                            vendor={SM.paymentsVendor}
+                            onValidityChange={this.onValidityChange}
+                            authorization={this.payment.token}
+                            styles={{
+                                base: {
+                                    color: '#3a3a3a',
+                                    'line-height': '40px',
+                                    'font-size': '16px',
+                                },
+                                focus: {
+                                    color: 'black',
+                                },
+                            }}
+                        >
+                            <Col {...fieldProps}>
+                                <Field name="name" validate={nonBlank} />
+                            </Col>
+                            <Col {...fieldProps}>
+                                <Field type="email" name="email" validate={validEmail} />
+                            </Col>
+                            <Col {...fieldProps} xs={6}>
+                                <Field {...fieldProps} name="phone" />
+                            </Col>
+
+                            {this.renderCardFields()}
+
+                            <Col xs={12}>
+                                <WarningNotification
+                                    flex margin="medium"
+                                    message={sale.errorMessage}
+                                />
+                            </Col>
+
+                            <Col xs={12}>
+                                <Box
+                                    margin={{ vertical: 'medium' }}
+                                    pad={{ between: 'medium' }}
+                                    justify="end"
+                                >
+                                    {this.props.controls}
+                                    <Button
+                                        primary
+                                        label={this.saveButtonLabel}
+                                        icon={isSaving ? <Spinning /> : <CreditCard />}
+                                        onClick={isSaving ? null : this.onSaleClick}
+                                    />
+                                </Box>
+                            </Col>
+                        </FieldsWrapper>
+                    </Col>
+                </StyledForm>
             </Form>
         );
     }

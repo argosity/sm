@@ -3,11 +3,16 @@ module SM
         belongs_to_tenant
         has_random_identifier
 
-        def self.json_for(identifier)
+        def self.current_shows(identifier)
             res = connection.select_all(
                 "select * from public_shows where embed_identifier = #{connection.quote(identifier)} and visible_during @> now()::timestamp order by first_show_time"
             )
-            res.to_a.map { |r| r.each { |k, v| r[k] = res.column_types[k].deserialize(v) } }
+
+            res.to_a.map do |r|
+                r.each { |k, v| r[k] = res.column_types[k].deserialize(v) }
+                SM::Models::ShowWrapper.new(r)
+            end
+
         end
 
         def self.update_tenant_slugs(old_slug, new_slug)

@@ -4,8 +4,8 @@ import { action, computed } from 'mobx';
 import { sumBy } from 'lodash';
 import cn from 'classnames';
 import moment from 'moment';
-import Button from 'grommet/components/Button';
-import { Mail, Ticket } from 'grommet-icons';
+import { Button } from 'grommet';
+import { Compliance, Trash, Mail, Ticket } from 'grommet-icons';
 import MobileApp from '../../lib/mobile-app-support';
 import Sale from '../../models/sale';
 import UX from './ux';
@@ -48,7 +48,7 @@ export default class Guest extends React.Component {
         const redeemed = sumBy(row[UX.FIELDS.REDEMPTIONS], 'qty');
         const is_voided = row[UX.FIELDS.IS_VOIDED];
         const full = (0 === (row[UX.FIELDS.QTY] - redeemed));
-        const doneIcon = full ? <DoneIcon size="small" /> : null;
+        const doneIcon = full ? <Compliance size="small" /> : null;
 
         return (
             <div
@@ -73,7 +73,7 @@ export default class Guest extends React.Component {
                 <div className="controls">
                     <Button onClick={this.onMail} plain icon={<Mail />} />
                     {this.renderPrintBtn()}
-                    <Button onClick={this.onRefund} plain icon={<TrashIcon />} />
+                    <Button onClick={this.onRefund} plain icon={<Trash />} />
                 </div>
             </div>
         );

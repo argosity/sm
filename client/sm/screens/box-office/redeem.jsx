@@ -2,15 +2,20 @@ import React from 'react';
 import { get } from 'lodash';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import WarningNotification from 'hippo/components/warning-notification';
 import PropTypes   from 'prop-types';
-import Layer       from 'grommet/components/Layer';
-import Input from 'grommet/components/TextInput';
-import Button      from 'grommet/components/Button';
-import { Save }    from 'grommet-icons';
-import Box         from 'grommet/components/Box';
-import Spinning    from 'hippo/components/icon/spinning';
+import styled from 'styled-components';
+import { Box, Layer, TextInput, Button, Heading } from 'grommet';
+import { Save, Close } from 'grommet-icons';
+import Spinning from 'hippo/components/icon/spinning';
+import WarningNotification from 'hippo/components/warning-notification';
 import Redemption  from '../../models/redemption';
+
+const Controls = styled.div`
+display: flex;
+flex-direction: column;
+> * { margin-top: 1rem; }
+input { width: 100%; }
+`;
 
 @observer
 export default class Redeem extends React.Component {
@@ -34,25 +39,21 @@ export default class Redeem extends React.Component {
     renderControls() {
         const { redemption } = this.props;
         return (
-            <Box pad="medium">
-                <Input
+            <Controls>
+                <TextInput
+                    size="large"
                     type="number"
                     min={1}
                     onChange={this.onQtyChange}
                     max={redemption.maxQty}
                     defaultValue={redemption.maxQty}
                 />
-                <Box
-                    margin="medium"
-                    justify="end"
-                >
-                    <Button
-                        icon={<Save />}
-                        label='Save'
-                        onClick={this.onSaveClick}
-                    />
-                </Box>
-            </Box>
+                <Button
+                    icon={<Save />}
+                    label='Save'
+                    onClick={this.onSaveClick}
+                />
+            </Controls>
         );
     }
 
@@ -75,20 +76,20 @@ export default class Redeem extends React.Component {
     }
 
     render() {
-        const { redemption } = this.props;
+        const { redemption, onCancel } = this.props;
         if (!redemption) { return null; }
 
         return (
-            <Layer
-                closer
-                className="box-office"
-                onClose={this.props.onCancel}
-                pad={{ between: 'small' }} margin="medium"
-            >
-                <h3>Redeem Ticket</h3>
-                <WarningNotification message={redemption.errorMessage} />
-                <div className="name">{this.name}</div>
-                {this.renderBody()}
+            <Layer className="box-office" onEsc={onCancel}>
+                <Box margin="medium">
+                    <Box flex="grow" align="center" justify="between" direction="row">
+                        <Heading level={4} margin="none">Redeem Ticket</Heading>
+                        <Button plain icon={<Close />} onClick={onCancel} />
+                    </Box>
+                    <WarningNotification message={redemption.errorMessage} />
+                    <div className="name">{this.name}</div>
+                    {this.renderBody()}
+                </Box>
             </Layer>
         );
     }
