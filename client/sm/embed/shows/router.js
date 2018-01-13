@@ -1,10 +1,8 @@
-import xhr from 'hippo/lib/xhr';
-
 import DefaultView from './view';
-
+import purchase from './purchase';
 
 const VIEWS = {
-
+    purchase,
 };
 
 
@@ -30,16 +28,15 @@ export default class Router {
         // eslint-disable-next-line no-restricted-globals
         const hash = location.hash || '#';
         const view = 1 === hash.length ? 'listing' : hash.slice(1);
-        this.incomingView = new (VIEWS[view] || DefaultView)(this.root);
-        const url = `${this.url}/${view}.html`;
-        xhr({ url }, { success: this.updatePage, failure: this.onFailure });
+        this.incomingView = new (VIEWS[view] || DefaultView)(this);
+        this.incomingView.fetch(`${this.url}/${view}.html`, this.updatePage, this.onFailure);
     }
 
     updatePage = (reply) => {
         this.failCount = 0;
         this.view.remove();
         this.view = this.incomingView;
-        this.view.render(reply.response);
+        this.view.render(reply);
     }
 
     onFailure = (req) => {
