@@ -79,7 +79,6 @@ export default class Venues extends React.Component {
 
     render() {
         const { screen } = this.props;
-
         return (
             <Form state={this.formState} tag="div" screen={screen}>
                 <Toolbar>

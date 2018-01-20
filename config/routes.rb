@@ -4,7 +4,7 @@ Hippo::API.routes.for_extension 'sm' do
     resources SM::Sale, path: 'sale/submit', controller: SM::Handlers::Checkout, cors: '*', public: true
     resources SM::Sale, controller: SM::Handlers::Sale
     resources SM::Payment, path: 'payment', controller: SM::Handlers::Payment, cors: '*', public: true
-    resources SM::Show, path: 'embed/shows/:embed_id/?:view?', controller: SM::Handlers::Shows, cors: '*', public: true, format: '.html', unwrapped: true
+    resources SM::Show, path: 'embed/shows/:embed_id/?:view?', controller: SM::Handlers::Shows, cors: '*', public: true, format: '', unwrapped: true
     resources SM::Show
     resources SM::Venue
     resources SM::Presenter

@@ -12,8 +12,14 @@ module SM
             attr_reader :view
 
             def show
+                return {
+                    show: SM::Show.public_representation(params['id']).to_h,
+                    vendor: SM::Payments.vendor_name,
+                    authorization: SM::Payments.vendor.payment_authorization
+                }.to_json if 'purchase' == params['view']
+
                 @view = SM::Templates::View.new(params['view'])
-                pp params
+
                 case params['view']
                 when 'listing'
                     listing

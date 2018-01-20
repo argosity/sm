@@ -2,15 +2,18 @@ import xhr from 'hippo/lib/xhr';
 
 export default class View {
 
-    constructor(router) {
-        this.router = router;
+    constructor(embed) {
+        this.embed = embed;
     }
 
     render({ response }) {
-        this.router.root.innerHTML = response;
+        this.embed.root.innerHTML = response;
     }
 
-    fetch(url, success, failure) {
+    display(id, success, failure) {
+        const { host } = this.embed;
+        let url = `${host}/api/sm/embed/shows/${this.embed.id}`;
+        if (id) url += `/${id}`;
         xhr({ url }, { success, failure });
     }
 

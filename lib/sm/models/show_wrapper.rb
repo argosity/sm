@@ -20,6 +20,14 @@ module SM
                 page.present? || external_url.present?
             end
 
+            def purchase_url
+                if can_purchase?
+                    "#purchase/#{identifier}"
+                else
+                    ''
+                end
+            end
+
             def info_url
                 if page.present?
                     "#info/#{identifier}"
@@ -28,6 +36,14 @@ module SM
                 else
                     ''
                 end
+            end
+
+            def to_h
+                super.merge({
+                                assets_url: Hippo.config.asset_host +
+                                    Hippo.config.api_path +
+                                    Hippo.config.assets_path_prefix
+                            })
             end
 
         end

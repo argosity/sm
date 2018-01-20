@@ -1,5 +1,5 @@
 import Bootstrap from 'hippo/lib/bootstrap';
-import Router from './shows/router';
+import Embed from './shows/embed';
 import './shows.scss';
 
 const bootstrap = new Bootstrap({
@@ -15,5 +15,5 @@ bootstrap.onReady((host, data) => {
         document.body.appendChild(root);
     }
     root.classList.add('showmaker-embedded-shows');
-    Router.boot(root, host, data);
+    Embed.boot(root, host, data);
 });

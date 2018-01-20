@@ -36,7 +36,7 @@
         </div>
         <div class="actions">
           <% if show.can_purchase? %>
-          <a href="#purchase" class="btn btn-primary btn-purchase">
+          <a href="<%= show.purchase_url %>" class="btn btn-primary btn-purchase">
             Purchase
           </a>
           <% end %>

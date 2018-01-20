@@ -1,12 +1,12 @@
-/** @jsx Preact.h */
-import Preact from 'preact';
 import View from './view';
 
 export default class Purchase extends View {
 
-    fetch(url) {
+    display(id) {
+        this.embed.root.innerHTML = '<div class="loading">Loading…</div>';
         System.import('./purchase-form').then(({ default: PurchaseForm }) => {
-            Preact.render(<PurchaseForm url={this.router.url} />, this.router.root);
+            this.embed.root.innerHTML = '';
+            PurchaseForm.boot(id, this.embed);
         });
     }
 

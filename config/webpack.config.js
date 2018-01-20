@@ -4,14 +4,14 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const entries = {
-    // app: [
-    //     'babel-polyfill-loader!',
-    //     '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
-    // ],
-    // homepage: [
-    //     'babel-polyfill-loader!',
-    //     'sm/homepage/index.js',
-    // ],
+    app: [
+        'babel-polyfill-loader!',
+        '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
+    ],
+    homepage: [
+        'babel-polyfill-loader!',
+        'sm/homepage/index.js',
+    ],
     'embedded-shows': [
         'sm/embed/shows.js',
     ],
