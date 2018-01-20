@@ -1,16 +1,15 @@
 import React from 'react';
 import { action, observable, computed, observe } from 'mobx';
 import {
-    Form, Field, FormState, nonBlank, numberValue, validURL,
+    Form, Field, FormState, nonBlank, numberValue, validURL, FieldsLayout,
 } from 'hippo/components/form';
 import PropTypes from 'prop-types';
-import { Row } from 'react-flexbox-grid';
 import { find } from 'lodash';
 import { observer }   from 'mobx-react';
 import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
-import NextIcon from 'grommet/components/icons/base/Next';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
+import { Next } from 'grommet-icons';
 import Asset from 'hippo/components/asset';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import { observePubSub } from 'hippo/models/pub_sub';
@@ -38,7 +37,6 @@ class EditForm extends React.Component {
         observe(this.formState.get('venue_id'), 'value', this.onVenueChange);
         observe(this.formState.get('price'), 'value', this.onPriceChange);
         observe(this.formState.get('capacity'), 'value', this.onCapacityChange);
-        this.nameField.wrappedInstance.focus();
     }
 
     @action.bound onPriceChange({ oldValue, newValue }) {
@@ -117,77 +115,63 @@ class EditForm extends React.Component {
                     <Box flex />
                     <Button
                         label="Edit Page" onClick={show.isNew ? null : this.props.onEditPage} accent
-                        icon={<NextIcon />} className="edit-page"
+                        icon={<Next />} className="edit-page"
                     />
                 </Toolbar>
                 <Form className="show-edit-body" tag="div" state={this.formState}>
                     <NetworkActivityOverlay model={show} />
 
-                    <Row>
+                    <FieldsLayout>
                         <Field
+                            autoFocus
                             ref={this.setFieldRef}
-                            name="title" xs={6} lg={3} validate={nonBlank}
-                        />
+                            name="title" validate={nonBlank} />
 
-                        <Field name="sub_title" xs={6} lg={3} />
+                        <Field name="sub_title" />
 
-                        <Field name="description" xs={12} lg={6} />
+                        <Field name="description" />
 
                         <Field
                             name="presenter_id" label="Presented By"
-                            type="select" collection={this.presenters} xs={6} md={4} lg={3} />
+                            type="select" collection={this.presenters} />
 
                         <Field
                             options={{ enableTime: false, mode: 'range' }}
                             format="M d Y"
-                            type="date" label="Visible" name="visible_during"
-                            xs={6} md={4} lg={3} />
+                            type="date" label="Visible" name="visible_during" />
 
-                        <Field type="checkbox" name="can_purchase" label="Purchasable?" xs={6} md={4} lg={3} />
+                        <Field type="checkbox" name="can_purchase" label="Purchasable?" />
 
-                        <Field type="number" name="price" validate={numberValue} xs={6} md={4} lg={3} />
+                        <Field type="number" name="price" validate={numberValue} />
 
                         <Field
-                            name="external_url" xs={6} md={4} lg={3}
+                            name="external_url"
                             validate={validURL({ allowBlank: true })} />
 
                         <Field
                             name="venue_id" label="Venue"
-                            type="select" collection={Venue.all.asOptions} validate={nonBlank}
-                            xs={6} md={4} lg={3} />
+                            type="select" collection={Venue.all.asOptions}
+                            validate={nonBlank} />
 
-                    </Row>
+                        <Field type="number" name="capacity" validate={numberValue} />
 
-                    <Row>
-                        <Asset model={show} name="image" sm={5} xs={12} />
-                        <ShowTimes show={show} sm={7} xs={12}/>
-                    </Row>
-                    <Row>
+                        <Asset model={show} name="image" />
 
-                        <Field
-                            type="number" name="capacity" validate={numberValue}
-                            xs={4} />
+                        <ShowTimes show={show} height={3} />
 
                         <Field
                             validate={numberValue}
                             label="Halt minutes"
-                            type="number" name="online_sales_halt_mins_before"
-                            xs={4} />
+                            type="number" name="online_sales_halt_mins_before" />
 
                         <Field
                             name="message_id" label="Order Messages"
-                            type="select" collection={Message.all.asOptions}
-                            xs={4} />
+                            type="select" collection={Message.all.asOptions} />
 
-                    </Row>
-                    <Row>
                         <Field
                             label="Instructions on tickets"
-                            style={{ height: '100%', minHeight: '300px' }}
-                            type="textarea" name="ticket_instructions"
-                            xs={12}
-                        />
-                    </Row>
+                            height={2} type="textarea" name="ticket_instructions" />
+                    </FieldsLayout>
 
                 </Form>
             </div>

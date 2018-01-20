@@ -4,13 +4,8 @@ import { observer } from 'mobx-react';
 import { get } from 'lodash';
 import { action, observable } from 'mobx';
 import moment from 'moment';
-import Button           from 'grommet/components/Button';
-import Box              from 'grommet/components/Box';
-import CameraIcon       from 'grommet/components/icons/base/Camera';
-import TicketIcon       from 'grommet/components/icons/base/Ticket';
-import CreditCardIcon   from 'grommet/components/icons/base/CreditCard';
-import SearchIcon       from 'grommet/components/icons/base/Search';
-import DocumentDownload from 'grommet/components/icons/base/DocumentDownload';
+import { Button, Box } from 'grommet';
+import { Camera, Ticket, CreditCard, Search, DocumentDownload } from 'grommet-icons';
 import Screen     from 'hippo/components/screen';
 import Query      from 'hippo/models/query';
 import QueryLayer from 'hippo/components/record-finder/query-layer';
@@ -19,8 +14,7 @@ import GuestList from './box-office/guest-list';
 import Sale from '../models/sale';
 import SaleLayer from '../components/sale/layer';
 import MobileApp from '../lib/mobile-app-support';
-
-import './box-office/box-office.scss';
+import StyledBoxOffice from './box-office/styled-box-office';
 
 const DateCell = ({ cellData }) => moment(cellData).format('YYYY-MM-DD hh:mma');
 
@@ -88,7 +82,7 @@ export default class BoxOffice extends React.Component {
     renderXlsBtn() {
         if (MobileApp.isReal) { return null; }
         return (
-            <Button plain icon={<DocumentDownload />} href={this.time.xlsURL} />
+            <Button title="Download as spreadsheet" plain icon={<DocumentDownload />} href={this.time.xlsURL} />
         );
     }
 
@@ -97,7 +91,8 @@ export default class BoxOffice extends React.Component {
 
         return (
             <Button
-                icon={<CameraIcon />}
+                title="Scan ticket"
+                icon={<Camera />}
                 onClick={MobileApp.startBarcodeScan}
             />
         );
@@ -119,11 +114,13 @@ export default class BoxOffice extends React.Component {
                 >
                     {this.renderXlsBtn()}
                     <Button
-                        icon={<TicketIcon />}
+                        icon={<Ticket />}
+                        title="Generate Ticket"
                         onClick={this.onCompTickets}
                     />
                     <Button
-                        icon={<CreditCardIcon />}
+                        icon={<CreditCard />}
+                        title="Sale"
                         onClick={this.onSaleClick}
                     />
                     {this.renderMobileScan()}
@@ -145,32 +142,34 @@ export default class BoxOffice extends React.Component {
 
         return (
             <Screen screen={this.props.screen}>
-                <QueryLayer
-                    query={query}
-                    title={'Find Show'}
-                    visible={isShowingSearch}
-                    onRecordSelect={this.onRecordFound}
-                    onClose={this.onSearchClose}
-                />
-                <SaleLayer
-                    sale={this.sale}
-                    onCancel={this.onSaleCancel}
-                    onComplete={this.onSaleComplete}
-                />
-                <Box
-                    responsive={false} direction="row" wrap
-                    justify="between" align="baseline"
-                >
-                    <Button
-                        plain
-                        className="grommetux-control-icon-search"
-                        icon={<SearchIcon />}
-                        label={get(time, 'show.title', 'Click to find Show')}
-                        onClick={this.onSearchClick}
+                <StyledBoxOffice>
+                    <QueryLayer
+                        query={query}
+                        title={'Find Show'}
+                        visible={isShowingSearch}
+                        onRecordSelect={this.onRecordFound}
+                        onClose={this.onSearchClose}
                     />
-                    {this.renderDetails()}
-                </Box>
-                <GuestList ref={this.setGuestList} time={time} />
+                    <SaleLayer
+                        sale={this.sale}
+                        onCancel={this.onSaleCancel}
+                        onComplete={this.onSaleComplete}
+                    />
+                    <Box
+                        responsive={false} direction="row" wrap
+                        justify="between" align="baseline"
+                    >
+                        <Button
+                            plain
+                            className="grommetux-control-icon-search"
+                            icon={<Search />}
+                            label={get(time, 'show.title', 'Click to find Show')}
+                            onClick={this.onSearchClick}
+                        />
+                        {this.renderDetails()}
+                    </Box>
+                    <GuestList ref={this.setGuestList} time={time} />
+                </StyledBoxOffice>
             </Screen>
         );
     }

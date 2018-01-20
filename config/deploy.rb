@@ -8,6 +8,7 @@ set :passenger_restart_with_touch, true
 set :conditionally_migrate, true
 set :linked_files, %w(config/database.yml config/secrets.yml)
 set :linked_dirs, %w(public/files log node_modules)
+set :branch, ENV['BRANCH'] if ENV['BRANCH']
 
 secrets = YAML.load(Pathname.new(__FILE__).dirname.join('secrets.yml').read)
 set :rollbar_token, secrets.dig('rollbar', 'server')

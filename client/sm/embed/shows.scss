@@ -1,0 +1,203 @@
+// import styled, { css, keyframes } from 'styled-components';
+// import grommetStyles from 'grommet/utils/styles';
+
+// @import '~grommet/scss/hpe/hpe.defaults';
+// @import '~grommet/scss/grommet-core/settings';
+
+// .grommet {
+//     @import "inuit-normalize/generic.normalize";
+//     @import "inuit-reset/generic.reset";
+//     @import "inuit-shared/generic.shared";
+// }
+
+// @import '~grommet/scss/grommet-core/base';
+// @import '~grommet/scss/grommet-core/objects';
+
+// @import '~grommet/scss/hpe/objects.button-hpe';
+// @import '~grommet/scss/hpe/objects.anchor-hpe';
+
+//
+
+.showmaker-embedded-shows {
+    @import "./button";
+    @import "./reset";
+
+    --default-bg-color: #2BBBAD;
+    --default-bg-color-hover: #30cfc0;
+
+    --primary-bg-color: #4285F4;
+    --primary-bg-color-hover: #5a95f5;
+
+    --input-color: #b9b9b9;
+    --input-text-color: #5b5b5b;
+    --input-focused-color: #2b2b2b;
+
+    --error-background-color: #fcf8e3;
+    --error-color: black;
+
+    --input-error-color: #ff2600;
+
+    .credits {
+        font-size: 0.9rem;
+        text-align: right;
+        font-variant: petite-caps;
+        font-style: italic;
+    }
+
+    @import './listing';
+
+    .order-receipt {
+        h1 {
+            font-size: 30px;
+            font-weight: bolder;
+            margin-bottom: 20px;
+        }
+        p { margin: 1rem 0; }
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            .btn {
+                margin-left: 1rem;
+                padding: 0.5rem 2rem;
+            }
+        }
+
+    }
+
+}
+
+//
+// .grommet footer {
+//     display: flex;
+//     justify-content: flex-end;
+//     // @include media-query(palm) {
+//     //     justify-content: space-around;
+//     // }
+//     margin: 10px 0;
+// }
+//
+// .show-receipt,
+// .show-information,
+// .show-purchase {
+//
+//     @include mq($until: tablet) {
+//         &.grommetux-layer {
+//             position: fixed;
+//             overflow: auto;
+//             -webkit-overflow-scrolling: touch;
+//             left: 0;
+//             right: 0;
+//             top: 0;
+//             bottom: 0;
+//             .contents {
+//                 position: fixed;
+//                 left: 0;
+//                 right: 0;
+//                 top: 0;
+//                 bottom: 0;
+//
+//             }
+//         }
+//         .grommetux-layer__container {
+//             position: fixed;
+//             top: 0;
+//             bottom: 0;
+//             left: 0;
+//             right: 0;
+//             overflow: auto;
+//              -webkit-overflow-scrolling: touch;
+//             display: block;
+//         }
+//     }
+//
+//     .contents {
+//         overflow: hidden;
+//         max-height: 100vh;
+//         .body {
+//             flex: 1;
+//             overflow: auto;
+//              -webkit-overflow-scrolling: touch;
+//         }
+//     }
+// }
+//
+// $show-layer-padding: 48px 0;
+//
+// .show-information {
+//     .text-editor-content {
+//         flex: 1;
+//         max-width: 1000px;
+//         padding: $show-layer-padding;
+//         min-height: 80vh;
+//         @include media-query(lap-and-up) {
+//             min-width: 45em;
+//         }
+//     }
+// }
+//
+// .show-receipt {
+//     .contents {
+//         padding: $show-layer-padding;
+//     }
+// }
+//
+// .show-purchase {
+//     .image img { max-height: 100%; }
+//
+//     .totals-line {
+//         margin-top: 0.5rem;
+//         h2 { margin: 0; }
+//         .ea { flex: 1; }
+//         .form-field {
+//             min-width: 200px;
+//         }
+//         .total {
+//             min-width: 200px;
+//         }
+//         .times {
+//             min-width: 250px;
+//         }
+//     }
+//     .grommetux-value {
+//         display: flex;
+//         flex-direction: row;
+//         justify-content: center;
+//         align-items: center;
+//         .grommetux-value__annotated div {
+//             display: flex;
+//             flex-direction: row-reverse;
+//             margin-right: 0.5rem;
+//         }
+//     }
+//     .form-field {
+//         &.card {
+//             .grommetux-form-field { overflow: hidden; }
+//         }
+//     }
+//     .top-info {
+//         display: flex;
+//         .image {
+//             align-self: center;
+//             max-width: 240px;
+//             margin-right: 1rem;
+//         }
+//         @include media-query(palm) {
+//             flex-wrap: wrap;
+//             .image {
+//                 flex: 1;
+//                 max-width: 100%;
+//                 margin-right: 0;
+//             }
+//             .grommetux-heading { margin-bottom: 0; }
+//         }
+//     }
+// }
+// .grommet.grommetux-drop {
+//     .grommetux-select__options {
+//         margin-left: 0;
+//     }
+// }
+
+
+//export default StyledListing;

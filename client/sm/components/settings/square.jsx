@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import Box from 'grommet/components/Box';
-import Anchor from 'grommet/components/Anchor';
+import { Box, Text, Anchor, Button } from 'grommet';
 import PopoutWindow from 'hippo/components/popout-window';
 import Extensions from 'hippo/extensions';
 import Tenant from 'hippo/models/tenant';
@@ -58,10 +57,12 @@ export default class SquareConfig extends React.Component {
 
     renderLinked() {
         return (
-            <div>
-                Linked to Square location “{this.auth.location_name}”.
-                <Anchor onClick={this.openLink}>Re-link</Anchor>
-            </div>
+            <Box direction="row" justify="between" align="center">
+                <Text>
+                    Linked to Square location “{this.auth.location_name}”.
+                </Text>
+                <Button margin="small" onClick={this.openLink} label="Re-link" />
+            </Box>
         );
     }
 
@@ -71,7 +72,7 @@ export default class SquareConfig extends React.Component {
 
     render() {
         return (
-            <Box margin={{ vertical: 'medium' }}>
+            <Box margin={{ vertical: 'medium', horizontal: 'small' }}>
                 <NetworkActivityOverlay model={this.auth} />
                 {this.auth.isAuthorized ? this.renderLinked() : this.renderNewLink()}
                 {this.renderLinkWindow()}

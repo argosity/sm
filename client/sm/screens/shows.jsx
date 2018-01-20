@@ -7,12 +7,10 @@ import {
     CellMeasurer, CellMeasurerCache,
 } from 'react-virtualized';
 import SwipeableViews from 'react-swipeable-views';
-
-import CheckBox from 'grommet/components/CheckBox';
-import Button   from 'grommet/components/Button';
-import Box from 'grommet/components/Box';
-import AddIcon  from 'grommet/components/icons/base/AddCircle';
-
+import { CheckBox, Button } from 'grommet';
+import { Add }  from 'grommet-icons';
+import styled from 'styled-components';
+import { Toolbar } from 'hippo/components/toolbar';
 import Query    from 'hippo/models/query';
 import Screen   from 'hippo/components/screen';
 import DataList from 'hippo/components/data-list';
@@ -21,7 +19,17 @@ import ShowModel from '../models/show';
 import Show from './shows/show';
 import EditFormWrapper from './shows/edit-form';
 import PageEditorWrapper from './shows/page-editor';
+
 import './shows/show-styles.scss';
+
+const ShowsList = styled.div`
+display: flex;
+flex-direction: column;
+height: 100vh;
+.data-list {
+  flex: 1;
+}
+`;
 
 @observer
 export default class Shows extends React.Component {
@@ -132,7 +140,6 @@ export default class Shows extends React.Component {
     rowRenderer(props) {
         const { index, key, parent } = props;
         const row = this.query.results.rows[index];
-
         const renderFn = ({ measure }) => (
             <Show
                 row={row}
@@ -164,30 +171,16 @@ export default class Shows extends React.Component {
                     className="shows-wrapper"
                     disabled index={this.displayIndex}
                 >
-                    <div className="shows-list">
-
-                        <Box
-                            className="controls"
-                            colorIndex="light-2"
-                            full="horizontal"
-                            direction="row"
-                            align="center"
-                            pad={{
-                                horizontal: 'small',
-                                vertical: 'small',
-                                between: 'small',
-                            }}
-                        >
-
+                    <ShowsList>
+                        <Toolbar>
                             <QueryBuilder autoFetch={true} query={this.query} />
                             <CheckBox
                                 checked={this.query.syncOptions.with.visible}
                                 label="Only Visible"
                                 onChange={this.changeVisible}
                             />
-                            <Button icon={<AddIcon />} onClick={this.onAdd} label="Add" />
-
-                        </Box>
+                            <Button icon={<Add />} onClick={this.onAdd} label="Add" />
+                        </Toolbar>
 
                         <DataList
                             query={this.query}
@@ -198,7 +191,7 @@ export default class Shows extends React.Component {
                             deferredMeasurementCache={this.sizeCache}
                             keyChange={this.listRenderKey}
                         />
-                    </div>
+                    </ShowsList>
                     <EditFormWrapper
                         row={this.editing.row}
                         query={this.query}

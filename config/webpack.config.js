@@ -13,7 +13,6 @@ const entries = {
         'sm/homepage/index.js',
     ],
     'embedded-shows': [
-        'babel-polyfill-loader!',
         'sm/embed/shows.js',
     ],
 };
@@ -26,9 +25,9 @@ end
 %>
 
 <% unless Hippo.env.production? -%>
-for (var key in entries) {
-    entries[key].unshift('react-hot-loader/patch');
-}
+// for (var key in entries) {
+//     entries[key].unshift('react-hot-loader/patch');
+// }
 <% end -%>
 
 const config = {
@@ -36,7 +35,10 @@ const config = {
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
         publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : dev_public_path  %>',
-            filename: '[name]-[hash].js',
+        filename: '[name]-[hash].js',
+<% unless Hippo.env.production? -%>
+        crossOriginLoading:  "anonymous",
+<% end -%>
     },
     resolve: {
         modules: [

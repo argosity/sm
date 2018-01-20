@@ -4,8 +4,12 @@ module SM
 
         extend self
 
+        def vendor_name
+            Hippo::SystemSettings.config.settings['paymentsVendor'] || 'unknown'
+        end
+
         def vendor_id
-            (Hippo::SystemSettings.config.settings['paymentsVendor'] || 'unknown').downcase.to_sym
+            vendor_name.downcase.to_sym
         end
 
         def vendor

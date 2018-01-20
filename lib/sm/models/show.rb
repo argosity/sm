@@ -31,12 +31,15 @@ module SM
             where('visible_during @> now()::timestamp') if val == 'true'
         }, export: true
 
-        def self.json_for(show_identifier)
+        def self.public_representation(show_identifier)
             res = connection.select_all(
                 "select * from public_shows where identifier = #{connection.quote(show_identifier)} limit 1"
             )
             raise ActiveRecord::RecordNotFound unless res.one?
-            Hash[res.first.map { |k, v| [k, res.column_types[k].deserialize(v)] }]
+
+            SM::Models::ShowWrapper.new(
+                Hash[res.first.map { |k, v| [k, res.column_types[k].deserialize(v)] }]
+            )
         end
 
         protected

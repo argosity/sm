@@ -2,7 +2,7 @@ import React from 'react';
 import { autobind } from 'core-decorators';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import Box from 'grommet/components/Box';
+import { Box } from 'grommet';
 import DataList from 'hippo/components/data-list';
 import QueryBuilder from 'hippo/components/query-builder';
 import ShowTime from '../../models/show-time';

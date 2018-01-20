@@ -21,17 +21,15 @@ export default class SaleLayer extends React.Component {
 
         return (
             <Layer
-                closer
-                onClose={onCancel}
+                onEsc={onCancel}
                 className="sale"
             >
                 <Box
                     flex
                     size={{ height: { min: 'medium' } }}
-                    full="horizontal"
                     separator='horizontal'
                     className="sale-pane"
-                    pad={{ vertical: 'medium' }}
+                    margin="small"
                 >
                     <SaleForm
                         sale={sale}

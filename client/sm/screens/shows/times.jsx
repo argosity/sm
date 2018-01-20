@@ -3,12 +3,10 @@ import { observer }  from 'mobx-react';
 import { action } from 'mobx';
 import PropTypes from 'prop-types';
 import { autobind } from 'core-decorators';
-import Heading from 'grommet/components/Heading';
-import Button from 'grommet/components/Button';
-import CloseIcon from 'grommet/components/icons/base/Close';
-import AddCircleIcon from 'grommet/components/icons/base/AddCircle';
-import Box from 'grommet/components/Box';
-import { columnClasses } from 'hippo/lib/util';
+import styled from 'styled-components';
+import { Button, Box } from 'grommet';
+import { Close, AddCircle } from 'grommet-icons';
+import { Heading } from 'hippo/components/form';
 import { Table, AutoSizer, Column } from 'react-virtualized';
 import DateTime from 'hippo/components/date-time';
 import Show from '../../models/show';
@@ -20,7 +18,6 @@ const ValueInput = observer(({ name, time }) => (
     />
 ));
 
-
 const DateInput = observer(({ time }) => (
     <DateTime
         value={time.occurs_at}
@@ -28,6 +25,16 @@ const DateInput = observer(({ time }) => (
         onChange={({ target: { value } }) => { time.occurs_at = value; }}
     />
 ));
+
+const Times = styled.div`
+display: flex;
+flex-direction: column;
+grid-row: auto / span 3;
+input {
+  width: 100%;
+  padding: 0;
+}
+`;
 
 @observer
 export default class ShowTimesEditor extends React.Component {
@@ -63,7 +70,7 @@ export default class ShowTimesEditor extends React.Component {
     @autobind
     renderControls({ rowData: occ }) {
         return (
-            <Button icon={<CloseIcon />} onClick={occ.onDelete}/>
+            <Button icon={<Close />} onClick={occ.onDelete}/>
         );
     }
 
@@ -75,10 +82,8 @@ export default class ShowTimesEditor extends React.Component {
     renderHeader() {
         return (
             <Box direction="row" align="center" justify="between">
-                <Heading tag='h4'>
-                    Show Dates/Times
-                </Heading>
-                <Button icon={<AddCircleIcon />} onClick={this.onAddTime}/>
+                <Heading size={4}>Show Dates/Times</Heading>
+                <Button icon={<AddCircle />} onClick={this.onAddTime}/>
             </Box>
         );
     }
@@ -88,28 +93,28 @@ export default class ShowTimesEditor extends React.Component {
 
         if (!times || !times.length) {
             return (
-                <div className={columnClasses(this.props, 'times')}>
+                <div className="times">
                     {this.renderHeader()}
                 </div>
             );
         }
 
         return (
-            <div className={columnClasses(this.props, 'times')}>
+            <Times>
                 {this.renderHeader()}
                 <AutoSizer>
                     {({ height, width }) =>
                         <Table
                             height={height - 50}
                             width={width}
-                            rowHeight={40}
+                            rowHeight={30}
                             rowGetter={this.rowAtIndex}
                             headerHeight={40}
                             rowCount={times.length}
                         >
                             <Column
                                 dataKey="occurs_at" label="Date/Time"
-                                width={200} flexGrow={1} headerRenderer={this.headerRenderer}
+                                width={250} flexGrow={1} headerRenderer={this.headerRenderer}
                                 cellRenderer={this.renderOccurs}
                             />
                             <Column
@@ -119,7 +124,7 @@ export default class ShowTimesEditor extends React.Component {
                             />
                             <Column
                                 dataKey="capacity" label="Capacity"
-                                width={80} headerRenderer={this.headerRenderer}
+                                width={50} headerRenderer={this.headerRenderer}
                                 cellRenderer={this.renderCapacity}
                             />
                             <Column
@@ -129,7 +134,7 @@ export default class ShowTimesEditor extends React.Component {
                             />
                         </Table>}
                 </AutoSizer>
-            </div>
+            </Times>
         );
     }
 

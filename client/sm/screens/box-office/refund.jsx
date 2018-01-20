@@ -6,9 +6,9 @@ import TextInput   from 'grommet/components/TextInput';
 import Layer       from 'grommet/components/Layer';
 import Button      from 'grommet/components/Button';
 import CheckBox    from 'grommet/components/CheckBox';
-import MoneyIcon   from 'grommet/components/icons/base/Money';
+import { Money }   from 'grommet-icons';
 import Box         from 'grommet/components/Box';
-import Spinning    from 'grommet/components/icons/Spinning';
+import Spinning    from 'hippo/components/icon/spinning';
 import Sale        from '../../models/sale';
 
 @observer
@@ -45,9 +45,9 @@ export default class Refund extends React.Component {
                 <label>
                     Refund Reason:
                 </label>
-                <TextInput min={1} onDOMChange={this.onTextChange} />
+                <TextInput min={1} onInput={this.onTextChange} />
                 <Button
-                    icon={<MoneyIcon />}
+                    icon={<Money />}
                     label='Refund'
                     onClick={this.onComplete}
                 />

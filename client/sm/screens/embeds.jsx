@@ -1,15 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import { map } from 'lodash';
+import styled from 'styled-components';
 import Screen from 'hippo/components/screen';
-import { Row, Col } from 'react-flexbox-grid';
-import Query    from 'hippo/models/query';
-import DataList from 'hippo/components/data-list';
+import Query from 'hippo/models/query';
 import { autobind } from 'core-decorators';
 import Heading from 'grommet/components/Heading';
-
+import { TextArea } from 'grommet';
 import EmbedModel from '../models/embed';
 import './embeds/embed-styles.scss';
+
+const Row = styled.div`
+padding: ${props => props.theme.global.edgeSize.small};
+textarea {
+  height: 150px;
+  width: 100%;
+}
+`;
 
 @observer
 export default class Embeds extends React.Component {
@@ -25,7 +33,11 @@ export default class Embeds extends React.Component {
         fields: [
             'id', 'tenants', 'name', 'identifier',
         ],
-    })
+    });
+
+    componentDidMount() {
+        this.query.fetch();
+    }
 
     onFocus(ev) {
         ev.target.select();
@@ -34,26 +46,18 @@ export default class Embeds extends React.Component {
     url = `${window.location.protocol}//${window.location.host}`;
 
     @autobind
-    rowRenderer(props) {
-        const { style, index, key } = props;
+    rowRenderer(row, index) {
         const [
             _, __, name, identifier,
-        ] = this.query.results.rows[index];
-
+        ] = row;
         return (
-            <Row
-                className="row"
-                key={key}
-                style={style}
-            >
-                <Col xs={12}><Heading tag='h3'>{name}</Heading></Col>
-                <Col xs={12}>
-                    <textarea
-                        onFocus={this.onFocus}
-                        readOnly
-                        value={`<script src="${this.url}/assets/embedded-shows.js" data-render-to="#showmaker-shows-listing" data-embed-id="${identifier}"></script>\n<div id="showmaker-shows-listing"></div>`}
-                    />
-                </Col>
+            <Row key={index}>
+                <Heading level={3}>{name}</Heading>
+                <TextArea
+                    onFocus={this.onFocus}
+                    readOnly
+                    value={`<script src="${this.url}/assets/embedded-shows.js" data-render-to="#showmaker-shows-listing" data-embed-id="${identifier}"></script>\n<div id="showmaker-shows-listing"></div>`}
+                />
             </Row>
         );
     }
@@ -61,11 +65,7 @@ export default class Embeds extends React.Component {
     render() {
         return (
             <Screen screen={this.props.screen}>
-                <DataList
-                    query={this.query}
-                    rowHeight={200}
-                    rowRenderer={this.rowRenderer}
-                />
+                {map(this.query.rows, this.rowRenderer)}
             </Screen>
         );
     }

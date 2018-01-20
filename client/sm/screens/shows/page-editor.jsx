@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import Box from 'grommet/components/Box';
-import Button from 'grommet/components/Button';
+import { Box, Button } from 'grommet';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import TextEditor from 'hippo/components/text-editor';
-import PreviousIcon from 'grommet/components/icons/base/Previous';
+import { Previous } from 'grommet-icons';
 
 import Show from '../../models/show';
 import './page-editor.scss';
@@ -42,7 +41,7 @@ class PageEditor extends React.Component {
             <div className="shows-edit-page">
                 <Toolbar justify="between">
                     <Button
-                        icon={<PreviousIcon />}
+                        icon={<Previous />}
                         label="Cancel" onClick={this.onCancel} accent
                     />
                     <SaveButton onClick={this.onSave} model={this.props.show} />
