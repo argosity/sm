@@ -6,8 +6,7 @@ import styled from 'styled-components';
 import Screen from 'hippo/components/screen';
 import Query from 'hippo/models/query';
 import { autobind } from 'core-decorators';
-import Heading from 'grommet/components/Heading';
-import { TextArea } from 'grommet';
+import { Heading, TextArea } from 'grommet';
 import EmbedModel from '../models/embed';
 import './embeds/embed-styles.scss';
 

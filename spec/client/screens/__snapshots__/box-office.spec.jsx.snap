@@ -1,56 +1,295 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Screen Gate renders and matches snapshot 1`] = `
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 100%;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  min-height: 0;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c1 {
+  display: grid;
+  height: 100%;
+  grid-template-areas: "header header" "main" "footer footer";
+  grid-template-columns: 100%;
+  grid-gap: 12px 12px;
+  grid-template-rows: 48px 1fr 96px;
+}
+
+.c2 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.c2 .guest-list {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c2 .guest-list .ReactVirtualized__List {
+  margin-top: 24px;
+  border-top: rgba(0,0,0,0.15) solid 1px;
+}
+
+.c2 .guest-list .data-list.selectable .ReactVirtualized__Grid__innerScrollContainer {
+  cursor: inherit;
+}
+
+.c2 .guest-list .data-list.selectable .ReactVirtualized__Grid__innerScrollContainer .guest:not(.full) {
+  cursor: pointer;
+}
+
+.c2 .guest-list .guest {
+  padding: 10px 0;
+  margin-bottom: 10px;
+  border-bottom: rgba(0,0,0,0.15) solid 1px;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c2 .guest-list .guest h4 {
+  margin: 0;
+}
+
+.c2 .guest-list .guest .controls {
+  min-width: 26px;
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+}
+
+.c2 .guest-list .guest .controls .grommetux-button__icon {
+  padding: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c2 .guest-list .guest .controls svg {
+  max-width: 100%;
+}
+
+.c2 .guest-list .guest.is_voided {
+  text-decoration: line-through;
+}
+
+.c2 .guest-list .guest.is_voided .controls {
+  visibility: hidden;
+}
+
+.c2 .guest-list .guest .grid {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-template-columns: repeat(auto-fill,minmax(180px,1fr) );
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 .guest-list .guest .grid > * {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.c0 {
+  font-family: 'Work Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333333;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.c0 * {
+  box-sizing: inherit;
+}
+
+.c4 {
+  cursor: pointer;
+  outline: none;
+  font: inherit;
+  text-decoration: none;
+  font: inherit;
+  margin: 0;
+  background-color: transparent;
+  overflow: visible;
+  text-transform: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+}
+
+.c5 {
+  display: inline-block;
+}
+
+.c5:first-child:not(:last-child) {
+  margin-right: 12px;
+}
+
+.c5 > * {
+  vertical-align: bottom;
+}
+
+.c6 {
+  display: inline-block;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  fill: #666666;
+  stroke: #666666;
+}
+
+.c6 g {
+  fill: inherit;
+  stroke: inherit;
+}
+
+.c6 *:not([stroke])[fill="none"] {
+  stroke-width: 0;
+}
+
+.c6 *[stroke*="#"],
+.c6 *[STROKE*="#"] {
+  stroke: inherit;
+  fill: none;
+}
+
+.c6 *[fill-rule],
+.c6 *[FILL-RULE],
+.c6 *[fill*="#"],
+.c6 *[FILL*="#"] {
+  fill: inherit;
+  stroke: none;
+}
+
+.c7:first-child:not(:last-child) {
+  margin-right: 12px;
+}
+
+@media only screen and (min-width:700px) {
+  .c4 {
+    -webkit-transition: 0.1s ease-in-out;
+    transition: 0.1s ease-in-out;
+  }
+}
+
 <div
-  className="hippo-screen box-office is-active"
-  data-screen-id="box-office"
+  className="c0"
 >
   <div
-    className="grommetux-box grommetux-box--direction-row grommetux-box--justify-between grommetux-box--align-baseline grommetux-box--pad-none grommetux-box--wrap"
-    id={undefined}
-    onClick={undefined}
-    role={undefined}
-    style={Object {}}
-    tabIndex={undefined}
+    className="hippo-screen box-office is-active c1"
+    data-screen-id="box-office"
+    rows={
+      Array [
+        "xxsmall",
+        "flex",
+        "xsmall",
+      ]
+    }
   >
-    <button
-      aria-label={undefined}
-      className="grommetux-button grommetux-button--plain grommetux-control-icon-search"
-      disabled={false}
-      href={undefined}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onMouseDown={[Function]}
-      onMouseUp={[Function]}
-      type="button"
+    <div
+      className="c2"
     >
-      <span
-        className="grommetux-button__icon"
+      <div
+        aria-label={undefined}
+        className="c3"
+        direction="row"
+        wrap={true}
       >
-        <svg
-          aria-label="search"
-          className="grommetux-control-icon grommetux-control-icon-search grommetux-control-icon--responsive"
-          height="24px"
-          role="img"
-          version="1.1"
-          viewBox="0 0 24 24"
-          width="24px"
+        <button
+          aria-label={undefined}
+          className="grommetux-control-icon-search c4"
+          disabled={false}
+          href={undefined}
+          icon={<Search />}
+          label="Click to find Show"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseUp={[Function]}
+          tabIndex="0"
+          type="button"
         >
-          <path
-            d="M15,15 L22,22 L15,15 Z M9.5,17 C13.6421356,17 17,13.6421356 17,9.5 C17,5.35786438 13.6421356,2 9.5,2 C5.35786438,2 2,5.35786438 2,9.5 C2,13.6421356 5.35786438,17 9.5,17 Z"
-            fill="none"
-            stroke="#000"
-            strokeWidth="2"
-          />
-        </svg>
-      </span>
-      <span
-        className="grommetux-button__label"
-      >
-        Click to find Show
-      </span>
-    </button>
+          <span
+            aria-hidden={true}
+            className="c5"
+          >
+            <svg
+              aria-label="Search"
+              className="c6"
+              height="24px"
+              role="img"
+              version="1.1"
+              viewBox="0 0 24 24"
+              width="24px"
+            >
+              <path
+                d="M15,15 L22,22 L15,15 Z M9.5,17 C13.6421356,17 17,13.6421356 17,9.5 C17,5.35786438 13.6421356,2 9.5,2 C5.35786438,2 2,5.35786438 2,9.5 C2,13.6421356 5.35786438,17 9.5,17 Z"
+                fill="none"
+                stroke="#000"
+                strokeWidth="2"
+              />
+            </svg>
+          </span>
+          <span
+            className="c7"
+          >
+            Click to find Show
+          </span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 `;

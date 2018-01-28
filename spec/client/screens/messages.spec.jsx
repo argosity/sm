@@ -1,4 +1,5 @@
-import { React, getScreenInstance } from 'hippo/testing/index'; // eslint-disable-line
+import { React, getScreenInstance } from 'hippo/testing'; // eslint-disable-line
+
 import Messages from 'sm/screens/messages';
 
 const screenInstance = getScreenInstance('messages');

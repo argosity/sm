@@ -1,3 +1,4 @@
+import React from 'react'; // eslint-disable-line no-unused-vars
 import Sale from 'sm/models/sale';
 import Show from 'sm/models/show';
 import Form from 'sm/components/sale/form';
@@ -34,6 +35,7 @@ describe('Payment Form', () => {
 
     it('sets sale values', () => {
         const form = mount(<Form {...props} />);
+
         form.find('input[name="qty"]').simulate(
             'change', { target: { value: 3 } },
         );
@@ -46,7 +48,6 @@ describe('Payment Form', () => {
         form.find('input[name="phone"]').simulate(
             'change', { target: { value: '123-456-7890' } },
         );
-
         return form.instance().saveState().then((sale) => {
             expect(sale.qty).toEqual(3);
             expect(sale.name).toEqual('My Name');

@@ -7,7 +7,7 @@ import { get, extend, each, map } from 'lodash';
 import { observer } from 'mobx-react';
 import PaymentFields from 'payment-fields';
 import { Col } from 'react-flexbox-grid';
-import { Box, Button, Select } from 'grommet/components/Button';
+import { Box, Button, Select } from 'grommet';
 import { CreditCard } from 'grommet-icons';
 import Value from 'hippo/components/value';
 import Spinning from 'hippo/components/icon/spinning';

@@ -3,7 +3,7 @@
 exports[`Payment Form matches snapshot 1`] = `
 <SaleForm
   heading=""
-  onComplete={[Function]}
+  onComplete={[MockFunction]}
   online={false}
   sale={
     Sale {
