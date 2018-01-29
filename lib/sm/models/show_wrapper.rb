@@ -13,7 +13,7 @@ module SM
             end
 
             def can_purchase?
-                true
+                can_purchase && occurs.any?{|o| o > Time.now }
             end
 
             def has_info?
