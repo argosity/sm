@@ -36,7 +36,7 @@ describe SM::Embed, api: true, vcr: VCR_OPTS do
     it "can query shows" do
         visible_show = shows.find{|s| s.times.find{|st| st.occurs_at > Time.now } }
         if visible_show.present?
-            shows = SM::Embed.current_shows(embeds.first.identifier)
+            shows = SM::Embed.find_by_identifier(embeds.first.identifier).current_shows
             ids = shows.map { |e| e['identifier'] }
             expect(ids).to include(visible_show.identifier)
         end
