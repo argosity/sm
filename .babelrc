@@ -1,16 +1,35 @@
 {
-    "plugins": [
-        "react-hot-loader/babel",
-        "transform-decorators-legacy",
-        "transform-class-properties",
-        "transform-function-bind",
-        "transform-react-jsx",
-        "grommet",
-        "lodash"
-    ],
-    "presets": [
-        ["es2015", {"modules": false}],
-        "react",
-        "stage-1"
-    ]
+    "env": {
+        "test": {
+            "plugins": [
+                "react-hot-loader/babel",
+                "transform-decorators-legacy",
+                "transform-class-properties",
+                "transform-function-bind",
+                "transform-react-jsx"
+            ],
+            "presets": [
+                ["es2015", {"modules": false}],
+                "react",
+                "stage-1"
+            ]
+        },
+        "production": {
+
+            "plugins": [
+                "react-hot-loader/babel",
+                "transform-decorators-legacy",
+                "transform-class-properties",
+                "transform-function-bind",
+                "transform-react-jsx",
+                "grommet",
+                "lodash"
+            ],
+            "presets": [
+                ["es2015", {"modules": false}],
+                "react",
+                "stage-1"
+            ]
+        }
+    }
 }
