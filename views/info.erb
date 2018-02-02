@@ -1,3 +1,16 @@
-<div class="information">
-<%= show.page %>
+<%= include['embeded_css_vars', embed: embed] %>
+<div class="show-information">
+  <div class="page">
+    <%= show.page %>
+  </div>
+  <div class="actions">
+    <a href="#" class="btn btn-default btn-cancel">
+      Listing
+    </a>
+    <% if show.can_purchase? %>
+    <a href="#purchase/<%= show.identifier %>" class="btn btn-primary btn-purchase">
+      Purchase
+    </a>
+    <% end %>
+  </div>
 </div>

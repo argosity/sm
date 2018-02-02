@@ -12,7 +12,6 @@ select
   sh.price,
   sh.capacity,
   sh.online_sales_halt_mins_before,
-  em.css_vars,
   times_info.first_show_time,
   coalesce(times_info.show_times, '[]'::json) as times,
   json_build_object(
@@ -33,7 +32,8 @@ select
     'name', venues.name,
     'address', venues.address,
     'phone_number', venues.phone_number,
-    'logo', json_build_object('file_data', venue_asset.file_data)
+    'logo', json_build_object('file_data', venue_asset.file_data),
+    'timezone', venues.timezone
   ) as venue
 
 from embeds em
@@ -60,4 +60,3 @@ from embeds em
        and presenter_asset.owner_id = presenter.id
   left join assets as venue_asset on venue_asset.owner_type = 'SM::Venue'
        and venue_asset.owner_id = sh.venue_id
-where visible_during @> now()::timestamp

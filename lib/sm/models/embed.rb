@@ -3,16 +3,26 @@ module SM
         belongs_to_tenant
         has_random_identifier
 
-        def self.current_shows(identifier)
-            res = connection.select_all(
-                "select * from public_shows where embed_identifier = #{connection.quote(identifier)} and visible_during @> now()::timestamp order by first_show_time"
+        def current_shows
+            conn = Embed.connection
+            res = conn.select_all(
+                "select * from public_shows where embed_identifier = #{conn.quote(identifier)} and visible_during @> now()::timestamp order by first_show_time"
             )
-
             res.to_a.map do |r|
                 r.each { |k, v| r[k] = res.column_types[k].deserialize(v) }
                 SM::Models::ShowWrapper.new(r)
             end
+        end
 
+        def find_show(show_identifier)
+            conn = Embed.connection
+            res = conn.select_all(
+                "select * from public_shows where embed_identifier = #{conn.quote(identifier)} and identifier = #{conn.quote(show_identifier)} limit 1"
+            )
+            raise ActiveRecord::RecordNotFound unless res.one?
+            SM::Models::ShowWrapper.new(
+                Hash[res.first.map { |k, v| [k, res.column_types[k].deserialize(v)] }]
+            )
         end
 
         def self.update_tenant_slugs(old_slug, new_slug)
@@ -20,7 +30,6 @@ module SM
                 .update_all(["tenants = array_replace(tenants, :old_slug, :new_slug)",
                         { old_slug: old_slug, new_slug: new_slug }])
         end
-
     end
 end
 

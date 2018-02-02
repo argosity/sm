@@ -31,6 +31,7 @@
             img {
                 max-height: 50px;
                 margin-right: 1rem;
+                min-width: 10px;
             }
         }
 
@@ -111,17 +112,19 @@
             .logo, .info, .actions {
                 min-width: 100%;
             }
+
             .content {
                 flex-direction: column-reverse;
                 .main {
                     flex-direction: column;
+                    .title {
+                        margin: 1rem 0;
+                    }
                     .actions {
                         flex-direction: row;
+                        margin: 1rem 0;
                         justify-content: space-around;
                         flex-wrap: wrap;
-                        .grommetux-button + .grommetux-button {
-                            margin-left: 0.5rem;
-                        }
                     }
                 }
             }

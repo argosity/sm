@@ -9,14 +9,13 @@ module SM
         # Care is taken to only expose a few attributes of SKU's marked as "public"
         class Shows < Hippo::API::ControllerBase
 
-            attr_reader :view
+            attr_reader :view, :embed
 
             def show
-                return {
-                    show: SM::Show.public_representation(params['id']).to_h,
-                    vendor: SM::Payments.vendor_name,
-                    authorization: SM::Payments.vendor.payment_authorization
-                }.to_json if 'purchase' == params['view']
+                MultiTenant.with(nil) {
+                    @embed = SM::Embed.find_by_identifier(params['embed_id'])
+                }
+                return purchase_json if 'purchase' == params['view']
 
                 @view = SM::Templates::View.new(params['view'])
 
@@ -24,7 +23,9 @@ module SM
                 when 'listing'
                     listing
                 when 'info'
-                    view.variables['show'] = SM::Show.find_by_identifier(params['id'])
+                    view.variables.merge!(
+                        embed: embed, show: SM::Show.find_by_identifier(params['id'])
+                    )
                 else
                     listing
                 end
@@ -32,12 +33,21 @@ module SM
             end
 
             def listing
-                shows = SM::Embed.current_shows(params['embed_id'])
+                shows = embed.current_shows #SM::Embed.current_shows(params['embed_id'])
                 if shows.none?
                     view.basename = 'no-shows'
                 else
-                    view.variables['shows'] = shows
+                    view.variables.merge!(embed: embed, shows: shows)
                 end
+            end
+
+            def purchase_json
+                {
+                    embed: embed.css_values,
+                    show: embed.find_show(params['id']).to_h,
+                    vendor: SM::Payments.vendor_name,
+                    authorization: SM::Payments.vendor.payment_authorization
+                }.to_json
             end
 
             def self.xls_sale_report(show_id, headers)

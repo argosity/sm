@@ -1,6 +1,5 @@
 button.btn,
 a.btn {
-
     font-family: 'Roboto', "Century Gothic", "Century", sans-serif;
     border-radius: 2px;
     border: 0;
@@ -8,8 +7,8 @@ a.btn {
     color: #fff;
     text-align: center;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    padding: 4px 8px;
-
+    padding: 10px 20px;
+    cursor: pointer;
     &:focus {
         outline: none !important;
     }
@@ -25,18 +24,18 @@ a.btn {
     }
 
     &.btn-default {
-        background: var(--default-bg-color);
-
+        color: var(--sm-default-btn-color);
+        background: var(--sm-default-btn-bg-color);
         &:hover, &:focus {
-            background-color: var(--default-bg-color-hover);
+            background-color: var(--sm-default-btn-bg-color-hover);
         }
     }
 
     &.btn-primary {
-        background: var(--primary-bg-color);
+        color: var(--sm-primary-btn-color);
+        background: var(--sm-primary-btn-bg-color);
         &:hover, &:focus {
-            background-color: var(--primary-bg-color-hover);
+            background-color: var(--sm-primary-btn-bg-color-hover);
         }
     }
-
 }

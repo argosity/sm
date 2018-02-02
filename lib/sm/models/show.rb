@@ -31,15 +31,8 @@ module SM
             where('visible_during @> now()::timestamp') if val == 'true'
         }, export: true
 
-        def self.public_representation(show_identifier)
-            res = connection.select_all(
-                "select * from public_shows where identifier = #{connection.quote(show_identifier)} limit 1"
-            )
-            raise ActiveRecord::RecordNotFound unless res.one?
-
-            SM::Models::ShowWrapper.new(
-                Hash[res.first.map { |k, v| [k, res.column_types[k].deserialize(v)] }]
-            )
+        def can_purchase?
+            can_purchase && times.any?{|t| t.occurs_at_in_venue_tz > Time.now }
         end
 
         protected

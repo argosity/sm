@@ -6,8 +6,13 @@ export default class View {
         this.embed = embed;
     }
 
+    get root() {
+        return this.embed.root;
+    }
+
     render({ response }) {
         this.embed.root.innerHTML = response;
+        this.updateStyleVariables();
     }
 
     display(id, success, failure) {
@@ -18,5 +23,14 @@ export default class View {
     }
 
     remove() { }
+
+    updateStyleVariables() {
+        const styles = this.root.querySelector('[data-type="css-style-variables"]');
+        if (!styles) { return; }
+        const rules = JSON.parse(styles.innerHTML);
+        Object.keys(rules).forEach((key) => {
+            this.root.style.setProperty(`--sm-${key}`, rules[key]);
+        });
+    }
 
 }
