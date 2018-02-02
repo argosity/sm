@@ -12,7 +12,6 @@ select
   sh.price,
   sh.capacity,
   sh.online_sales_halt_mins_before,
-  em.css_vars,
   times_info.first_show_time,
   coalesce(times_info.show_times, '[]'::json) as times,
   json_build_object(
