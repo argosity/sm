@@ -5,6 +5,7 @@ import Form from './purchase-form/form';
 import TextField from './purchase-form/text-field';
 import CardField from './purchase-form/card-field';
 import './purchase-form/purchase-form-styles.scss';
+import applyStyleRules from './apply-style-rules';
 import Sale from './sale';
 
 function currency(s) {
@@ -37,6 +38,9 @@ export default class PurchaseForm extends Preact.Component {
     componentWillMount() {
         this.sale.fetch((info) => {
             this.setState({ show: info.show });
+            if (info.css_values) {
+                applyStyleRules(this.embed.root, info.css_values);
+            }
         });
     }
 

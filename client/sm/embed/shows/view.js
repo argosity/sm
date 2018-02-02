@@ -1,4 +1,5 @@
 import xhr from 'hippo/lib/xhr';
+import applyStyleRules from './apply-style-rules';
 
 export default class View {
 
@@ -27,10 +28,7 @@ export default class View {
     updateStyleVariables() {
         const styles = this.root.querySelector('[data-type="css-style-variables"]');
         if (!styles) { return; }
-        const rules = JSON.parse(styles.innerHTML);
-        Object.keys(rules).forEach((key) => {
-            this.root.style.setProperty(`--sm-${key}`, rules[key]);
-        });
+        applyStyleRules(this.root, JSON.parse(styles.innerHTML));
     }
 
 }

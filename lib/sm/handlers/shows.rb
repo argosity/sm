@@ -43,7 +43,7 @@ module SM
 
             def purchase_json
                 {
-                    embed: embed.css_values,
+                    css_values: embed.css_values,
                     show: embed.find_show(params['id']).to_h,
                     vendor: SM::Payments.vendor_name,
                     authorization: SM::Payments.vendor.payment_authorization

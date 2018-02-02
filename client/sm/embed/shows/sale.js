@@ -38,7 +38,6 @@ export default class Sale {
         xhr({ url: `${this.host}/api/sm/embed/shows/${this.embedId}/purchase/${this.showId}` }, {
             success: ({ response }) => {
                 const reply = JSON.parse(response);
-                this.css_vars = reply.css_vars;
                 this.vendor = reply.vendor;
                 this.authorization = reply.authorization;
                 this.show = reply.show;
