@@ -7,6 +7,7 @@ import { observer } from 'mobx-react';
 import { observable, computed, action } from 'mobx';
 import Camera from 'react-native-camera';
 import Bridge from './bridge';
+import NetworkStatusModal from './network-status-modal';
 
 import { onMessage, setRef } from './api';
 import Config from './config';
@@ -90,6 +91,7 @@ export default class ShowMakerWeb extends React.Component {
         if (!Config.initialized) { return null; }
         return (
             <View style={styles.container}>
+                <NetworkStatusModal />
                 <WebView
                     ref={this.setWebViewRef}
                     bounces={false}
