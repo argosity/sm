@@ -100,9 +100,9 @@ export default class Venues extends React.Component {
                         name="code" recordsTitle='Venue' onRecordFound={this.onRecordFound}
                         query={this.query} validate={nonBlank} />
 
-                    <Field width={3} name="name" validate={nonBlank} />
+                    <Field desktop={3} tablet={2} name="name" validate={nonBlank} />
 
-                    <Field width={3} name="address" />
+                    <Field desktop={3} tablet={2} name="address" />
 
                     <Field
                         name="message_id" label="Order Confirmation"
