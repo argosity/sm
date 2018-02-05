@@ -1,26 +1,23 @@
-<div class="choose-tenant">
+<div class="mobile choose-tenant">
+    <img src="/logo/small.png" width="250" height="174">
+    <p>
+        Need an account?  <a href="/signup">Sign up for free!</a>
+    </p>
+    <form id="signup" method="post" action="/mobile">
+        <label>
+            Already have an account?  Enter the
+            account identifier that's found at the top of the
+            “System Settings” screen.
 
-  <h3>Welcome to ShowMaker</h3>
-
-  <p>
-    Need an account?  <a href="/signup">Sign up for free!</a>
-  </p>
-
-
-  <form id="signup" method="post" action="/mobile">
-
-    <label>
-      Already have an account?  Enter the
-      account identifier that's found at the top of the
-      “System Settings” screen.
-
-      <input
-        id="identifier" name="identifier"
-        autocorrect="off" autocapitalize="none"
-        type="text" placeholder="Identifier" value="<%= params['identifier'] %>">
-    </label>
-
-    <button type="submit" class="pure-button">Proceed</button>
-
-  </form>
+            <div class="control-group">
+                <input
+                    id="identifier" name="identifier"
+                    autocorrect="off" autocapitalize="none"
+                    type="text" placeholder="Identifier"
+                    value="<%= params['identifier'] %>"
+                >
+                <button type="submit">Proceed</button>
+            </div>
+        </label>
+    </form>
 </div>
