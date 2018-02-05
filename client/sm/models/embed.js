@@ -15,7 +15,7 @@ export default class Embed extends BaseModel {
 
     @computed get html() {
         const url = `${window.location.protocol}//${window.location.host}`;
-        return `<script src="${url}/assets/embedded-shows.js" data-render-to="#showmaker-shows-listing" data-embed-id="${this.identifier}"></script>\n<div id="showmaker-shows-listing"></div>`;
+        return `<div id="showmaker-shows-listing"></div>\n<script async src="${url}/assets/embedded-shows.js" data-render-to="#showmaker-shows-listing" data-embed-id="${this.identifier}"></script>`;
     }
 
     @readonly static css_value_labels = {
