@@ -4,10 +4,7 @@ import { observer } from 'mobx-react';
 import { computed } from 'mobx';
 import { Ticket }   from 'grommet-icons';
 import pluralize    from 'pluralize';
-import Anchor       from 'grommet/components/Anchor';
-import Box          from 'grommet/components/Box';
-import Button       from 'grommet/components/Button';
-import Paragraph    from 'grommet/components/Paragraph';
+import { Anchor, Box, Button } from 'grommet';
 
 import Sale from '../../models/sale';
 
@@ -40,10 +37,10 @@ export default class Receipt extends React.Component {
         if (!sale) { return null; }
 
         return (
-            <Paragraph size="large">
+            <p size="large">
                 We’ve also emailed you a receipt with
                 the {this.ticketName} to {sale.email}.
-            </Paragraph>
+            </p>
         );
     }
 
@@ -57,11 +54,11 @@ export default class Receipt extends React.Component {
                     separator='horizontal'
                 >
                     {this.title}
-                    <Paragraph>
+                    <p>
                         The transaction id for this order is {identifier}.  If you
                         need to contact us regarding the order, please mention this id so we
                         can find your records.
-                    </Paragraph>
+                    </p>
                     <Anchor
                         target="_blank"
                         href={Sale.ticketUrlForIdentifier(identifier)}
