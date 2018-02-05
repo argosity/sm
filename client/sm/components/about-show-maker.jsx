@@ -8,13 +8,17 @@ export default function AboutShowMaker() {
             <Box
                 pad="large"
             >
-                <div className="fancy-header">
-                    <h1>Welcome to the ShowMaker</h1>
-                </div>
+                <Box>
+                    <h1>Welcome to ShowMaker</h1>
+                </Box>
                 <h3>A few tips to get you started…</h3>
                 <p>
                     ShowMaker is broken into separate screens, each of which can be
                     visited by selecting it from the menu on the left.
+                </p>
+                <p>
+                    On narrow screens, the menu can be slid in and out by
+                    sliding in and out from the left side of the screen.
                 </p>
                 <p>
                     The screens and their purposes are:
