@@ -111,8 +111,7 @@ export default class Messages extends React.Component {
                         name="code" recordsTitle='Message' onRecordFound={this.onRecordFound}
                         query={this.query} validate={nonBlank}
                     />
-                    <Field name="name" validate={nonBlank} />
-
+                    <Field tablet="2" name="name" validate={nonBlank} />
                     <Asset
                         model={this.message} name="ticket_header"
                     />
