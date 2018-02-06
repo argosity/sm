@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { action } from 'mobx';
+import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { Box, Button } from 'grommet';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
@@ -22,11 +22,15 @@ class PageEditor extends React.Component {
 
     @action.bound setEditorRef(e) {
         this.editor = e;
-        this.editor.contents = this.props.show.page;
+        if (this.props.show.page_delta) {
+            this.editor.contents = toJS(this.props.show.page_delta);
+        }
     }
 
     @action.bound onSave() {
-        this.props.show.page = this.editor.contents;
+        const { delta, html } = this.editor.contents;
+        this.props.show.page = html;
+        this.props.show.page_delta = delta;
         this.props.show.save();
         this.props.onComplete();
     }

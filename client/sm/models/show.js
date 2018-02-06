@@ -45,6 +45,7 @@ export default class Show extends BaseModel {
     @field external_url;
     @field can_purchase = false;
     @field page = '';
+    @field({ type: 'object' }) page_delta;
     @field online_sales_halt_mins_before;
     @field({ model: DateRange }) visible_during = new DateRange({
         start: moment().startOf('day').toDate(),
