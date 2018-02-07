@@ -50,7 +50,8 @@ module SM
         end
 
         def upsert_item_for_show(show)
-            return unless show.can_purchase?
+            return unless show[:can_purchase]
+
             ca = SquareConnect::CatalogApi.new(
                 SM::Payments::Square.api_client
             )
