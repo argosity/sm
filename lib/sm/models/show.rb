@@ -12,7 +12,8 @@ module SM
         has_one :page, as: :owner, class_name: 'SM::Page', dependent: :destroy, export: true
 
         has_many :times, -> { order('occurs_at') },
-                 class_name: 'SM::ShowTime', autosave: true,
+                 class_name: 'SM::ShowTime',
+                 inverse_of: :show, autosave: true,
                  dependent: :destroy, export: { writable: true }
 
         before_validation :set_defaults
@@ -28,7 +29,7 @@ module SM
         }, export: true
 
         def can_purchase?
-            can_purchase && times.any?{|t| t.occurs_at_in_venue_tz > Time.now }
+            can_purchase && times.any? {|t| t.occurs_at_in_venue_tz > Time.now }
         end
 
         protected
