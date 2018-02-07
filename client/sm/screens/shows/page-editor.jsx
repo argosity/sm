@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { action, toJS } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { Box, Button } from 'grommet';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import TextEditor from 'hippo/components/text-editor';
 import { Previous } from 'grommet-icons';
-
 import Show from '../../models/show';
 import './page-editor.scss';
 
@@ -20,18 +19,22 @@ class PageEditor extends React.Component {
         onComplete: PropTypes.func.isRequired,
     }
 
+    @observable page;
+
+    componentWillMount() {
+        this.page = this.props.show.findOrCreatePage();
+    }
+
     @action.bound setEditorRef(e) {
         this.editor = e;
-        if (this.props.show.page_delta) {
-            this.editor.contents = toJS(this.props.show.page_delta);
+        if (this.page.contents) {
+            this.editor.contents = toJS(this.page.contents);
         }
     }
 
     @action.bound onSave() {
-        const { delta, html } = this.editor.contents;
-        this.props.show.page = html;
-        this.props.show.page_delta = delta;
-        this.props.show.save();
+        Object.assign(this.page, this.editor.contents);
+        this.page.save();
         this.props.onComplete();
     }
 
@@ -40,7 +43,7 @@ class PageEditor extends React.Component {
     }
 
     render() {
-        const { props: { show } } = this;
+        const { props: { show }, page } = this;
         return (
             <div className="shows-edit-page">
                 <Toolbar justify="between">
@@ -59,7 +62,7 @@ class PageEditor extends React.Component {
                 >
                     <TextEditor
                         onReady={this.setEditorRef}
-                        assets={show.page_images}
+                        assets={page.images}
                     />
                 </Box>
             </div>

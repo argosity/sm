@@ -41,7 +41,7 @@ export default class Show extends React.Component {
     onEdit() {
         this.isEditing = true;
         return this.props.query.results.fetchModelForRow(
-            this.props.index, { include: ['image', 'times'], with: '' },
+            this.props.index, { include: ['image', 'times', 'page'], with: '' },
         ).then((show) => {
             this.props.onEdit(this.props.index, show);
             this.isEditing = false;

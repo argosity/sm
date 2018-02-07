@@ -1,4 +1,4 @@
-import whenDomReady from 'when-dom-ready';
+import whenDomReady from 'hippo/lib/when-dom-ready';
 import SmoothScroll from 'hippo/lib/smooth-scroll';
 import './homepage.scss';
 

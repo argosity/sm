@@ -5,8 +5,9 @@ import DateRange from 'hippo/lib/date-range';
 import Config from 'hippo/config';
 import { renameProperties } from 'hippo/lib/util';
 import {
-    BaseModel, identifiedBy, identifier, field, belongsTo, computed, hasMany,
+    BaseModel, identifiedBy, identifier, field, belongsTo, computed, hasMany, action,
 } from './base';
+import Page from './page';
 import ShowTime from './show-time';
 
 const formatTime = occurs => moment(occurs.occurs_at).format('h:mma');
@@ -44,8 +45,7 @@ export default class Show extends BaseModel {
     @field capacity;
     @field external_url;
     @field can_purchase = false;
-    @field page = '';
-    @field({ type: 'object' }) page_delta;
+
     @field online_sales_halt_mins_before;
     @field({ model: DateRange }) visible_during = new DateRange({
         start: moment().startOf('day').toDate(),
@@ -54,10 +54,10 @@ export default class Show extends BaseModel {
 
     @belongsTo({ model: 'sm/venue' }) venue;
     @belongsTo({ model: 'sm/presenter' }) presenter;
+    @belongsTo({ model: Page, inverseOf: 'owner' }) page;
     @belongsTo({ model: Asset, inverseOf: 'owner' }) image;
 
     @hasMany({ model: ShowTime, inverseOf: 'show' }) times;
-    @hasMany({ model: Asset, inverseOf: 'owner' }) page_images;
 
     set(attrs = {}) {
         renameProperties(attrs, {
@@ -65,6 +65,15 @@ export default class Show extends BaseModel {
             venue_details: 'venue',
         });
         return super.set(attrs);
+    }
+
+    @action findOrCreatePage() {
+        if (!this.page) {
+            this.page = new Page({
+                owner: this, owner_id: this.id, owner_type: 'SM::Show',
+            });
+        }
+        return this.page;
     }
 
     @computed get image_details() {

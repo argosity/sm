@@ -17,6 +17,7 @@ module Hippo::Access
             grant SM::Payment
             grant SM::Redemption
             grant SM::Message
+            grant SM::Page
         end
 
     end

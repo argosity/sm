@@ -9,11 +9,7 @@ module SM
         belongs_to :presenter
         belongs_to :message
         has_one :image, as: :owner, class_name: 'Hippo::Asset', dependent: :destroy, export: true
-
-        has_many :page_images, -> { where owner_type: "PageImage" },
-                 class_name: 'Hippo::Asset', foreign_key: :owner_id,
-                 foreign_type: :owner_type,
-                 dependent: :destroy
+        has_one :page, as: :owner, class_name: 'SM::Page', dependent: :destroy, export: true
 
         has_many :times, -> { order('occurs_at') },
                  class_name: 'SM::ShowTime', autosave: true,
