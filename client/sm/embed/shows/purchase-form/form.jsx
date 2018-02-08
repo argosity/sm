@@ -1,6 +1,6 @@
 /** @jsx Preact.h */
 import Preact from 'preact';
-import { Vendors } from 'payment-fields';
+import Vendors from 'payment-fields/dist/vendors';
 
 export default class PaymentFields extends Preact.Component {
 
