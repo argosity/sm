@@ -24,8 +24,9 @@
         font-style: italic;
     }
 
-    @import "./button";
     @import "./reset";
+    @import "./button";
+    @import './spinner';
     @import './listing';
 
     .order-receipt {

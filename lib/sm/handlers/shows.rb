@@ -33,7 +33,7 @@ module SM
             end
 
             def listing
-                shows = embed.current_shows #SM::Embed.current_shows(params['embed_id'])
+                shows = embed.current_shows
                 if shows.none?
                     view.basename = 'no-shows'
                 else

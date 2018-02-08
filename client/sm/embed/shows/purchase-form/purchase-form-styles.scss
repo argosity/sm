@@ -6,7 +6,6 @@
         grid-template-columns: 300px minmax(200px, 1fr);
         @media (max-width: 550px) {
             grid-template-columns: 100%;
-
         }
         .logo {
             width: 100%;
@@ -27,14 +26,39 @@
         display: grid;
         grid-gap: 10px;
         grid-auto-flow: dense;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) ) ;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) ;
+        position: relative;
     }
 
+    .saving {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: rgba(255,255,255,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .message {
+            background-color: white;
+            border: 1px solid #c5bebe;
+            box-shadow: 10px 10px 29px 0px rgba(0,0,0,0.75);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            .sm-embed-spinner { margin-right: 0.5rem; }
+        }
+    }
     .totals {
         display: flex;
         flex-wrap: wrap;
-
+        align-items: center;
         margin: 1rem 0;
+        h3 {
+            flex: 1;
+            text-align: right;
+        }
         .select-time {
             flex: 1;
         }
@@ -70,6 +94,10 @@
         .btn {
             margin-left: 1rem;
             padding: 0.5rem 2rem;
+        }
+        @media (max-width: 550px) {
+            justify-content: space-around;
+            .btn { margin-left: 0; }
         }
     }
 

@@ -12,6 +12,10 @@ function currency(s) {
     return parseFloat(s).toFixed(2);
 }
 
+function formattedOccurs(st) {
+    return dateFormat(Date.parse(st.occurs_at), 'h:MMtt mmm dS yyyy');
+}
+
 
 export default class PurchaseForm extends Preact.Component {
 
@@ -49,19 +53,31 @@ export default class PurchaseForm extends Preact.Component {
         this.forceUpdate();
     }
 
-    renderTimes() {
-        const { show } = this.sale;
+    get availableTimes() {
+        const { show: { times } } = this.sale;
+        const now = Date.now();
+        const future = [];
+        for (let i = 0; i < times.length; i += 1) {
+            if (Date.parse(times[i].occurs_at) > now) {
+                future.push(times[i]);
+            }
+        }
+        return future;
+    }
 
-        if (1 === show.times.length) {
-            return <h3>{show.times[0].formattedOccursAt}</h3>;
+    renderTimes() {
+        const times = this.availableTimes;
+
+        if (1 === times.length) {
+            return <h3>{formattedOccurs(times[0])}</h3>;
         }
 
         return (
             <div className="select-time">
                 <select onChange={this.onTimeChange}>
-                    {show.times.map((st, index) => (
+                    {times.map((st, index) => (
                         <option key={st.identifier} value={index}>
-                            ${currency(st.price)} — {dateFormat(Date.parse(st.occurs_at), 'h:MMtt mmm dS yyyy')}
+                            ${currency(st.price)} — {formattedOccurs(st)}
                         </option>))}
                 </select>
             </div>
@@ -86,6 +102,10 @@ export default class PurchaseForm extends Preact.Component {
         this.setState({ isReady: true, tokenize });
     }
 
+    get isSaving() {
+        return this.state.isSaving;
+    }
+
     onPurchase = () => {
         const { sale } = this;
         if (!sale.isValid) {
@@ -93,6 +113,7 @@ export default class PurchaseForm extends Preact.Component {
             this.forceUpdate();
             return;
         }
+        this.setState({ isSaving: true });
         this.state.tokenize().then(({ token, cardData }) => {
             sale.nonce = token;
             sale.cardData = cardData;
@@ -101,11 +122,11 @@ export default class PurchaseForm extends Preact.Component {
                     this.embed.lastOrder = sale.order;
                     window.location.hash = `order/${sale.order.identifier}`;
                 }
-                this.forceUpdate();
+                this.setState({ isSaving: false });
             });
         }).catch(({ errors }) => {
             sale.errors = errors;
-            this.forceUpdate();
+            this.setState({ isSaving: false });
         });
     }
 
@@ -113,9 +134,7 @@ export default class PurchaseForm extends Preact.Component {
     renderErrors() {
         if (!this.sale.errors) { return null; }
         return (
-            <div className="errors">
-                {this.sale.errors.map(e => e.message).join('; ')}
-            </div>
+            <div className="errors">{this.sale.errorMessage}</div>
         );
     }
 
@@ -123,6 +142,17 @@ export default class PurchaseForm extends Preact.Component {
         const cn = ['show-purchase'];
         if (!this.state.isReady) { cn.push('is-pending'); }
         return cn.join(' ');
+    }
+
+    renderSaving() {
+        if (!this.state.isSaving) { return null; }
+        return (
+            <div className="saving">
+                <span className="message">
+                    <span className="sm-embed-spinner"/> Submitting order…
+                </span>
+            </div>
+        );
     }
 
     render() {
@@ -175,6 +205,7 @@ export default class PurchaseForm extends Preact.Component {
                         },
                     }}
                 >
+                    {this.renderSaving()}
                     <TextField label="Name" name="name" type="text" sale={sale} />
                     <TextField label="Email" name="email" type="email" sale={sale} />
                     <TextField label="Phone" name="phone" type="tel" sale={sale} />
@@ -192,10 +223,18 @@ export default class PurchaseForm extends Preact.Component {
                 </Form>
                 {this.renderErrors()}
                 <div className="actions">
-                    <button class="btn btn-default btn-cancel" onClick={this.onCancel}>
+                    <button
+                        disabled={this.isSaving}
+                        class="btn btn-default btn-cancel"
+                        onClick={this.onCancel}
+                    >
                         Cancel
                     </button>
-                    <button class="btn btn-primary btn-purchase" onClick={this.onPurchase}>
+                    <button
+                        disabled={this.isSaving}
+                        class="btn btn-primary btn-purchase"
+                        onClick={this.onPurchase}
+                    >
                         Purchase
                     </button>
                 </div>

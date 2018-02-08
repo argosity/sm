@@ -1,0 +1,14 @@
+@keyframes sm-embed-spinner {
+  to {transform: rotate(360deg);}
+}
+
+.sm-embed-spinner {
+    display: inline-block;
+    min-height: 20px;
+    min-width: 20px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    border-top-color: #333;
+    animation: sm-embed-spinner .6s linear infinite;
+}

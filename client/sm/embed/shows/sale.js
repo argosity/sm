@@ -68,6 +68,17 @@ export default class Sale {
         done(this);
     }
 
+    get errorMessage() {
+        if (!this.errors) { return ''; }
+        const keys = Object.keys(this.errors);
+        const msgs = [];
+        for (let i = 0; i < keys.length; i += 1) {
+            const err = this.errors[keys[i]];
+            msgs.push('base' === keys[i] ? err : `${keys[i]}: ${err}`);
+        }
+        return msgs.join('; ');
+    }
+
     save(done) {
         xhr({
             method: 'POST',
