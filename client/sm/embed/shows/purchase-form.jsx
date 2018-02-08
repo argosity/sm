@@ -84,8 +84,25 @@ export default class PurchaseForm extends Preact.Component {
         );
     }
 
+    renderSaving() {
+        if (!this.state.isSaving) { return null; }
+        return (
+            <div className="saving">
+                <span className="message">
+                    <span className="sm-embed-spinner"/> Submitting order…
+                </span>
+            </div>
+        );
+    }
+
     renderLoading() {
-        return <h1 className="loading">Loading…</h1>;
+        return (
+            <div className="loading">
+                <span className="message">
+                    <span className="sm-embed-spinner"/> Loading…
+                </span>
+            </div>
+        );
     }
 
     onQtyChange = (ev) => {
@@ -142,17 +159,6 @@ export default class PurchaseForm extends Preact.Component {
         const cn = ['show-purchase'];
         if (!this.state.isReady) { cn.push('is-pending'); }
         return cn.join(' ');
-    }
-
-    renderSaving() {
-        if (!this.state.isSaving) { return null; }
-        return (
-            <div className="saving">
-                <span className="message">
-                    <span className="sm-embed-spinner"/> Submitting order…
-                </span>
-            </div>
-        );
     }
 
     render() {
