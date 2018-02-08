@@ -6,7 +6,7 @@ set :repo_url, 'https://github.com/argosity/sm.git'
 set :deploy_to, '/srv/www/showmaker.com'
 set :passenger_restart_with_touch, true
 set :conditionally_migrate, true
-set :linked_files, %w(config/database.yml config/secrets.yml config/initialize.rb)
+set :linked_files, %w(config/database.yml config/secrets.yml .env)
 set :linked_dirs, %w(public/files log node_modules)
 set :branch, ENV['BRANCH'] if ENV['BRANCH']
 
