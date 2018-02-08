@@ -39,30 +39,28 @@
             </p>
             <p style="margin-top: 40px; text-align: center">
               <h3><a href="{{ sale.tickets_url }}">Download Tickets</a></h3>
+              <br>
+              <b>Or pull up this email on your phone so we can scan the code below</b>
+              <br>
+              <img src="{{ sale.qr_code_url }}" height="250" width="250">
             </p>
           </td>
           <td valign="top">
             {% if presenter %}
-
-            {% if presenter.logo %}
-            <img src="{{ presenter.logo.url }}" width="{{ presenter.logo.width }}" height="{{ presenter.logo.height }}">
-            <br>
-            <h3>Presents:</h3>
-            <br>
-            {% else %}
-            <h3>{{ presenter.name }} Presents</h3
-                                               {% endif %}
-
-                                               <br>
-                                               {% endif %}
-                                               <h3>{{show.title}}</h3>
-                                               {% if show.image %}
-                                               <img src="{{ show.image.url }}" width="{{ show.image.width }}" height="{{ show.image.height }}">
-                                               {% endif %}
-            <br>
-            <img src="{{ sale.qr_code_url }}" height="250" width="250">
-            <br>
-            <b>Or bring this email along so we can scan the code above</b>
+              {% if presenter.logo %}
+              <img src="{{ presenter.logo.url }}" width="{{ presenter.logo.width }}" height="{{ presenter.logo.height }}">
+              <br>
+              <h3>Presents:</h3>
+              <br>
+              {% else %}
+              <h3>{{ presenter.name }} Presents</h3
+              {% endif %}
+              <br>
+            {% endif %}
+            <h3>{{show.title}}</h3>
+            {% if show.image %}
+            <img src="{{ show.image.url }}" width="{{ show.image.width }}" height="{{ show.image.height }}">
+            {% endif %}
           </td>
         </tr>
       </table>
