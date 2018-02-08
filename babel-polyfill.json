@@ -1,15 +1,5 @@
 {
     "modules": [
-        "es6.object.assign",
-        "es6.array.find",
-        "es6.array.find-index",
-        "es6.array.from",
-        "es6.array.map",
-        "es6.string.starts-with",
-        "es6.object.prevent-extensions",
-        "es6.object.is-extensible",
-        "es6.date",
-        "es6.map",
         "es6.promise"
     ],
     "library": false

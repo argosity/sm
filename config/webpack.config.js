@@ -13,6 +13,7 @@ const entries = {
         'sm/homepage/index.js',
     ],
     'embedded-shows': [
+        'babel-polyfill-loader!',
         'sm/embed/shows.js',
     ],
 };
@@ -23,12 +24,6 @@ host = ENV['HOST'] || 'dev.argosity.com'
 "#{protocol}://#{host}:8889/assets/"
 end
 %>
-
-<% unless Hippo.env.production? -%>
-// for (var key in entries) {
-//     entries[key].unshift('react-hot-loader/patch');
-// }
-<% end -%>
 
 const config = {
     entry: entries,
@@ -67,8 +62,7 @@ const config = {
             {
                 loader: 'babel-loader',
                 test: /\.jsx?$/,
-                //                exclude: /node_modules/,
-                exclude: /node_modules\/(?!(\@ckeditor|OTHER)\/).*/,
+                exclude: /node_modules/,
                 options: {
                     plugins: [
                         'react-hot-loader/babel',
