@@ -70,6 +70,7 @@ require_relative '../spec_helper'
                 expect(sale.attendee.email).to eq 'test@test.com'
                 email = Mail::TestMailer.deliveries.last
                 expect(email.to).to eq([sale.attendee.email])
+                expect(email.body).to include(sale.qr_code_url)
                 expect(email.subject).to include("tickets for #{show.title}")
             end
         end

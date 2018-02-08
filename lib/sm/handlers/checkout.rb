@@ -1,8 +1,13 @@
 require 'hippo/api/controller_base'
+require 'rqrcode'
 
 module SM
     module Handlers
         class Checkout < Hippo::API::ControllerBase
+
+            def self.qr_code(id)
+                RQRCode::QRCode.new(id).as_svg
+            end
 
             def create
                 sale = SM::Sale.new(

@@ -29,6 +29,10 @@ module SM
             show_time.price * qty
         end
 
+        def qr_code_url
+            tenant.url + Hippo.config.api_path + '/sm/sale/qr/' + identifier + '.svg'
+        end
+
         def tickets_url
             tenant.url +
                 Hippo.config.api_path +

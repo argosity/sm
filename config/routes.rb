@@ -1,5 +1,8 @@
 Hippo::API.routes.for_extension 'sm' do
     # Embed routes must come before the Embed resource, otherwise it handles the requests
+    get 'sale/qr/:id.svg' do
+        SM::Handlers::Checkout.qr_code(params[:id])
+    end
     resources SM::ShowTime
     resources SM::Sale, path: 'sale/submit', controller: SM::Handlers::Checkout, cors: '*', public: true
     resources SM::Sale, controller: SM::Handlers::Sale
@@ -15,10 +18,8 @@ Hippo::API.routes.for_extension 'sm' do
     resources SM::Message
     resources SM::SquareAuth, controller: SM::Handlers::Square
 
-
     get 'show-time/:id/sales-report.xlsx' do
         SM::Handlers::Shows.xls_sale_report(params[:id], headers)
-
     end
 
 end

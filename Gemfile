@@ -16,6 +16,7 @@ gem 'axlsx',
 gem 'oauth2', '~> 1.4.0'
 gem 'square_connect', '~> 2.3.1'
 gem 'dotenv', '~> 2.2.1'
+gem 'rqrcode'
 group :test, :development do
     gem 'byebug'
     gem 'capistrano', '~> 3.8'

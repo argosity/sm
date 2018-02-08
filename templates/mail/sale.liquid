@@ -11,7 +11,11 @@
       <table style="max-width: 850px" border="0" bordercolor="#FFCC00" cellpadding="10" cellspacing="0">
         <tr>
           <td><h2>Thank You!</h2></td>
-          <td align="right">Order Identifier: {{ sale.identifier }}</td>
+          <td align="center">
+            Order Identifier: {{ sale.identifier }}
+            <br>
+            <img src="{{ sale.qr_code_url }}" height="250" width="250">
+          </td>
         </tr>
         <tr>
           <td valign="top">

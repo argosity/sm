@@ -52,7 +52,7 @@ module SM
                         logo: image_json(Hippo::SystemSettings.config.logo)
                     },
                     'sale' => sale.as_json(
-                        methods: %w{tickets_url total},
+                        methods: %w{tickets_url qr_code_url total},
                         only: %w{identifier qty tickets_url}
                     ).merge(
                         sale.attendee.as_json(

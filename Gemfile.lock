@@ -130,6 +130,7 @@ GEM
       capistrano-bundler (~> 1.1)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
+    chunky_png (1.3.10)
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crack (0.4.3)
@@ -295,6 +296,8 @@ GEM
       vegas (~> 0.1.2)
     rollbar (2.15.5)
       multi_json
+    rqrcode (0.10.1)
+      chunky_png (~> 1.0)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -391,6 +394,7 @@ DEPENDENCIES
   puma
   rake
   rollbar
+  rqrcode
   square_connect (~> 2.3.1)
 
 BUNDLED WITH
