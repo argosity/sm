@@ -17,7 +17,7 @@ export default class Email extends React.Component {
     }
 
     @action.bound
-    onQtyChange(ev) {
+    onChange(ev) {
         this.props.sale.email = ev.target.value;
     }
 
@@ -61,7 +61,7 @@ export default class Email extends React.Component {
             <Layer onEsc={onCancel} className="box-office">
                 <Box margin="medium">
                     <Box flex="grow" align="center" justify="between" direction="row">
-                        <Heading level={4} margin="none">Redeem Ticket</Heading>
+                        <Heading level={4} margin="none">Email Ticket</Heading>
                         <Button plain icon={<Close />} onClick={onCancel} />
                     </Box>
                     <div className="name">{sale.name}</div>

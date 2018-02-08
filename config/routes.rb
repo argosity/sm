@@ -1,6 +1,7 @@
 Hippo::API.routes.for_extension 'sm' do
     # Embed routes must come before the Embed resource, otherwise it handles the requests
     get 'sale/qr/:id.svg' do
+        content_type 'image/svg+xml'
         SM::Handlers::Checkout.qr_code(params[:id])
     end
     resources SM::ShowTime

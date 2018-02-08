@@ -13,8 +13,6 @@
           <td><h2>Thank You!</h2></td>
           <td align="center">
             Order Identifier: {{ sale.identifier }}
-            <br>
-            <img src="{{ sale.qr_code_url }}" height="250" width="250">
           </td>
         </tr>
         <tr>
@@ -28,13 +26,11 @@
               Show time is {{ show_time.occurs_at | date: "%l:%M%P on %a %b %d, %y" }} at:
             </p>
             <p>
-              <blockquote>
-                <address>
-                  {{ venue.name }}
-                  <br>
-                  {{ venue.address }}
-                </address>
-              </blockquote>
+              <address>
+                {{ venue.name }}
+                <br>
+                {{ venue.address }}
+              </address>
               <br>
               <a href="https://www.google.com/maps/place/{{ venue.name | url_encode }},+{{ venue.address | url_encode}}">View on Google Maps</a>
             </p>
@@ -63,6 +59,10 @@
                                                {% if show.image %}
                                                <img src="{{ show.image.url }}" width="{{ show.image.width }}" height="{{ show.image.height }}">
                                                {% endif %}
+            <br>
+            <img src="{{ sale.qr_code_url }}" height="250" width="250">
+            <br>
+            <b>Or bring this email along so we can scan the code above</b>
           </td>
         </tr>
       </table>
