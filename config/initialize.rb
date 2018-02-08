@@ -2,6 +2,8 @@
 #
 # Extensions are called in load order, so be aware latter extensions may
 # override config options specified
+require 'dotenv/load'
+
 Hippo.configure do | config |
     # You can specify a different initial vew by setting it here
     # It must be set if the "Workspace" extension is disabled in
