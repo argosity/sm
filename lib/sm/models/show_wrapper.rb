@@ -16,8 +16,12 @@ module SM
                 can_purchase && occurs.any?{|o| o > Time.now }
             end
 
+            def has_page?
+                page_id.present?
+            end
+
             def has_info?
-                page.present? || external_url.present?
+                has_page? || external_url.present?
             end
 
             def purchase_url
@@ -29,7 +33,7 @@ module SM
             end
 
             def info_url
-                if page.present?
+                if has_page?
                     "#info/#{identifier}"
                 elsif external_url.present?
                     external_url

@@ -120,15 +120,15 @@ export default class Messages extends React.Component {
                     />
 
                 </FieldsLayout>
-                <Box margin="small">
+
+                <Box margin="small" flex>
                     <Field
                         label="Order confirmation email subject"
                         name="order_confirmation_subject"
                     />
-                </Box>
-                <Box margin="small">
+
                     <Field
-                        style={{ minHeight: 200 }}
+                        flex
                         type="textarea"
                         name="order_confirmation_body"
                         label="Source for order confirmation email"

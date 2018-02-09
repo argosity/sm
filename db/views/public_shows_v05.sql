@@ -52,7 +52,7 @@ from embeds em
       ) x) order by st.occurs_at) AS show_times
     from show_times st where st.occurs_at > now() group by st.show_id
   ) times_info on times_info.show_id = sh.id
-  left join pages on page.owner_id = sh.id and page.owner_type = 'SM::Show'
+  left join pages pg on pg.owner_id = sh.id and pg.owner_type = 'SM::Show'
   left join venues on venues.id = sh.venue_id
   left join presenters presenter on presenter.id = sh.presenter_id
   left join assets as show_asset on show_asset.owner_type = 'SM::Show'
