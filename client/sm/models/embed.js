@@ -1,9 +1,11 @@
 import { extend } from 'lodash';
 import { readonly } from 'core-decorators';
+import { computed, action } from 'mobx';
 import {
-    BaseModel, identifiedBy, identifier, field, computed,
+    BaseModel, identifiedBy, identifier, field, belongsTo,
 } from './base';
 import defaultCSSValues from './embed_css_defaults';
+import Page from './page';
 
 @identifiedBy('sm/embed')
 export default class Embed extends BaseModel {
@@ -12,6 +14,8 @@ export default class Embed extends BaseModel {
     @field identifier;
     @field name;
     @field({ type: 'object' }) css_values = {};
+
+    @belongsTo({ model: Page, inverseOf: 'owner' }) page;
 
     @computed get html() {
         const url = `${window.location.protocol}//${window.location.host}`;
@@ -31,6 +35,15 @@ export default class Embed extends BaseModel {
         'input-error-color':          'color for inputs that have errors',
         'error-background-color':     'background color for errors',
         'error-color':                'text color for errors',
+    }
+
+    @action findOrCreatePage() {
+        if (!this.page) {
+            this.page = new Page({
+                owner: this, owner_id: this.id, owner_type: 'SM::Embed',
+            });
+        }
+        return this.page;
     }
 
     get_css_value(key) {

@@ -2,6 +2,11 @@ module SM
     class Embed < Model
         belongs_to_tenant
         has_random_identifier
+        has_page
+
+        scope :page_details, lambda { |*|
+            with_page_details_view
+        }, export: true
 
         def current_shows
             conn = Embed.connection

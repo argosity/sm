@@ -1,6 +1,10 @@
 <div class="listing">
-     <h2>No shows are currently listed.</h2>
-     <p class="credits">
+<% if embed.page && embed.page.html -%>
+<%= embed.page.html %>
+<% else -%>
+    <h2>No shows are currently listed.</h2>
+<% end -%>
+    <p class="credits">
        by <a href="https://showmaker.com" target="_blank">ShowMaker.com</a>
-     </p>
+    </p>
 </div>

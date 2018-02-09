@@ -33,11 +33,12 @@ module SM
             end
 
             def listing
+                view.variables[:embed] = embed
                 shows = embed.current_shows
                 if shows.none?
                     view.basename = 'no-shows'
                 else
-                    view.variables.merge!(embed: embed, shows: shows)
+                    view.variables[:shows] = shows
                 end
             end
 

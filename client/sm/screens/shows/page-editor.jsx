@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { observable, action, toJS } from 'mobx';
+import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { Box, Button } from 'grommet';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
@@ -28,7 +28,7 @@ class PageEditor extends React.Component {
     @action.bound setEditorRef(e) {
         this.editor = e;
         if (this.page.contents) {
-            this.editor.contents = toJS(this.page.contents);
+            this.editor.contents = this.page.editorContent;
         }
     }
 

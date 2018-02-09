@@ -5,6 +5,8 @@ module SM
     # this common base class.
     class Model < Hippo::Model
         self.abstract_class = true
+
+        include Concerns::HasPage
     end
     autoload :Attendee, "sm/models/attendee"
 end

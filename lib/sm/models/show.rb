@@ -4,12 +4,12 @@ module SM
 
         belongs_to_tenant
         has_random_identifier
+        has_page
 
         belongs_to :venue
         belongs_to :presenter
         belongs_to :message
         has_one :image, as: :owner, class_name: 'Hippo::Asset', dependent: :destroy, export: true
-        has_one :page, as: :owner, class_name: 'SM::Page', dependent: :destroy, export: true
 
         has_many :times, -> { order('occurs_at') },
                  class_name: 'SM::ShowTime',
