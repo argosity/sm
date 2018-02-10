@@ -8,6 +8,10 @@ export {
 
 export class BaseModel extends HippoBaseModel {
 
+    static get serverModel() {
+        return super.serverModel.replace(/^Sm::/, 'SM::');
+    }
+
 }
 
 export class CachedModel extends BaseModel {

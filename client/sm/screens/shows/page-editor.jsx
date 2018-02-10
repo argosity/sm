@@ -27,15 +27,16 @@ class PageEditor extends React.Component {
 
     @action.bound setEditorRef(e) {
         this.editor = e;
-        if (this.page.contents) {
-            this.editor.contents = this.page.editorContent;
-        }
+        // if (this.page.contents) {
+        //     this.editor.contents = this.page.editorContent;
+        // }
     }
 
     @action.bound onSave() {
         Object.assign(this.page, this.editor.contents);
-        this.page.save();
-        this.props.onComplete();
+        this.editor.save().then(() => {
+            this.props.onComplete();
+        });
     }
 
     @action.bound onCancel() {
@@ -61,8 +62,8 @@ class PageEditor extends React.Component {
                     full="horizontal"
                 >
                     <TextEditor
+                        page={page}
                         onReady={this.setEditorRef}
-                        assets={page.images}
                     />
                 </Box>
             </div>

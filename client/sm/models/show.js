@@ -4,16 +4,16 @@ import moment from 'moment';
 import DateRange from 'hippo/lib/date-range';
 import Config from 'hippo/config';
 import { renameProperties } from 'hippo/lib/util';
+import Page from 'hippo/models/page';
 import {
-    BaseModel, identifiedBy, identifier, field, belongsTo, computed, hasMany, action,
+    BaseModel, identifiedBy, identifier, field, belongsTo, computed, hasMany,
 } from './base';
-import Page from './page';
 import ShowTime from './show-time';
 
 const formatTime = occurs => moment(occurs.occurs_at).format('h:mma');
 
 @identifiedBy('sm/show')
-export default class Show extends BaseModel {
+export default class Show extends Page.hasPageMixin(BaseModel) {
 
     static get embedURL() {
         return `${Config.api_path}/sm/embed/shows`;
@@ -65,15 +65,6 @@ export default class Show extends BaseModel {
             venue_details: 'venue',
         });
         return super.set(attrs);
-    }
-
-    @action findOrCreatePage() {
-        if (!this.page) {
-            this.page = new Page({
-                owner: this, owner_id: this.id, owner_type: 'SM::Show',
-            });
-        }
-        return this.page;
     }
 
     @computed get image_details() {

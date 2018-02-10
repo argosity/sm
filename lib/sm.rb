@@ -15,7 +15,6 @@ end
 Kernel::Sm = SM
 
 require_relative "sm/tenant_extensions"
-require_rel "sm/concerns/*.rb"
 require_relative "sm/model"
 require_relative "sm/payments"
 require_relative "sm/access_roles"

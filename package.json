@@ -48,7 +48,7 @@
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.7",
     "react-flexbox-grid": "2.0.0",
-    "react-hot-loader": "^4.0.0-beta.21",
+    "react-hot-loader": "4.0.0-beta.15",
     "react-swipeable-views": "^0.12.12",
     "react-tag-autocomplete": "^5.5.0",
     "react-test-renderer": "^16.2.0",

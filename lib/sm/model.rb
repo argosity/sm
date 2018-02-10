@@ -6,7 +6,6 @@ module SM
     class Model < Hippo::Model
         self.abstract_class = true
 
-        include Concerns::HasPage
     end
     autoload :Attendee, "sm/models/attendee"
 end
@@ -15,7 +14,6 @@ require_relative "models/presenter"
 require_relative "models/show"
 require_relative "models/show_wrapper"
 require_relative "models/show_time"
-require_relative "models/page"
 require_relative "models/venue"
 require_relative "models/payment"
 require_relative "models/sale"

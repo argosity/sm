@@ -63,9 +63,6 @@ export default class Embeds extends React.Component {
 
     @action.bound setEditorRef(e) {
         this.editor = e;
-        if (this.page.contents) {
-            this.editor.contents = this.page.editorContent;
-        }
     }
 
     onFocus(ev) {
@@ -103,7 +100,7 @@ export default class Embeds extends React.Component {
                     <Heading level={4}>Message to display when there are no shows</Heading>
                     <TextEditor
                         onReady={this.setEditorRef}
-                        assets={page.images}
+                        page={page}
                     />
 
                 </Form>

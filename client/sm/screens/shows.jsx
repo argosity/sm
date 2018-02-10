@@ -75,7 +75,7 @@ export default class Shows extends React.Component {
     //     when(
     //         () => this.query.rows.length,
     //         () => {
-    //             this.query.results.modelForRow(0).fetch().then((s) => {
+    //             this.query.results.modelForRow(1).fetch({ include: 'page' }).then((s) => {
     //                 this.onEditRow(1, s);
     //                 this.displayIndex = 2;
     //             });
