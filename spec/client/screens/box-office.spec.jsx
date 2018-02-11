@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { Snapshot, getScreenInstance } from 'hippo/testing/index';
+import { getScreenInstance } from 'hippo/testing/index';
 import BoxOffice from 'sm/screens/box-office';
 import chronokinesis from 'chronokinesis';
 import moment from 'moment-timezone';
@@ -12,8 +12,9 @@ describe('Screen Gate', () => {
         moment.tz.setDefault('America/Los_Angeles');
     });
 
-    it('renders and matches snapshot', () => {
+    it('renders ', () => {
         screenInstance.id = 'BOXOFFICE';
-        expect(Snapshot(<BoxOffice screen={screenInstance} />)).toMatchSnapshot();
+        const screen = mount(<BoxOffice screen={screenInstance} />);
+        expect(screen).toHaveRendered('BoxOffice');
     });
 });
