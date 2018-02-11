@@ -41,6 +41,6 @@ describe('Model Show', () => {
         });
         expect(show.commonTime).toBeNull();
         show.times[0].occurs_at = '2017-07-26T15:30:15.000Z';
-        expect(show.commonTime).toEqual('8:30am');
+        expect(show.commonTime).toEqual('10:30am');
     });
 });
