@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import color from 'grommet/utils/colors';
+import media from 'hippo/components/grid/media';
 
 const StyledBoxOffice = styled.div`
 flex: 1;
@@ -38,12 +39,12 @@ padding: ${props => props.theme.global.edgeSize.small};
             .grommetux-button__icon {
                 padding: 0;
                 display: flex;
-                @include media-query(lap-and-up) {
+                ${media.desktop`
                     svg {
                         width: 17px;
                         height: 17px;
                     }
-                }
+                `}
             }
             min-width: 26px;
             justify-content: space-around;
@@ -69,39 +70,19 @@ padding: ${props => props.theme.global.edgeSize.small};
                 overflow: hidden;
             }
         }
-        @include media-query(lap-and-up) {
+        ${media.desktop`
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(220px, 1fr) ) ;
             }
-        }
-        @include media-query(palm) {
+        `}
+        ${media.phone`
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) ) ;
             }
-        }
+        `}
+
     }
 }
 `;
 
 export default StyledBoxOffice;
-//
-// .grommetux-layer.box-office {
-//
-//     h3 {
-//         margin: 0;
-//         height: 45px;
-//         display: flex;
-//         align-items: center;
-//     }
-//
-//     .name {
-//         font-size: 120%;
-//         margin-bottom: 10px;
-//     }
-//
-//     .grommetux-number-input {
-//         display: flex;
-//         justify-content: space-around;
-//     }
-//
-// }

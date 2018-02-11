@@ -223,6 +223,25 @@ exports[`Screen Gate renders and matches snapshot 1`] = `
   }
 }
 
+@media (min-width:992px) {
+  .c2 .guest-list .guest .controls .grommetux-button__icon svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+@media (min-width:992px) {
+  .c2 .guest-list .guest .grid {
+    grid-template-columns: repeat(auto-fill,minmax(220px,1fr) );
+  }
+}
+
+@media (min-width:376px) {
+  .c2 .guest-list .guest .grid {
+    grid-template-columns: repeat(auto-fill,minmax(150px,1fr) );
+  }
+}
+
 <div
   className="c0"
 >
