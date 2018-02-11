@@ -13,6 +13,7 @@ describe('Screen Gate', () => {
     });
 
     it('renders and matches snapshot', () => {
+        screenInstance.id = 'BOXOFFICE';
         expect(Snapshot(<BoxOffice screen={screenInstance} />)).toMatchSnapshot();
     });
 });
