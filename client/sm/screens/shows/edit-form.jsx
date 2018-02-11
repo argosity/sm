@@ -10,6 +10,7 @@ import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import { Next } from 'grommet-icons';
+import styled from 'styled-components';
 import Asset from 'hippo/components/asset';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import { observePubSub } from 'hippo/models/pub_sub';
@@ -18,6 +19,39 @@ import Venue from '../../models/venue';
 import Show from '../../models/show';
 import Presenter from '../../models/presenter';
 import ShowTimes from './times';
+
+
+const EditFormWrapper = styled.div`
+height: 100vh;
+button.edit-page {
+    flex-direction: row-reverse;
+    display: flex;
+}
+
+.show-edit-body {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 75px);
+    overflow-y: auto;
+    padding: 0 0.5rem;
+    > * {
+        min-height: min-content; min-height: -moz-min-content; min-height: -webkit-min-content;
+    }
+}
+.times {
+    margin-top: 0.5rem;
+    min-height: 250px;
+    input {
+        max-width: 100%;
+        padding: 0;
+        border-radius: 1px;
+        padding: 3px;
+        text-align: right;
+        &.flatpickr-input {
+            text-align: center;
+        }
+    }
+}`;
 
 @observer
 class EditForm extends React.Component {
@@ -108,7 +142,7 @@ class EditForm extends React.Component {
         observePubSub(show);
 
         return (
-            <div className="show-edit">
+            <EditFormWrapper className="show-edit">
                 <Toolbar>
                     <SaveButton onClick={this.onSave} model={this.props.show} />
                     <Button label="Cancel" onClick={this.onCancel} accent />
@@ -174,13 +208,13 @@ class EditForm extends React.Component {
                     </FieldsLayout>
 
                 </Form>
-            </div>
+            </EditFormWrapper>
         );
     }
 
 }
 
-export default function EditFormWrapper(props) {
+export default function EditFormMounter(props) {
     if (!props.show) { return null; }
     return <EditForm {...props} />;
 }

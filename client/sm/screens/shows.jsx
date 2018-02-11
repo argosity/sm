@@ -20,14 +20,26 @@ import Show from './shows/show';
 import EditFormWrapper from './shows/edit-form';
 import PageEditorWrapper from './shows/page-editor';
 
-import './shows/show-styles.scss';
-
 const ShowsList = styled.div`
+flex: 1;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+.data-list {
+    flex: 1;
+    align-self: stretch;
+}
+.controls {
+    .query-builder {
+        flex: 1;
+    }
+}
 display: flex;
 flex-direction: column;
 height: 100vh;
 .data-list {
-  flex: 1;
+    flex: 1;
 }
 `;
 
