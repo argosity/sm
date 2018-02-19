@@ -8,6 +8,8 @@ import { Heading, TextArea } from 'grommet';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import { Form, Field } from 'hippo/components/form';
 import TextEditor from 'hippo/components/text-editor';
+import Color from 'hippo/components/form/fields/color';
+
 import EmbedModel from '../../models/embed';
 
 const Colors = styled.div`
@@ -15,8 +17,13 @@ const Colors = styled.div`
   grid-gap: 10px;
   grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
   label {
-    > :first-child {
+    .labels {
       flex: 1;
+      justify-content: flex-end;
+      & + * {
+          width: 150px;
+          justify-content: flex-end;
+      }
     }
     > * {
       padding: 0;
@@ -90,7 +97,7 @@ export default class Embeds extends React.Component {
                             <Field
                                 key={key}
                                 name={key}
-                                type="color"
+                                type={Color}
                                 cellWidth={2}
                                 label={description}
                                 value={embed.get_css_value(key)}
