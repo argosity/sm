@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/argosity/hippo
-  revision: 55a0d874107b8c6a90c857419092f0f2e5035d68
+  revision: 19bbd79ac60b81e5b1b491e2910976923c45cdbb
   branch: master
   specs:
     hippo-fw (0.9.9)
@@ -222,7 +222,7 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    mustermann (1.0.1)
+    mustermann (1.0.2)
     nenv (0.3.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -247,11 +247,11 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    public_suffix (3.0.1)
+    public_suffix (3.0.2)
     puma (3.10.0)
     rack (2.0.3)
     rack-cors (0.4.1)
-    rack-protection (2.0.0)
+    rack-protection (2.0.1)
       rack
     rack-test (0.8.2)
       rack (>= 1.0, < 3)
@@ -334,10 +334,10 @@ GEM
       down (~> 4.1)
     shrine-memory (0.3.0)
       shrine (~> 2.2)
-    sinatra (2.0.0)
+    sinatra (2.0.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.0)
+      rack-protection (= 2.0.1)
       tilt (~> 2.0)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
