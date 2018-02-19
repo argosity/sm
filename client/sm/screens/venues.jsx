@@ -111,15 +111,18 @@ export default class Venues extends React.Component {
                     <Asset model={this.venue} name="logo" />
 
                     <Field
+                        cellWidth={2}
                         type="number" name="capacity"
                         validate={numberValue} />
 
                     <Field
+                        cellWidth={2}
                         label="Minutes before show to halt sales"
                         type="number" name="online_sales_halt_mins_before"
                         validate={numberValue} />
 
                     <Field
+                        cellWidth={2}
                         name="timezone" type="timezone"
                         label="Time Zone" />
 

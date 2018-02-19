@@ -91,6 +91,7 @@ export default class Embeds extends React.Component {
                                 key={key}
                                 name={key}
                                 type="color"
+                                cellWidth={2}
                                 label={description}
                                 value={embed.get_css_value(key)}
                                 onChange={partial(onColorChange, embed, key)}

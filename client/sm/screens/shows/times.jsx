@@ -29,6 +29,7 @@ const DateInput = observer(({ time }) => (
 const Times = styled.div`
 display: flex;
 flex-direction: column;
+grid-column-end: span 3;
 grid-row: auto / span 3;
 input {
   width: 100%;

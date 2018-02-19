@@ -176,29 +176,40 @@ class EditForm extends React.Component {
 
                         <Field type="checkbox" name="can_purchase" label="Purchasable?" />
 
-                        <Field type="number" name="price" validate={numberValue} />
+                        <Field
+                            cellWidth={1}
+                            type="number" name="price" validate={numberValue}
+                        />
 
                         <Field
-                            name="external_url"
-                            validate={validURL({ allowBlank: true })} />
+                            cellWidth={2} name="external_url"
+                            validate={validURL({ allowBlank: true })}
+                        />
 
                         <Field
                             name="venue_id" label="Venue"
                             type="select" collection={Venue.all.asOptions}
                             validate={nonBlank} />
 
-                        <Field type="number" name="capacity" validate={numberValue} />
+                        <Field
+                            cellWidth={2}
+                            type="number" name="capacity" validate={numberValue}
+                        />
 
                         <Asset model={show} name="image" />
 
-                        <ShowTimes show={show} height={3} />
+                        <ShowTimes
+                            show={show} height={3}
+                        />
 
                         <Field
+                            cellWidth={2}
                             validate={numberValue}
                             label="Halt minutes"
                             type="number" name="online_sales_halt_mins_before" />
 
                         <Field
+                            cellWidth={2}
                             name="message_id" label="Order Messages"
                             type="select" collection={Message.all.asOptions} />
 
