@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    WebView, View, StyleSheet, Dimensions,
+    WebView, View, StyleSheet, Dimensions, StatusBar,
 } from 'react-native';
 import Button from 'react-native-button';
 import { observer } from 'mobx-react';
@@ -92,6 +92,7 @@ export default class ShowMakerWeb extends React.Component {
         return (
             <View style={styles.container}>
                 <NetworkStatusModal />
+                <StatusBar hidden />
                 <WebView
                     ref={this.setWebViewRef}
                     bounces={false}
