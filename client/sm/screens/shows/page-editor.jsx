@@ -7,9 +7,14 @@ import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import TextEditor from 'hippo/components/text-editor';
 import { Previous } from 'grommet-icons';
+import styled from 'styled-components';
 import Show from '../../models/show';
-import './page-editor.scss';
 
+const EditPageWrapper = styled.div`
+display: flex;
+flex-direction: column;
+height: 100vh;
+`;
 
 @observer
 class PageEditor extends React.Component {
@@ -27,9 +32,6 @@ class PageEditor extends React.Component {
 
     @action.bound setEditorRef(e) {
         this.editor = e;
-        // if (this.page.contents) {
-        //     this.editor.contents = this.page.editorContent;
-        // }
     }
 
     @action.bound onSave() {
@@ -46,7 +48,7 @@ class PageEditor extends React.Component {
     render() {
         const { props: { show }, page } = this;
         return (
-            <div className="shows-edit-page">
+            <EditPageWrapper className="shows-edit-page">
                 <Toolbar justify="between">
                     <Button
                         icon={<Previous />}
@@ -56,8 +58,7 @@ class PageEditor extends React.Component {
                 </Toolbar>
                 <NetworkActivityOverlay model={show} />
                 <Box
-                    flex
-                    size="full"
+                    fill
                     basis="xxlarge"
                     full="horizontal"
                 >
@@ -66,7 +67,7 @@ class PageEditor extends React.Component {
                         onReady={this.setEditorRef}
                     />
                 </Box>
-            </div>
+            </EditPageWrapper>
         );
     }
 

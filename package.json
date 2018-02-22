@@ -18,7 +18,7 @@
     "eslint": "^4.17.0",
     "eslint-config-argosity": "^1.6.0",
     "flatpickr": "^4.2.4",
-    "grommet": "github:nathanstitt/grommet#NEXT-stable",
+    "grommet": "github:grommet/grommet#NEXT-stable",
     "grommet-icons": "^0.15.0",
     "hippo-fw": "git+https://github.com/argosity/hippo.git",
     "history": "^4.7.2",
