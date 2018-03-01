@@ -4,7 +4,7 @@ import { pick } from 'lodash';
 import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
 import { Box, Button } from 'grommet';
-import { ScheduleNew } from 'grommet-icons';
+import { ClearOption } from 'grommet-icons';
 import Help from 'hippo/components/help';
 import RecordFinder from 'hippo/components/record-finder';
 import {
@@ -92,8 +92,8 @@ export default class Messages extends React.Component {
                         onClick={this.isSavable ? this.onSave : null} />
 
                     <Button
-                        icon={<ScheduleNew />}
-                        label='Add New Message'
+                        icon={<ClearOption />}
+                        label='Clear'
                         onClick={this.onReset} />
 
                     <Button onClick={this.setDefaultMessages} label="Set Defaults" />

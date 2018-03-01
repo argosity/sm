@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import moment from 'moment-timezone';
 import { action, computed, observable } from 'mobx';
 import { Button } from 'grommet';
-import { ScheduleNew } from 'grommet-icons';
+import { ClearOption } from 'grommet-icons';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import RecordFinder from 'hippo/components/record-finder';
 import {
@@ -87,8 +87,8 @@ export default class Venues extends React.Component {
                         onClick={this.isSavable ? this.onSave : null}
                     />
                     <Button
-                        icon={<ScheduleNew />}
-                        label='Add New Venue'
+                        icon={<ClearOption />}
+                        label='Clear'
                         onClick={this.onReset}
                     />
 

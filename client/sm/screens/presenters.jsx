@@ -7,7 +7,7 @@ import Screen from 'hippo/components/screen';
 import Query from 'hippo/models/query';
 import RecordFinder from 'hippo/components/record-finder';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
-import { ScheduleNew } from 'grommet-icons';
+import { ClearOption } from 'grommet-icons';
 import Warning from 'hippo/components/warning-notification';
 import Asset from 'hippo/components/asset';
 import {
@@ -79,8 +79,8 @@ export default class Presenters extends React.Component {
                         onClick={this.isSavable ? this.onSave : null}
                     />
                     <Button
-                        icon={<ScheduleNew />}
-                        label='Add New Presenter'
+                        icon={<ClearOption />}
+                        label='Clear'
                         onClick={this.onReset}
                     />
                 </Toolbar>
