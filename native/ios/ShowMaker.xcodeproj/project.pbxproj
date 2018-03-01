@@ -1310,7 +1310,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.showmaker.app;
+				PRODUCT_BUNDLE_IDENTIFIER = YSNF4RS6C2.com.argosity.showmaker;
 				PRODUCT_NAME = ShowMaker;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1336,7 +1336,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.showmaker.app;
+				PRODUCT_BUNDLE_IDENTIFIER = YSNF4RS6C2.com.argosity.showmaker;
 				PRODUCT_NAME = ShowMaker;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
