@@ -49,11 +49,7 @@ const config = {
                 use: [ 'style-loader',  'css-loader' ]
             },
             {
-                test: /\.svg$/,
-                use: [ 'raw-loader' ]
-            },
-            {
-                test: /\.(jpg|png)$/,
+                test: /\.(jpg|png|svg)$/,
                 loader: 'url-loader',
                 options: {
                     limit: 25000,

@@ -1,14 +1,14 @@
 Hippo::Screen.for_extension 'sm' do | screens |
     screens.define "box-office" do | screen |
         screen.title       = "Box Office"
-        screen.icon        = "ticket"
+        screen.icon        = "ticket-alt"
         screen.group_id    = ""
     end
 
     screens.define "shows" do | screen |
         screen.title       = "Shows"
         screen.description = ""
-        screen.icon        = "id-card-o"
+        screen.icon        = "id-card"
         screen.group_id    = ""
     end
     screens.define "presenters" do | screen |
@@ -20,12 +20,12 @@ Hippo::Screen.for_extension 'sm' do | screens |
     screens.define "venues" do | screen |
         screen.title       = "Venues"
         screen.description = ""
-        screen.icon        = "building-o"
+        screen.icon        = "building"
         screen.group_id    = ""
     end
     screens.define "messages" do | screen |
         screen.title       = "Messages"
-        screen.icon        = "pencil-square-o"
+        screen.icon        = "envelope"
     end
     screens.define "embeds" do | screen |
         screen.title       = "Embedding"
