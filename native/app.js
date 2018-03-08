@@ -92,7 +92,7 @@ export default class ShowMakerWeb extends React.Component {
         return (
             <View style={styles.container}>
                 <NetworkStatusModal />
-                <StatusBar hidden />
+                <StatusBar  />
                 <WebView
                     ref={this.setWebViewRef}
                     bounces={false}
@@ -110,7 +110,11 @@ export default class ShowMakerWeb extends React.Component {
 
 
 styles = StyleSheet.create({
+    statusBar: {
+        height: 20,
+    },
     container: {
+        top: 20,
         flex: 1,
         flexDirection: 'row',
     },
