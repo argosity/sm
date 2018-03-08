@@ -2,8 +2,8 @@ import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import { Send, Close } from 'grommet-icons';
-import PropTypes   from 'prop-types';
 import { Heading, Layer, TextInput, Button, Box } from 'grommet';
+import PropTypes   from 'prop-types';
 import Spinning    from 'hippo/components/icon/spinning';
 import Sale        from '../../models/sale';
 
@@ -31,10 +31,7 @@ export default class Email extends React.Component {
                     onChange={this.onChange}
                     defaultValue={sale.email}
                 />
-                <Box
-                    margin="medium"
-                    justify="end"
-                >
+                <Box margin="medium" justify="end">
                     <Button
                         icon={<Send />}
                         label='Send'

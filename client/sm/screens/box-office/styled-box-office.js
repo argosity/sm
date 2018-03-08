@@ -10,25 +10,23 @@ padding: ${props => props.theme.global.edgeSize.small};
 
 .guest-list {
     flex: 1;
+
     .ReactVirtualized__List {
         margin-top: ${props => props.theme.global.edgeSize.medium};
         border-top: ${props => color.colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
     }
 
-    .data-list.selectable {
-        .ReactVirtualized__Grid__innerScrollContainer {
-            cursor: inherit; // override grid default
-
-            .guest {
-                &:not(.full) {
-                    cursor: pointer;
-                }
+    .ReactVirtualized__Grid__innerScrollContainer {
+        cursor: inherit; // override grid default
+        padding-bottom: 5px;
+        .guest {
+            &:not(.full) {
+                cursor: pointer;
             }
         }
     }
+
     .guest {
-        padding: 10px 0;
-        margin-bottom: 10px;
 
         border-bottom: ${props => color.colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
 
@@ -36,15 +34,18 @@ padding: ${props => props.theme.global.edgeSize.small};
         overflow: hidden;
         h4 { margin: 0; }
         .controls {
-            .grommetux-button__icon {
-                padding: 0;
-                display: flex;
-                ${media.desktop`
-                    svg {
+            > * {
+               padding: 0;
+               display: flex;
+               align-items: center;
+               justify-content: flex-end;
+               ${media.desktop`
+svg {
                         width: 17px;
                         height: 17px;
                     }
-                `}
+               `}
+               > * { display: flex; }
             }
             min-width: 26px;
             justify-content: space-around;
