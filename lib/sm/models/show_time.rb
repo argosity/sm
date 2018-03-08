@@ -26,6 +26,10 @@ module SM
             occurs_at_in_venue_tz.strftime('%Y-%m-%d_%H:%M')
         end
 
+        def can_purchase?
+            show.can_purchase && occurs_at > Time.now
+        end
+
         private
 
         def on_redemption(redemption)
