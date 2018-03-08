@@ -4,7 +4,7 @@ FactoryBot.define do
 
         association :show_time, factory: :show_time
         association :attendee, factory: :attendee
-        qty { (rand * 4).to_i + 1 }
+        qty { Faker::Number.between(1, 4) }
         payments { build_list :payment, 1, amount: show_time.price }
     end
 end

@@ -5,11 +5,13 @@ FactoryBot.define do
         title { Faker::RockBand.name }
         sub_title { "with #{Faker::Superhero.name}" }
         description { Faker::Company.catch_phrase }
-        visible_during { (Time.now - (rand * 10).to_i.days)...(Time.now + (rand * 10).to_i.days) }
-        price { (rand*100).round(2) }
-        capacity { (rand*100).to_i }
+        visible_during {
+            (Time.now - (Faker::Number.between(0, 10)).days)...(Time.now + Faker::Number.between(1, 10).days)
+        }
+        price { Faker::Number.between(5, 25) }
+        capacity { Faker::Number.between(50, 250) }
 
-        online_sales_halt_mins_before  { (rand*90).to_i + 30 }
+        online_sales_halt_mins_before  { Faker::Number.between(5, 30) }
         can_purchase { true }
         association :venue, factory: :venue
         transient do
