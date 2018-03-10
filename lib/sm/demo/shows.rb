@@ -34,7 +34,7 @@ module SM::Demo
                 attrs = FactoryBot.attributes_for(
                     :show, identifier: identifier,
                 ).merge(venue: venue, presenter: presenter)
-                show = SM::Show.find_by(identifier: identifier) || SM::Show.build(attrs)
+                show = SM::Show.find_by(identifier: identifier) || SM::Show.new(attrs)
 
                 open(Faker::Avatar.image, "rb") do |avatar|
                     show.build_image unless show.image
