@@ -26,6 +26,6 @@ end
 
 require_rel './demo/*rb'
 
-Hippo::Cron.daily do
+Hippo::Cron.weekly do
     SM::Demo.update
 end

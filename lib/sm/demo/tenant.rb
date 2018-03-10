@@ -5,9 +5,8 @@ module SM::Demo
         LOGIN = 'admin'
 
         def self.update
-
             tenant = Hippo::Tenant.find_by(identifier: IDENTIFIER) ||
-                     Hippo::Tenant.build(ATTRS)
+                     Hippo::Tenant.new
             tenant.update_attributes!(
                 identifier: IDENTIFIER, slug: 'demo',
                 name: 'demo', email: 'contact@argosity.com',
