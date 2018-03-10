@@ -15,7 +15,7 @@ FactoryBot.define do
         can_purchase { true }
         association :venue, factory: :venue
         transient do
-            number_of_times { (rand(4) + 1) }
+            number_of_times { Faker::Number.between(1, 5) }
         end
 
         after :create do |show, evaluator|

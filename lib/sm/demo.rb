@@ -1,10 +1,11 @@
 require 'factory_bot'
 require 'faker'
+require 'open-uri'
 
 module SM
     module Demo
 
-        mattr_accessor :tenant, :venues, :shows
+        mattr_accessor :tenant, :presenters, :venues, :shows
 
         def self.update
             FactoryBot.definition_file_paths = Hippo::Extensions.map do |ext|
@@ -14,6 +15,7 @@ module SM
             Faker::Config.random = Random.new(123)
             self.tenant = SM::Demo::Tenant.update
             self.tenant.perform do
+                self.presenters = SM::Demo::Presenters.update
                 self.venues = SM::Demo::Venues.update
                 SM::Demo::Shows.update
             end

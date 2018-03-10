@@ -25,10 +25,23 @@ module SM::Demo
                 venue = SM::Demo.venues[
                     index % SM::Demo.venues.length
                 ]
+                presenter = nil
+                unless 0 == Faker::Number.between(0, 4)
+                    presenter = SM::Demo.presenters[
+                        index % SM::Demo.presenters.length
+                    ]
+                end
                 attrs = FactoryBot.attributes_for(
                     :show, identifier: identifier,
-                ).merge(venue: venue)
+                ).merge(venue: venue, presenter: presenter)
                 show = SM::Show.find_by(identifier: identifier) || SM::Show.build(attrs)
+
+                open(Faker::Avatar.image, "rb") do |avatar|
+                    show.build_image unless show.image
+                    show.image.file = avatar
+                end
+
+                show.image
                 show.update_attributes!(attrs)
                 show_times = TIME_IDS[index]
                 show.times.where('identifier not in (?)', show_times).delete_all
