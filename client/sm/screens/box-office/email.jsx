@@ -28,6 +28,8 @@ export default class Email extends React.Component {
             <Box>
                 <TextInput
                     min={1}
+                    autoFocus
+                    type="email"
                     onChange={this.onChange}
                     defaultValue={sale.email}
                 />

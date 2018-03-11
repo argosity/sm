@@ -41,9 +41,10 @@ export default class Redeem extends React.Component {
         return (
             <Controls>
                 <TextInput
+                    min={1}
+                    autoFocus
                     size="large"
                     type="number"
-                    min={1}
                     onChange={this.onQtyChange}
                     max={redemption.maxQty}
                     defaultValue={redemption.maxQty}
