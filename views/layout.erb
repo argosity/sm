@@ -8,8 +8,19 @@
     <%= javascript_tags :homepage %>
   </head>
   <body>
+    <nav class="demo imponent">
+      <a href="/" class="brand">
+        <img class="logo" src="/logo/small.png" />
+        <span>ShowMaker</span>
+      </a>
+      <div class="menu">
+        <a href="/signup" class="button icon-file-code">Signup</a>
+      </div>
+    </nav>
     <div class="content">
       <%= yield %>
     </div>
+
+    <%= erb :footer %>
   </body>
 </html>

@@ -29,6 +29,14 @@ class Hippo::API::Root
 
     post '/signup', &SM::Handlers::Signup.handler
 
+    get '/terms' do
+        erb :terms
+    end
+
+    get '/privacy' do
+        erb :privacy
+    end
+
     get '/signup' do
         erb :signup, locals: { tenant: false }
     end
@@ -59,7 +67,7 @@ Hippo::API::Routing.root_view_route = lambda do
         if MultiTenant.current_tenant
             erb :hippo_root_view, layout: false
         else
-            erb :homepage
+            erb :homepage, layout: false
         end
     end
 end

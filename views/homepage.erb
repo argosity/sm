@@ -1,87 +1,105 @@
-<div class="splash-container">
-  <div class="panel splash">
-    <h1 class="splash-head">ShowMaker</h1>
-    <p class="splash-subhead">
-      Successfull events made easy
-    </p>
-    <a href="#signup" class="signup-link">Sign up</a>
-  </div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tools for running shows.">
+    <title>ShowMaker</title>
+    <%= javascript_tags :homepage %>
+  </head>
+  <body>
+    <div class="content">
+      <div class="splash-container">
+        <div class="panel splash">
+          <h1 class="splash-head">ShowMaker</h1>
+          <p class="splash-subhead">
+            Successfull events made easy
+          </p>
+          <a href="#signup" class="signup-link">Sign up</a>
+        </div>
 
-</div>
+      </div>
 
 
-<div class="content-wrapper">
-  <div class="content">
+      <div class="content-wrapper">
+        <div class="content">
 
-    <div class="panel info">
-      <p>
-        With ShowMaker you can embed show listings, information and ticket sales into your website.
-      </p>
-      <p>
-        Once tickets are purchased, use our easy box-office interface to check guests into the show and make sales at the door.
-      </p>
+          <div class="panel info">
+            <p>
+              With ShowMaker you can embed show listings, information and ticket sales into your website.
+            </p>
+            <p>
+              Once tickets are purchased, use our easy box-office interface to check guests into the show and make sales at the door.
+            </p>
+          </div>
+
+          <h2 class="content-head is-center">ShowMaker can help you:</h2>
+
+
+          <h3 class="content-subhead">
+            <i class="fas fa-rocket"></i>
+            Take your events to the next level
+          </h3>
+          <p>
+            We're creating a platform for clubs and promoters to use to drive interest in their shows and to conduct ticket sales online and at the door.
+          </p>
+
+          <h3 class="content-subhead">
+            <i class="fas fa-bullhorn"></i>
+            Engage your audience.
+          </h3>
+          <p>
+            Booking the best acts in the world won't help you if no-one knows they're coming to your venue.  Use our tools to run a cross-media campaign with integrated mailing lists, FB, Twitter & Instagram postings.
+          </p>
+
+
+          <h3 class="content-subhead">
+            <i class="fas fa-ticket-alt" data-fa-transform="rotate-330"></i>
+            Sell tickets online and at the door
+          </h3>
+          <p>
+            Embed an upcoming show listing into your existing website and sell tickets right from the listings.
+          </p>
+          <p>
+            Use our app to scan the tickets at the door, or take door sales using credit cards.
+          </p>
+
+          <h3 class="content-subhead">
+            <i class="fas fa-users"></i>
+            No show too large or small.
+          </h3>
+          <p>
+            ShowMaker was born out of the frustration we felt as event center owners who
+            book and promote acts.  It's a lot of work to put together a successful event,
+            but our software can make it easier.
+          </p>
+
+
+        </div>
+
+        <div class="content ribbon">
+          <div class="card">
+            <header>
+              <h2>Try us for free!</h2>
+            </header>
+            <p>
+              You can list, promote and embed events with ShowMaker completely for free.
+
+            </p>
+            <p>
+              For a small monthly fee (details TBD), you can also sell tickets online.
+            </p>
+          </div>
+        </div>
+
+        <div class="content">
+          <%= erb :signup, locals: { params: {}, tenant: false } %>
+        </div>
+
+        <%= erb :footer %>
+
+      </div>
     </div>
 
-    <h2 class="content-head is-center">ShowMaker can help you:</h2>
-
-
-    <h3 class="content-subhead">
-      <i class="fas fa-rocket"></i>
-      Take your events to the next level
-    </h3>
-    <p>
-      We're creating a platform for clubs and promoters to use to drive interest in their shows and to conduct ticket sales online and at the door.
-    </p>
-
-    <h3 class="content-subhead">
-      <i class="fas fa-bullhorn"></i>
-      Engage your audience.
-    </h3>
-    <p>
-      Booking the best acts in the world won't help you if no-one knows they're coming to your venue.  Use our tools to run a cross-media campaign with integrated mailing lists, FB, Twitter & Instagram postings.
-    </p>
-
-
-    <h3 class="content-subhead">
-      <i class="fas fa-ticket-alt" data-fa-transform="rotate-330"></i>
-      Sell tickets online and at the door
-    </h3>
-    <p>
-      Embed an upcoming show listing into your existing website and sell tickets right from the listings.
-    </p>
-    <p>
-      Use our app to scan the tickets at the door, or take door sales using credit cards.
-    </p>
-
-    <h3 class="content-subhead">
-      <i class="fas fa-users"></i>
-      No show too large or small.
-    </h3>
-    <p>
-      ShowMaker was born out of the frustration we felt as event center owners who
-      book and promote acts.  It's a lot of work to put together a successful event,
-      but our software can make it easier.
-    </p>
-
-
-  </div>
-
-  <div class="content ribbon">
-    <div class="card">
-        <header>
-          <h2>Try us for free!</h2>
-        </header>
-      <p>
-        You can list, promote and embed events with ShowMaker completely for free.
-
-      </p>
-      <p>
-        For a small monthly fee (details TBD), you can also sell tickets online.
-      </p>
-    </div>
-  </div>
-
-  <div class="content">
-    <%= erb :signup, locals: { params: {}, tenant: false } %>
-  </div>
-</div>
+  </body>
+</html>
