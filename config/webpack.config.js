@@ -95,6 +95,11 @@ const config = {
         ],
     },
     devtool: '<%= Hippo.env.production? ? 'source-map' : 'eval-source-map' %>',
+    optimization: {
+        splitChunks: {
+            chunks: 'async'
+        }
+    },
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"<%= Hippo.env.to_s %>"',
