@@ -27,6 +27,7 @@ end
 
 const config = {
     entry: entries,
+    mode: '<%= Hippo.env.production? ? 'production' : 'development' %>',
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
         publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : dev_public_path  %>',
