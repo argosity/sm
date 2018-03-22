@@ -29,8 +29,10 @@
     "jest-styled-components": "^5.0.0",
     "jsdom": "^11.6.2",
     "loadjs": "^3.5.2",
+    "mobx": "^3.6.2",
     "mobx-decorated-models": "^0.8.3",
     "mobx-persist": "^0.4.1",
+    "mobx-react": "4.4.3",
     "mobx-react-router": "^4.0.1",
     "moment-timezone": "^0.5.14",
     "object-hash": "^1.2.0",
@@ -75,7 +77,6 @@
     "compression-webpack-plugin": "^1.1.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "enzyme-to-json": "^3.3.1",
     "react-hot-loader": "^4.0.0",
     "webpack-cli": "^2.0.11"
   }

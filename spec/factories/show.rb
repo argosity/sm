@@ -2,7 +2,7 @@ FactoryBot.define do
     factory :show, class: SM::Show do
         tenant {  Hippo::Tenant.current }
 
-        title { Faker::RockBand.name }
+        title { "#{ Faker::Color.color_name.capitalize} #{Faker::Lovecraft.deity}"  }
         sub_title { "with #{Faker::Superhero.name}" }
         description { Faker::Company.catch_phrase }
         visible_during {
@@ -18,9 +18,15 @@ FactoryBot.define do
             number_of_times { Faker::Number.between(1, 5) }
         end
 
+        trait :with_page do
+            after :create do |show, evaluator|
+                FactoryBot.create :page, owner: show
+            end
+        end
+
         after :create do |show, evaluator|
             FactoryBot.create_list :show_time, evaluator.number_of_times,
-                                    show: show, tenant: show.tenant
+                                   show: show, tenant: show.tenant
             show.reload
         end
     end

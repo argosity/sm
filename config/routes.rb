@@ -29,6 +29,10 @@ class Hippo::API::Root
 
     post '/signup', &SM::Handlers::Signup.handler
 
+    get '/demo' do
+        erb :demo
+    end
+
     get '/terms' do
         erb :terms
     end

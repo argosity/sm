@@ -40,9 +40,11 @@ module SM::Demo
                     show.build_image unless show.image
                     show.image.file = avatar
                 end
-
-                show.image
                 show.update_attributes!(attrs)
+
+                show.build_page unless show.page
+                show.page.update_attributes!(FactoryBot.attributes_for :page)
+
                 show_times = TIME_IDS[index]
                 show.times.where('identifier not in (?)', show_times).delete_all
                 show_times.each do |showid|
@@ -52,23 +54,24 @@ module SM::Demo
                             :show_time, show: show, identifier: showid
                         )
                     )
-                    if time.can_purchase?
-                        Faker::Number.between(1, 10).times do |sid|
-                            identifier = "${time.identifier}#{sid}"
-                            attendee = SM::Attendee.find_or_create_by(
-                                FactoryBot.attributes_for(:attendee)
+                    next unless time.can_purchase?
+
+                    Faker::Number.between(1, 10).times do |sid|
+                        identifier = "${time.identifier}#{sid}"
+                        attendee = SM::Attendee.find_or_create_by(
+                            FactoryBot.attributes_for(:attendee)
+                        )
+                        sale = time.sales.find_by(identifier: identifier) ||
+                               time.sales.build
+                        sale.update_attributes!(
+                            FactoryBot.attributes_for(
+                                :sale, show_time: time
+                            ).merge(
+                                attendee: attendee
                             )
-                            sale = time.sales.find_by(identifier: identifier) ||
-                                   time.sales.build
-                            sale.update_attributes!(
-                                FactoryBot.attributes_for(
-                                    :sale, show_time: time
-                                ).merge(
-                                    attendee: attendee
-                                )
-                            )
-                        end
+                        )
                     end
+
                 end
                 show
             end
