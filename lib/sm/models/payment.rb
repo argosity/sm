@@ -9,7 +9,7 @@ module SM
 
         attr_accessor :nonce
 
-        enum processor_id: [ :braintree, :square, :stripe ]
+        enum processor_id: [ :braintree, :square, :stripe, :test ]
 
         validates :amount, :card_type, :digits, presence: true
 

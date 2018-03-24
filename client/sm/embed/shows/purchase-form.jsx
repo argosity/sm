@@ -7,6 +7,7 @@ import CardField from './purchase-form/card-field';
 import './purchase-form/purchase-form-styles.scss';
 import applyStyleRules from './apply-style-rules';
 import Sale from './sale';
+import TestEnvWarning from './purchase-form/test-env-warning';
 
 function currency(s) {
     return parseFloat(s).toFixed(2);
@@ -15,7 +16,6 @@ function currency(s) {
 function formattedOccurs(st) {
     return dateFormat(Date.parse(st.occurs_at), 'h:MMtt mmm dS yyyy');
 }
-
 
 export default class PurchaseForm extends Preact.Component {
 
@@ -54,12 +54,16 @@ export default class PurchaseForm extends Preact.Component {
     }
 
     get availableTimes() {
-        const { show: { times } } = this.sale;
+        const { show, show: { times } } = this.sale;
         const now = Date.now();
         const future = [];
         for (let i = 0; i < times.length; i += 1) {
-            if (Date.parse(times[i].occurs_at) > now) {
-                future.push(times[i]);
+            const time = times[i];
+            if (!time.price) {
+                time.price = show.price;
+            }
+            if (Date.parse(time.occurs_at) > now) {
+                future.push(time);
             }
         }
         return future;
@@ -228,6 +232,7 @@ export default class PurchaseForm extends Preact.Component {
                     <CardField label="Card CVV" type="cvv" sale={sale} />
                 </Form>
                 {this.renderErrors()}
+                <TestEnvWarning vendor={vendor} />
                 <div className="actions">
                     <button
                         disabled={this.isSaving}

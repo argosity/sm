@@ -23,7 +23,6 @@ module SM
                     )
                     if sale.valid?
                         sale.payments.each do |payment|
-                            #payment.processor_transaction = '1234'
                             process_charge(sale, payment)
                         end
                         sale.save

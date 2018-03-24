@@ -1,6 +1,7 @@
 /** @jsx Preact.h */
 import Preact from 'preact';
 import Vendors from 'payment-fields/dist/vendors';
+import MockApi from './mock-api';
 
 export default class PaymentFields extends Preact.Component {
 
@@ -10,7 +11,7 @@ export default class PaymentFields extends Preact.Component {
 
     constructor(props) {
         super(props);
-        const Api = Vendors[props.vendor];
+        const Api = Vendors[props.vendor] || MockApi;
         this.api = new Api(props);
     }
 

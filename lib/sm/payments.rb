@@ -5,7 +5,7 @@ module SM
         extend self
 
         def vendor_name
-            Hippo::SystemSettings.config.settings['paymentsVendor'] || 'unknown'
+            Hippo::SystemSettings.config.settings['paymentsVendor'] || 'test'
         end
 
         def vendor_id
@@ -17,6 +17,8 @@ module SM
                 return SM::Payments::Square
             elsif vendor_id == :braintree
                 return SM::Payments::Braintree
+            else
+                return SM::Payments::MockProvider
             end
         end
 
@@ -26,3 +28,4 @@ end
 require_relative "payments/charge_result"
 require_relative "payments/braintree"
 require_relative "payments/square"
+require_relative "payments/mock_provider"

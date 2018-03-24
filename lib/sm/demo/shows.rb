@@ -42,9 +42,12 @@ module SM::Demo
                 end
                 show.update_attributes!(attrs)
 
-                show.build_page unless show.page
-                show.page.update_attributes!(FactoryBot.attributes_for :page)
-
+                if Faker::Number.between(1, 3) == 1
+                    show.build_page unless show.page
+                    show.page.update_attributes!(FactoryBot.attributes_for :page)
+                elsif show.page
+                    show.page.destroy
+                end
                 show_times = TIME_IDS[index]
                 show.times.where('identifier not in (?)', show_times).delete_all
                 show_times.each do |showid|

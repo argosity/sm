@@ -11,7 +11,7 @@ export default class Purchase extends View {
             </div>
         `;
         // eslint-disable-next-line
-        System.import('./purchase-form').then(({ default: PurchaseForm }) => {
+        import('./purchase-form').then(({ default: PurchaseForm }) => {
             this.embed.root.innerHTML = '';
             PurchaseForm.boot(id, this.embed);
         });

@@ -1,5 +1,5 @@
 <div class="listing">
-<% if embed.page && embed.page.html -%>
+<% if embed.page && embed.page.html.present? -%>
 <%= embed.page.html %>
 <% else -%>
     <h2>No shows are currently listed.</h2>

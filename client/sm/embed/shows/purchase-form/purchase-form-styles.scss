@@ -64,6 +64,7 @@
     &.is-pending {
         .card-field {
             min-height: 42px;
+            input { width: 100%; }
         }
     }
 
@@ -145,5 +146,22 @@
         border-radius: 4px;
         padding: 1rem;
         margin: 2rem 0;
+    }
+
+    .testing-warning {
+        display: flex;
+        justify-content: center;
+        .inner {
+            h2 { font-size: 1.8rem; }
+            text-align: center;
+            border: 2px solid red;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px;
+            .no-cc {
+                color: red;
+                font-size: 1.3rem;
+            }
+        }
     }
 }

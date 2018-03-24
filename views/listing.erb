@@ -1,41 +1,41 @@
 <%= include['embeded_css_vars', embed: embed] %>
-<div class="listing">
+<div class="shows-listing">
+
   <% shows.each do | show | -%>
   <div class="show" data-show-identifier="<%= show.identifier %>">
     <% puts '-' * 80 %>
     <% if asset.exists?(show.image) %>
-    <img class="logo" src="<%= asset.url_for(show.image, 'medium' ) %>" />
+    <img class="show-logo" src="<%= asset.url_for(show.image, 'medium' ) %>" />
     <% end %>
-    <div class="content">
-      <div class="main">
-        <div class="info">
-          <div class="title">
+    <div class="show-content">
+      <div class="show-main-content">
+        <div class="show-info">
+          <div class="show-title">
             <% if show.presenter %>
             <% if asset.exists?(show.presenter['logo']) %>
-            <img class="presenter" src="<%= asset.url_for(show.presenter['logo'], 'thumbnail' ) %>" />
+            <img class="show-presenter" src="<%= asset.url_for(show.presenter['logo'], 'thumbnail' ) %>" />
             <% else %>
-            <h3 class="presenter"><%= show.presenter['name'] %> presents:</h3>
+            <h3 class="show-presenter"><%= show.presenter['name'] %> presents:</h3>
             <% end %>
             <% end %>
             <h2><%= show.title %></h2>
           </div>
-          <h3 class="sub-title"><%= show.sub_title %></h3>
-          <p class="description"><%= show.description %></p>
+          <h3 class="show-sub-title"><%= show.sub_title %></h3>
+          <p class="show-description"><%= show.description %></p>
           <div class="show-times">
-            <% pp show.times %>
             <% if show.times.any? %>
             <% timeformat = '%l:%M%P ' %>
             <% if show.has_common_time? %>
             <% timeformat = '' %>
             <%= show.occurs.first.strftime('%l:%M%P') %> on
             <% end %>
-            <ul class="dates">
+            <ul class="show-dates">
               <li><%= show.occurs.map{ |t| t.strftime("#{timeformat}%b #{t.day.ordinalize}") }.join('</li><li>') %></li>
             </ul>
             <% end %>
           </div>
         </div>
-        <div class="actions">
+        <div class="show-actions">
           <% if show.can_purchase? %>
           <a href="<%= show.purchase_url %>" class="btn btn-primary btn-purchase">
             Purchase
@@ -47,13 +47,13 @@
         </div>
       </div>
 
-      <div class="venue">
+      <div class="show-venue">
          <% if asset.exists?(show.venue['logo']) %>
-         <img class="logo" src="<%= asset.url_for(show.venue['logo'], 'thumbnail' ) %>" />
+         <img class="show-logo" src="<%= asset.url_for(show.venue['logo'], 'thumbnail' ) %>" />
          <% else %>
-         <span class="name"><%= show.venue['name'] %></span>
+         <span class="show-name"><%= show.venue['name'] %></span>
          <% end %>
-         <span class="address"><%= show.venue['address'] %></span>
+         <span class="show-address"><%= show.venue['address'] %></span>
       </div>
 
     </div>
