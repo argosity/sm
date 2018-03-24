@@ -23,9 +23,6 @@
         "\\.(svg|css|less|scss)$": "identity-obj-proxy",
         "flexboxgrid": "identity-obj-proxy"
     },
-    "snapshotSerializers": [
-        "enzyme-to-json/serializer"
-    ],
     "transform": {
         "^.+\\.jsx?$": "<rootDir>/config/jest/babel-transform.js",
         "^.+\\.yml$":  "<rootDir>/config/jest/yaml-transform.js"

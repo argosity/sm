@@ -1,5 +1,6 @@
 const babelOptions = {
     plugins: [
+        'babel-plugin-dynamic-import-node',
         'babel-plugin-transform-decorators-legacy',
         'babel-plugin-transform-class-properties',
         'babel-plugin-transform-function-bind',
