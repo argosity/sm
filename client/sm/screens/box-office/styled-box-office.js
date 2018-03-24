@@ -38,17 +38,18 @@ padding: ${props => props.theme.global.edgeSize.small};
                padding: 0;
                display: flex;
                align-items: center;
-               justify-content: flex-end;
+               justify-content: center;
                ${media.desktop`
 svg {
                         width: 17px;
                         height: 17px;
                     }
-               `}
+`}
                > * { display: flex; }
+               &:hover { path { fill: black; } }
             }
             min-width: 26px;
-            justify-content: space-around;
+            justify-content: space-evenly;
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -61,27 +62,20 @@ svg {
         display: flex;
         .grid {
             flex: 1;
-            display: grid;
-            grid-gap: 0.5rem;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr) ) ;
+            display: flex;
+            flex-wrap: wrap;
             align-items: center;
             > * {
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
+              flex: 1;
+              margin-right: 0.5rem;
+              min-width: 180px;
+              word-wrap: break-word;
+            }
+            .pur-rdm {
+              max-width: 130px;
+              min-width: 130px;
             }
         }
-        ${media.desktop`
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr) ) ;
-            }
-        `}
-        ${media.phone`
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) ) ;
-            }
-        `}
-
     }
 }
 `;

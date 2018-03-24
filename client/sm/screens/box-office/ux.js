@@ -1,6 +1,7 @@
-import { action, observable } from 'mobx';
+import { action, observable, computed } from 'mobx';
 import Query from 'hippo/models/query';
 import PubSub from 'hippo/models/pub_sub';
+import WindowSize from 'hippo/lib/window-size';
 import Sale from '../../models/sale';
 import Redemption from '../../models/redemption';
 import MobileApp from '../../lib/mobile-app-support';
@@ -25,10 +26,11 @@ export default class GuestUX {
     }
 
     @observable time;
-    @observable rowHeight;
     @observable redemption;
     @observable emailSale;
     @observable refundSale;
+
+    windowSize = new WindowSize();
 
     query = new Query({
         src: Sale,
@@ -44,11 +46,10 @@ export default class GuestUX {
 
     constructor(props) {
         this.update(props);
-        if (window.matchMedia) {
-            this.mql = window.matchMedia('(min-width: 800px)');
-            this.mql.addListener(this.onMediaQueryChanged);
-            this.onMediaQueryChanged();
-        }
+    }
+
+    @computed get rowHeight() {
+        return 55 * Math.ceil((150 * 6) / this.windowSize.width);
     }
 
     addSale(sale) {
@@ -57,14 +58,13 @@ export default class GuestUX {
 
     @action
     onUnmount() {
-        this.mql.removeListener(this.onMediaQueryChanged);
         this.pubSubUnsubscribe();
     }
 
-    @action.bound
-    onMediaQueryChanged() {
-        this.rowHeight = this.mql.matches ? 70 : 120;
-    }
+    // @action.bound
+    // onMediaQueryChanged() {
+    //     this.rowHeight = this.mql.matches ? 70 : 120;
+    // }
 
     pubSubUnsubscribe() {
         if (!this.time) { return; }

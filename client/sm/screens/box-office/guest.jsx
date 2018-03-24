@@ -61,8 +61,13 @@ export default class Guest extends React.Component {
                 >
                     <div className="name">{doneIcon}{row[UX.FIELDS.NAME]}</div>
                     <div className="ident">{row[UX.FIELDS.IDENTIFIER]}</div>
-                    <div className="rs">
-                        Purchased: <b>{row[UX.FIELDS.QTY]}</b>; Redeemed: <b>{redeemed}</b>
+                    <div className="pur-rdm">
+                        <div className="pur">
+                            Purchased: <b>{row[UX.FIELDS.QTY]}</b>;
+                        </div>
+                        <div className="rdm">
+                            Redeemed: <b>{redeemed}</b>
+                        </div>
                     </div>
                     <div className="phone">{row[UX.FIELDS.PHONE]}</div>
                     <div className="email">{row[UX.FIELDS.EMAIL]}</div>
