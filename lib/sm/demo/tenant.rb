@@ -2,7 +2,7 @@ module SM::Demo
 
     module Tenant
         IDENTIFIER = 'q9JmCesvRakW'
-        LOGIN = 'admin'
+        LOGIN = 'demo'
 
         def self.update
             tenant = Hippo::Tenant.find_by(identifier: IDENTIFIER) ||
