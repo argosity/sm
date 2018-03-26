@@ -10,9 +10,10 @@ padding: ${props => props.theme.global.edgeSize.small};
 
 .guest-list {
     flex: 1;
-
+    .query-builder {
+        margin: ${props => props.theme.global.edgeSize.medium} 0;
+    }
     .ReactVirtualized__List {
-        margin-top: ${props => props.theme.global.edgeSize.medium};
         border-top: ${props => color.colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
     }
 
