@@ -19,10 +19,10 @@ function dt(date) {
 
 const ShowWrapper = styled.div`
 flex: 1;
-padding: 0.5em;
+padding: 1rem;
 min-height: 120px;
-margin: 0.5em 0;
-border: 1px solid lightgrey;
+border-bottom: 1px solid lightgrey;
+box-sizing: border-box;
 
 .medium img {
     max-height: 200px;
