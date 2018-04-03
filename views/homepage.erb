@@ -87,7 +87,7 @@
                 <li>5 shows per month</li>
                 <li>Maximum 1000 mailing list subscribers</li>
               </ul>
-              <p class="price">$ 20/month</p>
+              <p class="price"><sup>$</sup>20/month</p>
             </div>
             <div class="plan">
               <ul>
@@ -95,7 +95,7 @@
                 <li>12 shows per month</li>
                 <li>Unlimited mailing list subscribers</li>
               </ul>
-              <p class="price">$ 40/month</p>
+              <p class="price"><sup>$</sup>50/month</p>
             </div>
             <div class="plan">
               <ul>
@@ -103,14 +103,14 @@
                 <li>Unlimited shows</li>
                 <li>Unlimited mailing list subscribers</li>
               </ul>
-              <p class="price">$ 60/month</p>
+              <p class="price"><sup>$</sup>100/month</p>
             </div>
           </div>
           <h4>
             You will be prompted to choose between one of the above
             plans after you login for the first time
           </h4>
-          <%= erb :signup, locals: { title: false, params: {}, tenant: false } %>
+          <%= erb :signup, locals: { hide_title: true, params: {}, tenant: false } %>
         </div>
         <%= erb :footer %>
       </div>
