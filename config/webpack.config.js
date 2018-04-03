@@ -65,6 +65,7 @@ const config = {
                     plugins: [
                         'react-hot-loader/babel',
                         'babel-plugin-lodash',
+                        'babel-plugin-grommet',
                         'babel-plugin-transform-decorators-legacy',
                         'babel-plugin-transform-class-properties',
                         'babel-plugin-transform-function-bind',
