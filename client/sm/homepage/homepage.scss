@@ -169,15 +169,26 @@ nav + .content {
 
 /* This is the class used for the dark-background areas. */
 .ribbon {
-    background: #2d3e50;
+    border: 10px solid #2d3e50;
     .card { margin: 0; }
+}
+
+h2.signup {
+    .start-at {
+        font-size: 70%;
+        font-weight: normal;
+    }
 }
 
 /* This is the class used for the footer */
 footer {
     bottom: 0;
-    border-top: 1px solid #ececec;
+    border-top: 1px solid #d8d8d8;
+    margin-top: 40px;
     color: #7f8c8d;
+    display: flex;
+    justify-content: flex-end;
+
     .content {
         text-align: right;
     }
@@ -229,6 +240,23 @@ form#signup {
     label {
         padding-bottom: 1rem;
         display: block;
+    }
+}
+
+.planslist {
+    flex-wrap: nowrap;
+    .plan {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        & + .plan {
+            border-left: 1px solid #80808042;
+        }
+        ul {
+            padding: 1rem;
+            margin: 0;
+        }
     }
 }
 

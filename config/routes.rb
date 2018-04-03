@@ -52,6 +52,10 @@ class Hippo::API::Root
     get '/mobile', &SM::Handlers::Mobile.handler
     post '/mobile', &SM::Handlers::Mobile.handler
 
+    get  '/contact' do erb :contact_form end
+    post '/contact', &Hippo::API::Handlers::Contact.sender('/contact-submitted')
+    get  '/contact-submitted' do erb :contact_submitted end
+
     post '/sq/notice' do
         'hi'
     end

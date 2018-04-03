@@ -17,9 +17,7 @@
           </p>
           <a href="#signup" class="signup-link">Sign up</a>
         </div>
-
       </div>
-
 
       <div class="content-wrapper">
         <div class="content">
@@ -29,12 +27,11 @@
               With ShowMaker you can embed show listings, information and ticket sales into your website.
             </p>
             <p>
-              Once tickets are purchased, use our easy box-office interface to check guests into the show and make sales at the door.
+              Once tickets are purchased, use our easy box-office interface to check guests into the show and/or make sales at the door.
             </p>
           </div>
 
           <h2 class="content-head is-center">ShowMaker can help you:</h2>
-
 
           <h3 class="content-subhead">
             <i class="fas fa-rocket"></i>
@@ -51,7 +48,6 @@
           <p>
             Booking the best acts in the world won't help you if no-one knows they're coming to your venue.  Use our tools to run a cross-media campaign with integrated mailing lists, FB, Twitter & Instagram postings.
           </p>
-
 
           <h3 class="content-subhead">
             <i class="fas fa-ticket-alt" data-fa-transform="rotate-330"></i>
@@ -73,33 +69,51 @@
             book and promote acts.  It's a lot of work to put together a successful event,
             but our software can make it easier.
           </p>
-
-
         </div>
 
         <div class="content ribbon">
-          <div class="card">
-            <header>
-              <h2>Try us for free!</h2>
-            </header>
-            <p>
-              You can list, promote and embed events with ShowMaker completely for free.
-
-            </p>
-            <p>
-              For a small monthly fee (details TBD), you can also sell tickets online.
-            </p>
+          <header>
+            <h2 class="signup">
+              Signup for Showmaker
+              <span class="start-at">
+                Plans start at just $20 per month!
+              </span>
+            </h2>
+          </header>
+          <div class="flex planslist">
+            <div class="plan">
+              <ul>
+                <li>120 tickets per show</li>
+                <li>5 shows per month</li>
+                <li>Maximum 1000 mailing list subscribers</li>
+              </ul>
+              <p class="price">$ 20/month</p>
+            </div>
+            <div class="plan">
+              <ul>
+                <li>500 tickets per show</li>
+                <li>12 shows per month</li>
+                <li>Unlimited mailing list subscribers</li>
+              </ul>
+              <p class="price">$ 40/month</p>
+            </div>
+            <div class="plan">
+              <ul>
+                <li>2,000 tickets per show</li>
+                <li>Unlimited shows</li>
+                <li>Unlimited mailing list subscribers</li>
+              </ul>
+              <p class="price">$ 60/month</p>
+            </div>
           </div>
+          <h4>
+            You will be prompted to choose between one of the above
+            plans after you login for the first time
+          </h4>
+          <%= erb :signup, locals: { title: false, params: {}, tenant: false } %>
         </div>
-
-        <div class="content">
-          <%= erb :signup, locals: { params: {}, tenant: false } %>
-        </div>
-
         <%= erb :footer %>
-
       </div>
     </div>
-
   </body>
 </html>

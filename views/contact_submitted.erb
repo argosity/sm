@@ -1,0 +1,12 @@
+<h4>
+  Your message has been successfully transmitted and you should recieve a reply promptly.
+</h4>
+<% if Hippo.config.support_phone.present? %>
+<p>
+  If you need promt assistance you can also contact us by phone at
+  <a href="tel:<%= Hippo.config.support_phone %>"><%= Hippo.config.support_phone %></a>
+</p>
+<% end %>
+<footer>
+  <a class="button" href="/">Home</a>
+</footer>

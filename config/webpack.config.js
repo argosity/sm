@@ -16,6 +16,7 @@ const entries = {
         'babel-polyfill-loader!',
         'sm/embed/shows.js',
     ],
+
 };
 <%
 def dev_public_path

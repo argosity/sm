@@ -1,6 +1,15 @@
 <footer>
   <div class="content">
-    <a href="/privacy">Privacy Policy</a>
-    <a href="/terms">Terms &amp; Conditions</a>
+    <% unless '/privacy' == request.path %>
+    <a class="pseudo button" href="/privacy">Privacy Policy</a>
+    <% end %>
+
+    <% unless '/terms' == request.path %>
+    <a class="pseudo button" href="/terms">Terms &amp; Conditions</a>
+    <% end %>
+
+    <% unless '/contact' == request.path %>
+    <a class="pseudo button" href="/contact">Contact</a>
+    <% end %>
   </div>
 </footer>

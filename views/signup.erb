@@ -1,5 +1,6 @@
+<% if !defined?(title) && false != title %>
 <h2 class="content-head is-center">ShowMaker Signup</h2>
-
+<% end %>
 <form id="signup" method="post" action="/signup">
 
     <% if tenant && tenant.errors.any? %>
@@ -35,6 +36,6 @@
       By signing up for ShowMaker, you agree to abide by our <a href="/terms">terms &amp; conditions</a>
     </p>
 
-    <button type="submit" class="pure-button">Sign Up</button>
+    <button type="submit">Sign Up</button>
 
 </form>

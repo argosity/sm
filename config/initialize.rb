@@ -11,6 +11,7 @@ Hippo.configure do | config |
     config.website_domain = ENV['HOST'] || 'https://showmaker.com'
     config.asset_host = ENV['ASSET_HOST']
     config.product_name = 'Show Maker'
+    config.support_phone = '123-456-7890'
     config.support_email = 'support@showmaker.com'
 end
 
