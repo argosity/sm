@@ -115,6 +115,7 @@ const config = {
                 ecma: 8,
             }
         }),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
         new webpack.optimize.OccurrenceOrderPlugin(), // use smallest id for most used chuncks
         new CompressionPlugin({
