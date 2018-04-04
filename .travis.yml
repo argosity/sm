@@ -18,6 +18,11 @@ env:
     - DATABASE_URL=postgres://travis@127.0.0.1:5432/travis
     - REDIS_URL=redis://localhost:6379
     - TRAVIS_NODE_VERSION="7"
+    - ASSET_HOST=https://assets.showmaker.com
+    - HOST=test.showmaker.com
+    - SUPPORT_EMAIL=support@showmaker.com
+    - SUPPORT_PHONE=123-456-7890
+    - PRODUCT_NAME=ShowMaker
 before_install:
   - nvm install $TRAVIS_NODE_VERSION
   - npm install
