@@ -14,6 +14,7 @@ describe "Contact Form", api: true, vcr: VCR_OPTS do
         email = Mail::TestMailer.deliveries.last
         expect(email.to).to eq([Hippo.config.support_email])
         expect(email.subject).to eq '[Show Maker Contact] hi'
+        expect(email.reply_to).to eq ['test@test.com']
         expect(email.body.to_s).to include 'Contact form submission from Bob test@test.com'
         expect(email.body.to_s).to include 'this is a test'
     end

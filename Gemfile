@@ -15,7 +15,6 @@ gem 'axlsx',
     ref: 'c8ac844572b25fda358cc01d2104720c4c42f450'
 gem 'oauth2', '~> 1.4.0'
 gem 'square_connect', '~> 2.3.1'
-gem 'dotenv', '~> 2.2.1'
 gem 'rqrcode'
 group :test, :development do
     gem 'byebug'
