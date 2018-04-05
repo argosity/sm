@@ -4,9 +4,11 @@ Hippo::API.routes.for_extension 'sm' do
         content_type 'image/svg+xml'
         SM::Handlers::Checkout.qr_code(params[:id])
     end
+    resources SM::Show, path: 'show-time/stats', controller: SM::Handlers::ShowTimeStats
     resources SM::ShowTime
     resources SM::Sale, path: 'sale/submit', controller: SM::Handlers::Checkout, cors: '*', public: true
     resources SM::Sale, controller: SM::Handlers::Sale
+
     resources SM::Payment, path: 'payment', controller: SM::Handlers::Payment, cors: '*', public: true
     resources SM::Show, path: 'embed/shows/:embed_id/?:view?', controller: SM::Handlers::Shows, cors: '*', public: true, format: '', unwrapped: true
     resources SM::Show

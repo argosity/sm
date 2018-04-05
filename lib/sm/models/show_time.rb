@@ -5,6 +5,7 @@ module SM
 
         belongs_to_tenant
         belongs_to :show, export: true
+        has_many :sales, inverse_of: :show_time
         has_many :redemptions, inverse_of: :show_time, listen: { create: :on_redemption }
         has_many :sales
         validates :occurs_at, presence: true

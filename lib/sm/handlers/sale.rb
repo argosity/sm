@@ -17,7 +17,6 @@ module SM
 
 
             def update
-
                 sale = SM::Sale.find_by(identifier: params[:id])
                 if data['send_receipt']
                     sale.attendee.email = data['send_receipt']

@@ -4,12 +4,17 @@ Hippo::Screen.for_extension 'sm' do | screens |
         screen.icon        = "ticket-alt"
         screen.group_id    = ""
     end
-
     screens.define "shows" do | screen |
         screen.title       = "Shows"
         screen.description = ""
         screen.icon        = "id-card"
         screen.group_id    = ""
+    end
+    screens.define "forecast" do | screen |
+        screen.title       = "Forecast"
+        screen.icon        = "newspaper"
+        screen.group_id    = ""
+        screen.model_class = ""
     end
     screens.define "presenters" do | screen |
         screen.title       = "Presenters"
