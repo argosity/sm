@@ -6,10 +6,10 @@ const StyledBoxOffice = styled.div`
 flex: 1;
 display: flex;
 flex-direction: column;
-padding: ${props => props.theme.global.edgeSize.small};
 
 .guest-list {
     flex: 1;
+    padding: ${props => props.theme.global.edgeSize.xsmall};
     .query-builder {
         margin: ${props => props.theme.global.edgeSize.medium} 0;
     }

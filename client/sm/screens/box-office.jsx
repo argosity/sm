@@ -1,22 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { get } from 'lodash';
 import { action, observable } from 'mobx';
-import moment from 'moment';
 import { Button, Box } from 'grommet';
-import { Camera, Ticket, CreditCard, Search, DocumentDownload } from 'grommet-icons';
+import { Camera, Ticket, CreditCard, DocumentDownload } from 'grommet-icons';
 import Screen     from 'hippo/components/screen';
-import Query      from 'hippo/models/query';
-import QueryLayer from 'hippo/components/record-finder/query-layer';
+import ShowTimeHeader from '../components/show-time-finder-header';
 import ShowTime from '../models/show-time';
 import GuestList from './box-office/guest-list';
 import Sale from '../models/sale';
 import SaleLayer from '../components/sale/layer';
 import MobileApp from '../lib/mobile-app-support';
 import StyledBoxOffice from './box-office/styled-box-office';
-
-const DateCell = ({ cellData }) => moment(cellData).format('YYYY-MM-DD hh:mma');
 
 @observer
 export default class BoxOffice extends React.Component {
@@ -26,24 +21,13 @@ export default class BoxOffice extends React.Component {
     }
 
     @observable time = new ShowTime();
-    @observable isShowingSearch = false;
+
     @observable sale;
 
-    query = new Query({
-        src: ShowTime,
-        syncOptions: { include: 'show', with: { purchasable: true }, order: { occurs_at: 'desc' } },
-        fields: [
-            { id: 'id', visible: false, queryable: false },
-            { id: 'shows.title', label: 'Title', flexGrow: 1 },
-            {
-                id: 'occurs_at', cellRenderer: DateCell, flexGrow: 0, width: 160, textAlign: 'right',
-            },
-        ],
-    })
 
     componentDidMount() {
         // for debugging
-        // this.query.fetchSingle({ id: 1 }).then(o => this.onRecordFound(o));
+        // this.query.fetchSingle({ id: 1 }).then(o => this.onShowFound(o));
         MobileApp.on('barcodeScan', this.onBarcodeScan);
     }
 
@@ -52,10 +36,10 @@ export default class BoxOffice extends React.Component {
     }
 
     @action.bound
-    onRecordFound(time) {
+    onShowFound(time) {
         this.time = time;
-        this.isShowingSearch = false;
     }
+
     @action.bound onSaleClick() {
         this.sale = new Sale({ time: this.time });
     }
@@ -68,8 +52,6 @@ export default class BoxOffice extends React.Component {
     }
 
     @action.bound onSaleCancel() { this.sale = null; }
-    @action.bound onSearchClick() { this.isShowingSearch = true; }
-    @action.bound onSearchClose() { this.isShowingSearch = false; }
 
     @action.bound setGuestList(gl) {
         this.guestList = gl;
@@ -98,76 +80,43 @@ export default class BoxOffice extends React.Component {
         );
     }
 
-    renderDetails() {
-        if (this.time.isNew) { return null; }
+    renderControls() {
         return (
             <Box
-                style={{ flex: '1  0 auto', paddingLeft: '12px' }}
-                direction="row" align="center" responsive={false}
+                style={{ flex: '1  0 auto' }}
+                direction="row" responsive={false} flex justify="end"
             >
-                <span>
-                    {moment(this.time.occurs_at).format('h:mma ddd, MMM D')}
-                </span>
-                <Box
-                    style={{ flex: '1  0 auto' }}
-                    direction="row" responsive={false} flex justify="end"
-                >
-                    {this.renderXlsBtn()}
-                    <Button
-                        icon={<Ticket />}
-                        title="Generate Ticket"
-                        onClick={this.onCompTickets}
-                    />
-                    <Button
-                        icon={<CreditCard />}
-                        title="Sale"
-                        onClick={this.onSaleClick}
-                    />
-                    {this.renderMobileScan()}
-                </Box>
-            </Box>
-        );
-    }
-
-    renderControls() {
-        if (this.time.isNew) { return null; }
-        return (
-            <Box direction="row" justify="end">
+                {this.renderXlsBtn()}
+                <Button
+                    icon={<Ticket />}
+                    title="Generate Ticket"
+                    onClick={this.onCompTickets}
+                />
+                <Button
+                    icon={<CreditCard />}
+                    title="Sale"
+                    onClick={this.onSaleClick}
+                />
+                {this.renderMobileScan()}
             </Box>
         );
     }
 
     render() {
-        const { time, query, isShowingSearch } = this;
+        const { time } = this;
 
         return (
             <Screen screen={this.props.screen}>
+
                 <StyledBoxOffice>
-                    <QueryLayer
-                        query={query}
-                        title={'Find Show'}
-                        visible={isShowingSearch}
-                        onRecordSelect={this.onRecordFound}
-                        onClose={this.onSearchClose}
-                    />
                     <SaleLayer
                         sale={this.sale}
                         onCancel={this.onSaleCancel}
                         onComplete={this.onSaleComplete}
                     />
-                    <Box
-                        responsive={false} direction="row" wrap
-                        justify="between" align="baseline"
-                    >
-                        <Button
-                            plain
-                            className="grommetux-control-icon-search"
-                            icon={<Search />}
-                            label={get(time, 'show.title', 'Click to find Show')}
-                            onClick={this.onSearchClick}
-                        />
-                        {this.renderDetails()}
-                    </Box>
+                    <ShowTimeHeader onShowFound={this.onShowFound}>
+                        {this.renderControls()}
+                    </ShowTimeHeader>
                     <GuestList ref={this.setGuestList} time={time} />
                 </StyledBoxOffice>
             </Screen>

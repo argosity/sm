@@ -62,18 +62,15 @@ export default class Guest extends React.Component {
                     <div className="name">{doneIcon}{row[UX.FIELDS.NAME]}</div>
                     <div className="ident">{row[UX.FIELDS.IDENTIFIER]}</div>
                     <div className="pur-rdm">
-                        <div className="pur">
-                            Purchased: <b>{row[UX.FIELDS.QTY]}</b>;
-                        </div>
-                        <div className="rdm">
-                            Redeemed: <b>{redeemed}</b>
-                        </div>
+                        <b className="pur">{row[UX.FIELDS.QTY]}</b>
+                        <span> : </span>
+                        <b className="rdm">{redeemed}</b>
                     </div>
-                    <div className="phone">{row[UX.FIELDS.PHONE]}</div>
-                    <div className="email">{row[UX.FIELDS.EMAIL]}</div>
                     <div className="date">{
                         moment(row[UX.FIELDS.DATE]).format('dd, MMM Do, h:mm:ss a')
                     }</div>
+                    <div className="phone">{row[UX.FIELDS.PHONE]}</div>
+                    <div className="email">{row[UX.FIELDS.EMAIL]}</div>
                 </div>
                 <div className="controls">
                     <Button onClick={this.onMail} plain icon={<Mail />} />
