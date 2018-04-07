@@ -5,9 +5,11 @@ import { action } from 'mobx';
 import { Box } from 'grommet';
 import Screen from 'hippo/components/screen';
 import Value from 'hippo/components/value';
+import Chart from 'hippo/components/chart';
 import NetworkActivity from 'hippo/components/network-activity-overlay';
 import ShowTimeStats from '../models/show-time-stats';
 import ShowTimeHeader from '../components/show-time-finder-header';
+
 
 @observer
 export default class Forecast extends React.Component {
@@ -23,12 +25,24 @@ export default class Forecast extends React.Component {
         this.stats.fetch();
     }
 
+    chartOptions = {
+        axisX: {
+            labelInterpolationFnc(value, index) {
+                return 0 === index % 2 ? value : null;
+            },
+        },
+    };
+
     renderStats() {
         const { stats } = this;
+
         return (
-            <Box gap="small" direction="row" justify="center">
-                <Value label="Sales" value={stats.sales} />
-                <Value label="Checked In" value={stats.redemptions} />
+            <Box>
+                <Box gap="small" direction="row" justify="center">
+                    <Value label="Sales" value={stats.sales} />
+                    <Value label="Checked In" value={stats.redemptions} />
+                </Box>
+                <Chart options={this.chartOptions} data={stats.chartData} type="Line" />
             </Box>
         );
     }
@@ -41,7 +55,6 @@ export default class Forecast extends React.Component {
                 <ShowTimeHeader onShowFound={this.onShowFound} />
                 <NetworkActivity model={stats} />
                 { !stats.isNew && !stats.syncInProgress && this.renderStats() }
-
             </Screen>
         );
     }
