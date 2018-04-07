@@ -22,12 +22,15 @@ export default class ShowTimeFinderHeader extends React.Component {
 
     @observable time = new ShowTime();
     @observable isShowingSearch = false;
-    @action.bound onSearchClick() { this.isShowingSearch = true; }
+    @action.bound onSearchClick() {
+        this.query.reset();
+        this.isShowingSearch = true;
+    }
     @action.bound onSearchClose() { this.isShowingSearch = false; }
 
     query = new Query({
         src: ShowTime,
-        syncOptions: { include: 'show', with: { purchasable: true }, order: { occurs_at: 'desc' } },
+        syncOptions: { include: 'show', with: 'purchasable', order: { occurs_at: 'desc' } },
         fields: [
             { id: 'id', visible: false, queryable: false },
             { id: 'shows.title', label: 'Title', flexGrow: 1 },
