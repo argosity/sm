@@ -10,7 +10,9 @@ module SM
         has_many :sales
         validates :occurs_at, presence: true
 
-        scope :purchasable, lambda{ |can_purchase = true|
+        export_join_tables :shows
+
+        scope :purchasable, lambda { |can_purchase = true|
             joins(:show).where(shows: { can_purchase: (can_purchase == true || can_purchase == 'true') })
         }, export: true
 
