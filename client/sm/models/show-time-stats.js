@@ -26,7 +26,6 @@ export default class ShowTimeStats extends BaseModel {
         const series = [[]];
         range(max.diff(min, 'days')).forEach((d) => {
             const day = min.clone().add(d, 'day');
-
             runningQty += sumBy(values, sale => (
                 sale.date.isSame(day, 'day') ? sale.qty : 0
             ));

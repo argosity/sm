@@ -174,7 +174,10 @@ class EditForm extends React.Component {
                             format="M d Y"
                             type="date" label="Visible" name="visible_during" />
 
-                        <Field type="checkbox" name="can_purchase" label="Purchasable?" />
+                        <Field
+                            type="checkbox" cellWidth={1} align="center"
+                            name="can_purchase" label="Purchasable?"
+                        />
 
                         <Field
                             cellWidth={1}
