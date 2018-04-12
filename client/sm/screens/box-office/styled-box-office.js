@@ -7,9 +7,23 @@ flex: 1;
 display: flex;
 flex-direction: column;
 
+.navbar-controls {
+    .qty-sold {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2rem;
+        align-items: center;
+        margin-left: 0.5rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+        justify-content: center;
+    }
+}
+
 .guest-list {
     flex: 1;
-    padding: ${props => props.theme.global.edgeSize.xsmall};
+     padding: ${props => props.theme.global.edgeSize.xsmall};
     .query-builder {
         margin: ${props => props.theme.global.edgeSize.medium} 0;
     }

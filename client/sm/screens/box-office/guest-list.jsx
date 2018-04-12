@@ -5,7 +5,6 @@ import { observer } from 'mobx-react';
 import { Box } from 'grommet';
 import DataList from 'hippo/components/data-list';
 import QueryBuilder from 'hippo/components/query-builder';
-import ShowTime from '../../models/show-time';
 import Redeem from './redeem';
 import Email from './email';
 import Refund from './refund';
@@ -16,33 +15,24 @@ import UX from './ux';
 export default class GuestList extends React.Component {
 
     static propTypes = {
-        time: PropTypes.instanceOf(ShowTime).isRequired,
-    }
-
-    ux = new UX(this.props);
-
-    componentWillUnmount() {
-        this.ux.onUnmount();
-    }
-
-    componentWillReceiveProps(props) {
-        this.ux.update(props);
+        ux: PropTypes.instanceOf(UX).isRequired,
     }
 
     @autobind renderGuest(props) {
-        const row = this.ux.query.results.rows[props.index];
+        const row = this.props.ux.query.results.rows[props.index];
         return (
             <Guest
                 {...props}
                 rowIndex={props.index}
                 row={row}
-                ux={this.ux}
+                ux={this.props.ux}
             />
         );
     }
 
     render() {
-        if (!this.ux.time) { return null; }
+        const { ux } = this.props;
+        if (!ux.time) { return null; }
 
         return (
             <Box
@@ -52,25 +42,25 @@ export default class GuestList extends React.Component {
                 flex
             >
                 <Redeem
-                    redemption={this.ux.redemption}
-                    onComplete={this.ux.onCheckInComplete}
-                    onCancel={this.ux.cancelPending}
+                    redemption={ux.redemption}
+                    onComplete={ux.onCheckInComplete}
+                    onCancel={ux.cancelPending}
                 />
                 <Email
-                    sale={this.ux.emailSale}
-                    onComplete={this.ux.onMailSend}
-                    onCancel={this.ux.cancelPending}
+                    sale={ux.emailSale}
+                    onComplete={ux.onMailSend}
+                    onCancel={ux.cancelPending}
                 />
                 <Refund
-                    sale={this.ux.refundSale}
-                    onComplete={this.ux.onRefundConfirm}
-                    onCancel={this.ux.cancelPending}
+                    sale={ux.refundSale}
+                    onComplete={ux.onRefundConfirm}
+                    onCancel={ux.cancelPending}
                 />
-                <QueryBuilder autoFetch={true} query={this.ux.query} />
+                <QueryBuilder autoFetch={true} query={ux.query} />
                 <DataList
-                    query={this.ux.query}
+                    query={ux.query}
                     rowRenderer={this.renderGuest}
-                    rowHeight={this.ux.rowHeight}
+                    rowHeight={ux.rowHeight}
                 />
             </Box>
         );

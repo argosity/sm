@@ -1,4 +1,5 @@
 import { action, observable, computed } from 'mobx';
+import { get } from 'lodash';
 import Query from 'hippo/models/query';
 import PubSub from 'hippo/models/pub_sub';
 import WindowSize from 'hippo/lib/window-size';
@@ -25,7 +26,7 @@ export default class GuestUX {
         return this.constructor.FIELDS;
     }
 
-    @observable time;
+    @observable time;// = new ShowTime();
     @observable redemption;
     @observable emailSale;
     @observable refundSale;
@@ -44,10 +45,6 @@ export default class GuestUX {
         ],
     })
 
-    constructor(props) {
-        this.update(props);
-    }
-
     @computed get rowHeight() {
         return 55 * Math.ceil((150 * 6) / this.windowSize.width);
     }
@@ -61,10 +58,13 @@ export default class GuestUX {
         this.pubSubUnsubscribe();
     }
 
-    // @action.bound
-    // onMediaQueryChanged() {
-    //     this.rowHeight = this.mql.matches ? 70 : 120;
-    // }
+    @computed get qtySold() {
+        return get(this.query.results, 'metaData.qty_sold', 0);
+    }
+
+    @computed get qtyRedeemed() {
+        return get(this.query.results, 'metaData.qty_redeemed', 0);
+    }
 
     pubSubUnsubscribe() {
         if (!this.time) { return; }
