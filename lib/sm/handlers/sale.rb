@@ -5,7 +5,6 @@ module SM
         class Sale < Hippo::API::ControllerBase
 
             def create
-
                 sale = model.from_attribute_data(data, current_user)
                 sale.attendee = Attendee.for_sale_data(data)
                 sale.show_time = SM::ShowTime.preload(:show).find_by(
@@ -14,7 +13,6 @@ module SM
                 options = build_reply_options.merge(success: sale.save)
                 std_api_reply(:create, sale, options)
             end
-
 
             def update
                 sale = SM::Sale.find_by(identifier: params[:id])
@@ -36,7 +34,15 @@ module SM
             end
 
             def show
-                perform_retrieval
+                reply = perform_retrieval
+                if query_params && query_params['show_time_id']
+                    st = ShowTime.find(query_params['show_time_id'])
+                    reply.merge!(
+                        qty_sold: st.sales.sum(:qty),
+                        qty_redeemed: st.redemptions.count,
+                    )
+                end
+                reply
             end
 
             private

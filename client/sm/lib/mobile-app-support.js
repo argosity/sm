@@ -9,7 +9,7 @@ const App = {
 
 export default App;
 
-['playSound', 'startBarcodeScan', 'on', 'once'].forEach((m) => {
+['playSound', 'startBarcodeScan', 'on', 'once', 'off'].forEach((m) => {
     App[m] = (...args) => {
         if (window.ShowMakerApp) {
             window.ShowMakerApp[m](...args);
