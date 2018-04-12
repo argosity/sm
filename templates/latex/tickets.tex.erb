@@ -60,6 +60,7 @@ if show.presenter
 <% if show.venue -%>
   \put(45,1){\parbox{145mm}{\small\raggedleft <%=q show.venue.name %>, <%=q show.venue.address %>}}
 <% end -%>
+
 <% if (image = show.image).present? -%>
 \put(145,30){
  \begin{minipage}[c][50mm]{40mm}
@@ -68,7 +69,7 @@ if show.presenter
 }
 <% end -%>
 %
-%
+\put(5,55){\parbox{40mm}{\centering <%= sale.attendee.name %>}}
 \put(5,30){
   \qrcode[height=40mm]{<%= sale.identifier %>:<%= pageNum+1 %>}
 }%
