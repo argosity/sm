@@ -6,7 +6,6 @@ import { action, observable } from 'mobx';
 import { Search } from 'grommet-icons';
 import { get } from 'lodash';
 import moment from 'moment';
-import { Toolbar } from 'hippo/components/toolbar';
 import Query      from 'hippo/models/query';
 import QueryLayer from 'hippo/components/record-finder/query-layer';
 import ShowTime from '../models/show-time';
@@ -18,6 +17,11 @@ export default class ShowTimeFinderHeader extends React.Component {
 
     static propTypes = {
         onShowFound: PropTypes.func.isRequired,
+        label: PropTypes.func,
+    }
+
+    static defaultProps = {
+        label: st => get(st, 'show.title', 'Click to find Show'),
     }
 
     @observable time = new ShowTime();
@@ -30,12 +34,12 @@ export default class ShowTimeFinderHeader extends React.Component {
 
     query = new Query({
         src: ShowTime,
-        syncOptions: { include: 'show', with: 'purchasable', order: { occurs_at: 'desc' } },
+        syncOptions: { include: 'show', order: { occurs_at: 'desc' } },
         fields: [
             { id: 'id', visible: false, queryable: false },
             { id: 'shows.title', label: 'Title', flexGrow: 1 },
             {
-                id: 'occurs_at', cellRenderer: DateCell, flexGrow: 0, width: 160, textAlign: 'right',
+                id: 'occurs_at', cellRenderer: DateCell, flexGrow: 0, width: 170, textAlign: 'right',
             },
         ],
     })
@@ -68,8 +72,10 @@ export default class ShowTimeFinderHeader extends React.Component {
     }
 
     render() {
+        const { label } = this.props;
+
         return (
-            <Toolbar>
+            <React.Fragment>
                 <QueryLayer
                     query={this.query}
                     title={'Find Show'}
@@ -81,11 +87,11 @@ export default class ShowTimeFinderHeader extends React.Component {
                     color="transparent"
                     className="grommetux-control-icon-search"
                     icon={<Search />}
-                    label={get(this.time, 'show.title', 'Click to find Show')}
+                    label={label(this.time)}
                     onClick={this.onSearchClick}
                 />
                 {this.renderDetails()}
-            </Toolbar>
+            </React.Fragment>
         );
     }
 
