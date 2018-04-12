@@ -10,7 +10,7 @@ describe('Model ShowTimes Occurrence', () => {
         chronokinesis.reset();
     });
 
-    fit('#occurrencesString', () => {
+    it('#occurrencesString', () => {
         const show = new Show({
             times: [
                 { occurs_at: '2017-07-26T15:45:15.000Z' },
