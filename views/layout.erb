@@ -14,7 +14,9 @@
         <span>ShowMaker</span>
       </a>
       <div class="menu">
+      <% unless '/signup' == request.path %>
         <a href="/signup" class="button icon-file-code">Signup</a>
+      <% end %>
       </div>
     </nav>
     <div class="content">
