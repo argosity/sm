@@ -29,7 +29,13 @@ module SM
         }, export: true
 
         def can_purchase?
-            can_purchase && times.any? {|t| t.occurs_at_in_venue_tz > Time.now }
+            halt = Time.now
+            !!can_purchase && times.any? {|t| halt < t.occurs_at }
+        end
+
+        def can_purchase_online?
+            halt = Time.now + online_sales_halt_mins_before.minutes
+            !!(can_purchase && times.any? {|t| halt < t.occurs_at })
         end
 
         protected

@@ -13,7 +13,8 @@ module SM
             end
 
             def can_purchase?
-                can_purchase && occurs.any?{|o| o > Time.now }
+                halt = Time.now + self.online_sales_halt_mins_before.minutes
+                !!(can_purchase && occurs.any? {|o| halt < o })
             end
 
             def has_page?

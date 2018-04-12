@@ -33,6 +33,10 @@ module SM
             show.can_purchase && occurs_at > Time.now
         end
 
+        def can_purchase_online?
+            show.can_purchase && occurs_at > (Time.now + show.online_sales_halt_mins_before.minutes)
+        end
+
         private
 
         def on_redemption(redemption)
