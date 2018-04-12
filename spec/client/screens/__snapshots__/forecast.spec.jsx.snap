@@ -108,13 +108,9 @@ exports[`Screen Forecast renders and matches snapshot 1`] = `
   >
     <div
       aria-label={undefined}
-      className="hippo-toolbar sc-dnqmqq dDLAIh StyledBox-bStriS bFIgXI"
+      className="hippo-toolbar sc-bwzfXH cMzSiz StyledBox-bStriS bFIgXI"
       direction="row"
     >
-      <div
-        className="StyledBox__StyledBoxGap-ixLlSs laXbkr"
-        direction="row"
-      />
       <button
         aria-label={undefined}
         className="grommetux-control-icon-search c0"
