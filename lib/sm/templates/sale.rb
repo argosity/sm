@@ -17,10 +17,6 @@ module SM
                 @sale = sale
             end
 
-            def pathname
-                root_path.join('mail', filename)
-            end
-
             def subject
                 if custom_message && custom_message.order_confirmation_subject.present?
                     ::Liquid::Template

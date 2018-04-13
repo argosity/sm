@@ -52,34 +52,11 @@ module SM
             end
 
             def self.xls_sale_report(show_id, headers)
-                st = SM::ShowTime.find(show_id)
-                pkg = Axlsx::Package.new do |p|
-                    p.workbook.add_worksheet(:name => "Basic Worksheet") do |sheet|
-                        sheet.add_row([st.show.title])
-                        time = st.occurs_at_in_venue_tz
-                        sheet.add_row([time.strftime("%I:%M%P %a %b #{time.day.ordinalize}, %Y")])
-                        sheet.merge_cells "A1:F1"
-                        sheet.merge_cells "A2:F2"
-                        sheet.add_row(
-                            ['Name', 'Phone', 'Email', 'Created At', 'Qty', 'Redemptions']
-                        )
-                        st.sales.with_details.order(name: 'desc').find_each do |s|
-                            sheet.add_row(
-                                [
-                                    s.name, s.phone, s.email,
-                                    s.created_at.strftime('%Y-%m-%d'), s.qty,
-                                    s.redemptions.count
-                                ]
-                            )
-                        end
-                    end
-                    p.use_shared_strings = true
-                end
-                headers.merge!(
-                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'Content-Disposition' => "attachment; filename=#{st.show.title.parameterize}-#{st.occurs_at.strftime('%Y-%m-%d')}.xlsx"
-                )
-                pkg.to_stream
+                show_time = SM::ShowTime.find(show_id)
+                report = SM::SaleReport.new(show_time)
+                headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                headers['Content-Disposition'] = "attachment; filename=#{report.file_name}.xls"
+                report.xls.to_stream
             end
         end
     end

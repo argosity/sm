@@ -7,6 +7,10 @@ module SM
                 SM::ROOT_PATH.join('templates')
             end
 
+            def pathname
+                root_path.join('mail', filename)
+            end
+
         end
     end
 end
