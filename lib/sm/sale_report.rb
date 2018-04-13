@@ -38,12 +38,15 @@ module SM
         end
 
         def SaleReport.email_pending
-            SM::ShowTime.where("occurs_at between now() and now() + interval '30 minutes'").each do |st|
+            SM::ShowTime.where("occurs_at between now() and now() + interval '1 hour'").each do |st|
                 sr = SM::SaleReport.new(st)
                 SM::Templates::SaleReport.create(sr).deliver
             end
-                # "select * from public_shows where embed_identifier = #{conn.quote(identifier)} and visible_during @> now()::timestamp order by first_show_time"
         end
     end
 
+end
+
+Hippo::Cron.hourly do
+    SM::SaleReport.email_pending
 end
