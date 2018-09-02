@@ -6,8 +6,7 @@ import {
 import PropTypes from 'prop-types';
 import { find } from 'lodash';
 import { observer }   from 'mobx-react';
-import Box from 'grommet/components/Box';
-import Button from 'grommet/components/Button';
+import { Box, Button } from 'grommet';
 import { Toolbar, SaveButton } from 'hippo/components/toolbar';
 import { Next } from 'grommet-icons';
 import styled from 'styled-components';

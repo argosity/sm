@@ -5,7 +5,7 @@ import { get } from 'lodash';
 import { Row } from 'react-flexbox-grid';
 import { Form, Field, FormState, nonBlank } from 'hippo/components/form';
 
-import Heading from 'grommet/components/Heading';
+import { Heading } from 'grommet';
 import BraintreeConfigModel from '../../models/brain-tree-config';
 
 const KEY = 'braintree';

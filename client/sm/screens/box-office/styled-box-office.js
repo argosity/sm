@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import color from 'grommet/utils/colors';
+import { colorForName } from 'grommet/utils';
 import media from 'hippo/components/grid/media';
 
 const StyledBoxOffice = styled.div`
@@ -28,7 +28,7 @@ flex-direction: column;
         margin: ${props => props.theme.global.edgeSize.medium} 0;
     }
     .ReactVirtualized__List {
-        border-top: ${props => color.colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
+        border-top: ${props => colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
     }
 
     .ReactVirtualized__Grid__innerScrollContainer {
@@ -43,7 +43,7 @@ flex-direction: column;
 
     .guest {
 
-        border-bottom: ${props => color.colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
+        border-bottom: ${props => colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
 
 
         overflow: hidden;

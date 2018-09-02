@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-
-import Box from 'grommet/components/Box';
-import Layer from 'grommet/components/Layer';
-
+import { Box, Layer } from 'grommet';
 import SaleForm from './form';
 
 @observer

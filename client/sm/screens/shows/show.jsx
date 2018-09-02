@@ -7,7 +7,7 @@ import cn from 'classnames';
 import styled from 'styled-components';
 import { Row, Col, getColumnProps } from 'react-flexbox-grid';
 import moment from 'moment';
-import Button    from 'grommet/components/Button';
+import { Button }   from 'grommet';
 import { Edit, View }  from 'grommet-icons';
 import Spinning from 'hippo/components/icon/spinning';
 import DateRange from 'hippo/lib/date-range';

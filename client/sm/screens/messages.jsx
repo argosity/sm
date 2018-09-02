@@ -85,7 +85,7 @@ export default class Messages extends React.Component {
 
     render() {
         return (
-            <Form state={this.formState} tag="div" {...this.props}>
+            <Form state={this.formState} {...this.props}>
                 <Toolbar>
                     <SaveButton
                         model={this.message}
