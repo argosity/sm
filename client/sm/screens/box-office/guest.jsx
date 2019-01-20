@@ -22,12 +22,15 @@ export default class Guest extends React.Component {
     @action.bound onRedeem() {
         this.props.ux.onRedeem(this.props.rowIndex);
     }
+
     @action.bound onMail() {
         this.props.ux.onMail(this.props.rowIndex);
     }
+
     @action.bound onRefund() {
         this.props.ux.onRefund(this.props.rowIndex);
     }
+
     @computed get printURL() {
         return Sale.ticketUrlForIdentifier(this.props.row[UX.FIELDS.IDENTIFIER]);
     }

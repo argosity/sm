@@ -45,10 +45,12 @@ export default class BoxOffice extends React.Component {
     @action.bound onSaleClick() {
         this.sale = new Sale({ time: this.ux.time });
     }
+
     @action.bound onSaleComplete() {
         this.guestList.ux.addSale(this.sale);
         this.sale = null;
     }
+
     @action.bound onCompTickets() {
         this.sale = new Sale({ time: this.ux.time, noCharge: true });
     }

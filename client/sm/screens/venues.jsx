@@ -25,7 +25,9 @@ export default class Venues extends React.Component {
     }
 
     @observable venue = new Venue();
+
     @observable errorMessage = '';
+
     formState = new FormState()
 
     query = new Query({
@@ -53,7 +55,7 @@ export default class Venues extends React.Component {
     @action.bound
     onSave() {
         this.formState.persistTo(this.venue)
-            .then(venue => venue.save())
+            .then(venue => venue.sync.save())
             .then(this.onSaved);
     }
 
@@ -74,7 +76,7 @@ export default class Venues extends React.Component {
     }
 
     @computed get isSavable() {
-        return this.formState.isValid && !this.venue.syncInProgress;
+        return this.formState.isValid && !this.venue.sync.isBusy;
     }
 
     render() {

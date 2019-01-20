@@ -35,9 +35,9 @@ const createTransformer = (options) => {
             return crypto.createHash('md5').update(fileData).digest('hex');
         },
         process(src, filename) {
-            if (!babel.util.canCompile(filename)) {
-                return src;
-            }
+            // if (!babel.util.canCompile(filename)) {
+            //     return src;
+            // }
             const theseOptions = Object.assign({ filename }, options);
             return babel.transform(src, theseOptions).code;
         },

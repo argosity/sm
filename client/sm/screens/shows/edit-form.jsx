@@ -112,7 +112,7 @@ class EditForm extends React.Component {
             return;
         }
         this.formState.persistTo(this.props.show)
-            .then(() => this.props.show.save({ include: 'times' }))
+            .then(() => this.props.show.sync.save({ include: 'times' }))
             .then(this.onSaved);
     }
 
@@ -129,7 +129,7 @@ class EditForm extends React.Component {
     }
 
     @computed get isSavable() {
-        return this.formState.isValid && !this.props.show.syncInProgress;
+        return this.formState.isValid && !this.props.show.sync.isBusy;
     }
 
     @action.bound setFieldRef(r) {

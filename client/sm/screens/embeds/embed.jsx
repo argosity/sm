@@ -62,9 +62,9 @@ export default class Embeds extends React.Component {
     @observable page = this.props.embed.findOrCreatePage();
 
     @action.bound onSaveClick() {
-        this.props.embed.save().then(() => {
+        this.props.embed.sync.save().then(() => {
             Object.assign(this.page, this.editor.contents);
-            this.page.save();
+            this.page.sync.save();
         });
     }
 

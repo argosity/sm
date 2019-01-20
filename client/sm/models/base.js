@@ -18,7 +18,7 @@ export class CachedModel extends BaseModel {
 
     constructor(attrs) {
         super(attrs);
-        observe(this, 'syncInProgress', ({ newValue, oldValue }) => {
+        observe(this.sync, 'isFetching', ({ newValue, oldValue }) => {
             if (!oldValue && newValue && newValue.isCreate) {
                 if (this.constructor.$cachedCollection) {
                     this.constructor.$cachedCollection.push(this);

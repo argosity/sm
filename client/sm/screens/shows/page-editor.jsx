@@ -36,7 +36,7 @@ class PageEditor extends React.Component {
 
     @action.bound onSave() {
         Object.assign(this.page, this.editor.contents);
-        this.editor.save().then(() => {
+        this.editor.sync.save().then(() => {
             this.props.onComplete();
         });
     }

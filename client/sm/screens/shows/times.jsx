@@ -104,36 +104,35 @@ export default class ShowTimesEditor extends React.Component {
             <Times>
                 {this.renderHeader()}
                 <AutoSizer>
-                    {({ height, width }) =>
-                        <Table
-                            height={height - 50}
-                            width={width}
-                            rowHeight={30}
-                            rowGetter={this.rowAtIndex}
-                            headerHeight={40}
-                            rowCount={times.length}
-                        >
-                            <Column
-                                dataKey="occurs_at" label="Date/Time"
-                                width={250} flexGrow={1} headerRenderer={this.headerRenderer}
-                                cellRenderer={this.renderOccurs}
-                            />
-                            <Column
-                                dataKey="price" label="Price"
-                                width={80} headerRenderer={this.headerRenderer}
-                                cellRenderer={this.renderPrice}
-                            />
-                            <Column
-                                dataKey="capacity" label="Capacity"
-                                width={50} headerRenderer={this.headerRenderer}
-                                cellRenderer={this.renderCapacity}
-                            />
-                            <Column
-                                dataKey="capacity" label=""
-                                width={50} headerRenderer={this.headerRenderer}
-                                cellRenderer={this.renderControls}
-                            />
-                        </Table>}
+                    {({ height, width }) => <Table
+                        height={height - 50}
+                        width={width}
+                        rowHeight={30}
+                        rowGetter={this.rowAtIndex}
+                        headerHeight={40}
+                        rowCount={times.length}
+                    >
+                        <Column
+                            dataKey="occurs_at" label="Date/Time"
+                            width={250} flexGrow={1} headerRenderer={this.headerRenderer}
+                            cellRenderer={this.renderOccurs}
+                        />
+                        <Column
+                            dataKey="price" label="Price"
+                            width={80} headerRenderer={this.headerRenderer}
+                            cellRenderer={this.renderPrice}
+                        />
+                        <Column
+                            dataKey="capacity" label="Capacity"
+                            width={50} headerRenderer={this.headerRenderer}
+                            cellRenderer={this.renderCapacity}
+                        />
+                        <Column
+                            dataKey="capacity" label=""
+                            width={50} headerRenderer={this.headerRenderer}
+                            cellRenderer={this.renderControls}
+                        />
+                    </Table>}
                 </AutoSizer>
             </Times>
         );

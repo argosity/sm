@@ -17,6 +17,7 @@ export default class Refund extends React.Component {
     }
 
     @observable reason;
+
     @observable void_only;
 
     @action.bound onTextChange(ev) {
@@ -61,7 +62,7 @@ export default class Refund extends React.Component {
     }
 
     renderBody() {
-        return this.props.sale.syncInProgress ? this.renderSpinner() : this.renderControls();
+        return this.props.sale.sync.isBusy ? this.renderSpinner() : this.renderControls();
     }
 
     render() {

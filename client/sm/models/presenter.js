@@ -9,6 +9,7 @@ export default class Presenter extends CachedModel {
     @identifier id;
 
     @field code = '';
+
     @field name = '';
 
     @belongsTo({ model: Asset, inverseOf: 'owner' }) logo;

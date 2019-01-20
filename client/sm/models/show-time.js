@@ -18,6 +18,7 @@ export default class ShowTime extends BaseModel {
     @belongsTo({ model: 'sm/show' }) show;
 
     @field price;
+
     @field capacity;
 
     @field({ type: 'date' }) occurs_at = moment()

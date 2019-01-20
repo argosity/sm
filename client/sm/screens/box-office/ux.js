@@ -26,9 +26,13 @@ export default class GuestUX {
         return this.constructor.FIELDS;
     }
 
-    @observable time;// = new ShowTime();
+    @observable time;
+
+    // = new ShowTime();
     @observable redemption;
+
     @observable emailSale;
+
     @observable refundSale;
 
     windowSize = new WindowSize();
@@ -142,7 +146,7 @@ export default class GuestUX {
         if (saleRow) {
             this.redemption.sale = this.query.results.convertRowToObject(saleRow);
         }
-        this.redemption.save().then(this.onCheckInComplete);
+        this.redemption.sync.save().then(this.onCheckInComplete);
     }
 
     @action onRefund(rowIndex) {

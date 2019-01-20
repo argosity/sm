@@ -11,8 +11,11 @@ import defaultCSSValues from './embed_css_defaults';
 export default class Embed extends Page.hasPageMixin(BaseModel) {
 
     @identifier id;
+
     @field identifier;
+
     @field name;
+
     @field({ type: 'object' }) css_values = {};
 
     @belongsTo({ model: Page, inverseOf: 'owner' }) page;

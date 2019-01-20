@@ -13,12 +13,17 @@ const ISO_FORMAT = 'YYYYMMDD';
 export default class ShowTimeStats extends BaseModel {
 
     @identifier id;
+
     @field compareToId;
 
     @session showTime;
+
     @session redemptions;
+
     @session sales;
+
     @session({ type: 'object' }) timeline = [];
+
     @session({ type: 'object' }) comparison_timeline = [];
 
     @action compareTo(time) {
@@ -43,8 +48,8 @@ export default class ShowTimeStats extends BaseModel {
             return { labels: [], series: [] };
         }
         const timeline = this.normalizedTimeLine(this.timeline);
-        const compare = isEmpty(this.comparison_timeline) ?
-            null : this.normalizedTimeLine(this.comparison_timeline);
+        const compare = isEmpty(this.comparison_timeline)
+            ? null : this.normalizedTimeLine(this.comparison_timeline);
 
         const days = values(timeline);
         const day = first(days).date;

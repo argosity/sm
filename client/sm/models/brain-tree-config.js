@@ -11,7 +11,9 @@ export default class BrainTreeConfig extends BaseModel {
     @identifier unused;
 
     @field merchant_id;
+
     @field public_key;
+
     @field private_key;
 
     @computed get syncUrl() {

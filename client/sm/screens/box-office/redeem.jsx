@@ -33,7 +33,7 @@ export default class Redeem extends React.Component {
 
     @action.bound
     onSaveClick() {
-        this.props.redemption.save().then(this.props.onComplete);
+        this.props.redemption.sync.save().then(this.props.onComplete);
     }
 
     renderControls() {
@@ -63,7 +63,7 @@ export default class Redeem extends React.Component {
     }
 
     renderBody() {
-        return this.props.redemption.syncInProgress ? this.renderSpinner() : this.renderControls();
+        return this.props.redemption.sync.isBusy ? this.renderSpinner() : this.renderControls();
     }
 
     get redemption() {

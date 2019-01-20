@@ -1,19 +1,18 @@
 const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require('webpack');
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const entries = {
     app: [
-        'babel-polyfill-loader!',
+        '@babel/polyfill',
         '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
     ],
     homepage: [
-        'babel-polyfill-loader!',
+        '@babel/polyfill',
         'sm/homepage/index.js',
     ],
     'embedded-shows': [
-        'babel-polyfill-loader!',
+        '@babel/polyfill',
         'sm/embed/shows.js',
     ],
 
@@ -32,10 +31,10 @@ const config = {
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
         publicPath: '<%= Hippo.env.production? ? 'https://assets.showmaker.com/assets/' : dev_public_path  %>',
-        filename: '[name]-[hash].js',
-<% unless Hippo.env.production? -%>
+            filename: '[name]-[hash].js',
+        <% unless Hippo.env.production? -%>
         crossOriginLoading:  "anonymous",
-<% end -%>
+        <% end -%>
     },
     resolve: {
         modules: [
@@ -58,26 +57,25 @@ const config = {
                 },
             },
             {
-                loader: 'babel-loader',
+                use: { loader: 'babel-loader' },
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                options: {
-                    plugins: [
-                        'react-hot-loader/babel',
-                        'babel-plugin-lodash',
-
-                        'babel-plugin-transform-decorators-legacy',
-                        'babel-plugin-transform-class-properties',
-                        'babel-plugin-transform-function-bind',
-                        'babel-plugin-transform-react-jsx',
-                        'babel-plugin-transform-runtime',
-                    ].map(require.resolve),
-                    presets: [
-                        require.resolve('babel-preset-es2015'),
-                        require.resolve('babel-preset-react'),
-                        require.resolve('babel-preset-stage-1'),
-                    ],
-                },
+                // options: {
+                //     plugins: [
+                //         'react-hot-loader/babel',
+                //         'babel-plugin-lodash',
+                //         'babel-plugin-transform-decorators-legacy',
+                //         'babel-plugin-transform-class-properties',
+                //         'babel-plugin-transform-function-bind',
+                //         'babel-plugin-transform-react-jsx',
+                //         'babel-plugin-transform-runtime',
+                //     ].map(require.resolve),
+                //     presets: [
+                //         require.resolve('babel-preset-es2015'),
+                //         require.resolve('babel-preset-react'),
+                //         require.resolve('babel-preset-stage-1'),
+                //     ],
+                // },
             },
             { test: /\.scss$/,
                 use: [
@@ -107,25 +105,25 @@ const config = {
             'process.env.NODE_ENV': '"<%= Hippo.env.to_s %>"',
         }),
 <% if Hippo.env.production? %>
-        new UglifyJsPlugin({
-            extractComments: true,
-            parallel: 4,
-            sourceMap: true,
-            cache: true,
-            uglifyOptions: {
-                ecma: 8,
-            }
-        }),
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
-        new webpack.optimize.OccurrenceOrderPlugin(), // use smallest id for most used chuncks
-        new CompressionPlugin({
-          asset: "[path].gz[query]",
-          algorithm: "gzip",
-          test: /\.(js|html)$/,
-          threshold: 10240,
-          minRatio: 0.8
-        })
+        // new UglifyJsPlugin({
+        //     extractComments: true,
+        //     parallel: 4,
+        //     sourceMap: true,
+        //     cache: true,
+        //     uglifyOptions: {
+        //         ecma: 8,
+        //     }
+        // }),
+        // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        // new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
+        // new webpack.optimize.OccurrenceOrderPlugin(), // use smallest id for most used chuncks
+        // new CompressionPlugin({
+        //   asset: "[path].gz[query]",
+        //   algorithm: "gzip",
+        //   test: /\.(js|html)$/,
+        //   threshold: 10240,
+        //   minRatio: 0.8
+        // })
 <% else %>
         new webpack.NamedModulesPlugin(),
 <% end %>

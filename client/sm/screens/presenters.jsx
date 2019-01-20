@@ -46,7 +46,7 @@ export default class Presenters extends React.Component {
     @action.bound
     onSave() {
         this.formState.persistTo(this.presenter)
-            .then(() => this.presenter.save())
+            .then(() => this.presenter.sync.save())
             .then(this.onSaved);
     }
 
@@ -64,7 +64,7 @@ export default class Presenters extends React.Component {
     }
 
     @computed get isSavable() {
-        return this.formState.isValid && !this.presenter.syncInProgress;
+        return this.formState.isValid && !this.presenter.sync.isBusy;
     }
 
     render() {

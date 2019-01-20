@@ -25,7 +25,7 @@ export default class SquareConfig extends React.Component {
     }
 
     onSave() {
-        this.auth.save();
+        this.auth.sync.save();
     }
 
     @action.bound openLink() {
@@ -35,7 +35,7 @@ export default class SquareConfig extends React.Component {
     @action.bound onLinkWindowClose() {
         this.isLinking = false;
         this.auth.update(this.popOpen.popup.square);
-        this.auth.save();
+        this.auth.sync.save();
     }
 
     renderLinkWindow() {

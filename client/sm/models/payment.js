@@ -9,8 +9,11 @@ export default class Payment extends BaseModel {
     @identifier id;
 
     @field nonce;
+
     @field card_type;
+
     @field digits;
+
     @field amount;
 
     @session token;

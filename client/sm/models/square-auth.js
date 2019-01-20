@@ -9,7 +9,9 @@ export default class SquareAuth extends BaseModel {
     @identifier id = 'linked';
 
     @field token;
+
     @field location_id;
+
     @field location_name;
 
     @computed get isAuthorized() {

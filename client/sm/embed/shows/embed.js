@@ -16,7 +16,8 @@ export default class Embed {
 
     static boot(...args) {
         if (window.ShowMaker) {
-            root.innerHTML = '<h1>Only a single instance of ShowMaker can be loaded at once</h1>';
+            // eslint-disable-next-line no-console
+            console.warn('Only a single instance of ShowMaker can be loaded at once');
         }
         window.ShowMaker = new Embed(...args);
     }

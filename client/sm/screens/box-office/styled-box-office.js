@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { colorForName } from 'grommet/utils';
-import media from 'hippo/components/grid/media';
+import { normalizeColor } from 'grommet/utils';
 
 const StyledBoxOffice = styled.div`
 flex: 1;
@@ -28,7 +27,7 @@ flex-direction: column;
         margin: ${props => props.theme.global.edgeSize.medium} 0;
     }
     .ReactVirtualized__List {
-        border-top: ${props => colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
+        border-top: ${props => normalizeColor('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
     }
 
     .ReactVirtualized__Grid__innerScrollContainer {
@@ -43,7 +42,7 @@ flex-direction: column;
 
     .guest {
 
-        border-bottom: ${props => colorForName('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
+        border-bottom: ${props => normalizeColor('border', props.theme)} solid ${props => props.theme.global.borderSize.xsmall};
 
 
         overflow: hidden;
@@ -54,12 +53,13 @@ flex-direction: column;
                display: flex;
                align-items: center;
                justify-content: center;
-               ${media.desktop`
+
+
 svg {
                         width: 17px;
                         height: 17px;
                     }
-`}
+
                > * { display: flex; }
                &:hover { path { fill: black; } }
             }
@@ -83,7 +83,10 @@ svg {
             > * {
               flex: 1;
               margin-right: 0.5rem;
-              min-width: 180px;
+              min-width: 190px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
               word-wrap: break-word;
             }
             .pur-rdm {

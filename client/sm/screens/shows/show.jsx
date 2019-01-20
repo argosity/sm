@@ -92,7 +92,7 @@ export default class Show extends React.Component {
     visibleIcon(visible) {
         if (!visible.isCurrent) { return null; }
         return (
-            <View size="small" type="status" colorIndex="brand" />
+            <View size="small" type="status" />
         );
     }
 
@@ -136,8 +136,7 @@ export default class Show extends React.Component {
                     </Col>
                     <Col sm={6} className="occurs">
                         <b>Occurs:</b>
-                        <ul>{map(occurances, o =>
-                            <li key={o.id || 'new'}>{dt(o.occurs_at)}</li>)}</ul>
+                        <ul>{map(occurances, o => <li key={o.id || 'new'}>{dt(o.occurs_at)}</li>)}</ul>
                     </Col>
 
                 </Row>

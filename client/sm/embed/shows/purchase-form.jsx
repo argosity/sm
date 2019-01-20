@@ -138,7 +138,7 @@ export default class PurchaseForm extends Preact.Component {
         this.state.tokenize().then(({ token, cardData }) => {
             sale.nonce = token;
             sale.cardData = cardData;
-            sale.save(() => {
+            sale.sync.save(() => {
                 if (sale.order) {
                     this.embed.lastOrder = sale.order;
                     window.location.hash = `order/${sale.order.identifier}`;

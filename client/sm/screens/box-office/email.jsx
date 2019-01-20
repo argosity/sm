@@ -49,7 +49,7 @@ export default class Email extends React.Component {
     }
 
     renderBody() {
-        return this.props.sale.syncInProgress ? this.renderSpinner() : this.renderControls();
+        return this.props.sale.sync.isBusy ? this.renderSpinner() : this.renderControls();
     }
 
     render() {

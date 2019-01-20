@@ -17,17 +17,16 @@ import {
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import WarningNotification from 'hippo/components/warning-notification';
 import CardField from 'hippo/components/payments/field';
-
 import StyledForm from './styled-sale-form';
-
 import Arrow from './pointer-arrow';
 import Sale from '../../models/sale';
 import Payment from '../../models/payment';
 import SM from '../../extension';
 
 
-const PaymentFieldsWrapperMock = ({ className, children }) =>
-    <div className={className}>{children}</div>;
+const PaymentFieldsWrapperMock = ({ className, children }) => (
+    <div className={className}>{children}</div>
+);
 
 @observer
 export default class SaleForm extends React.Component {
@@ -48,8 +47,11 @@ export default class SaleForm extends React.Component {
     }
 
     @observable formState = new FormState()
+
     @observable payment = new Payment();
+
     @observable cardIsvalid;
+
     @observable isSaving;
 
     @observable fields = {
@@ -150,7 +152,7 @@ export default class SaleForm extends React.Component {
         this.isSaving = true;
         this.saveState().then(() => {
             if (sale.isValid) {
-                sale.save().then(() => {
+                sale.sync.save().then(() => {
                     this.isSaving = false;
                     if (sale.isValid) {
                         this.props.onComplete(sale);
@@ -166,9 +168,7 @@ export default class SaleForm extends React.Component {
     }
 
     @computed get isBusy() {
-        return Boolean(
-            this.isSaving || get(this.payment, 'syncInProgress.isFetch'),
-        );
+        return Boolean(this.isSaving || this.payment.sync.isFetching);
     }
 
     @computed get busyMessage() {

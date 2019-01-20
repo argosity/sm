@@ -20,8 +20,11 @@ import Message from '../models/message';
 export default class Messages extends React.Component {
 
     @observable defaultMessage = new Message();
+
     @observable message;
+
     @observable errorMessage = '';
+
     formState = new FormState();
 
     query = new Query({
@@ -48,7 +51,7 @@ export default class Messages extends React.Component {
     @action.bound
     onSave() {
         this.formState.persistTo(this.message)
-            .then(message => message.save())
+            .then(message => message.sync.save())
             .then(this.onSaved);
     }
 
@@ -80,7 +83,7 @@ export default class Messages extends React.Component {
     }
 
     @computed get isSavable() {
-        return this.formState.isValid && !this.message.syncInProgress;
+        return this.formState.isValid && !this.message.sync.isBusy;
     }
 
     render() {

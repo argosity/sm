@@ -9,11 +9,17 @@ import {
 export default class Message extends CachedModel {
 
     @identifier id;
+
     @field code;
+
     @field name;
+
     @field order_confirmation_subject;
+
     @field order_confirmation_body;
+
     @belongsTo({ model: Asset, inverseOf: 'owner' }) ticket_header;
+
     @belongsTo({ model: Asset, inverseOf: 'owner' }) ticket_footer;
 
     @action

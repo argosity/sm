@@ -9,11 +9,15 @@ export default class Redemption extends BaseModel {
     @identifier id;
 
     @field qty = 0;
+
     @field sale_id;
+
     @field ticket;
 
     @field({ type: 'date' }) created_at;
+
     @session sale;
+
     @session rowIndex;
 
     @belongsTo({ model: 'sm/sale' }) sale;

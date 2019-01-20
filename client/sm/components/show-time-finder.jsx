@@ -25,11 +25,14 @@ export default class ShowTimeFinderHeader extends React.Component {
     }
 
     @observable time = new ShowTime();
+
     @observable isShowingSearch = false;
+
     @action.bound onSearchClick() {
         this.query.reset();
         this.isShowingSearch = true;
     }
+
     @action.bound onSearchClose() { this.isShowingSearch = false; }
 
     query = new Query({

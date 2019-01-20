@@ -47,6 +47,6 @@ module SM
 
 end
 
-Hippo::Cron.hourly do
-    SM::SaleReport.email_pending
-end
+# Hippo::Cron.hourly do
+#     SM::SaleReport.email_pending
+# end

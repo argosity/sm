@@ -18,6 +18,7 @@ export default class Show extends Page.hasPageMixin(BaseModel) {
     static get embedURL() {
         return `${Config.api_path}/sm/embed/shows`;
     }
+
     static fetchEmbedded(embedId) {
         return this.Collection
             .create()
@@ -33,28 +34,44 @@ export default class Show extends Page.hasPageMixin(BaseModel) {
     }
 
     @identifier id;
+
     @field identifier = '';
+
     @field title = '';
+
     @field sub_title = '';
+
     @field description = '';
+
     @field venue_id;
+
     @field message_id;
+
     @field ticket_instructions;
+
     @field presenter_id;
+
     @field price;
+
     @field capacity;
+
     @field external_url;
+
     @field can_purchase = false;
 
     @field online_sales_halt_mins_before;
+
     @field({ model: DateRange }) visible_during = new DateRange({
         start: moment().startOf('day').toDate(),
         end: moment().add(1, 'week').endOf('day').toDate(),
     });
 
     @belongsTo({ model: 'sm/venue' }) venue;
+
     @belongsTo({ model: 'sm/presenter' }) presenter;
+
     @belongsTo({ model: Page, inverseOf: 'owner' }) page;
+
     @belongsTo({ model: Asset, inverseOf: 'owner' }) image;
 
     @hasMany({ model: ShowTime, inverseOf: 'show' }) times;
