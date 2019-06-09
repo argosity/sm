@@ -1,41 +1,4 @@
 <% unless defined?(hide_title) %>
 <h2 class="content-head is-center">ShowMaker Signup</h2>
 <% end %>
-<form id="signup" method="post" action="/signup">
-
-    <% if tenant && tenant.errors.any? %>
-    <h4 class="invalid"><%= tenant.errors.full_messages.to_sentence %></h4>
-    <% end %>
-
-    <label>
-      Your Name
-      <input id="name" name="name" type="text" placeholder="Your Name" value="<%= params['name'] %>">
-    </label>
-
-    <label>
-      Company Name
-      <input id="company" name="company" type="text" placeholder="Company" value="<%= params['company'] %>">
-    </label>
-
-    <label>
-      Email
-      <input id="email" name="email" type="email" placeholder="Email Address" value="<%= params['email'] %>">
-    </label>
-
-    <label>
-      Login
-      <input id="login" name="login" type="text" placeholder="Your Login">
-    </label>
-
-    <label for="password">
-      Password
-      <input id="password" name="password" type="password" placeholder="Your Password" value="<%= params['password'] %>">
-    </label>
-
-    <p>
-      By signing up for ShowMaker, you agree to abide by our <a href="/terms">terms &amp; conditions</a>
-    </p>
-
-    <button type="submit">Sign Up</button>
-
-</form>
+<h3>Signups have been suspended</h3>
